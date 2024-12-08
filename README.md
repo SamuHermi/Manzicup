@@ -6,6 +6,32 @@
 **DESCARGAR BASE: https://skyfangames.blogspot.com/2024/01/base-de-sky.html**
 
 
+### AÑADIDOS V 1.0.9
+
+- Más validaciones para las animaciones de ataques.
+- Se ha rehecho completamente el sistema de Regalo Misterioso. Ahora permite crear regalos por internet con contraseña, aparte de muchas mejoras.
+- Mejoras en el movimiento del jugador, ahora se mueve con solo darle tap a las teclas.
+- Correcciones en el precio de venta de algunos objetos, de acorde a las nuevas generaciones.
+- Mejoras en el PluginManager para que detecte cuando se agregan o eliminan carpetas.
+- Corrección de stats de mega Scizor.
+- Agregado que si se libera a un Pokémon con un objeto equipado, el objeto se guarda en la mochila.
+- Cambios en el NPC configurador del random del mapa de Scripts.
+- Agrega opción de usar las MOs sin aprenderlas.
+- Agrega posibilidad de flag Kicking en el PBS de moves.txt y metodo kickingMove? para saber si es un movimiento de patadas.
+- Correcciones en el Buscasalvajes.
+- Cambia el precio de venta por defecto de 1/2 a 1/4 del precio de compra, de acuerdo a los cambios en BDSP y SV.
+- Agrega opción en el NameBox para que el color del cuadro sea independiente del del text box y tambien definir distintos Skins para distintos NPCs.
+- Corrección en el tiempo mostrado al guardar partida, independientemente del turbo.
+- El PokéRadar ahora está ordenado por probabilidad de aparición
+- Opción para que los objetos consumibles, como bayas, gemas, banda focus, etc. se restauren luego del combate, esto viene por defecto desactivado, para activarlo hay que cambiar la constante `RESTORE_HELD_ITEMS_AFTER_BATTLE` a true
+- Actualiza Ladrón a los cambios de 9na
+- Cambios menores de traducciones.
+- El buscasalvajes ahora mostrara la silueta del Pokémon en negro para Pokémon no vistos, el icono en escala de grises para Pokémon vistos pero no capturados y el icono a color para los Pokémon capturados.
+- Correcciones al recibir Huevos ahora siempre ofrecerá meterlos a la incubadora si la tienes y esta tiene espacio disponible.
+- Correcciones para la congelación de Hisui.
+- Se incluye la Ruby Standard Library (RSL) esto es un compilado de librerias de código que podrán importar en sus scripts para facilitarse distintas cosas, por ejemplo puede importar la libreria de JSON para manejar este tipo de archivos con mayor facilidad. Pueden encontrar mas información [aquí](https://ruby-doc.org/3.3.0/standard_library_rdoc.html)
+
+
 ### AÑADIDOS V 1.0.8
 
 - Añadido buscador instantáneo en la Pokédex al pulsar la tecla D.
