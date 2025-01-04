@@ -857,7 +857,16 @@ Battle::AbilityEffects::StatLossImmunityFromAlly.add(:FLOWERVEIL,
 # OnStatGain handlers
 #===============================================================================
 
-# There aren't any!
+Battle::AbilityEffects::OnStatGain.add(:CURSEDMIRROR,
+    proc { |ability, battler, stat, user, battle|
+    battle.pbShowAbilitySplash(battler)
+    battle.allOtherSideBattlers(user.index).each do |b|
+      next if !b.near?(user)
+      b.pbLowerStatStageByAbility(stat, 1, user, false)
+    end
+    battle.pbHideAbilitySplash(battler)
+    }
+)  
 
 #===============================================================================
 # OnStatLoss handlers
@@ -928,6 +937,14 @@ Battle::AbilityEffects::PriorityBracketChange.add(:STALL,
   }
 )
 
+Battle::AbilityEffects::PriorityBracketChange.add(:CHILLDUDE,
+  proc { |ability, battler, battle|
+    choices = battle.choices[battler.index]
+    if choices[0] == :UseMove
+      next -1 if !choices[2].statusMove?
+    end
+  }
+)
 #===============================================================================
 # PriorityBracketUse handlers
 #===============================================================================
@@ -1180,6 +1197,8 @@ Battle::AbilityEffects::ModifyMoveBaseType.add(:AERILATE,
   }
 )
 
+Battle::AbilityEffects::ModifyMoveBaseType.copy(:AERILATE,:ORNITHES)
+
 Battle::AbilityEffects::ModifyMoveBaseType.add(:GALVANIZE,
   proc { |ability, user, move, type|
     next if type != :NORMAL || !GameData::Type.exists?(:ELECTRIC)
@@ -1207,6 +1226,22 @@ Battle::AbilityEffects::ModifyMoveBaseType.add(:PIXILATE,
     next if type != :NORMAL || !GameData::Type.exists?(:FAIRY)
     move.powerBoost = true
     next :FAIRY
+  }
+)
+
+Battle::AbilityEffects::ModifyMoveBaseType.add(:TURBOBLAZE,
+  proc { |ability, user, move, type|
+    next if type != :NORMAL || !GameData::Type.exists?(:FIRE)
+      move.powerBoost = true
+    next :FIRE
+  }
+)
+
+Battle::AbilityEffects::ModifyMoveBaseType.add(:TERAVOLT,
+  proc { |ability, user, move, type|
+    next if type != :NORMAL || !GameData::Type.exists?(:ELECTRIC)
+      move.powerBoost = true
+    next :ELECTRIC
   }
 )
 
@@ -1363,8 +1398,15 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:SUPREMEOVERLORD,
   }
 )
 
+Battle::AbilityEffects::DamageCalcFromUser.add(:POWEROFFRIENDSHIP,
+  proc { |ability, user, target, move, mults, baseDmg, type|
+    bonus = 5 - user.effects[PBEffects::SupremeOverlord]
+    next if bonus <= 0
+    mults[:power_multiplier] *= (1 + (0.1 * bonus))
+  }
+)
 
-Battle::AbilityEffects::DamageCalcFromUser.copy(:AERILATE, :GALVANIZE, :NORMALIZE, :PIXILATE, :REFRIGERATE)
+Battle::AbilityEffects::DamageCalcFromUser.copy(:AERILATE, :GALVANIZE, :NORMALIZE, :PIXILATE, :REFRIGERATE, :ORNITHES)
 
 Battle::AbilityEffects::DamageCalcFromUser.add(:ANALYTIC,
   proc { |ability, user, target, move, mults, power, type|
@@ -1385,6 +1427,8 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:ANALYTIC,
 Battle::AbilityEffects::DamageCalcFromUser.add(:BLAZE,
   proc { |ability, user, target, move, mults, power, type|
     if user.hp <= user.totalhp / 3 && type == :FIRE
+      mults[:attack_multiplier] *= 1.8
+    elsif type == :FIRE
       mults[:attack_multiplier] *= 1.5
     end
   }
@@ -1471,6 +1515,18 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:MEGALAUNCHER,
   }
 )
 
+Battle::AbilityEffects::DamageCalcFromUser.add(:STRIKER,
+  proc { |ability, user, target, move, mults, power, type|
+    mults[:attack_multiplier] *= 1.3 if move.kickingMove?
+  }
+)
+
+Battle::AbilityEffects::DamageCalcFromUser.add(:SPEEDFORCE,
+  proc { |ability, user, target, move, mults, power, type|
+    mults[:attack_multiplier] += 0.2*user.speed 
+  }
+)
+
 Battle::AbilityEffects::DamageCalcFromUser.add(:MINUS,
   proc { |ability, user, target, move, mults, power, type|
     next if !move.specialMove?
@@ -1499,6 +1555,8 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:ORICHALCUMPULSE,
 Battle::AbilityEffects::DamageCalcFromUser.add(:OVERGROW,
   proc { |ability, user, target, move, mults, power, type|
     if user.hp <= user.totalhp / 3 && type == :GRASS
+      mults[:attack_multiplier] *= 1.8
+    elsif type == :GRASS
       mults[:attack_multiplier] *= 1.5
     end
   }
@@ -1536,6 +1594,12 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:RIVALRY,
         mults[:power_multiplier] *= 0.75
       end
     end
+  }
+)
+
+Battle::AbilityEffects::DamageCalcFromUser.add(:CHILLDUDE,
+  proc { |ability, user, target, move, mults, power, type|
+  mults[:power_multiplier] *= 1.30 if move.physicalMove?
   }
 )
 
@@ -1582,7 +1646,11 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:STAKEOUT,
 
 Battle::AbilityEffects::DamageCalcFromUser.add(:STEELWORKER,
   proc { |ability, user, target, move, mults, power, type|
-    mults[:attack_multiplier] *= 1.5 if type == :STEEL
+  if user.hp <= user.totalhp / 3 && type == :STEEL
+    mults[:attack_multiplier] *= 1.8
+  elsif type == :STEEL
+    mults[:attack_multiplier] *= 1.5
+  end
   }
 )
 
@@ -1601,10 +1669,13 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:STRONGJAW,
 Battle::AbilityEffects::DamageCalcFromUser.add(:SWARM,
   proc { |ability, user, target, move, mults, power, type|
     if user.hp <= user.totalhp / 3 && type == :BUG
+      mults[:attack_multiplier] *= 1.8
+    elsif type == :BUG
       mults[:attack_multiplier] *= 1.5
     end
   }
 )
+
 
 Battle::AbilityEffects::DamageCalcFromUser.add(:TECHNICIAN,
   proc { |ability, user, target, move, mults, power, type|
@@ -1624,6 +1695,8 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:TINTEDLENS,
 Battle::AbilityEffects::DamageCalcFromUser.add(:TORRENT,
   proc { |ability, user, target, move, mults, power, type|
     if user.hp <= user.totalhp / 3 && type == :WATER
+      mults[:attack_multiplier] *= 1.8
+    elsif type == :WATER
       mults[:attack_multiplier] *= 1.5
     end
   }
@@ -1645,7 +1718,11 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:TOXICBOOST,
 
 Battle::AbilityEffects::DamageCalcFromUser.add(:TRANSISTOR,
   proc { |ability, user, target, move, mults, power, type|
-    mults[:attack_multiplier] *= 1.5 if type == :ELECTRIC
+  if user.hp <= user.totalhp / 3 && type == :ELECTRIC
+    mults[:attack_multiplier] *= 1.8
+  elsif type == :ELECTRIC
+    mults[:attack_multiplier] *= 1.5
+  end
   }
 )
 
@@ -3139,6 +3216,20 @@ Battle::AbilityEffects::OnSwitchIn.add(:ELECTRICSURGE,
   }
 )
 
+Battle::AbilityEffects::OnSwitchIn.add(:TWISTEDDIM,
+  proc { |ability, battler, battle, switch_in|
+    battle.pbShowAbilitySplash(battler)
+    if battle.field.effects[PBEffects::TrickRoom] != 0
+      battle.field.effects[PBEffects::TrickRoom] = 0
+      battle.pbDisplay(_INTL("¡{1} alteró las dimensiones!", battler.pbThis))
+    else
+      battle.field.effects[PBEffects::TrickRoom] = 5
+      battle.pbDisplay(_INTL("¡{1} alteró las dimensiones!", battler.pbThis))
+    end
+    battle.pbHideAbilitySplash(battler)
+  }
+)
+
 Battle::AbilityEffects::OnSwitchIn.add(:EMBODYASPECT,
   proc { |ability, battler, battle, switch_in|
     next if !battler.isSpecies?(:OGERPON)
@@ -3623,6 +3714,16 @@ Battle::AbilityEffects::OnSwitchIn.add(:SUPREMEOVERLORD,
   }
 )
 
+Battle::AbilityEffects::OnSwitchIn.add(:POWEROFFRIENDSHIP,
+  proc { |ability, battler, battle, switch_in|
+    numFainted = [5, battler.num_fainted_allies].min
+    next if numFainted >= 5
+    battle.pbShowAbilitySplash(battler)
+    battle.pbDisplay(_INTL("¡{1} ganó la fuerza de sus aliados!", battler.pbThis))
+    battler.effects[PBEffects::SupremeOverlord] = numFainted
+    battle.pbHideAbilitySplash(battler)
+  }
+)
 
 Battle::AbilityEffects::OnSwitchIn.add(:TABLETSOFRUIN,
   proc { |ability, battler, battle, switch_in|
@@ -3740,6 +3841,67 @@ Battle::AbilityEffects::OnSwitchIn.add(:ZEROTOHERO,
     battle.pbDisplay(_INTL("¡{1} sufrió una transformación heroíca!", battler.pbThis))
     battle.pbHideAbilitySplash(battler)
     battle.pbSetAbilityTrigger(battler)
+  }
+)
+
+Battle::AbilityEffects::OnSwitchIn.add(:FORECAST,
+  proc { |ability, battler, battle, switch_in|
+  target = battler.pbDirectOpposing
+  plateType = battle.pbGetBestTypeJudgment(battler, target, nil, nil) || :NORMAL
+  battle.pbDisplay(_INTL("¡{1} prefiere el tipo {2}!", battler.pbThis,plateType.name))
+  if plateType == :WATER
+    battle.pbStartWeatherAbility(:Rain, battler)
+    
+  elsif plateType == :ELECTRIC
+    battle.pbStartWeatherAbility(:Rain, battler)
+    next if battle.field.terrain == :Electric
+    battle.pbStartTerrain(battler, :Electric)
+
+  elsif plateType == :FIRE
+    battle.pbStartWeatherAbility(:Sun, battler)
+    
+  elsif plateType == :GRASS
+    battle.pbStartWeatherAbility(:Sun, battler)     
+    next if battle.field.terrain == :Grassy
+    battle.pbStartTerrain(battler, :Grassy)
+ 
+  elsif plateType == :ICE
+    battle.pbStartWeatherAbility(:Snow, battler)
+    
+  elsif plateType == :ROCK || plateType == :GROUND || plateType == :STEEL
+    battle.pbStartWeatherAbility(:Sandstorm, battler)    
+    
+  elsif plateType == :FAIRY   
+    next if battle.field.terrain == :Misty
+    battle.pbStartTerrain(battler, :Misty)
+    
+  elsif plateType == :PSYCHIC   
+    next if battle.field.terrain == :Psychic
+    battle.pbStartTerrain(battler, :Psychic)
+    
+  end
+
+  }
+)
+
+Battle::AbilityEffects::OnSwitchIn.add(:CRYPTIC,
+  proc { |ability, battler, battle, switch_in|
+
+    next if !$player.has_species?(:UNOWN)
+    battle.pbShowAbilitySplash(battler)
+    battle.pbDisplay(_INTL("¡{1} ha recibido fuerza de los unowns de su equipo!", battler.pbThis))
+    battler.pbRaiseStatStageByAbility(:SPECIAL_ATTACK, 1, battler)
+    battler.pbRaiseStatStageByAbility(:SPEED, 1, battler)
+    battle.pbHideAbilitySplash(battler)
+    battler.allAllies.each{|b|
+      next if !b || !b.near?(battler) || b.fainted?
+      next if !b.isSpecies?(:UNOWN)
+      battle.pbShowAbilitySplash(battler)
+      battle.pbDisplay(_INTL("¡{1} ha recibido fuerza del unown aliado!", battler.pbThis))
+      battler.pbRaiseStatStageByAbility(:SPECIAL_ATTACK, 1, battler)
+      battler.pbRaiseStatStageByAbility(:SPEED, 1, battler)
+      battle.pbHideAbilitySplash(battler)
+    }
   }
 )
 

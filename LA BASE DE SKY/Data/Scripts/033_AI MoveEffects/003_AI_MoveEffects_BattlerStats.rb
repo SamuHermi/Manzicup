@@ -1473,7 +1473,7 @@ Battle::AI::Handlers::MoveEffectAgainstTargetScore.add("UserTargetSwapBaseSpeed"
     user_speed = user.base_stat(:SPEED)
     target_speed = target.base_stat(:SPEED)
     next Battle::AI::MOVE_USELESS_SCORE if user_speed == target_speed
-    if battle.field.effects[PBEffects::TrickRoom] > 1
+    if battle.field.effects[PBEffects::TrickRoom] != 0 || battle.field.effects[PBEffects::TrickRoom] != 1
       # User wants to be slower so it can move first
       next Battle::AI::MOVE_USELESS_SCORE if target_speed > user_speed
       score += (40 * ((user_speed.to_f / target_speed) - 1)).to_i
@@ -1606,7 +1606,7 @@ Battle::AI::Handlers::MoveEffectScore.add("StartUserSideDoubleSpeed",
   proc { |score, move, user, ai, battle|
     # Don't want to make allies faster if Trick Room will make them act later
     if ai.trainer.medium_skill?
-      next Battle::AI::MOVE_USELESS_SCORE if battle.field.effects[PBEffects::TrickRoom] > 1
+      next Battle::AI::MOVE_USELESS_SCORE if battle.field.effects[PBEffects::TrickRoom] != 0 || battle.field.effects[PBEffects::TrickRoom] != 1
     end
     # Get the speeds of all battlers
     ally_speeds = []

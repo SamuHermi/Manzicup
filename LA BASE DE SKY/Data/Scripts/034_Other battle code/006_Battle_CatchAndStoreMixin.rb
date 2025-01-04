@@ -17,7 +17,7 @@ module Battle::CatchAndStoreMixin
               _INTL("Enviarlo al PC"),
               _INTL("Ver los datos de {1}", pkmn.name),
               _INTL("Comprobar equipo")]
-      cmds.delete_at(1) if @sendToBoxes == 2
+      cmds.delete_at(1)
       loop do
         cmd = pbShowCommands(_INTL("¿Qué quieres hacer con {1}?", pkmn.name), cmds, 99)
         next if cmd == 99 && @sendToBoxes == 2   # Can't cancel if must add to party
@@ -245,7 +245,7 @@ module Battle::CatchAndStoreMixin
       elsif numOwned > 30
         dex_modifier = 1
       end
-      dex_modifier *= 2 if $bag.has?(:CATCHINGCHARM)
+      dex_modifier *= 1 + $bag.quantity(:CATCHINGCHARM)
       c = x * dex_modifier / 12
       # Calculate the number of shakes
       if c > 0 && pbRandom(256) < c

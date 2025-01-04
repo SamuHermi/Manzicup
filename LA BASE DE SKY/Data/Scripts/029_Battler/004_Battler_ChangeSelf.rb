@@ -223,10 +223,25 @@ class Battle::Battler
       if hasActiveAbility?(:FORECAST)
         newForm = 0
         case effectiveWeather
-        when :Sun, :HarshSun   then newForm = 1
-        when :Rain, :HeavyRain then newForm = 2
-        when :Hail             then newForm = 3
+        when :Sun, :HarshSun   then 
+            newForm = 1
+        when :Rain, :HeavyRain then 
+            newForm = 2
+        when :Hail             then 
+          newForm = 3
+
+        when :None             then 
+          case @battle.field.terrain
+            when :Misty        then
+              newForm = 4
+            when :Electric     then
+              newForm = 5
+            when :Grassy       then
+              newForm = 6
+            when :Psychic        then
+              newForm = 7   
         end
+      end  
         if @form != newForm
           @battle.pbShowAbilitySplash(self, true)
           @battle.pbHideAbilitySplash(self)

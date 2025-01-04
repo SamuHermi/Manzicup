@@ -856,6 +856,8 @@ class Battle
     @field.terrainDuration = -1
   end
 
+
+
   def pbStartTerrain(user, newTerrain, fixedDuration = true)
     return if @field.terrain == newTerrain
     @field.terrain = newTerrain
@@ -1081,7 +1083,17 @@ class Battle
       break if effective_types.length == 1
     end
     return check_type if effective_types.include?(check_type)
+    if effective_types.include?(:FIRE)
+      return :FIRE
+    elsif effective_types.include?(:WATER)
+      return :WATER
+     elsif effective_types.include?(:ICE)
+      return :ICE
+    elsif effective_types.include?(:ROCK) || effective_types.include?(:STEEL) || effective_types.include?(:GROUND)
+      return :ROCK
+    end
     return effective_types.sample
   end
+
 end
 

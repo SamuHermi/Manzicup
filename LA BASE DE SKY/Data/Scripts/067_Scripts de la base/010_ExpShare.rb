@@ -12,6 +12,13 @@
 if Settings::USE_NEW_EXP_SHARE
     class PokemonSystem
         attr_accessor :expshareon
+        attr_accessor :multiexp
+
+        alias_method :expshare_initialize, :initialize unless method_defined?(:expshare_initialize)
+        def initialize
+            expshare_initialize
+            @multiexp = false
+        end 
     end
 
     MenuHandlers.add(:options_menu, :expshareon, {
@@ -29,6 +36,7 @@ if Settings::USE_NEW_EXP_SHARE
     MenuHandlers.add(:party_menu, :expshare, {
     "name"      => _INTL("Repartir Exp."),
     "order"     => 70,
+    "condition" => proc { next $PokemonSystem.multiexp },
     "effect"    => proc { |screen, party, party_idx|
         pokemon = party[party_idx]
         if pokemon.expshare

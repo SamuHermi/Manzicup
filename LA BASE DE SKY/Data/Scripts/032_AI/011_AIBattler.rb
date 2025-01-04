@@ -223,7 +223,7 @@ class Battle::AI::AIBattler
     return false if other.nil?
     this_speed  = rough_stat(:SPEED)
     other_speed = other.rough_stat(:SPEED)
-    return (this_speed > other_speed) ^ (@ai.battle.field.effects[PBEffects::TrickRoom] > 0)
+    return (this_speed > other_speed) ^ (@ai.battle.field.effects[PBEffects::TrickRoom] != 0)
   end
 
   #-----------------------------------------------------------------------------

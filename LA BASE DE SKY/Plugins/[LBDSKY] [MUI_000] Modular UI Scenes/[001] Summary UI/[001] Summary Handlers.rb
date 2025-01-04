@@ -50,7 +50,7 @@ UIHandlers.add(:summary, :page_skills, {
   "name"      => "ESTADÍSTICAS",
   "suffix"    => "skills",
   "order"     => 30,
-  "options"   => [:item, :nickname, :pokedex, :mark, :legacy],
+  "options"   => [:item, :nickname, :pokedex, :mark, :legacy, :change_ability],
   "layout"    => proc { |pkmn, scene| scene.drawPageThree }
 })
 

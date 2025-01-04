@@ -120,6 +120,7 @@ class PokemonSummary_Scene
       when :tms      then commands[cmd] = _INTL("Usar MT")      if Settings::MECHANICS_GENERATION >= 9 && $bag.has_compatible_tm?(@pokemon)
       when :mark     then commands[cmd] = _INTL("Marcas")
       when :ability  then commands[cmd] = _INTL("Ver Habilidad")
+      when :change_ability then commands[cmd] = _INTL("Cambiar habilidad")
       when :legacy   then commands[cmd] = _INTL("Histórico") if (!@pokemon.egg? && defined?(show_legacy))
       when String    then commands[cmd] = _INTL("#{cmd}")
       end
@@ -235,6 +236,21 @@ class PokemonSummary_Scene
       }
     when :legacy
       dorefresh = show_legacy if defined?(show_legacy)
+    when :change_ability
+      abils = @pokemon.unlocked_abilities
+      ability_commands = []
+      abil_cmd = 0
+      abils.each do |i|
+        ability_commands.push(GameData::Ability.get(i).name)
+        abil_cmd = ability_commands.length - 1 if @pokemon.ability_id == i
+      end
+      abil_cmd = pbShowCommands(ability_commands)
+      if abil_cmd >= 0
+        #@pokemon.ability_index = abils[abil_cmd][1]
+        pbMessage(GameData::Ability.get(abils[abil_cmd]).name)
+        @pokemon.ability = GameData::Ability.get(abils[abil_cmd])
+        dorefresh = true
+      end
     else
       cmd = command_list[command][0]
       if cmd.is_a?(String)

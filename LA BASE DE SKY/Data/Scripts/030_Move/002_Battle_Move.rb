@@ -140,6 +140,7 @@ class Battle::Move
   def pulseMove?;         return @flags.any? { |f| f[/^Pulse$/i] };               end
   def bombMove?;          return @flags.any? { |f| f[/^Bomb$/i] };                end
   def danceMove?;         return @flags.any? { |f| f[/^Dance$/i] };               end
+
   # Causes perfect accuracy and double damage if target used Minimize. Perfect accuracy only with Gen 6+ mechanics.
   def tramplesMinimize?;  return @flags.any? { |f| f[/^TramplesMinimize$/i] };    end
 
@@ -149,7 +150,7 @@ class Battle::Move
   def windMove?;        return @flags.any? { |f| f[/^Wind$/i] };            end
   def slicingMove?;     return @flags.any? { |f| f[/^Slicing$/i] };         end
   def electrocuteUser?; return @flags.any? { |f| f[/^ElectrocuteUser$/i] }; end
-    
+  def kickingMove?;       return @flags.any? { |f| f[/^Kicking$/i] };       end    
     
   def nonLethal?(_user, _target); return false; end   # For False Swipe
   def preventsBattlerConsumingHealingBerry?(battler, targets); return false; end   # For Bug Bite/Pluck

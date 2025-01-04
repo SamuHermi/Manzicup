@@ -1,0 +1,5 @@
+Name       = walk In Storage Boxes
+Version    = 0.1
+Essentials = 20
+Website    = https://www.pokecommunity.com/
+Credits    = derFischae

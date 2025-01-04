@@ -1,8 +1,8 @@
-﻿# See the documentation on the wiki to learn how to edit this file.
+﻿# Consulta la documentación en la wiki para aprender cómo editar este archivo.
 #-------------------------------
 [VENUSAUR,1]
 FormName = Mega Venusaur
-MegaStone = VENUSAURITE
+MegaStone = MEGASTONE
 BaseStats = 80,100,123,80,122,120
 BaseExp = 313
 Abilities = THICKFAT
@@ -13,7 +13,7 @@ Generation = 6
 #-------------------------------
 [CHARIZARD,1]
 FormName = Mega Charizard X
-MegaStone = CHARIZARDITEX
+MegaStone = MEGASTONEX
 Types = FIRE,DRAGON
 BaseStats = 78,130,111,100,130,85
 BaseExp = 317
@@ -25,7 +25,7 @@ Generation = 6
 #-------------------------------
 [CHARIZARD,2]
 FormName = Mega Charizard Y
-MegaStone = CHARIZARDITEY
+MegaStone = MEGASTONE
 BaseStats = 78,104,78,100,159,115
 BaseExp = 317
 Abilities = DROUGHT
@@ -35,7 +35,7 @@ Generation = 6
 #-------------------------------
 [BLASTOISE,1]
 FormName = Mega Blastoise
-MegaStone = BLASTOISINITE
+MegaStone = MEGASTONE
 BaseStats = 79,103,120,78,135,115
 BaseExp = 315
 Abilities = MEGALAUNCHER
@@ -45,7 +45,7 @@ Generation = 6
 #-------------------------------
 [BEEDRILL,1]
 FormName = Mega Beedrill
-MegaStone = BEEDRILLITE
+MegaStone = MEGASTONE
 BaseStats = 65,150,40,145,15,80
 BaseExp = 284
 Abilities = ADAPTABILITY
@@ -56,7 +56,7 @@ Generation = 6
 #-------------------------------
 [PIDGEOT,1]
 FormName = Mega Pidgeot
-MegaStone = PIDGEOTITE
+MegaStone = MEGASTONE
 BaseStats = 83,80,80,121,135,80
 BaseExp = 290
 Abilities = NOGUARD
@@ -93,68 +93,6 @@ Pokedex = Este gourmet es muy exigente con el sabor y la frescura de la comida. 
 Generation = 7
 Flags = InheritFormWithEverStone
 WildItemUncommon = PECHABERRY
-#-------------------------------
-[PIKACHU,2]
-FormName = Forma Coqueta
-GenderRatio = AlwaysFemale
-Abilities = LIGHTNINGROD
-#-------------------------------
-[PIKACHU,3]
-FormName = Forma Aristócrata
-GenderRatio = AlwaysFemale
-Abilities = LIGHTNINGROD
-#-------------------------------
-[PIKACHU,4]
-FormName = Forma Enmascarada
-GenderRatio = AlwaysFemale
-Abilities = LIGHTNINGROD
-#-------------------------------
-[PIKACHU,5]
-FormName = Forma Erudita
-GenderRatio = AlwaysFemale
-Abilities = LIGHTNINGROD
-#-------------------------------
-[PIKACHU,6]
-FormName = Forma Superstar
-GenderRatio = AlwaysFemale
-Abilities = LIGHTNINGROD
-#-------------------------------
-[PIKACHU,7]
-FormName = Forma Roquera
-GenderRatio = AlwaysFemale
-Abilities = LIGHTNINGROD
-#-------------------------------
-[PIKACHU,8]
-FormName = Forma Gorra Original
-GenderRatio = AlwaysMale
-#-------------------------------
-[PIKACHU,9]
-FormName = Forma Gorra Hoenn
-GenderRatio = AlwaysMale
-#-------------------------------
-[PIKACHU,10]
-FormName = Forma Gorra Sinnoh
-GenderRatio = AlwaysMale
-#-------------------------------
-[PIKACHU,11]
-FormName = Forma Gorra Teselia
-GenderRatio = AlwaysMale
-#-------------------------------
-[PIKACHU,12]
-FormName = Forma Gorra Kalos
-GenderRatio = AlwaysMale
-#-------------------------------
-[PIKACHU,13]
-FormName = Forma Gorra Alola
-GenderRatio = AlwaysMale
-#-------------------------------
-[PIKACHU,14]
-FormName = Forma Gorra Compañero
-GenderRatio = AlwaysMale
-#-------------------------------
-[PIKACHU,15]
-FormName = Forma Gorra Trotamundos
-GenderRatio = AlwaysMale
 #-------------------------------
 [RAICHU,1]
 FormName = Forma Alola
@@ -305,7 +243,7 @@ Flags = InheritFormWithEverStone
 #-------------------------------
 [ALAKAZAM,1]
 FormName = Mega Alakazam
-MegaStone = ALAKAZITE
+MegaStone = MEGASTONE
 BaseStats = 55,50,65,150,175,105
 BaseExp = 300
 Abilities = TRACE
@@ -409,18 +347,6 @@ Pokedex = La impresión del mordisco del Shellder provocó una reacción químic
 Generation = 8
 Flags = InheritFormWithEverStone
 #-------------------------------
-[SLOWBRO,2]
-FormName = Mega Slowbro
-MegaStone = SLOWBRONITE
-BaseStats = 95,75,180,30,130,80
-BaseExp = 207
-Abilities = SHELLARMOR
-HiddenAbilities = SHELLARMOR
-Height = 2.0
-Weight = 120.0
-Shape = HeadArms
-Generation = 6
-#-------------------------------
 [FARFETCHD,1]
 FormName = Forma Galar
 Types = FIGHTING
@@ -468,7 +394,7 @@ Flags = InheritFormWithEverStone
 #-------------------------------
 [GENGAR,1]
 FormName = Mega Gengar
-MegaStone = GENGARITE
+MegaStone = MEGASTONE
 BaseStats = 60,65,80,130,170,95
 BaseExp = 300
 Abilities = SHADOWTAG
@@ -517,16 +443,6 @@ Pokedex = Se desconoce el motivo, pero adoptó esta forma tiempo atrás, cuando 
 Generation = 8
 WildItemUncommon = MISTYSEED
 #-------------------------------
-[KANGASKHAN,1]
-FormName = Mega Kangaskhan
-MegaStone = KANGASKHANITE
-BaseStats = 105,125,100,100,60,100
-BaseExp = 207
-Abilities = PARENTALBOND
-HiddenAbilities = PARENTALBOND
-Weight = 100.0
-Generation = 6
-#-------------------------------
 [MRMIME,1]
 FormName = Forma Galar
 Types = ICE,PSYCHIC
@@ -544,41 +460,6 @@ Pokedex = El claqué es su especialidad. Genera una capa de hielo bajo sus pies,
 Generation = 8
 Flags = InheritFormWithEverStone
 Evolutions = MRRIME,Level,42
-#-------------------------------
-[PINSIR,1]
-FormName = Mega Pinsir
-MegaStone = PINSIRITE
-Types = BUG,FLYING
-BaseStats = 65,155,120,105,65,90
-BaseExp = 210
-Abilities = AERILATE
-HiddenAbilities = AERILATE
-Height = 1.7
-Weight = 59.0
-Shape = MultiWinged
-Generation = 6
-#-------------------------------
-[GYARADOS,1]
-FormName = Mega Gyarados
-MegaStone = GYARADOSITE
-Types = WATER,DARK
-BaseStats = 95,155,109,81,70,130
-BaseExp = 224
-Abilities = MOLDBREAKER
-HiddenAbilities = MOLDBREAKER
-Weight = 305.0
-Generation = 6
-#-------------------------------
-[AERODACTYL,1]
-FormName = Mega Aerodactyl
-MegaStone = AERODACTYLITE
-BaseStats = 80,135,85,150,70,95
-BaseExp = 215
-Abilities = TOUGHCLAWS
-HiddenAbilities = TOUGHCLAWS
-Height = 2.1
-Weight = 79.0
-Generation = 6
 #-------------------------------
 [ARTICUNO,1]
 FormName = Forma Galar
@@ -626,7 +507,7 @@ Generation = 8
 #-------------------------------
 [MEWTWO,1]
 FormName = Mega Mewtwo X
-MegaStone = MEWTWONITEX
+MegaStone = MEGASTONEX
 Types = PSYCHIC,FIGHTING
 BaseStats = 106,190,100,130,154,100
 BaseExp = 390
@@ -638,7 +519,7 @@ Generation = 6
 #-------------------------------
 [MEWTWO,2]
 FormName = Mega Mewtwo Y
-MegaStone = MEWTWONITEY
+MegaStone = MEGASTONE
 BaseStats = 106,150,70,140,194,120
 BaseExp = 390
 Abilities = INSOMNIA
@@ -654,7 +535,7 @@ Evolutions = PIKACHU,None,
 #-------------------------------
 [AMPHAROS,1]
 FormName = Mega Ampharos
-MegaStone = AMPHAROSITE
+MegaStone = MEGASTONE
 Types = ELECTRIC,DRAGON
 BaseStats = 90,95,105,45,165,110
 BaseExp = 305
@@ -758,39 +639,6 @@ Generation = 3
 FormName = Forma Signo !
 Generation = 3
 #-------------------------------
-[STEELIX,1]
-FormName = Mega Steelix
-MegaStone = STEELIXITE
-BaseStats = 75,125,230,30,55,95
-BaseExp = 214
-Abilities = SANDFORCE
-HiddenAbilities = SANDFORCE
-Height = 10.5
-Weight = 740.0
-Generation = 6
-#-------------------------------
-[SCIZOR,1]
-FormName = Mega Scizor
-MegaStone = SCIZORITE
-BaseStats = 70,150,140,75,65,100
-BaseExp = 210
-Abilities = TECHNICIAN
-HiddenAbilities = TECHNICIAN
-Height = 2.0
-Weight = 125.0
-Generation = 6
-#-------------------------------
-[HERACROSS,1]
-FormName = Mega Heracross
-MegaStone = HERACRONITE
-BaseStats = 80,185,115,75,40,105
-BaseExp = 210
-Abilities = SKILLLINK
-HiddenAbilities = SKILLLINK
-Height = 1.7
-Weight = 62.5
-Generation = 6
-#-------------------------------
 [CORSOLA,1]
 FormName = Forma Galar
 Types = GHOST
@@ -807,20 +655,9 @@ Generation = 8
 Flags = InheritFormWithEverStone
 Evolutions = CURSOLA,Level,38
 #-------------------------------
-[HOUNDOOM,1]
-FormName = Mega Houndoom
-MegaStone = HOUNDOOMINITE
-BaseStats = 75,90,90,115,140,90
-BaseExp = 210
-Abilities = SOLARPOWER
-HiddenAbilities = SOLARPOWER
-Height = 1.9
-Weight = 49.5
-Generation = 6
-#-------------------------------
 [TYRANITAR,1]
 FormName = Mega Tyranitar
-MegaStone = TYRANITARITE
+MegaStone = MEGASTONE
 BaseStats = 100,164,150,71,95,120
 BaseExp = 350
 HiddenAbilities = SANDSTREAM
@@ -830,8 +667,7 @@ Generation = 6
 #-------------------------------
 [SCEPTILE,1]
 FormName = Mega Sceptile
-MegaStone = SCEPTILITE
-Types = GRASS,DRAGON
+MegaStone = MEGASTONE
 BaseStats = 70,110,75,145,145,85
 BaseExp = 315
 Abilities = LIGHTNINGROD
@@ -842,7 +678,7 @@ Generation = 6
 #-------------------------------
 [BLAZIKEN,1]
 FormName = Mega Blaziken
-MegaStone = BLAZIKENITE
+MegaStone = MEGASTONE
 BaseStats = 80,160,80,100,130,80
 BaseExp = 315
 Abilities = SPEEDBOOST
@@ -850,7 +686,7 @@ Generation = 6
 #-------------------------------
 [SWAMPERT,1]
 FormName = Mega Swampert
-MegaStone = SWAMPERTITE
+MegaStone = MEGASTONE
 BaseStats = 100,150,110,70,95,110
 BaseExp = 318
 Abilities = SWIFTSWIM
@@ -882,95 +718,22 @@ Evolutions = OBSTAGOON,LevelNight,35
 #-------------------------------
 [GARDEVOIR,1]
 FormName = Mega Gardevoir
-MegaStone = GARDEVOIRITE
+MegaStone = MEGASTONE
 BaseStats = 68,85,65,100,165,135
 BaseExp = 309
 Abilities = PIXILATE
 HiddenAbilities = PIXILATE
 Generation = 6
 #-------------------------------
-[SABLEYE,1]
-FormName = Mega Sableye
-MegaStone = SABLENITE
-BaseStats = 50,85,125,20,85,115
-BaseExp = 168
-Abilities = MAGICBOUNCE
-HiddenAbilities = MAGICBOUNCE
-Weight = 161.0
-Generation = 6
-#-------------------------------
-[MAWILE,1]
-FormName = Mega Mawile
-MegaStone = MAWILITE
-BaseStats = 50,105,125,50,55,95
-BaseExp = 168
-Abilities = HUGEPOWER
-HiddenAbilities = HUGEPOWER
-Height = 1.0
-Weight = 23.5
-Generation = 6
-#-------------------------------
 [AGGRON,1]
 FormName = Mega Aggron
-MegaStone = AGGRONITE
+MegaStone = MEGASTONE
 Types = STEEL
 BaseStats = 70,140,230,50,60,80
 Abilities = FILTER
 HiddenAbilities = FILTER
 Height = 2.2
 Weight = 395.0
-Generation = 6
-#-------------------------------
-[MEDICHAM,1]
-FormName = Mega Medicham
-MegaStone = MEDICHAMITE
-BaseStats = 60,100,85,100,80,85
-BaseExp = 179
-HiddenAbilities = PUREPOWER
-Generation = 6
-#-------------------------------
-[MANECTRIC,1]
-FormName = Mega Manectric
-MegaStone = MANECTITE
-BaseStats = 70,75,80,135,135,80
-BaseExp = 201
-Abilities = INTIMIDATE
-HiddenAbilities = INTIMIDATE
-Height = 1.8
-Weight = 44.0
-Generation = 6
-#-------------------------------
-[SHARPEDO,1]
-FormName = Mega Sharpedo
-MegaStone = SHARPEDONITE
-BaseStats = 70,140,70,105,110,65
-BaseExp = 196
-Abilities = STRONGJAW
-HiddenAbilities = STRONGJAW
-Height = 2.5
-Weight = 130.3
-Generation = 6
-#-------------------------------
-[CAMERUPT,1]
-FormName = Mega Camerupt
-MegaStone = CAMERUPTITE
-BaseStats = 70,120,100,20,145,105
-BaseExp = 196
-Abilities = SHEERFORCE
-HiddenAbilities = SHEERFORCE
-Height = 2.5
-Weight = 320.5
-Generation = 6
-#-------------------------------
-[ALTARIA,1]
-FormName = Mega Altaria
-MegaStone = ALTARIANITE
-Types = DRAGON,FAIRY
-BaseStats = 75,110,110,80,110,105
-BaseExp = 207
-Abilities = PIXILATE
-HiddenAbilities = PIXILATE
-Height = 1.5
 Generation = 6
 #-------------------------------
 [CASTFORM,1]
@@ -991,41 +754,33 @@ Types = ICE
 Color = White
 Pokedex = Castform adopta esta forma cuando graniza. Su cuerpo se enfría y su piel se congela parcialmente.
 #-------------------------------
-[BANETTE,1]
-FormName = Mega Banette
-MegaStone = BANETTITE
-BaseStats = 64,165,75,75,93,83
-BaseExp = 194
-Abilities = PRANKSTER
-HiddenAbilities = PRANKSTER
-Height = 1.2
-Weight = 13.0
-Generation = 6
+[CASTFORM,4]
+FormName = Forma Nebulosa
+Types = FAIRY
+Color = Purple
+Pokedex = Castform adopta esta forma cuando hay niebla en el aire. Su cuerpo adquiere un color morado.
 #-------------------------------
-[ABSOL,1]
-FormName = Mega Absol
-MegaStone = ABSOLITE
-BaseStats = 65,150,60,115,115,60
-BaseExp = 198
-Abilities = MAGICBOUNCE
-HiddenAbilities = MAGICBOUNCE
-Weight = 49.0
-Generation = 6
+[CASTFORM,5]
+FormName = Forma Eléctrica
+Types = ELECTRIC
+Color = Yellow
+Pokedex = Castform adopta esta forma cuando hay tensión en el aire. Su cuerpo adquiere un color amarillo.
 #-------------------------------
-[GLALIE,1]
-FormName = Mega Glalie
-MegaStone = GLALITITE
-BaseStats = 80,120,80,100,120,80
-BaseExp = 203
-Abilities = REFRIGERATE
-HiddenAbilities = REFRIGERATE
-Height = 2.1
-Weight = 350.2
-Generation = 6
+[CASTFORM,6]
+FormName = Forma Herbórea
+Types = GRASS
+Color = Green
+Pokedex = Castform adopta esta forma cuando hay polen en el aire. Su cuerpo adquiere un color verdoso.
+#-------------------------------
+[CASTFORM,7]
+FormName = Forma Psíquica
+Types = PSYCHIC
+Color = Pink
+Pokedex = Castform adopta esta forma en situaciones extrañas. Su cuerpo adquiere un color rosado.
 #-------------------------------
 [SALAMENCE,1]
 FormName = Mega Salamence
-MegaStone = SALAMENCITE
+MegaStone = MEGASTONE
 BaseStats = 95,145,130,120,120,90
 BaseExp = 350
 Abilities = AERILATE
@@ -1036,18 +791,17 @@ Generation = 6
 #-------------------------------
 [METAGROSS,1]
 FormName = Mega Metagross
-MegaStone = METAGROSSITE
+MegaStone = MEGASTONE
 BaseStats = 95,145,130,120,120,90
 BaseExp = 350
 Abilities = TOUGHCLAWS
-HiddenAbilities = TOUGHCLAWS
 Height = 2.5
 Weight = 942.9
 Generation = 6
 #-------------------------------
 [LATIAS,1]
 FormName = Mega Latias
-MegaStone = LATIASITE
+MegaStone = MEGASTONE
 BaseStats = 80,100,120,110,140,150
 BaseExp = 350
 Height = 1.8
@@ -1057,7 +811,7 @@ Generation = 6
 #-------------------------------
 [LATIOS,1]
 FormName = Mega Latios
-MegaStone = LATIOSITE
+MegaStone = MEGASTONE
 BaseStats = 80,130,100,110,160,120
 BaseExp = 350
 Height = 2.3
@@ -1158,51 +912,18 @@ FormName = Forma Mar Este
 Color = Blue
 Pokedex = Its body is covered in a sticky slime. It's very susceptible to dehydration, so it can't spend too much time on land.
 #-------------------------------
-[LOPUNNY,1]
-FormName = Mega Lopunny
-MegaStone = LOPUNNITE
-Types = NORMAL,FIGHTING
-BaseStats = 65,136,94,135,54,96
-BaseExp = 203
-Abilities = SCRAPPY
-HiddenAbilities = SCRAPPY
-Height = 1.3
-Weight = 28.3
-Generation = 6
-#-------------------------------
 [GARCHOMP,1]
 FormName = Mega Garchomp
-MegaStone = GARCHOMPITE
+MegaStone = MEGASTONE
 BaseStats = 108,170,115,92,120,95
 BaseExp = 350
 Abilities = SANDFORCE
 HiddenAbilities = SANDFORCE
 Generation = 6
 #-------------------------------
-[LUCARIO,1]
-FormName = Mega Lucario
-MegaStone = LUCARIONITE
-BaseStats = 70,145,88,112,140,70
-BaseExp = 219
-Abilities = ADAPTABILITY
-HiddenAbilities = ADAPTABILITY
-Height = 1.3
-Weight = 57.5
-Generation = 6
-#-------------------------------
-[ABOMASNOW,1]
-FormName = Mega Abomasnow
-MegaStone = ABOMASITE
-BaseStats = 90,132,105,30,132,105
-BaseExp = 208
-HiddenAbilities = SNOWWARNING
-Height = 2.7
-Weight = 185.0
-Generation = 6
-#-------------------------------
 [GALLADE,1]
 FormName = Mega Gallade
-MegaStone = GALLADITE
+MegaStone = MEGASTONE
 BaseStats = 68,165,95,110,65,115
 BaseExp = 309
 Abilities = INNERFOCUS
@@ -1339,18 +1060,10 @@ FormName = Tipo Hada
 Types = FAIRY
 Generation = 6
 #-------------------------------
-[AUDINO,1]
-FormName = Mega Audino
-MegaStone = AUDINITE
-Types = NORMAL,FAIRY
-BaseStats = 103,60,126,50,80,126
-BaseExp = 425
-Abilities = HEALER
-HiddenAbilities = HEALER
-Height = 1.5
-Weight = 32.0
-Color = White
-Generation = 6
+[BASCULIN,1]
+FormName = Forma Raya Azul
+Abilities = ROCKHEAD,ADAPTABILITY
+WildItemUncommon = DEEPSEASCALE
 #-------------------------------
 [DARUMAKA,2]
 FormName = Forma Galar
@@ -1556,28 +1269,28 @@ HiddenAbilities = BATTLEBOND
 Generation = 7
 #-------------------------------
 [VIVILLON,1]
-FormName = Motivo Isleño
-#-------------------------------
-[VIVILLON,2]
 FormName = Motivo Continental
 #-------------------------------
-[VIVILLON,3]
+[VIVILLON,2]
 FormName = Motivo Oriental
 #-------------------------------
-[VIVILLON,4]
+[VIVILLON,3]
 FormName = Motivo Vergel
 #-------------------------------
-[VIVILLON,5]
+[VIVILLON,4]
 FormName = Motivo Estepa
 #-------------------------------
-[VIVILLON,6]
+[VIVILLON,5]
 FormName = Motivo Polar
 #-------------------------------
-[VIVILLON,7]
+[VIVILLON,6]
 FormName = Motivo Jungla
 #-------------------------------
-[VIVILLON,8]
+[VIVILLON,7]
 FormName = Motivo Marino
+#-------------------------------
+[VIVILLON,8]
+FormName = Motivo Floral
 #-------------------------------
 [VIVILLON,9]
 FormName = Motivo Moderno
@@ -1736,7 +1449,7 @@ FormName = Tamaño Grande
 BaseStats = 75,95,122,69,58,75
 Height = 1.1
 Weight = 14.0
-Pokedex =  Los Gourgeist Tamaño Grande se hacen pasar por adultos para tomar a los niños de la mano y llevárselos al otro mundo.
+Pokedex = Los Gourgeist Tamaño Grande se hacen pasar por adultos para tomar a los niños de la mano y llevárselos al otro mundo.
 #-------------------------------
 [GOURGEIST,3]
 FormName = Tamaño Extragrande
@@ -1789,7 +1502,7 @@ Shape = BipedalTail
 #-------------------------------
 [DIANCIE,1]
 FormName = Mega Diancie
-MegaStone = DIANCITE
+MegaStone = MEGASTONE
 BaseStats = 50,160,110,110,160,110
 BaseExp = 350
 Abilities = MAGICBOUNCE
@@ -2074,7 +1787,7 @@ Pokedex = Puede liberar descargas eléctricas de hasta 15.000 V. Se enfrenta a c
 #-------------------------------
 [SINISTEA,1]
 FormName = Forma Genuina
-Pokedex =  Espera a que algún incauto intente bebérselo para absorber su energía vital, pero suelen escupirlo enseguida debido a su mal sabor.
+Pokedex = Espera a que algún incauto intente bebérselo para absorber su energía vital, pero suelen escupirlo enseguida debido a su mal sabor.
 Evolutions = POLTEAGEIST,Item,CHIPPEDPOT
 #-------------------------------
 [POLTEAGEIST,1]
@@ -2408,7 +2121,7 @@ Moves = 1,TAILWHIP,1,TACKLE,5,WORKUP,10,DOUBLEKICK,15,FLAMECHARGE,20,HEADBUTT,25
 TutorMoves = BODYPRESS,BODYSLAM,BULKUP,BULLDOZE,CLOSECOMBAT,CURSE,DIG,DOUBLEEDGE,DRILLRUN,EARTHQUAKE,ENDEAVOR,ENDURE,FACADE,FIREBLAST,FIRESPIN,FLAMECHARGE,FLAMETHROWER,FLAREBLITZ,GIGAIMPACT,HIGHHORSEPOWER,HYPERBEAM,IRONHEAD,LASHOUT,OUTRAGE,OVERHEAT,PROTECT,RAINDANCE,REST,REVERSAL,ROCKSLIDE,ROCKTOMB,SANDSTORM,SCARYFACE,SLEEPTALK,SMARTSTRIKE,STOMPINGTANTRUM,STONEEDGE,SUBSTITUTE,SUNNYDAY,TAKEDOWN,TEMPERFLARE,THIEF,TRAILBLAZE,WILDCHARGE,WILLOWISP,ZENHEADBUTT
 Weight = 85.0
 Color = Black
-Pokedex =  La Variedad Ardiente debe su nombre a la capacidad de exhalar aire a altas temperaturas por el hocico. Lleva las tres colas trenzadas.
+Pokedex = La Variedad Ardiente debe su nombre a la capacidad de exhalar aire a altas temperaturas por el hocico. Lleva las tres colas trenzadas.
 Generation = 9
 Flags = InheritFormWithEverStone
 #-------------------------------
@@ -2482,7 +2195,7 @@ Color = Gray
 Habitat = Mountain
 Pokedex = Sus robustas garras son ideales para moverse por los riscos más escarpados. De sus puntas rezuma un veneno que daña los nervios de las presas que captura.
 Generation = 8
-Flags = InheritFormWithEverStone
+Flags = InheritFormWithEverStone,HasGenderedSprites
 Evolutions = SNEASLER,DayHoldItem,RAZORCLAW
 #-------------------------------
 [DIALGA,1]
@@ -2533,30 +2246,16 @@ Pokedex = Habitar en montañas cubiertas de nieves le ha permitido desarrollar u
 Generation = 8
 #-------------------------------
 [BASCULIN,2]
-FormName = Forma Raya Roja
-Abilities = RECKLESS,ADAPTABILITY
-Moves=1,WATERGUN,1,TAILWHIP,4,TACKLE,8,FLAIL,12,AQUAJET,16,BITE,20,SCARYFACE,24,HEADBUTT,28,SOAK,32,CRUNCH,36,TAKEDOWN,40,FINALGAMBIT,44,AQUATAIL,44,WAVECRASH,48,THRASH,52,DOUBLEEDGE,56,HEADSMASH
-TutorMoves = AGILITY,AQUATAIL,ASSURANCE,ATTRACT,BOUNCE,BRINE,CAPTIVATE,CONFIDE,CRUNCH,CUT,DIVE,DOUBLETEAM,ENDEAVOR,ENDURE,FACADE,FLIPTURN,FRUSTRATION,HAIL,HIDDENPOWER,HYDROPUMP,ICEBEAM,ICEFANG,ICYWIND,LIQUIDATION,MIMIC,MUDDYWATER,MUDSHOT,NATURALGIFT,PROTECT,PSYCHICFANGS,RAINDANCE,REST,RETURN,REVENGE,REVERSAL,ROUND,SCALD,SCALESHOT,SCARYFACE,SECRETPOWER,SLEEPTALK,SNORE,SUBSTITUTE,SUPERPOWER,SURF,SWAGGER,SWIFT,TAUNT,TOXIC,UPROAR,WATERFALL,WHIRLPOOL,ZENHEADBUTT
-EggMoves = BUBBLEBEAM,ENDEAVOR
-Category = Violento
-Pokedex = Los Basculin con la raya roja y aquellos con la raya azul se llevan fatal, pero algunos tienden a agruparse.
-Generation = 5
-WildItemUncommon = DEEPSEATOOTH
-Flags = InheritFormFromMother
-Evolutions = BASCULEGION,None,
-#-------------------------------
-[BASCULIN,3]
-FormName = Forma Raya Azul
-Abilities = ROCKHEAD,ADAPTABILITY
-Moves=1,WATERGUN,1,TAILWHIP,4,TACKLE,8,FLAIL,12,AQUAJET,16,BITE,20,SCARYFACE,24,HEADBUTT,28,SOAK,32,CRUNCH,36,TAKEDOWN,40,FINALGAMBIT,44,AQUATAIL,44,WAVECRASH,48,THRASH,52,DOUBLEEDGE,56,HEADSMASH
-TutorMoves = AGILITY,AQUATAIL,ASSURANCE,ATTRACT,BOUNCE,BRINE,CAPTIVATE,CONFIDE,CRUNCH,CUT,DIVE,DOUBLETEAM,ENDEAVOR,ENDURE,FACADE,FLIPTURN,FRUSTRATION,HAIL,HIDDENPOWER,HYDROPUMP,ICEBEAM,ICEFANG,ICYWIND,LIQUIDATION,MIMIC,MUDDYWATER,MUDSHOT,NATURALGIFT,PROTECT,PSYCHICFANGS,RAINDANCE,REST,RETURN,REVENGE,REVERSAL,ROUND,SCALD,SCALESHOT,SCARYFACE,SECRETPOWER,SLEEPTALK,SNORE,SUBSTITUTE,SUPERPOWER,SURF,SWAGGER,SWIFT,TAUNT,TOXIC,UPROAR,WATERFALL,WHIRLPOOL,ZENHEADBUTT
-EggMoves = BUBBLEBEAM,ENDEAVOR
-Category = Violento
-Pokedex = Los Basculin con la raya roja y aquellos con la raya azul se llevan fatal, pero algunos tienden a agruparse.
-Generation = 5
-WildItemUncommon = DEEPSEASCALE
-Flags = InheritFormFromMother
-Evolutions = BASCULEGION,None,
+FormName = Forma Raya Blanca
+Abilities = RATTLED,ADAPTABILITY
+Moves = 1,WATERGUN,1,TAILWHIP,4,TACKLE,8,FLAIL,12,AQUAJET,16,BITE,20,SCARYFACE,24,HEADBUTT,28,SOAK,32,CRUNCH,36,TAKEDOWN,40,UPROAR,44,WAVECRASH,48,THRASH,52,DOUBLEEDGE,56,HEADSMASH
+TutorMoves = AGILITY,BLIZZARD,CHILLINGWATER,CRUNCH,DOUBLEEDGE,ENDEAVOR,ENDURE,FACADE,FLIPTURN,HYDROPUMP,ICEBEAM,ICEFANG,ICYWIND,LIQUIDATION,MUDDYWATER,MUDSHOT,PROTECT,PSYCHICFANGS,RAINDANCE,REST,SCALESHOT,SCARYFACE,SLEEPTALK,SNOWSCAPE,SUBSTITUTE,SURF,SWIFT,TAKEDOWN,UPROAR,WATERFALL,WATERPULSE,WHIRLPOOL,ZENHEADBUTT
+EggMoves = ENDEAVOR,LASTRESPECTS
+Category = Manso
+Pokedex = A pesar de diferenciarse de otros Basculin, como por su plácida naturaleza, se considera una forma regional por todas las características compartidas.
+Generation = 8
+Flags = InheritFormWithEverStone
+Evolutions = BASCULEGION,LevelRecoilDamage,294
 #-------------------------------
 [ZORUA,1]
 FormName = Forma Hisui
@@ -2675,8 +2374,8 @@ Generation = 9
 #-------------------------------
 [BASCULEGION,1]
 FormName = Forma Hembra
-GenderRatio = AlwaysFemale
 BaseStats = 120,92,65,78,100,75
+Flags = DefaultForm_2,InheritFormWithEverStone
 #-------------------------------
 [ENAMORUS,1]
 FormName = Forma Tótem
@@ -2859,7 +2558,6 @@ Height = 0.3
 Weight = 16.0
 Shape = Head
 Pokedex = Cuando presiente peligro, se prepara para combatir formando un caparazón de cristales muy resistente mediante la teracristalización.
-Flags = Legendary,TeraType_STELLAR
 #-------------------------------
 [TERAPAGOS,2]
 FormName = Forma Astral
@@ -2870,4 +2568,4 @@ Height = 1.7
 Weight = 77.0
 Shape = Head
 Pokedex = Adopta esta forma cuando su energía Teracristal se ve amplificada descomunalmente. Se asemeja a la imagen del mundo que la gente tenía antaño.
-Flags = Legendary,TeraType_STELLAR
+#-------------------------------

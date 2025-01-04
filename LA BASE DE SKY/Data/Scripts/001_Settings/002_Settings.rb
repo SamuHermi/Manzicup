@@ -418,6 +418,7 @@ module Settings
   # Número del interruptor que, si está en ON, desactiva el acceso a la caja de
   # almacenamiento de Pokémon (PC) a través de la pantalla de Equipo.
   DISABLE_BOX_LINK_SWITCH   = 35
+  
 
   #=============================================================================
   

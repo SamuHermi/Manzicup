@@ -1251,3 +1251,34 @@ Description = Su caparazón encierra energía de todos los tipos. Gracias a ello
 [TERAFORMZERO]
 Name = Teracaparazón
 Description = Cuando Terapagos adopta la Forma Astral, anula todos los efectos del tiempo atmosférico y de los campos que haya en el terreno gracias a su poder oculto.
+#-------------------------------
+
+
+#-------------------------------
+[CRYPTIC]
+Name = Críptico
+Description = Potencia sus características al tener Unowns aliados.
+#-------------------------------
+[CURSEDMIRROR]
+Name = Espejo encantado
+Description = Al potenciar una carácterística reduce la misma carácterística del rival.
+#-------------------------------
+[STRIKER]
+Name = Striker
+Description = Potencia movimientos de patada.
+#-------------------------------
+[TWISTEDDIM]
+Name = Presencia rara
+Description = Activa espacio raro al entrar.
+#-------------------------------
+[SPEEDFORCE]
+Name = Fuerza centrífuga
+Description = Añade un 20% de la velocidad al daño inflingido.
+#------------------------------
+[ORNITHES]
+Name = Ornithes
+Description = Levitación y Piel Celeste.
+#------------------------------
+[CHILLDUDE]
+Name = Mente fría
+Description = El Pokémon siempre actúa con lentitud, pero aumenta 30% la potencia de los movimientos.

@@ -240,6 +240,8 @@ module BattleCreationHelperMethods
           battle.defaultTerrain = :Electric
         when :Fog
           battle.defaultTerrain = :Misty
+        when :NoGravity
+          battle.field.effects[PBEffects::TrickRoom] = -1
         end
       end
     else

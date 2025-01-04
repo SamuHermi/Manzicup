@@ -130,9 +130,19 @@ module NameBox
   # Colores asociados a cada personaje
   NPCCOLORS = {
     # "Nombre" => [ColorBase, Sombra]
-    "Prof. Oak" => [Color.new(48,80,200), Color.new(208,208,208)],
-    "Candela" => [Color.new(224,8,8), Color.new(208,208,208)]
-  }
+    "Hermi" => [Color.new(248, 152,  24), Color.new(248, 200, 152)],
+    "Iria" => [Color.new(  0, 112, 248), Color.new(120, 184, 232)],
+    "Samer" => [Color.new(208,  56, 184),Color.new(232, 160, 224)],
+    "Isa" => [Color.new( 72, 216, 216), Color.new(168, 224, 224)],
+    "Bra" => [Color.new( 96, 176,  72), Color.new(174, 208, 144)],
+    "Pablo" => [Color.new(232,  32,  16), Color.new(248, 168, 184)],
+    "Brais" => [Color.new(114,  64, 232), Color.new(184, 168, 224)],
+    "Jess" => [Color.new(52, 52, 52), Color.new(100, 100, 100)],
+    "Ana" =>  [Color.new(200, 200, 200), Color.new(150, 150, 150)],
+    "Rodri" => [Color.new(232, 208,  32), Color.new(248, 232, 136)],
+    "Sabo" => [Color.new(60, 35, 85),Color.new(52, 31, 74)],
+    "Nerea" => [Color.new(25, 177, 192),Color.new(21, 166, 181)],
+    }
 
   # Si esto está en true el cuadro del nombre del NPC será del mismo estilo que el cuadro de texto elegido
   # Si quieren cambiar este comportamiento y definir un skin específico para cada nombre, entonces hay que cambiar la siguiente constante a false

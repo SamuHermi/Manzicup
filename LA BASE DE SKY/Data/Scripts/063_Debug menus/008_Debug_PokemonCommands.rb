@@ -1111,19 +1111,22 @@ MenuHandlers.add(:pokemon_debug_menu, :duplicate, {
       screen.pbHardRefresh
       screen.pbDisplay(_INTL("El Pokémon se ha duplicado."))
     when PokemonStorageScreen
-      if screen.storage.pbMoveCaughtToParty(clonedpkmn)
-        if pkmnid[0] != -1
-          screen.pbDisplay(_INTL("El Pokémon duplicado se ha unido a tu equipo."))
+      if !$player.has_species?(pkmn.species)
+        if screen.storage.pbMoveCaughtToParty(clonedpkmn)
+          if pkmnid[0] != -1
+            screen.pbDisplay(_INTL("El Pokémon duplicado se ha unido a tu equipo."))
+          end
+        else
+          oldbox = screen.storage.currentBox
+          newbox = screen.storage.pbStoreCaught(clonedpkmn)
+          if newbox < 0
+            screen.pbDisplay(_INTL("Todas las cajas están llenas."))
+          elsif newbox != oldbox
+            screen.pbDisplay(_INTL("El Pokémon duplicado se ha movido a la caja \"{1}.\"", screen.storage[newbox].name))
+            screen.storage.currentBox = oldbox
+          end
         end
       else
-        oldbox = screen.storage.currentBox
-        newbox = screen.storage.pbStoreCaught(clonedpkmn)
-        if newbox < 0
-          screen.pbDisplay(_INTL("Todas las cajas están llenas."))
-        elsif newbox != oldbox
-          screen.pbDisplay(_INTL("El Pokémon duplicado se ha movido a la caja \"{1}.\"", screen.storage[newbox].name))
-          screen.storage.currentBox = oldbox
-        end
       end
       screen.pbHardRefresh
     end

@@ -309,3 +309,66 @@ Land,21
     10,PIKACHU,11,14
     10,SANDSHREW_1,11,14
     10,VULPIX_1,11,14
+#-------------------------------
+[048] # Mazmorra
+Cave,5
+    20,CHINGLING,1
+    20,CLEFFA,1
+    20,IGGLYBUFF,1
+    20,PICHU,1
+    10,RIOLU,1
+    10,TYROGUE,1
+#-------------------------------
+[076] # Mazmorra
+Cave,5
+    20,CHINGLING,1
+    20,CLEFFA,1
+    20,IGGLYBUFF,1
+    20,PICHU,1
+    10,RIOLU,1
+    10,TYROGUE,1
+#-------------------------------
+[077] # Mazmorra
+Cave,5
+    20,CHINGLING,1
+    20,CLEFFA,1
+    20,IGGLYBUFF,1
+    20,PICHU,1
+    10,RIOLU,1
+    10,TYROGUE,1
+#-------------------------------
+[078] # Mazmorra
+Cave,5
+    20,CHINGLING,1
+    20,CLEFFA,1
+    20,IGGLYBUFF,1
+    20,PICHU,1
+    10,RIOLU,1
+    10,TYROGUE,1
+#-------------------------------
+[079] # Mazmorra
+Cave,5
+    20,CHINGLING,1
+    20,CLEFFA,1
+    20,IGGLYBUFF,1
+    20,PICHU,1
+    10,RIOLU,1
+    10,TYROGUE,1
+#-------------------------------
+[080] # Mazmorra
+Cave,5
+    20,CHINGLING,1
+    20,CLEFFA,1
+    20,IGGLYBUFF,1
+    20,PICHU,1
+    10,RIOLU,1
+    10,TYROGUE,1
+#-------------------------------
+[081] # Mazmorra
+Cave,5
+    20,CHINGLING,1
+    20,CLEFFA,1
+    20,IGGLYBUFF,1
+    20,PICHU,1
+    10,RIOLU,1
+    10,TYROGUE,1

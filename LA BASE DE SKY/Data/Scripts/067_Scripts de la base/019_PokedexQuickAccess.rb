@@ -149,13 +149,11 @@ class PokemonStorageScreen
                 commands[cmdMove = commands.length] = (pokemon) ? _INTL("Cambiar") : _INTL("Dejar")
               elsif pokemon
                 helptext = _INTL("{1} está seleccionado.", pokemon.name)
-                commands[cmdMove = commands.length] = _INTL("Mover")
               end
               commands[cmdSummary = commands.length]  = _INTL("Datos")
               commands[cmdWithdraw = commands.length] = (selected[0] == -1) ? _INTL("Dejar") : _INTL("Sacar")
               commands[cmdItem = commands.length]     = _INTL("Objeto")
               commands[cmdMark = commands.length]     = _INTL("Marcas")
-              commands[cmdRelease = commands.length]  = _INTL("Liberar")
               commands[cmdPokedex = commands.length]  = _INTL("Pokédex") if $player.has_pokedex && $player.pokedex.unlocked?(-1)
               commands[cmdDebug = commands.length]    = _INTL("Debug") if $DEBUG
               commands[commands.length]               = _INTL("Cancelar")
@@ -169,13 +167,11 @@ class PokemonStorageScreen
               elsif cmdSummary >= 0 && command == cmdSummary   # Summary
                 pbSummary(selected, @heldpkmn)
               elsif cmdWithdraw >= 0 && command == cmdWithdraw   # Store/Withdraw
-                (selected[0] == -1) ? pbStore(selected, @heldpkmn) : pbWithdraw(selected, @heldpkmn)
+                (selected[0] == -1) ? pbRelease(selected, @heldpkmn) : pbWithdraw(selected, pokemon)
               elsif cmdItem >= 0 && command == cmdItem   # Item
                 pbItem(selected, @heldpkmn)
               elsif cmdMark >= 0 && command == cmdMark   # Mark
                 pbMark(selected, @heldpkmn)
-              elsif cmdRelease >= 0 && command == cmdRelease   # Release
-                pbRelease(selected, @heldpkmn)
               elsif cmdPokedex >= 0 && command == cmdPokedex    # Pokédex
                   openPokedexOnPokemon(pokemon.species) if pokemon
                   openPokedexOnPokemon(@heldpkmn.species) if !pokemon && @heldpkmn

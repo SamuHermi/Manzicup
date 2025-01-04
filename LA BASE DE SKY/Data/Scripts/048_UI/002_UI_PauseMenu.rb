@@ -166,7 +166,6 @@ MenuHandlers.add(:pause_menu, :pokedex, {
 MenuHandlers.add(:pause_menu, :party, {
   "name"      => _INTL("Pokémon"),
   "order"     => 20,
-  "condition" => proc { next $player.party_count > 0 },
   "effect"    => proc { |menu|
     pbPlayDecisionSE
     hidden_move = nil

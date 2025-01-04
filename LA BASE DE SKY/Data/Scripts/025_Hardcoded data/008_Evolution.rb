@@ -188,6 +188,15 @@ GameData::Evolution.register({
 })
 
 GameData::Evolution.register({
+  :id            => :LevelWeather,
+  :parameter     => Integer,
+  :level_up_proc => proc { |pkmn, parameter|
+    next pkmn.level >= parameter && $game_screen &&
+         [:Rain, :Fog, :Hail, :Snow, :Sun, :Sandstorm].include?(GameData::Weather.get($game_screen.weather_type).category)
+  }
+})
+
+GameData::Evolution.register({
   :id            => :LevelCycling,
   :parameter     => Integer,
   :level_up_proc => proc { |pkmn, parameter|

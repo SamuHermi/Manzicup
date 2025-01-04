@@ -28,3 +28,73 @@ ExtraConnections = 2
 FloorPatches = 3,75,25
 FloorDecorations = 50,200
 VoidDecorations = 50,200
+#-------------------------------
+[sea]
+DungeonSize = 8,6
+CellSize = 10,10
+MinRoomSize = 10,10
+MaxRoomSize = 20,20
+CorridorWidth = 2
+NodeLayout = full
+RoomLayout = full
+RoomChance = 70
+ExtraConnections = 2
+FloorPatches = 3,75,25
+FloorDecorations = 50,200
+VoidDecorations = 50,200
+#-------------------------------
+[volcano]
+DungeonSize = 8,6
+CellSize = 10,10
+MinRoomSize = 5,5
+MaxRoomSize = 10,10
+CorridorWidth = 5
+NodeLayout = full
+RoomLayout = full
+RoomChance = 90
+ExtraConnections = 2
+FloorPatches = 3,75,25
+FloorDecorations = 100,200
+VoidDecorations = 50,200
+#-------------------------------
+[space]
+DungeonSize = 8,6
+CellSize = 10,10
+MinRoomSize = 5,5
+MaxRoomSize = 9,9
+CorridorWidth = 1
+NodeLayout = full
+RoomLayout = full
+RoomChance = 40
+ExtraConnections = 0
+FloorPatches = 3,75,25
+FloorDecorations = 50,100
+VoidDecorations = 50,200
+#-------------------------------
+[snow]
+DungeonSize = 8,6
+CellSize = 10,10
+MinRoomSize = 10,10
+MaxRoomSize = 20,20
+CorridorWidth = 2
+NodeLayout = full
+RoomLayout = full
+RoomChance = 70
+ExtraConnections = 2
+FloorPatches = 3,75,25
+FloorDecorations = 50,200
+VoidDecorations = 50,200
+#-------------------------------
+[gy]
+DungeonSize = 8,6
+CellSize = 10,10
+MinRoomSize = 10,10
+MaxRoomSize = 20,20
+CorridorWidth = 2
+NodeLayout = full
+RoomLayout = full
+RoomChance = 70
+ExtraConnections = 2
+FloorPatches = 3,75,25
+FloorDecorations = 50,200
+VoidDecorations = 50,200

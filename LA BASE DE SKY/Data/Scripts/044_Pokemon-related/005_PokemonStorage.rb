@@ -234,10 +234,17 @@ class PokemonStorage
       pkmn.heal
       pkmn.ready_to_evolve = old_ready_evo
     end
-    maxPokemon(@currentBox).times do |i|
-      if self[@currentBox, i].nil?
-        self[@currentBox, i] = pkmn
-        return @currentBox
+    pkmn.level = 5
+    pkmn.species = pkmn.species_data.get_baby_species
+    maxBoxes.times do |j|
+      maxPokemon(j).times do |i|
+        if self[j, i].nil?
+          self[j, i] = pkmn
+          return j
+        elsif self[j, i].species == pkmn.species && self[j, i].form == pkmn.form
+            upgradePokemon(self[j, i],pkmn)
+          return nil
+        end
       end
     end
     self.maxBoxes.times do |j|
@@ -248,7 +255,46 @@ class PokemonStorage
         return @currentBox
       end
     end
-    return -1
+    return nil
+  end
+
+  def upgradePokemon (oldOne,newOne)
+    GameData::Stat.each_main do |s|
+      if(newOne.iv[s.id] > oldOne.iv[s.id])
+        oldOne.iv[s.id] = newOne.iv[s.id]
+      end
+    end
+    newOne.moves.each do |m|
+      if(!oldOne.hasMove?(m.id))
+        if pbLearnMove(oldOne, m.id, true, false)
+          oldOne.add_first_move(m.id)
+        end
+      end
+    end
+    if newOne.shiny?
+      oldOne.shiny = true
+    end
+    newOne.unlocked_abilities.each do |i|
+      if !oldOne.unlocked_abilities.include?(i)
+          oldOne.unlocked_abilities.push(i)
+          pbMessage(_INTL("{1} ha conseguido la habilidad {2}",oldOne.name,GameData::Ability.get(i.name).real_name))
+      end
+    end
+  end
+
+  def pbSavePokemon(pkmn)
+    # Store as normal (add to party if there's space, or send to a Box if not)
+    stored_box = pbStorePokemon(pbPlayer, pkmn)
+    if stored_box.nil?
+      pbMessage(_INTL("¡El {1} que tenías se ha potenciado!", pkmn.name))      
+    elsif stored_box < 0
+      pbDisplayPaused(_INTL("Se agregó a {1} al equipo.", pkmn.name))
+      @initialItems[0][pbPlayer.party.length - 1] = pkmn.item_id if @initialItems
+      return
+    end
+    # Messages saying the Pokémon was stored in a PC box
+    box_name = pbBoxName(stored_box)
+    pbDisplayPaused(_INTL("Se envió {1} a la caja \"{2}\"!", pkmn.name, box_name))
   end
 
   def pbDelete(box, index)
@@ -398,4 +444,3 @@ end
 def pbEachNonEggPokemon
   pbEachPokemon { |pkmn, box| yield(pkmn, box) if !pkmn.egg? }
 end
-

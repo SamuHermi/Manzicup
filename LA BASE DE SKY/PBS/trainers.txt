@@ -117,3 +117,93 @@ Pokemon = CHARIZARD,63
     Item = SITRUSBERRY
 Pokemon = BLASTOISE,63
     Item = SITRUSBERRY
+#-------------------------------
+[OTAKA_LIDER,Maryan]
+LoseText = Y pareces tan callado, tímido e inocente, y vas y escribes mi nombre en mi Death Note, te enseño mis Pokemón y no empiezas a temblar.
+Pokemon = JIGGLYPUFF,14
+    Moves = DISARMINGVOICE,SING,COVET,DISABLE
+    Item = LIGHTCLAY
+Pokemon = STUFFUL,14
+    Moves = PROTECT,LOWSWEEP,DOUBLEEDGE,PAYBACK
+    AbilityIndex = 0
+    Item = SILKSCARF
+Pokemon = MIMIKYU,16
+    Moves = SHADOWSNEAK,SCRATCH,DRAININGKISS
+#-------------------------------
+[TRIPULANTE,Azul]
+LoseText = ...
+Pokemon = TOXEL,33
+Pokemon = ARIADOS,32
+#-------------------------------
+[TRIPULANTE,Morado]
+LoseText = ...
+Pokemon = SILICOBRA,33
+Pokemon = SNEASEL,32
+Pokemon = CYCLIZAR,33
+#-------------------------------
+[TRIPULANTE,Lima]
+LoseText = ...
+Pokemon = ZUBAT,36
+#-------------------------------
+[TRIPULANTE,Rosa]
+LoseText = ...
+Pokemon = GLOOM,36
+#------------------------------
+[TRIPULANTE,Amarillo]
+LoseText = ...
+Pokemon = MORELULL,36
+Pokemon = SKIPLOOM,36
+#------------------------------
+[TRIPULANTE,Naranja]
+LoseText = ... 
+Pokemon = WEEPINBELL,36
+#------------------------------
+[TRIPULANTE,Verde]
+LoseText = ... 
+Pokemon = SERVINE,36
+Pokemon = BAYLEEF,36
+#------------------------------
+[TRIPULANTE,Cian]
+LoseText = ... 
+Pokemon = ROSELIA,36
+Pokemon = IVYSAUR,36
+#------------------------------
+[EXPLORADOR,Yurian]
+LoseText = ...
+Pokemon = SAMUROTT,57
+    Form = 1
+    Moves = CEASELESSEDGE,RAZORSHELL,TAUNT,AQUAJET
+    Item = FOCUSSASH
+    AbilityIndex = 2
+Pokemon = ARMAROUGE,57
+    Moves = ARMORCANNON,CALMMIND,PSYSHOCK,ENERGYBALL
+    Items = HEAVYDUTYBOOTS
+Pokemon = GREATTUSK,57
+    Moves = BULKUP,EARTHQUAKE,CLOSECOMBAT,HEADLONGRUSH
+    Item = BOOSTERENERGY
+Pokemon = ZYGARDE,58
+    Moves = DRAGONDANCE,SUBSTITUTE,THOUSANDARROWS,DRAGONTAIL
+    AbilityIndex = 2
+    Item = LEFTOVERS
+Pokemon = DECIDUEYE,58
+    Moves = SPIRITSHACKLE,DEFOG,UTURN,GRASSKNOT
+    AbilityIndex = 2
+#------------------------------
+[CLERIGO,Lylgivunt]
+Pokemon = CORVIKNIGHT,50
+	Shiny = true
+Pokemon = ABSERAPH,50
+Pokemon = SIRFETCHD,50
+Pokemon = HOOH,50
+Pokemon = GLALIBERG,50
+#-------------------------------
+[MAYORDOMO,Devere]
+Items = POTION,POTION
+LoseText = Espero que haya disfrutado del combate
+Pokemon = INDEEDEE,11
+Pokemon = NINETALES,11
+Pokemon = DARTRIX,12
+    Item = EVIOLITE	
+Pokemon = BEARTIC,11
+Pokemon = ZAMAZENTA,11
+	Item = RUSTEDSHIELD

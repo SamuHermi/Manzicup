@@ -405,7 +405,7 @@ def pbGenerateWildPokemon(species, level, isRoamer = false)
   # Improve chances of shiny Pokémon with Shiny Charm and battling more of the
   # same species
   shiny_retries = 0
-  shiny_retries += 2 if $bag.has?(:SHINYCHARM)
+  shiny_retries += (100*$bag.quantity(:SHINYCHARM))
   if Settings::HIGHER_SHINY_CHANCES_WITH_NUMBER_BATTLED
     values = [0, 0]
     case $player.pokedex.battled_count(species)

@@ -120,8 +120,8 @@ class Battle::Battler
     return true if !@battle.pbOwnedByPlayer?(@index)
     disobedient = false
     # Pokémon may be disobedient; calculate if it is
-    badge_level = 10 * (@battle.pbPlayer.badge_count + 1)
-    badge_level = GameData::GrowthRate.max_level if @battle.pbPlayer.badge_count >= 8
+    badge_level = $game_variables[LevelCapsEX::LEVEL_CAP_VARIABLE]
+    #badge_level = GameData::GrowthRate.max_level if @battle.pbPlayer.badge_count >= 8
     if Settings::ANY_HIGH_LEVEL_POKEMON_CAN_DISOBEY ||
        (Settings::FOREIGN_HIGH_LEVEL_POKEMON_CAN_DISOBEY && @pokemon.foreign?(@battle.pbPlayer))
       if @level > badge_level
@@ -472,7 +472,7 @@ class Battle::Battler
     # Airborne-based immunity to Ground moves
     if move.damagingMove? && move.calcType == :GROUND &&
        target.airborne? && !move.hitsFlyingTargets?
-      if target.hasActiveAbility?(:LEVITATE) && !@battle.moldBreaker
+       if (target.hasActiveAbility?(:LEVITATE) || target.hasActiveAbility?(:ORNITHES)) && !@battle.moldBreaker
         if show_message
           @battle.pbShowAbilitySplash(target)
           if Battle::Scene::USE_ABILITY_SPLASH

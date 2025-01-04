@@ -293,7 +293,7 @@ class Battle::Battler
     @effects[PBEffects::SplintersType]   = nil
     @effects[PBEffects::SilkTrap]        = false
     @effects[PBEffects::SuccessiveMove]  = nil
-    @effects[PBEffects::SupremeOverlord] = 0
+    @effects[PBEffects::SupremeOverlord] = 0  
     @effects[PBEffects::Syrupy]          = 0
     @effects[PBEffects::SyrupyUser]      = -1
     @battle.allBattlers.each do |b|

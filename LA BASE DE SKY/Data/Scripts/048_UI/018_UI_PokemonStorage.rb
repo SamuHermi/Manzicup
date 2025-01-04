@@ -1548,13 +1548,11 @@ class PokemonStorageScreen
               commands[cmdMove = commands.length] = (pokemon) ? _INTL("Cambiar") : _INTL("Dejar")
             elsif pokemon
               helptext = _INTL("Has seleccionado a {1}.", pokemon.name)
-              commands[cmdMove = commands.length] = _INTL("Move")
             end
             commands[cmdSummary = commands.length]  = _INTL("Datos")
             commands[cmdWithdraw = commands.length] = (selected[0] == -1) ? _INTL("Guardar") : _INTL("Sacar")
             commands[cmdItem = commands.length]     = _INTL("Objeto")
             commands[cmdMark = commands.length]     = _INTL("Marcas")
-            commands[cmdRelease = commands.length]  = _INTL("Liberar")
             commands[cmdDebug = commands.length]    = _INTL("Debug") if $DEBUG
             commands[commands.length]               = _INTL("Cancelar")
             command = pbShowCommands(helptext, commands)
@@ -1567,13 +1565,11 @@ class PokemonStorageScreen
             elsif cmdSummary >= 0 && command == cmdSummary   # Summary
               pbSummary(selected, @heldpkmn)
             elsif cmdWithdraw >= 0 && command == cmdWithdraw   # Store/Withdraw
-              (selected[0] == -1) ? pbStore(selected, @heldpkmn) : pbWithdraw(selected, @heldpkmn)
+              (selected[0] == -1) ? pbRelease(selected, @heldpkmn) : pbWithdraw(selected, @heldpkmn)
             elsif cmdItem >= 0 && command == cmdItem   # Item
               pbItem(selected, @heldpkmn)
             elsif cmdMark >= 0 && command == cmdMark   # Mark
               pbMark(selected, @heldpkmn)
-            elsif cmdRelease >= 0 && command == cmdRelease   # Release
-              pbRelease(selected, @heldpkmn)
             elsif cmdDebug >= 0 && command == cmdDebug   # Debug
               pbPokemonDebug((@heldpkmn) ? @heldpkmn : pokemon, selected, heldpoke)
             end
@@ -1710,57 +1706,35 @@ class PokemonStorageScreen
       pbDisplay(_INTL("¡Tu equipo está lleno!"))
       return false
     end
-    @scene.pbWithdraw(selected, heldpoke, @storage.party.length)
-    if heldpoke
-      @storage.pbMoveCaughtToParty(heldpoke)
-      @heldpkmn = nil
+    if !$player.has_species?(heldpoke.species)
+      clonedpkmn = heldpoke.clone
+      if @storage.pbMoveCaughtToParty(clonedpkmn)
+          pbDisplay(_INTL("El Pokémon duplicado se ha unido a tu equipo."))
+      end
+      return true
     else
-      @storage.pbMove(-1, -1, box, index)
+      pbDisplay(_INTL("Ya tienes un {1} tu equipo.",heldpoke.species))
+      return false
     end
-    @scene.pbRefresh
-    return true
+    @scene.pbHardRefresh
+
   end
 
   def pbStore(selected, heldpoke)
     box = selected[0]
     index = selected[1]
-    raise _INTL("No se puede depositar...") if box != -1
     if pbAbleCount <= 1 && pbAble?(@storage[box, index]) && !heldpoke
       pbPlayBuzzerSE
       pbDisplay(_INTL("¡Es tu último Pokémon!"))
-    elsif heldpoke&.mail
-      pbDisplay(_INTL("Debes retirar la carta que lleva."))
-    elsif !heldpoke && @storage[box, index].mail
-      pbDisplay(_INTL("Debes retirar la carta que lleva."))
     elsif heldpoke&.cannot_store
       pbDisplay(_INTL("¡{1} no quiere quedarse en el PC!", heldpoke.name))
     elsif !heldpoke && @storage[box, index].cannot_store
       pbDisplay(_INTL("¡{1} no quiere quedarse en el PC!", @storage[box, index].name))
     else
       loop do
-        destbox = @scene.pbChooseBox(_INTL("¿Dejar en qué caja?"))
-        if destbox >= 0
-          firstfree = @storage.pbFirstFreePos(destbox)
-          if firstfree < 0
-            pbDisplay(_INTL("La Caja está llena."))
-            next
-          end
-          if heldpoke || selected[0] == -1
-            p = (heldpoke) ? heldpoke : @storage[-1, index]
-            if Settings::HEAL_STORED_POKEMON
-              old_ready_evo = p.ready_to_evolve
-              p.heal
-              p.ready_to_evolve = old_ready_evo
-            end
-          end
-          @scene.pbStore(selected, heldpoke, destbox, firstfree)
-          if heldpoke
-            @storage.pbMoveCaughtToBox(heldpoke, destbox)
-            @heldpkmn = nil
-          else
-            @storage.pbMove(destbox, -1, -1, index)
-          end
-        end
+        $player.remove_pokemon_at_index(index)
+        @heldpkmn = nil
+        @scene.pbRelease(heldpoke)       
         break
       end
       @scene.pbRefresh
@@ -1893,6 +1867,7 @@ class PokemonStorageScreen
   end
 
   def pbSummary(selected, heldpoke)
+
     @scene.pbSummary(selected, heldpoke)
   end
 

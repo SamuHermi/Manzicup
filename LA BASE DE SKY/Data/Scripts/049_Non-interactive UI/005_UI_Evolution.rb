@@ -211,14 +211,23 @@ class PokemonEvolutionScene
                      "\\se[]" + _INTL("¡Enhorabuena! ¡Tu {1} evolucionó en {2}!",
                                       @pokemon.name, newspeciesname) + "\\wt[80]") { pbUpdate }
     @sprites["msgwindow"].text = ""
-    # Check for consumed item and check if Pokémon should be duplicated
+        # Check for consumed item and check if Pokémon should be duplicated
     pbEvolutionMethodAfterEvolution
     # Modify Pokémon to make it evolved
     was_fainted = @pokemon.fainted?
+
+    ability = @pokemon.ability
+    if @pokemon.ability != @pokemon.species_data.abilities[@pokemon.ability_index]
+      @pokemon.species = @newspecies
+      @pokemon.ability = ability
+    else
     @pokemon.species = @newspecies
+    end
+
     @pokemon.hp = 0 if was_fainted
     @pokemon.calc_stats
     @pokemon.ready_to_evolve = false
+
     # See and own evolved species
     was_owned = $player.owned?(@newspecies)
     $player.pokedex.register(@pokemon)
@@ -247,6 +256,7 @@ class PokemonEvolutionScene
     moves_to_learn.each do |move|
       pbLearnMove(@pokemon, move, true) { pbUpdate }
     end
+
   end
 
   def pbEvolutionMethodAfterEvolution

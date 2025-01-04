@@ -1,4 +1,4 @@
-﻿# See the documentation on the wiki to learn how to edit this file.
+﻿# Consulta la documentación en la wiki para aprender cómo editar este archivo.
 #-------------------------------
 KRICKETOT;LUCKYEGG;IMPISH;HP,ATK,DEF,SD;GROWL,BIDE,,
 CATERPIE;MAGOBERRY;CAREFUL;HP,SD;TACKLE,STRINGSHOT,,

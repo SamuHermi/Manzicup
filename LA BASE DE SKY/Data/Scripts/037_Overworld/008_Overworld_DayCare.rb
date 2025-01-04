@@ -241,7 +241,7 @@ class DayCare
       if father.owner.language != mother.owner.language
         shiny_retries += (Settings::MECHANICS_GENERATION >= 8) ? 6 : 5
       end
-      shiny_retries += 2 if $bag.has?(:SHINYCHARM)
+      shiny_retries += $bag.quantity(:SHINYCHARM)
       return if shiny_retries == 0
       shiny_retries.times do
         break if egg.shiny?

@@ -14,7 +14,7 @@ class Battle::Peer
     end
     oldCurBox = pbCurrentBox
     storedBox = $PokemonStorage.pbStoreCaught(pkmn)
-    if storedBox < 0
+    if storedBox.nil?
       # NOTE: Poké Balls can't be used if storage is full, so you shouldn't ever
       #       see this message.
       pbDisplayPaused(_INTL("No se pueden capturar más Pokémon..."))

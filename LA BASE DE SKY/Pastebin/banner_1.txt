@@ -1,0 +1,249 @@
+prob = rand(100)
+case prob
+#############################################
+# Tier 1 con un 35%
+#############################################
+when (0...35) 
+	result = rand(10)
+#############################################
+# Tier 2 con un 40%
+#############################################
+when (35...75) 
+	result = rand(10)
+#############################################
+# Tier 3 con un 15%
+#############################################
+when (0...90) 
+	result = rand(20)
+	case result
+	when (0)
+		poke = Pokemon.new(:SPEAROW,5)
+		poke.calc_stats		
+		pokeReward(poke,3)
+	when (1)
+		poke = Pokemon.new(:SENTRET,5)
+		poke.calc_stats		
+		pokeReward(poke,3)	
+	when (2)
+		poke = Pokemon.new(:HOOTHOOT,5)
+		poke.calc_stats		
+		pokeReward(poke,3)	
+	when (3)
+		poke = Pokemon.new(:LEDYBA,5)
+		poke.calc_stats		
+		pokeReward(poke,3)		
+	when (4)
+		poke = Pokemon.new(:SPINARAK,5)
+		poke.calc_stats		
+		pokeReward(poke,3)	
+	when (5)
+		poke = Pokemon.new(:POOCHYENA,5)
+		poke.calc_stats		
+		pokeReward(poke,3)	
+	when (6)
+		poke = Pokemon.new(:ZIGZAGOON,5)
+		poke.calc_stats		
+		pokeReward(poke,3)	
+	when (7)
+		poke = Pokemon.new(:STARLY,5)
+		poke.calc_stats		
+		pokeReward(poke,3)		
+	when (8)
+		poke = Pokemon.new(:BIDOOF,5)
+		poke.calc_stats		
+		pokeReward(poke,3)
+	when (9)
+		poke = Pokemon.new(:KRICKETOT,5)
+		poke.calc_stats		
+		pokeReward(poke,3)
+	when (10)
+		poke = Pokemon.new(:PATRAT,5)
+		poke.calc_stats		
+		pokeReward(poke,3)		
+	when (11)
+		poke = Pokemon.new(:PIDOVE,5)
+		poke.calc_stats		
+		pokeReward(poke,3)		
+	when (12)
+		poke = Pokemon.new(:SEWADDLE,5)
+		poke.calc_stats		
+		pokeReward(poke,3)
+	when (13)
+		poke = Pokemon.new(:PURRLOIN,5)
+		poke.calc_stats		
+		pokeReward(poke,3)
+	when (14)
+		poke = Pokemon.new(:BUNNELBY,5)
+		poke.calc_stats		
+		pokeReward(poke,3)
+	when (15)
+		poke = Pokemon.new(:SCATTERBUG,5)
+		poke.calc_stats		
+		pokeReward(poke,3)
+	when (16)
+		poke = Pokemon.new(:RATTATA_1,5)
+		poke.calc_stats		
+		pokeReward(poke,3)		
+	when (17)
+		poke = Pokemon.new(:ZIGZAGOON_1,5)
+		poke.calc_stats		
+		pokeReward(poke,5)	
+	when (18)
+		poke = Pokemon.new(:SKWOVET,5)
+		poke.calc_stats		
+		pokeReward(poke,5)		
+	when (19)
+		poke = Pokemon.new(:LECHONK,5)
+		poke.calc_stats		
+		pokeReward(poke,5)
+	when (20)
+		poke = Pokemon.new(:TAROUNTULA,5)
+		poke.calc_stats		
+		pokeReward(poke,5)		
+	when (20)
+		poke = Pokemon.new(:FIDOUGH,5)
+		poke.calc_stats		
+		pokeReward(poke,5)		
+	end	
+#############################################
+# Tier 4 con un 7%
+#############################################
+when (90...97) 
+	result = rand(9)
+	case result
+	when (0)
+		poke = Pokemon.new(:PAWMI,5)
+		poke.learn_move(:DRAINPUNCH)
+		poke.learn_move(:PLASMFISTS)
+		poke.calc_stats		
+		pokeReward(poke,4)
+	when (1)
+		poke = Pokemon.new(:PAWMI,5)
+		poke.learn_move(:DRAINPUNCH)
+		poke.learn_move(:PLASMFISTS)
+		poke.calc_stats		
+		pokeReward(poke,4)
+	when (2)
+		poke = Pokemon.new(:FLETCHLING,5)
+		poke.learn_move(:VOLTTACKLE)
+		poke.learn_move(:HEADSMASH)
+		poke.calc_stats
+		pokeReward(poke,4)
+	when (3)
+		poke = Pokemon.new(:RATTATA,5)
+		poke.learn_move(:ENDEAVOR)
+		poke.learn_move(:QUICKATTACK)
+		poke.calc_stats
+		pokeReward(poke,4) 
+	when (4)
+		poke = Pokemon.new(:VENIPEDE,5)
+		poke.learn_move(:BANEFULBURNKER)
+		poke.learn_move(:BATONPASS)
+		poke.abilityIndex = 2
+		poke.calc_stats
+		pokeReward(poke,4) 		
+	when (5)
+		poke = Pokemon.new(:MANKEY,5)
+		poke.learn_move(:SLACKOFF)
+		poke.learn_move(:NORETREAT)
+		poke.abilityIndex = 2
+		poke.calc_stats
+		pokeReward(poke,4) 			
+	when (6)
+		poke = Pokemon.new(:TAILLOW,5)
+		poke.item = FLAMEORB
+		poke.learn_move(:FACADE)
+		poke.learn_move(:BURNINGBULWARK)
+		poke.abilityIndex = 0
+		poke.calc_stats
+		pokeReward(poke,4) 		
+	when (7)
+		poke = Pokemon.new(:SHINX,5)
+		poke.learn_move(:ZIPPYZAP)
+		poke.learn_move(:SWORDSDANCE)
+		poke.abilityIndex = 1
+		poke.calc_stats
+		pokeReward(poke,4)	
+	when (8)
+		poke = Pokemon.new(:WINGULL,5)
+		poke.learn_move(:THUNDER)
+		poke.learn_move(:CALMMIND)
+		poke.abilityIndex = 1
+		poke.calc_stats
+		pokeReward(poke,4)	
+	when (9)
+		poke = Pokemon.new(:GRUBBIN,5)
+		poke.learn_move(:THUNDERCLAP)
+		poke.learn_move(:QUIVERDANCE)
+		poke.calc_stats
+		pokeReward(poke,4)	
+	end	
+#############################################
+# Tier 5 con un 3%
+#############################################
+when (97...100) 
+	result = rand(6)
+	case result
+	when (0)
+		poke = Pokemon.new(:CATERPIE,5)
+		poke.item = :MEGASTONE
+		poke.learn_move(:SILKTRAP)
+		poke.learn_move(:TWINBEAM)
+		poke.learn_move(:BLEAKWINDSTORM)
+		poke.learn_move(:SANDSEARSTORM)
+		poke.calc_stats		
+		pokeReward(poke,5)
+	when (1)
+		poke = Pokemon.new(:WURMPLE,5)
+		poke.learn_move(:BATONPASS)
+		poke.learn_move(:BLEAKWINDSTORM)
+		poke.learn_move(:STOREDPOWER)
+		poke.learn_move(:MALIGNANTCHAIN)
+		poke.calc_stats		
+		pokeReward(poke,5)
+	when (2)
+		poke = Pokemon.new(:WURMPLE,5)
+		poke.learn_move(:BATONPASS)
+		poke.learn_move(:BLEAKWINDSTORM)
+		poke.learn_move(:STOREDPOWER)
+		poke.learn_move(:MALIGNANTCHAIN)
+		poke.calc_stats		
+		pokeReward(poke,5)	
+	when (3)
+		poke = Pokemon.new(:PIDGEY,5)
+		poke.item = :MEGASTONE
+		poke.learn_move(:WILDBOLTSTORM)
+		poke.learn_move(:SANDSEARSTORM)
+		poke.learn_move(:NASTYPLOT)
+		poke.learn_move(:BOOMBURST)	
+		poke.calc_stats		
+		pokeReward(poke,5)		
+	when (4)
+		poke = Pokemon.new(:ROOKIDEE,5)
+		poke.item = :MEGASTONE
+		poke.learn_move(:ROOST)
+		poke.learn_move(:BODYPRESS)
+		poke.learn_move(:KINGSHIELD)
+		poke.learn_move(:BEHEMOTHBASH)	
+		poke.calc_stats		
+		pokeReward(poke,5)		
+	when (5)
+		poke = Pokemon.new(:RALTS,5)
+		poke.item = :MEGASTONE
+		poke.learn_move(:PSYBLADE)
+		poke.learn_move(:BITTERBLADE)
+		poke.learn_move(:NORETREAT)
+		poke.learn_move(:BOOMBURST)		
+		poke.calc_stats		
+		pokeReward(poke,5)		
+	when (6)
+		poke = Pokemon.new(:BLIPBUG,5)
+		poke.item = :MEGASTONE
+		poke.learn_move(:HEALORDER)
+		poke.learn_move(:LUSTERPURGE)
+		poke.learn_move(:SLEEPPOWDER)
+		poke.learn_move(:DEFENDORDER)		
+		poke.calc_stats		
+		pokeReward(poke,5)	
+	end		
+end

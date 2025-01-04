@@ -40,6 +40,17 @@ ItemHandlers::UseFromBag.add(:ESCAPEROPE, proc { |item|
   next 0
 })
 
+ItemHandlers::UseFromBag.add(:EXPSHARE2, proc { |item|
+  if !$PokemonSystem.multiexp
+    $PokemonSystem.multiexp = true
+    pbMessage(_INTL("Repartir experiencia activado."))
+  else
+    $PokemonSystem.multiexp = false
+    pbMessage(_INTL("Repartir experiencia desactivado."))
+  end
+  next 1
+})
+
 ItemHandlers::UseFromBag.add(:BICYCLE, proc { |item|
   next (pbBikeCheck) ? 2 : 0
 })
@@ -1202,6 +1213,135 @@ ItemHandlers::UseOnPokemon.add(:GRACIDEA, proc { |item, qty, pkmn, scene|
     scene.pbDisplay(_INTL("¡{1} cambió de forma!", pkmn.name))
   end
   next true
+})
+
+ItemHandlers::UseOnPokemon.add(:SCARLETBOOK, proc { |item, qty, pkmn, scene|
+  if pkmn.isSpecies?(:DONPHAN)
+      pkmn.species = :GREATTUSK
+      scene.pbRefresh
+      scene.pbDisplay(_INTL("¡{1} cambió de forma!", pkmn.name))
+      next true
+  elsif pkmn.isSpecies?(:JIGGLPUFF)
+    pkmn.species = :SCREAMTAIL
+    scene.pbRefresh
+    scene.pbDisplay(_INTL("¡{1} cambió de forma!", pkmn.name))
+    next true
+  elsif pkmn.isSpecies?(:AMOONGUSS)
+    pkmn.species = :BRUTEBONNET
+    scene.pbRefresh
+    scene.pbDisplay(_INTL("¡{1} cambió de forma!", pkmn.name))
+    next true
+  elsif pkmn.isSpecies?(:MISDREAVUS)
+    pkmn.species = :FLUTTERMANE
+    scene.pbRefresh
+    scene.pbDisplay(_INTL("¡{1} cambió de forma!", pkmn.name))
+    next true
+  elsif pkmn.isSpecies?(:VOLCARONA)
+    pkmn.species = :SLITHERWING
+    scene.pbRefresh
+    scene.pbDisplay(_INTL("¡{1} cambió de forma!", pkmn.name))
+    next true
+  elsif pkmn.isSpecies?(:MAGNETON)
+    pkmn.species = :SANDSHOCKS
+    scene.pbRefresh
+    scene.pbDisplay(_INTL("¡{1} cambió de forma!", pkmn.name))
+    next true
+  elsif pkmn.isSpecies?(:SALAMANCE)
+    pkmn.species = :ROARINGMOON
+    scene.pbRefresh
+    scene.pbDisplay(_INTL("¡{1} cambió de forma!", pkmn.name))
+    next true
+  elsif pkmn.isSpecies?(:CYCLIZAR)
+    pkmn.species = :KORAIDON
+    scene.pbRefresh
+    scene.pbDisplay(_INTL("¡{1} cambió de forma!", pkmn.name))
+    next true
+  elsif pkmn.isSpecies?(:SUICUNE)
+    pkmn.species = :WALKINGWAKE
+    scene.pbRefresh
+    scene.pbDisplay(_INTL("¡{1} cambió de forma!", pkmn.name))
+    next true
+  elsif pkmn.isSpecies?(:ENTEI)
+    pkmn.species = :GOUGINGFIRE
+    scene.pbRefresh
+    scene.pbDisplay(_INTL("¡{1} cambió de forma!", pkmn.name))
+    next true
+  elsif pkmn.isSpecies?(:RAIKOU)
+    pkmn.species = :RAGINGBOLT
+    scene.pbRefresh
+    scene.pbDisplay(_INTL("¡{1} cambió de forma!", pkmn.name))
+    next true
+  else
+    scene.pbDisplay(_INTL("No tendría efecto."))
+    next false
+  end
+})
+
+ItemHandlers::UseOnPokemon.add(:VIOLETBOOK, proc { |item, qty, pkmn, scene|
+  if pkmn.isSpecies?(:DONPHAN)
+      pkmn.species = :IRONTREADS
+      scene.pbRefresh
+      scene.pbDisplay(_INTL("¡{1} cambió de forma!", pkmn.name))
+      next true
+  elsif pkmn.isSpecies?(:DELIBIRD)
+    pkmn.species = :IRONBUNDLE
+    scene.pbRefresh
+    scene.pbDisplay(_INTL("¡{1} cambió de forma!", pkmn.name))
+    next true
+  elsif pkmn.isSpecies?(:HARIYAMA)
+    pkmn.species = :IRONHANDS
+    scene.pbRefresh
+    scene.pbDisplay(_INTL("¡{1} cambió de forma!", pkmn.name))
+    next true
+  elsif pkmn.isSpecies?(:HYDREIGON)
+    pkmn.species = :IRONJUGULIS
+    scene.pbRefresh
+    scene.pbDisplay(_INTL("¡{1} cambió de forma!", pkmn.name))
+    next true
+  elsif pkmn.isSpecies?(:VOLCARONA)
+    pkmn.species = :IRONMOTH
+    scene.pbRefresh
+    scene.pbDisplay(_INTL("¡{1} cambió de forma!", pkmn.name))
+    next true
+  elsif pkmn.isSpecies?(:TYRANITAR)
+    pkmn.species = :IRONTHORNS
+    scene.pbRefresh
+    scene.pbDisplay(_INTL("¡{1} cambió de forma!", pkmn.name))
+    next true
+  elsif pkmn.isSpecies?(:GARDEVOIR)
+    pkmn.species = :IRONVALIANT
+    scene.pbRefresh
+    scene.pbDisplay(_INTL("¡{1} cambió de forma!", pkmn.name))
+    next true
+  elsif pkmn.isSpecies?(:GALLADE)
+    pkmn.species = :IRONVALIANT
+    scene.pbRefresh
+    scene.pbDisplay(_INTL("¡{1} cambió de forma!", pkmn.name))
+    next true    
+  elsif pkmn.isSpecies?(:CYCLIZAR)
+    pkmn.species = :MIRAIDON
+    scene.pbRefresh
+    scene.pbDisplay(_INTL("¡{1} cambió de forma!", pkmn.name))
+    next true
+  elsif pkmn.isSpecies?(:VIRIZION)
+    pkmn.species = :IRONLEAVES
+    scene.pbRefresh
+    scene.pbDisplay(_INTL("¡{1} cambió de forma!", pkmn.name))
+    next true
+  elsif pkmn.isSpecies?(:TERRAKION)
+    pkmn.species = :IRONBOULDER
+    scene.pbRefresh
+    scene.pbDisplay(_INTL("¡{1} cambió de forma!", pkmn.name))
+    next true
+  elsif pkmn.isSpecies?(:COBALION)
+    pkmn.species = :IRONCROWN
+    scene.pbRefresh
+    scene.pbDisplay(_INTL("¡{1} cambió de forma!", pkmn.name))
+    next true
+  else
+    scene.pbDisplay(_INTL("No tendría efecto."))
+    next false
+  end
 })
 
 ItemHandlers::UseOnPokemon.add(:REDNECTAR, proc { |item, qty, pkmn, scene|

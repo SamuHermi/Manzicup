@@ -662,7 +662,7 @@ end
 #===============================================================================
 class Battle::Move::StartSlowerBattlersActFirst < Battle::Move
   def pbEffectGeneral(user)
-    if @battle.field.effects[PBEffects::TrickRoom] > 0
+    if @battle.field.effects[PBEffects::TrickRoom] != 0
       @battle.field.effects[PBEffects::TrickRoom] = 0
       @battle.pbDisplay(_INTL("¡{1} alteró las dimensiones!", user.pbThis))
     else
@@ -672,7 +672,7 @@ class Battle::Move::StartSlowerBattlersActFirst < Battle::Move
   end
 
   def pbShowAnimation(id, user, targets, hitNum = 0, showAnimation = true)
-    return if @battle.field.effects[PBEffects::TrickRoom] > 0   # No animation
+    return if @battle.field.effects[PBEffects::TrickRoom] != 0   # No animation
     super
   end
 end

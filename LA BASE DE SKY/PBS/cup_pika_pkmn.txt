@@ -1,4 +1,4 @@
-﻿# See the documentation on the wiki to learn how to edit this file.
+﻿# Consulta la documentación en la wiki para aprender cómo editar este archivo.
 #-------------------------------
 SUNKERN;EVERSTONE;DOCILE;HP,ATK,SA;SLUDGEBOMB,GROWTH,NATUREPOWER,ENCORE
 SUNKERN;LAXINCENSE;JOLLY;HP,SPD,SA;SAFEGUARD,SLUDGEBOMB,LEECHSEED,INGRAIN

@@ -171,44 +171,15 @@ MenuHandlers.add(:pc_menu, :pokemon_storage, {
     loop do
       command = pbShowCommandsWithHelp(nil,
                                        [_INTL("Organizar Cajas"),
-                                        _INTL("Sacar Pokémon"),
-                                        _INTL("Dejar Pokémon"),
                                         _INTL("¡Nos vemos!")],
                                        [_INTL("Organiza a los Pokémon en las Cajas y en tu equipo."),
-                                        _INTL("Mover Pokémon del almacenamiento a tu equipo."),
-                                        _INTL("Dejar Pokémon de tu equipo en las Cajas."),
                                         _INTL("Vuelve al menú anterior.")], -1, command)
       break if command < 0
-      case command
-      when 0   # Organize
+      if command == 0
         pbFadeOutIn do
           scene = PokemonStorageScene.new
           screen = PokemonStorageScreen.new(scene, $PokemonStorage)
           screen.pbStartScreen(0)
-        end
-      when 1   # Withdraw
-        if $PokemonStorage.party_full?
-          pbMessage(_INTL("¡Tu equipo está lleno!"))
-          next
-        end
-        pbFadeOutIn do
-          scene = PokemonStorageScene.new
-          screen = PokemonStorageScreen.new(scene, $PokemonStorage)
-          screen.pbStartScreen(1)
-        end
-      when 2   # Deposit
-        count = 0
-        $PokemonStorage.party.each do |p|
-          count += 1 if p && !p.egg? && p.hp > 0
-        end
-        if count <= 1
-          pbMessage(_INTL("¡No puedes dejar a tu útimo Pokémon!"))
-          next
-        end
-        pbFadeOutIn do
-          scene = PokemonStorageScene.new
-          screen = PokemonStorageScreen.new(scene, $PokemonStorage)
-          screen.pbStartScreen(2)
         end
       else
         break

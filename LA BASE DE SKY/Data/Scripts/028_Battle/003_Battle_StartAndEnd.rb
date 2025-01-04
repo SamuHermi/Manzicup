@@ -352,11 +352,15 @@ class Battle
   def pbGainMoney
     return if !@internalBattle || !@moneyGain
     # Money rewarded from opposing trainers
+    tMoney = 0
     if trainerBattle?
-      tMoney = 0
+      
       @opponent.each_with_index do |t, i|
         tMoney += pbMaxLevelInTeam(1, i) * t.base_money
       end
+    else
+      tMoney += pbMaxLevelInTeam(0, 0)
+    end
       tMoney *= 2 if @field.effects[PBEffects::AmuletCoin]
       tMoney *= 2 if @field.effects[PBEffects::HappyHour]
       oldMoney = pbPlayer.money
@@ -366,7 +370,6 @@ class Battle
         $stats.battle_money_gained += moneyGained
         pbDisplayPaused(_INTL("¡Has ganado {1}$ por vencer!", moneyGained.to_s_formatted))
       end
-    end
     # Pick up money scattered by Pay Day
     if @field.effects[PBEffects::PayDay] > 0
       @field.effects[PBEffects::PayDay] *= 2 if @field.effects[PBEffects::AmuletCoin]
@@ -458,6 +461,7 @@ class Battle
         # Lose money from losing a battle
         pbLoseMoney
         pbDisplayPaused(_INTL("¡Estás fuera de combate!")) if !@canLose
+        $player.party.clear
       elsif @decision == 2   # Lost in a Battle Frontier battle
         if @opponent
           @opponent.each_with_index do |trainer, i|

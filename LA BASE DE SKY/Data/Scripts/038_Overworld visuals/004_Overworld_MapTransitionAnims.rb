@@ -90,10 +90,19 @@ def pbStartOver(gameover = false)
                 _INTL("Tras la derrota, fuiste corriendo a un Centro Pokémon."))
     else
       pbMessage("\\w[]\\wm\\c[13]\\l[3]" +
-                _INTL("Has salido corriendo hacia un Centro Pokémon para que tu equipo no sufra más daño..."))
+                _INTL("Has salido corriendo hacia la base para no sufrir más daño..."))
     end
+    pbMessage("\\w[]\\wm\\c[13]\\l[3]" +
+      _INTL("¡Todos tus Pokémon te han abandonado!"))  
+
+      pbMessage("\\w[]\\wm\\c[13]\\l[3]" +
+      _INTL("Todo tu dinero se ha convertido en monedas.\nHas conseguido {1} monedas",$player.money/100))  
+    $player.coins += $player.money/100
+    $player.money = 0
+
     pbCancelVehicles
     Followers.clear
+    $game_switches[60] = false
     $game_switches[Settings::STARTING_OVER_SWITCH] = true
     $game_temp.player_new_map_id    = $PokemonGlobal.pokecenterMapId
     $game_temp.player_new_x         = $PokemonGlobal.pokecenterX

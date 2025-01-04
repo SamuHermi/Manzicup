@@ -85,6 +85,8 @@ class Pokemon
   # Whether this Pokémon can be traded
   attr_accessor :cannot_trade
 
+  attr_accessor  :unlocked_abilities
+
   # Max total IVs
   IV_STAT_LIMIT = 31
   # Max total EVs
@@ -440,6 +442,8 @@ class Pokemon
   def ability
     return GameData::Ability.try_get(ability_id)
   end
+
+
 
   # @return [Symbol, nil] the ability symbol of this Pokémon's ability
   def ability_id
@@ -1276,6 +1280,7 @@ class Pokemon
     reset_moves if withMoves
     @first_moves      = []
     @ribbons          = []
+    @unlocked_abilities = []
     @cool             = 0
     @beauty           = 0
     @cute             = 0

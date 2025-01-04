@@ -399,3 +399,190 @@ Gender = Male
 BaseMoney = 100
 BattleBGM = Battle Champion
 VictoryBGM = Battle victory leader
+#-------------------------------
+[HERMI]
+Name = Rival
+Gender = Male
+BaseMoney = 100
+BattleBGM = Battle Hermi
+VictoryBGM = Battle victory leader
+#-------------------------------
+[IRIA]
+Name = Rival
+Gender = Female
+BaseMoney = 100
+BattleBGM = Battle Iria
+VictoryBGM = Battle victory leader
+#-------------------------------
+[JESS]
+Name = Rival
+Gender = Female
+BaseMoney = 100
+BattleBGM = Battle Jess
+VictoryBGM = Battle victory leader
+#-------------------------------
+[BRAIS]
+Name = Rival
+Gender = Male
+BaseMoney = 100
+BattleBGM = Battle Brais
+VictoryBGM = Battle victory leader
+#-------------------------------
+[SAMER]
+Name = Rival
+Gender = Male
+BaseMoney = 100
+BattleBGM = Battle Samer
+VictoryBGM = Battle victory leader
+#-------------------------------
+[ISA]
+Name = Rival
+Gender = Female
+BaseMoney = 100
+BattleBGM = Battle Isa
+VictoryBGM = Battle victory leader
+#-------------------------------
+[RODRI]
+Name = Rival
+Gender = Male
+BaseMoney = 100
+BattleBGM = Battle Rodri
+VictoryBGM = Battle victory leader
+#-------------------------------
+[BRA]
+Name = Rival
+Gender = Male
+BaseMoney = 100
+BattleBGM = Battle Bra
+VictoryBGM = Battle victory leader
+#-------------------------------
+[ANA]
+Name = Rival
+Gender = Female
+BaseMoney = 100
+BattleBGM = Battle Ana
+VictoryBGM = Battle victory leader
+#-------------------------------
+[PABLO]
+Name = Rival
+Gender = Male
+BaseMoney = 100
+BattleBGM = Battle Pablo
+VictoryBGM = Battle victory leader
+#-------------------------------
+[SABO]
+Name = Rival
+Gender = Male
+BaseMoney = 100
+BattleBGM = Battle Eliel
+VictoryBGM = Battle victory leader
+#-------------------------------
+[NEREA]
+Name = Rival
+Gender = Female
+BaseMoney = 100
+BattleBGM = Battle Eliel
+VictoryBGM = Battle victory leader
+#-------------------------------
+[TRIPULANTE]
+Name = Tripulante
+Gender = Unknown
+BaseMoney = 4
+SkillLevel = 16
+BattleBGM = Battle Amongus
+#-------------------------------
+[OTAKA_LIDER]
+Name = Otaka culiada
+Gender = Female
+BaseMoney = 100
+BattleBGM = Battle OtakaLider
+#-------------------------------
+[BBEG]
+Name = Malo maloso
+Gender = Male
+BaseMoney = 100
+BattleBGM = Battle Moridon
+#-------------------------------
+[IMPOSTOR]
+Name = Sus
+Gender = Male
+BaseMoney = 100
+BattleBGM = but nobody came
+#-------------------------------
+[NOCANON]
+Name = No canon
+Gender = Female
+BaseMoney = 100
+BattleBGM = but nobody came
+#-------------------------------
+[PAPI]
+Name = Daddy
+Gender = Male
+BaseMoney = 100
+BattleBGM = but nobody came
+#-------------------------------
+[MANADA]
+Name = Manada de
+Gender = Female
+BaseMoney = 100
+BattleBGM = but nobody came
+#-------------------------------
+[PROFETA]
+Name = Profeta
+Gender = Male
+BaseMoney = 100
+BattleBGM = but nobody came
+#-------------------------------
+[PSICOPATA]
+Name = Aventurero
+Gender = Male
+BaseMoney = 100
+BattleBGM = Battle Draldvyr
+#-------------------------------
+[MAYORDOMO]
+Name = Aventurero
+Gender = Male
+BaseMoney = 100
+BattleBGM = Battle Devere
+#-------------------------------
+[PRINCE]
+Name = Aventurero
+Gender = Male
+BaseMoney = 100
+BattleBGM = Battle Eldar
+#-------------------------------
+[REYMALDICIONES]
+Name = Rey de las maldiciones
+Gender = Male
+BaseMoney = 100
+BattleBGM = Battle Sukuna
+#-------------------------------
+[PICARO]
+Name = Picarón
+Gender = Male
+BaseMoney = 100
+BattleBGM = Battle Devere
+#-------------------------------
+[ENANO]
+Name = Enano
+Gender = Male
+BaseMoney = 100
+BattleBGM = Battle Devere
+#-------------------------------
+[GUARDIANA]
+Name = Guardiana
+Gender = Female
+BaseMoney = 100
+BattleBGM = Battle Devere
+#-------------------------------
+[EXPLORADOR]
+Name = Explorador
+Gender = Male
+BaseMoney = 100
+BattleBGM = Battle Devere
+#-------------------------------
+[CLERIGO]
+Name = Clérigo
+Gender = Male
+BaseMoney = 100
+BattleBGM = Battle Devere

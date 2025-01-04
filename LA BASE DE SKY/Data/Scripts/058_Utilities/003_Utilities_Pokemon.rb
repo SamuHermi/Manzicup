@@ -21,13 +21,15 @@ def pbStorePokemon(pkmn)
     return
   end
   pkmn.record_first_moves
-  if $player.party_full?
-    stored_box = $PokemonStorage.pbStoreCaught(pkmn)
-    box_name   = $PokemonStorage[stored_box].name
-    pbMessage(_INTL("¡{1} se ha enviado a la Caja \"{2}\"!", pkmn.name, box_name))
+
+  stored_box = $PokemonStorage.pbStoreCaught(pkmn)   
+  if stored_box.nil?
+    pbMessage(_INTL("¡El {1} que tenías se ha potenciado!", pkmn.name))      
   else
-    $player.party[$player.party.length] = pkmn
+    box_name  = $PokemonStorage[stored_box].name
+    pbMessage(_INTL("¡{1} se ha enviado a la Caja \"{2}\"!", pkmn.name, box_name))
   end
+  
 end
 
 def pbNicknameAndStore(pkmn)
@@ -72,6 +74,33 @@ def pbAddPokemon(pkmn, level = 1, see_form = true)
   end
   # Nickname and add the Pokémon
   pbNicknameAndStore(pkmn)
+  return true
+end
+
+#===============================================================================
+# Giving Pokémon to the player (will send to storage if party is full)
+#===============================================================================
+def pbReceivePokemon(pkmn, level = 1, see_form = true)
+  pkmn = Pokemon.new(pkmn, level) if !pkmn.is_a?(Pokemon)
+  species_name = pkmn.speciesName
+  was_owned = $player.owned?(pkmn.species)
+  $player.pokedex.set_seen(pkmn.species)
+  $player.pokedex.set_owned(pkmn.species)
+  $player.pokedex.register(pkmn) if see_form
+  pkmn.unlocked_abilities.push(pkmn.ability_id)
+  # Show Pokédex entry for new species if it hasn't been owned before
+  if Settings::SHOW_NEW_SPECIES_POKEDEX_ENTRY_MORE_OFTEN && see_form && !was_owned &&
+     $player.has_pokedex && $player.pokedex.species_in_unlocked_dex?(pkmn.species)
+    pbMessage(_INTL("Los datos de {1} se han añadido a la Pokédex.", species_name))
+    $player.pokedex.register_last_seen(pkmn)
+    pbFadeOutIn do
+      scene = PokemonPokedexInfo_Scene.new
+      screen = PokemonPokedexInfoScreen.new(scene)
+      screen.pbDexEntry(pkmn.species)
+    end
+  end
+  # Nickname and add the Pokémon
+  pbStorePokemon(pkmn)
   return true
 end
 

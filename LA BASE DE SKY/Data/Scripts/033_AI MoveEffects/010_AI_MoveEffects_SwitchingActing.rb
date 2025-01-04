@@ -479,7 +479,7 @@ Battle::AI::Handlers::MoveEffectAgainstTargetScore.add("TargetActsNext",
     # Compare the speeds of all battlers
     speeds = []
     ai.each_battler { |b, i| speeds.push([i, b.rough_stat(:SPEED)]) }
-    if battle.field.effects[PBEffects::TrickRoom] > 0
+    if battle.field.effects[PBEffects::TrickRoom] != 0
       speeds.sort! { |a, b| a[1] <=> b[1] }
     else
       speeds.sort! { |a, b| b[1] <=> a[1] }
@@ -514,7 +514,7 @@ Battle::AI::Handlers::MoveEffectAgainstTargetScore.add("TargetActsLast",
     # Compare the speeds of all battlers
     speeds = []
     ai.each_battler { |b, i| speeds.push([i, b.rough_stat(:SPEED)]) }
-    if battle.field.effects[PBEffects::TrickRoom] > 0
+    if battle.field.effects[PBEffects::TrickRoom] != 0
       speeds.sort! { |a, b| a[1] <=> b[1] }
     else
       speeds.sort! { |a, b| b[1] <=> a[1] }
@@ -590,7 +590,8 @@ Battle::AI::Handlers::MoveEffectScore.add("StartSlowerBattlersActFirst",
     # Just in case a side has no battlers
     next Battle::AI::MOVE_USELESS_SCORE if ally_speeds.length == 0 || foe_speeds.length == 0
     # Invert the speeds if Trick Room applies (and will last longer than this round)
-    if battle.field.effects[PBEffects::TrickRoom] > 1
+    if battle.field.effects[PBEffects::TrickRoom] != 0 ||
+       battle.field.effects[PBEffects::TrickRoom] != 1
       foe_speeds.map! { |val| 100_000 - val }    # 100_000 is higher than speed can
       ally_speeds.map! { |val| 100_000 - val }   # possibly be; only order matters
     end

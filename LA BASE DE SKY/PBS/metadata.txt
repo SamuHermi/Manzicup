@@ -1,7 +1,7 @@
 ﻿# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
 [0]
-StartMoney = 3000
+StartMoney = 0
 StartItemStorage = POTION
 Home = 3,7,5,8
 StorageCreator = Bill
@@ -13,21 +13,74 @@ SurfBGM = Surfing
 BicycleBGM = Bicycle
 #-------------------------------
 [1]
-TrainerType = POKEMONTRAINER_Red
-WalkCharset = trainer_POKEMONTRAINER_Red
-RunCharset = boy_run
-CycleCharset = boy_bike
-SurfCharset = boy_surf
-DiveCharset = boy_surf
-FishCharset = boy_fish_offset
-SurfFishCharset = boy_fish_offset
+TrainerType = HERMI
+WalkCharset = trainer_HERMI.png
+RunCharset = trainer_HERMI.png
+SurfCharset = Surf.png
+SurfFishCharset = Maewing.png
 #-------------------------------
 [2]
-TrainerType = POKEMONTRAINER_Leaf
-WalkCharset = trainer_POKEMONTRAINER_Leaf
-RunCharset = girl_run
-CycleCharset = girl_bike
-SurfCharset = girl_surf
-DiveCharset = girl_surf
-FishCharset = girl_fish_offset
-SurfFishCharset = girl_fish_offset
+TrainerType = IRIA
+WalkCharset = trainer_IRIA.png
+RunCharset = trainer_IRIA.png
+SurfCharset = Surf.png
+#-------------------------------
+[3]
+TrainerType = JESS
+WalkCharset = trainer_JESS.png
+RunCharset = trainer_JESS.png
+SurfCharset = Surf.png
+#-------------------------------
+[4]
+TrainerType = BRAIS
+WalkCharset = trainer_BRAIS.png
+RunCharset = trainer_BRAIS.png
+SurfCharset = Surf.png
+#-------------------------------
+[5]
+TrainerType = ISA
+WalkCharset = trainer_ISA.png
+RunCharset = trainer_ISA.png
+SurfCharset = Surf.png
+#-------------------------------
+[6]
+TrainerType = SAMER
+WalkCharset = trainer_SAMER.png
+RunCharset = trainer_SAMER.png
+SurfCharset = Surf.png
+#-------------------------------
+[7]
+TrainerType = RODRI
+WalkCharset = trainer_RODRI.png
+RunCharset = trainer_RODRI.png
+SurfCharset = Surf.png
+#-------------------------------
+[8]
+TrainerType = BRA
+WalkCharset = trainer_BRA.png
+RunCharset = trainer_BRA.png
+SurfCharset = Surf.png
+#-------------------------------
+[9]
+TrainerType = ANA
+WalkCharset = trainer_ANA.png
+RunCharset = trainer_ANA.png
+SurfCharset = Surf.png
+#-------------------------------
+[10]
+TrainerType = PABLO
+WalkCharset = trainer_PABLO.png
+RunCharset = trainer_PABLO.png
+SurfCharset = Surf.png
+#-------------------------------
+[11]
+TrainerType = SABO
+WalkCharset = trainer_SABO.png
+RunCharset = trainer_SABO.png
+SurfCharset = Surf.png
+#-------------------------------
+[12]
+TrainerType = NEREA
+WalkCharset = trainer_NEREA.png
+RunCharset = trainer_NEREA.png
+SurfCharset = Surf.png
