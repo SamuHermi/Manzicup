@@ -2194,12 +2194,12 @@ Description = Cada vez que golpea se endurecen sus puños. Si acierta, el Ataque
 Name = Golpe Roca
 Type = FIGHTING
 Category = Physical
-Power = 40
+Power = 70
 Accuracy = 100
 TotalPP = 15
 Target = NearOther
 FunctionCode = LowerTargetDefense1
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Field
 EffectChance = 50
 Description = Ataca con puñetazos que pueden romper rocas. Puede bajar la Defensa del objetivo.
 #-------------------------------
@@ -4817,14 +4817,14 @@ Description = Baile muy enérgico y cuyo tipo se corresponde con el del Pokémon
 #-------------------------------
 [ROCKCLIMB]
 Name = Treparrocas
-Type = NORMAL
+Type = ROCK
 Category = Physical
 Power = 90
 Accuracy = 85
 TotalPP = 20
 Target = NearOther
 FunctionCode = ConfuseTarget
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Field
 EffectChance = 20
 Description = Ataca con una gran embestida. Puede confundir al objetivo.
 #-------------------------------
@@ -5024,7 +5024,7 @@ Accuracy = 100
 TotalPP = 15
 Target = NearOther
 FunctionCode = FlinchTarget
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Field
 EffectChance = 30
 Description = Lanza un potente cabezazo que puede amedrentar al objetivo.
 #-------------------------------
@@ -5164,14 +5164,14 @@ Description = Atrapa con potentes pinzas.
 #-------------------------------
 [CUT]
 Name = Corte
-Type = NORMAL
+Type = STEEL
 Category = Physical
-Power = 50
-Accuracy = 95
+Power = 80
+Accuracy = 100
 TotalPP = 30
 Target = NearOther
 FunctionCode = None
-Flags = Contact,CanProtect,CanMirrorMove,Slicing
+Flags = Contact,CanProtect,CanMirrorMove,Slicing,Field
 Description = Corta con garras, guadañas, etc. También sirve para cortar árboles finos.
 #-------------------------------
 [RAPIDSPIN]
@@ -8397,7 +8397,7 @@ Accuracy = 100
 TotalPP = 15
 Target = AllNearOthers
 FunctionCode = DoublePowerIfTargetUnderwater
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Field
 Description = Inunda el campo de batalla con una ola gigante. Fuera de batalla sirve para moverse sobre el agua.
 #-------------------------------
 [FISHIOUSREND]
@@ -8434,7 +8434,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = TwoTurnAttackInvulnerableUnderwater
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Field
 Description = Primer turno: se sumerge en el mar. Segundo turno: emerge y ataca.
 #-------------------------------
 [SCALD]
@@ -8483,7 +8483,7 @@ Accuracy = 100
 TotalPP = 15
 Target = NearOther
 FunctionCode = FlinchTarget
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Field
 EffectChance = 20
 Description = Embiste con un gran impulso que puede amedrentar. También sirve para remontar cascadas.
 #-------------------------------

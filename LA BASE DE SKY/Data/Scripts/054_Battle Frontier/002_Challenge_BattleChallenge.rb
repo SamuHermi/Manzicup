@@ -8,6 +8,7 @@ class BattleChallenge
   BATTLE_PALACE_ID  = 1
   BATTLE_ARENA_ID   = 2
   BATTLE_FACTORY_ID = 3
+  DUNGEON_CHALLENGE = 4
 
   def initialize
     @bc = BattleChallengeData.new
@@ -20,7 +21,7 @@ class BattleChallenge
     @numRounds = numrounds
     @rules = rules
     register(id, id[/double/], 3,
-             id[/^factory/] ? BATTLE_FACTORY_ID : BATTLE_TOWER_ID,
+             id[/^factory/] ? BATTLE_FACTORY_ID : id[/^dungeon/] ? DUNGEON_CHALLENGE : BATTLE_TOWER_ID,
              id[/open$/] ? 1 : 0)
     pbWriteCup(id, rules)
   end
@@ -31,6 +32,8 @@ class BattleChallenge
       @bc.setExtraData(BattleFactoryData.new(@bc))
       numPokemon = 3
       battletype = BATTLE_TOWER_ID
+    else
+
     end
     @rules = modeToRules(doublebattle, numPokemon, battletype, mode) if !@rules
   end
@@ -182,6 +185,7 @@ class BattleChallengeData
   attr_reader   :battleNumber
   attr_reader   :numRounds
   attr_reader   :party
+  attr_reader   :bag
   attr_reader   :inProgress
   attr_reader   :resting
   attr_reader   :wins
@@ -210,20 +214,23 @@ class BattleChallengeData
     @wins         = t.currentWins
     @battleNumber = 1
     @trainers     = []
-    raise _INTL("El número de rondas es 0 o menos.") if numRounds <= 0
     @numRounds = numRounds
     # Get all the trainers for the next set of battles
-    btTrainers = pbGetBTTrainers(pbBattleChallenge.currentChallenge)
-    while @trainers.length < @numRounds
-      newtrainer = pbBattleChallengeTrainer(@wins + @trainers.length, btTrainers)
-      found = false
-      @trainers.each do |tr|
-        found = true if tr == newtrainer
+    if numRounds > 0
+      btTrainers = pbGetBTTrainers(pbBattleChallenge.currentChallenge)
+      while @trainers.length < @numRounds
+        newtrainer = pbBattleChallengeTrainer(@wins + @trainers.length, btTrainers)
+        found = false
+        @trainers.each do |tr|
+          found = true if tr == newtrainer
+        end
+        @trainers.push(newtrainer) if !found
       end
-      @trainers.push(newtrainer) if !found
     end
     @start = [$game_map.map_id, $game_player.x, $game_player.y]
     @oldParty = $player.party
+    Console.echo_li(@oldParty[0].name)
+    @oldBag = $bag
     $player.party = @party if @party
     Game.save(safe: true)
   end
@@ -269,11 +276,14 @@ class BattleChallengeData
 
   def pbCancel
     $player.party = @oldParty if @oldParty
+    $bag = @oldBag if @oldBag
     reset
   end
 
   def pbEnd
     $player.party = @oldParty
+    $bag = @oldBag
+    Console.echo_li(@oldParty[0].name)
     return if !@inProgress
     save = (@decision != 0)
     reset
@@ -300,6 +310,8 @@ class BattleChallengeData
     @trainers     = []
     @oldParty     = nil
     @party        = nil
+    @oldBag       = nil
+    @bag          = nil
     @extraData    = nil
   end
 

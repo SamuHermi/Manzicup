@@ -12,13 +12,6 @@
 if Settings::USE_NEW_EXP_SHARE
     class PokemonSystem
         attr_accessor :expshareon
-        attr_accessor :multiexp
-
-        alias_method :expshare_initialize, :initialize unless method_defined?(:expshare_initialize)
-        def initialize
-            expshare_initialize
-            @multiexp = false
-        end 
     end
 
     MenuHandlers.add(:options_menu, :expshareon, {
@@ -30,33 +23,13 @@ if Settings::USE_NEW_EXP_SHARE
     "get_proc"    => proc { next $PokemonSystem.expshareon },
     "set_proc"    => proc { |value, _scene| $PokemonSystem.expshareon = value }
     })
-
-
-
-    MenuHandlers.add(:party_menu, :expshare, {
-    "name"      => _INTL("Repartir Exp."),
-    "order"     => 70,
-    "condition" => proc { next $PokemonSystem.multiexp },
-    "effect"    => proc { |screen, party, party_idx|
-        pokemon = party[party_idx]
-        if pokemon.expshare
-            if pbConfirmMessage(_INTL("¿Quieres desactivar el Repartir Experiencia en este Pokémon?"))
-                pokemon.expshare=false
-            end
-        else
-            if pbConfirmMessage(_INTL("¿Quieres activar el Repartir Experiencia en este Pokémon?"))
-                pokemon.expshare=true
-            end
-        end
-    }
-    })
     
     class Pokemon
         attr_accessor(:expshare)    # Repartir experiencia
         alias initialize_old initialize
         def initialize(species,level,player=$player,withMoves=true, recheck_form = true)
             initialize_old(species, level, player, withMoves)
-            @expshare = true if $PokemonSystem.expshareon == 0 || $PokemonSystem.expshareon || $player.has_exp_all
+            @expshare = false
         end 
     end
     

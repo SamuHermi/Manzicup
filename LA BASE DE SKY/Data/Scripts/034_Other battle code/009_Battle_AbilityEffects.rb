@@ -1388,6 +1388,15 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:SHARPNESS,
 )
 
 #===============================================================================
+# FieldExplorer
+#===============================================================================
+Battle::AbilityEffects::DamageCalcFromUser.add(:FIELDEXPLORER,
+  proc { |ability, user, target, move, mults, baseDmg, type|
+    mults[:power_multiplier] *= 1.5 if move.fieldMove?
+  }
+)
+
+#===============================================================================
 # Supreme Overlord
 #===============================================================================
 Battle::AbilityEffects::DamageCalcFromUser.add(:SUPREMEOVERLORD,
@@ -3024,6 +3033,21 @@ Battle::AbilityEffects::OnSwitchIn.add(:AIRLOCK,
     end
     battle.pbDisplay(_INTL("El tiempo atmosférico ya no ejerce ninguna influencia."))
     battle.pbHideAbilitySplash(battler)
+  }
+)
+Battle::AbilityEffects::OnSwitchIn.add(:MAGNETPULL,
+  proc { |ability, battler, battle, switch_in|
+    next if !battler.pbOwnedByPlayer?
+    battle.allOtherSideBattlers(battler.index).each do |b|
+      pbStealItem(battler,b) if b.pbHasType?(:STEEL)
+    end
+  }
+)
+
+Battle::AbilityEffects::OnSwitchIn.add(:DIVINEMOTH,
+  proc { |ability, battler, battle, switch_in|
+  battler.pbRaiseStatStageByAbility(:SPECIAL_ATTACK, 1, battler)
+  battler.pbRaiseStatStageByAbility(:SPEED, 1, battler)  
   }
 )
 

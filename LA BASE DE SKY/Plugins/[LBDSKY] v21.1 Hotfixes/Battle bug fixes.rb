@@ -165,6 +165,7 @@ module Battle::CatchAndStoreMixin
         pkmn.name = nickname
       end
     end
+
     # Store the Pokémon
     if pbPlayer.party_full? && (@sendToBoxes == 0 || @sendToBoxes == 2)   # Ask/must add to party
       cmds = [_INTL("Agregar al equipo"),
@@ -189,6 +190,7 @@ module Battle::CatchAndStoreMixin
           party_size = pbPlayer.party.length
           # Get chosen Pokémon and clear battle-related conditions
           $player.remove_pokemon_at_index(party_index)
+          $player.party[$player.party.length] = pkmn
           stored_box = -1
           break
         when 1   # Send to a Box
@@ -202,6 +204,13 @@ module Battle::CatchAndStoreMixin
         when 3   # Check party
           @scene.pbPartyScreen(0, true, 2)
         end
+      end
+    else
+      stored_box = @peer.pbStorePokemon(pbPlayer, pkmn)
+      if stored_box < 0
+        pbDisplayPaused(_INTL("{1} se ha añadido a tu equipo.", pkmn.name))
+        @initialItems[0][pbPlayer.party.length - 1] = pkmn.item_id if @initialItems
+        return
       end
     end
   end

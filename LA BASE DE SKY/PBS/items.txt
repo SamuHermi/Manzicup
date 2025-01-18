@@ -5288,7 +5288,7 @@ Description = Los Pokémon pueden llevarla o usarla para descongelarse.
 Name = Baya Zanama
 NamePlural = Bayas Zanama
 Pocket = 5
-Price = 20
+Price = 75
 FieldUse = OnPokemon
 BattleUse = OnMove
 Flags = Berry,Fling_10,NaturalGift_FIGHTING_80
@@ -5317,7 +5317,7 @@ Description = Los Pokémon pueden usarla o llevarla para salir del estado de con
 Name = Baya Ziuela
 NamePlural = Bayas Ziuela
 Pocket = 5
-Price = 20
+Price = 100
 FieldUse = OnPokemon
 BattleUse = OnPokemon
 Flags = Berry,Fling_10,NaturalGift_FLYING_80
@@ -5327,7 +5327,7 @@ Description = Los Pokémon pueden llevarla o usarla para recuperarse de problema
 Name = Baya Zidra
 NamePlural = Bayas Zidra
 Pocket = 5
-Price = 20
+Price = 200
 FieldUse = OnPokemon
 BattleUse = OnPokemon
 Flags = Berry,Fling_10,NaturalGift_PSYCHIC_80
@@ -6239,7 +6239,7 @@ Description = Riendas que permiten unir a Calyrex con su montura.
 [OVALCHARM]
 Name = Amuleto Oval
 NamePlural = Amuletos Ovales
-Pocket = 8
+Pocket = 6
 Price = 0
 Flags = KeyItem
 Description = Misterioso amuleto redondo que aumenta la posibilidad de encontrar Huevos en la Guardería Pokémon.
@@ -6249,12 +6249,13 @@ Name = Amuleto Iris
 NamePlural = Amuletos Iris
 Pocket = 6
 Price = 0
+Flags = KeyItems
 Description = Misterioso amuleto brillante que aumenta la probabilidad de encontrar Pokémon variocolores.
 #-------------------------------
 [CATCHINGCHARM]
 Name = Amuleto Captura
 NamePlural = Amuletos Captura
-Pocket = 8
+Pocket = 6
 Price = 0
 Flags = KeyItem
 Description = Misterioso amuleto que aumenta la posibilidad de hacer capturas críticas.
@@ -6674,3 +6675,66 @@ FieldUse = Direct
 Flags = KeyItem
 Description = Incubadora que permite mantener 6 huevos hasta que eclosionen.
 #-------------------------------
+[TICKETBRA]
+Name = Ticket Gacha Pokémon
+NamePlural = Ticket Gacha Pokémon
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = Ticket que le permite a Brayan abrir un gacha de Pokémon.
+#-------------------------------
+[TICKETISA]
+Name = Ticket Gacha Objetos
+NamePlural = Ticket Gacha Objetos
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = Ticket que le permite a Isa abrir un gacha de Objetos.
+#-------------------------------
+[TICKETBRAIS]
+Name = Ticket Invitados
+NamePlural = Ticket Invitados
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = Ticket que le permite a Brais a recibir a los invitados que vengan a la base.
+#-------------------------------
+[TICKETSAMER]
+Name = Ticket Coliseo
+NamePlural = Ticket Coliseo
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = Ticket que le permite a Samer abrir un coliseo en la sala de juegos.
+#-------------------------------
+[TICKETSABO]
+Name = Ticket Abuso Pokémonil
+NamePlural = Ticket Abuso Pokémonil
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = Ticket que le permite a Sabo usar tus Pokémon en tareas domésticas.
+#-------------------------------
+[TICKETJESS]
+Name = Ticket Venta Amuletos
+NamePlural = Ticket Venta Amuletos
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = Ticket que le permite a Jessica crear amuletos que te faciliten la aventura.
+#-------------------------------
+[STORAGEKEY]
+Name = Llave almacén
+NamePlural = Llave almacén
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = Llave del almacén.
+#-------------------------------
+[GAMEROOMKEY]
+Name = Llave cuarto de juegos
+NamePlural = Llave cuarto de juegos
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = Llave del cuarto de juegos.

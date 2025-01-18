@@ -26,7 +26,7 @@ module LevelScalingSettings
   PROPORTIONAL_SCALING = false
 
   # Trainer parties will keep the same pokemon and levels of the first battle
-  SAVE_TRAINER_PARTIES = true
+  SAVE_TRAINER_PARTIES = false
 
   # Defines a "Map Level" in which all wild pokemon in the map will be, based on the the party when the player first enters the map
   USE_MAP_LEVEL_FOR_WILD_POKEMON = false

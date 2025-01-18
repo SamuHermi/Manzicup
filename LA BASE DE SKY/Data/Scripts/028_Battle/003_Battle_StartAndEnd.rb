@@ -458,10 +458,10 @@ class Battle
                                   @opponent[0].full_name, @opponent[1].full_name, @opponent[2].full_name))
           end
         end
+      
         # Lose money from losing a battle
         pbLoseMoney
         pbDisplayPaused(_INTL("¡Estás fuera de combate!")) if !@canLose
-        $player.party.clear
       elsif @decision == 2   # Lost in a Battle Frontier battle
         if @opponent
           @opponent.each_with_index do |trainer, i|
@@ -479,11 +479,12 @@ class Battle
       PBDebug.log_header("===== Pokémon caught =====")
       PBDebug.log("")
       @scene.pbWildBattleSuccess if !Settings::GAIN_EXP_FOR_CAPTURE
-    end
+    
     # Register captured Pokémon in the Pokédex, and store them
     pbRecordAndStoreCaughtPokemon
     # Collect Pay Day money in a wild battle that ended in a capture
-    pbGainMoney if @decision == 4
+    pbGainMoney
+    end
     # Pass on Pokérus within the party
     if @internalBattle
       infected = []

@@ -311,7 +311,7 @@ Land,21
     10,VULPIX_1,11,14
 #-------------------------------
 [048] # Mazmorra
-Cave,5
+Land,21
     20,CHINGLING,1
     20,CLEFFA,1
     20,IGGLYBUFF,1
@@ -329,7 +329,7 @@ Cave,5
     10,TYROGUE,1
 #-------------------------------
 [077] # Mazmorra
-Cave,5
+Water,2
     20,CHINGLING,1
     20,CLEFFA,1
     20,IGGLYBUFF,1
@@ -356,7 +356,7 @@ Cave,5
     10,TYROGUE,1
 #-------------------------------
 [080] # Mazmorra
-Cave,5
+Land,21
     20,CHINGLING,1
     20,CLEFFA,1
     20,IGGLYBUFF,1
@@ -365,7 +365,7 @@ Cave,5
     10,TYROGUE,1
 #-------------------------------
 [081] # Mazmorra
-Cave,5
+Land,21
     20,CHINGLING,1
     20,CLEFFA,1
     20,IGGLYBUFF,1

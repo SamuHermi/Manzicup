@@ -149,7 +149,7 @@ class Battle::Scene
     scene = PokemonParty_Scene.new
     switchScreen = PokemonPartyScreen.new(scene, modParty)
     msg = _INTL("Elige un Pokémon.")
-    msg = _INTL("¿Qué Pokémon enviar al PC?") if mode == 1
+    msg = _INTL("¿Qué Pokémon liberar?") if mode == 1
     switchScreen.pbStartScene(msg, @battle.pbNumPositions(0, 0))
     # Loop while in party screen
     loop do

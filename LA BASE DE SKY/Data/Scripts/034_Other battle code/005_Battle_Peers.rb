@@ -3,7 +3,9 @@
 #===============================================================================
 class Battle::Peer
   def pbStorePokemon(player, pkmn)
+    
     if !player.party_full?
+      
       player.party[player.party.length] = pkmn
       return -1
     end

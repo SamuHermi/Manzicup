@@ -4,28 +4,32 @@
 #===============================================================================
 class Battle::Move::UserTakesTargetItem < Battle::Move
   def pbEffectAfterAllHits(user, target)
-    return if user.wild?   # Wild Pokémon can't thieve
-    return if user.fainted?
-    return if target.damageState.unaffected || target.damageState.substitute
-    return if !target.item || (user.item && !target.wild?)
-    return if target.unlosableItem?(target.item)
-    return if user.unlosableItem?(target.item)
-    return if target.hasActiveAbility?(:STICKYHOLD) && !@battle.moldBreaker
-    itemName = target.itemName
-    user.item = target.item unless target.wild?
-    # Permanently steal the item from wild Pokémon
-    if target.wild? && target.item == target.initialItem #&& !user.initialItem
-      # user.setInitialItem(target.item)
-      # De acuerdo a los cambios de 9na gen los objetos robados de salvajes deben ir a la mochila
-      $bag.add(target.item)
-      target.pbRemoveItem
-      @battle.pbDisplay(_INTL("¡{1} robó {2} a {3}! ¡El objeto está en la mochila!", user.pbThis, itemName, target.pbThis(true)))
-    else
-      target.pbRemoveItem(false)
-      @battle.pbDisplay(_INTL("¡{1} robó {2} a {3}!", user.pbThis, itemName, target.pbThis(true)))
-    end
-    user.pbHeldItemTriggerCheck
+    pbStealItem(user,target)
   end
+end
+
+def pbStealItem(user,target)
+  return if user.wild?   # Wild Pokémon can't thieve
+  return if user.fainted?
+  return if target.damageState.unaffected || target.damageState.substitute
+  return if !target.item || (user.item && !target.wild?)
+  return if target.unlosableItem?(target.item)
+  return if user.unlosableItem?(target.item)
+  return if target.hasActiveAbility?(:STICKYHOLD) && !@battle.moldBreaker
+  itemName = target.itemName
+  user.item = target.item unless target.wild?
+  # Permanently steal the item from wild Pokémon
+  if target.wild? && target.item == target.initialItem #&& !user.initialItem
+    # user.setInitialItem(target.item)
+    # De acuerdo a los cambios de 9na gen los objetos robados de salvajes deben ir a la mochila
+    $bag.add(target.item)
+    target.pbRemoveItem
+    @battle.pbDisplay(_INTL("¡{1} robó {2} a {3}! ¡El objeto está en la mochila!", user.pbThis, itemName, target.pbThis(true)))
+  else
+    target.pbRemoveItem(false)
+    @battle.pbDisplay(_INTL("¡{1} robó {2} a {3}!", user.pbThis, itemName, target.pbThis(true)))
+  end
+  user.pbHeldItemTriggerCheck
 end
 
 #===============================================================================

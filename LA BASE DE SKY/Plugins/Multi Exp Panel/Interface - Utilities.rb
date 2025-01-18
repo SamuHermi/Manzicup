@@ -1,3 +1,7 @@
+#===============================================================================
+# CREDITOS
+# Swdfm
+#===============================================================================
 class Swdfm_Exp_Screen
   def set_comparative_z(first_tile, second_tile, amount = 1)
     set_to = @sprites[second_tile].z

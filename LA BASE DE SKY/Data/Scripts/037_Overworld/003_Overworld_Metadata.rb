@@ -30,6 +30,7 @@ class PokemonGlobalMetadata
   # Special battle modes
   attr_accessor :safariState
   attr_accessor :bugContestState
+  attr_accessor :dungeonState
   attr_accessor :challenge
   attr_accessor :lastbattle      # Saved recording of a battle
   # Events
@@ -85,6 +86,7 @@ class PokemonGlobalMetadata
     # Special battle modes
     @safariState          = nil
     @bugContestState      = nil
+    @dungeonState         = nil
     @challenge            = nil
     @lastbattle           = nil
     # Events

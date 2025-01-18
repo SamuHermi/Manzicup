@@ -1,0 +1,26 @@
+===Change Log===
+1.1.2
+- Fixed player message handling so you can have just a single string instead of choices. This message will appear just like NPC messages would (no player input).
+
+
+1.1.1
+- Fixed a crash that would occur if an Instant conversation contained more than 1 line of text
+
+
+1.1 
+- New feature: Sorting Conversations. Using the SPECIAL key, you can sort the group list by Newest first, Unread first, or Alphabetically.
+- New feature: Pinning Conversations. Using the ACTION key, you can toggle whether or not a group is pinned to the top of the group list.
+- New feature: Timestamps. Added timestamps, which will appear above individual conversations. Along with this, I've changed the old divider to show "Unread" to help distinguish which messages the player hasn't yet seen.
+- New feature: Delayed Messages. Using pbPendDelayedIM, pend an Instant Message to be sent to the player after a set number of steps/amount of time. These messages take priority over Sequential or Random passive messages. For example, you might want your rival to send you a message 60 minutes after the battle you just had.
+- New feature: Pending Random Messages. In addition to messages included in the predefined PASSIVE_TRIGGERS_RANDOM_POOL, you can add messages to that pool dynamically using pbPendRandomIM. For example, you can pend a random message after talking to a minor NPC, without having to create a switch to keep track that you talked to them.
+- Added 3 new settings to control new features: SHOW_TIME_STAMPS, ALLOW_SORTING, and ALLOW_PINNING
+- Changed the Delay Time/Variable parameter used in conversation configurations to now use seconds instead of frames
+- Fixed issue where v21 frames checking wasn't properly implemented
+- Fixed issue where on_step_taken handler was being used instead of on_player_step_taken for passive triggers
+- Fixed issue where new groups or groups with new messages weren't being sorted to the top of the group list
+- Fixed issue where the group list was only showing 6 groups at a time
+- Fixed issue where the up/down arrows weren't implemented for long lists of groups
+
+
+1.0 
+- Initial Release

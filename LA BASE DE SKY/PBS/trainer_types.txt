@@ -1,4 +1,4 @@
-﻿# See the documentation on the wiki to learn how to edit this file.
+﻿# Consulta la documentación en la wiki para aprender cómo editar este archivo.
 #-------------------------------
 [POKEMONTRAINER_Red]
 Name = Entrenador Pokémon
@@ -487,9 +487,16 @@ VictoryBGM = Battle victory leader
 [TRIPULANTE]
 Name = Tripulante
 Gender = Unknown
-BaseMoney = 4
-SkillLevel = 16
+BaseMoney = 8
+SkillLevel = 10
 BattleBGM = Battle Amongus
+#-------------------------------
+[ESTRATEGA]
+Name = Estratega
+Gender = Unknown
+BaseMoney = 8
+SkillLevel = 10
+BattleBGM = Battle TFT
 #-------------------------------
 [OTAKA_LIDER]
 Name = Otaka culiada
@@ -585,4 +592,4 @@ BattleBGM = Battle Devere
 Name = Clérigo
 Gender = Male
 BaseMoney = 100
-BattleBGM = Battle Devere
+BattleBGM = Battle Lylgivunt

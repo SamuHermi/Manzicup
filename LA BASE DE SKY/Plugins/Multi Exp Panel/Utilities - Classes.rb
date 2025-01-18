@@ -1,3 +1,7 @@
+#===============================================================================
+# CREDITOS
+# Swdfm
+#===============================================================================
 def pbPackageBitmap(bmp)
   bmp = [bmp] unless bmp.is_a?(Array)
   return AnimatedBitmap_Swdfm_Layer.new(bmp)

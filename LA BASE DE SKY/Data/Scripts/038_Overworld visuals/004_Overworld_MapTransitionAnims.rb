@@ -92,14 +92,7 @@ def pbStartOver(gameover = false)
       pbMessage("\\w[]\\wm\\c[13]\\l[3]" +
                 _INTL("Has salido corriendo hacia la base para no sufrir más daño..."))
     end
-    pbMessage("\\w[]\\wm\\c[13]\\l[3]" +
-      _INTL("¡Todos tus Pokémon te han abandonado!"))  
-
-      pbMessage("\\w[]\\wm\\c[13]\\l[3]" +
-      _INTL("Todo tu dinero se ha convertido en monedas.\nHas conseguido {1} monedas",$player.money/100))  
-    $player.coins += $player.money/100
-    $player.money = 0
-
+    #pbLoseDungeon if pbInDungeon?
     pbCancelVehicles
     Followers.clear
     $game_switches[60] = false
@@ -137,7 +130,7 @@ def pbStartOver(gameover = false)
       $game_temp.player_new_y         = homedata[2]
       $game_temp.player_new_direction = homedata[3]
       pbDismountBike
-      $scene.transfer_player if $scene.is_a?(Scene_Map)
+     $scene.transfer_player if $scene.is_a?(Scene_Map)
       $game_map.refresh
     else
       $player.heal_party

@@ -656,6 +656,7 @@ def darEquipoDePrueba()
     species = [:PIKACHU, :PIDGEOTTO, :KADABRA, :GYARADOS, :DIGLETT, :CHANSEY]
     species.each { |id| party.push(id) if GameData::Species.exists?(id) }
     $player.party.clear
+    
     # Generate Pokémon of each species at level 20
     party.each do |spec|
       pkmn = Pokemon.new(spec, 20)

@@ -255,6 +255,19 @@ def pbBattleFactoryRules(double, openlevel)
   return ret
 end
 
+def pbBattleDungeonRules(double,openlevel)
+  ret = PokemonChallengeRules.new
+  if openlevel
+    ret.setLevelAdjustment(FixedLevelAdjustment.new(100))
+    ret.addPokemonRule(MaximumLevelRestriction.new(100))
+  else
+    ret.setLevelAdjustment(FixedLevelAdjustment.new(50))
+    ret.addPokemonRule(MaximumLevelRestriction.new(50))
+  end
+  ret.setDoubleBattle(double)
+  return ret
+end  
+
 #===============================================================================
 # Other Interesting Rulesets
 #===============================================================================

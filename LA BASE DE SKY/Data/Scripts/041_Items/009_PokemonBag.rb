@@ -215,6 +215,21 @@ class PokemonBag
     @new_items ||= []
     @new_items.delete(item_data.id) if item_data
   end
+
+  def remove_non_important
+    # Obtener el inventario del jugador
+    @pockets.each do |pocket|
+      next if !pocket
+      for a in 1..20 do
+        pocket.each do |item|  
+
+        Console.echo_li(GameData::Item.get(item[0]).name)
+        $bag.remove(GameData::Item.get(item[0]).id,item[1]) if !GameData::Item.get(item[0]).is_important?()
+        end
+      end
+    end
+  end
+
   ### PREPARACION DE DETECTAR OBJETOS NUEVOS - AUN NO SE USA ###
 
   #-----------------------------------------------------------------------------

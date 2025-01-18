@@ -74,6 +74,7 @@ module Battle::CatchAndStoreMixin
       end
     end
     # Store as normal (add to party if there's space, or send to a Box if not)
+    
     stored_box = @peer.pbStorePokemon(pbPlayer, pkmn)
     if stored_box < 0
       pbDisplayPaused(_INTL("{1} se ha añadido a tu equipo.", pkmn.name))

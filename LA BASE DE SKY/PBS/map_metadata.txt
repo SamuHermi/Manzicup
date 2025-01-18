@@ -460,3 +460,7 @@ Flags = ScaleWildEncounterLevels
 [082]   # Jardín
 Name = Jardín
 SnapEdges = true
+#-------------------------------
+[089]   # Gimnasio AmongUs
+Name = Gimnasio AmongUs
+SnapEdges = true

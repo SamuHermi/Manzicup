@@ -149,6 +149,7 @@ class Battle::Move
   #-----------------------------------------------------------------------------
   def windMove?;        return @flags.any? { |f| f[/^Wind$/i] };            end
   def slicingMove?;     return @flags.any? { |f| f[/^Slicing$/i] };         end
+  def fieldMove?;     return @flags.any? { |f| f[/^Field$/i] };         end
   def electrocuteUser?; return @flags.any? { |f| f[/^ElectrocuteUser$/i] }; end
   def kickingMove?;       return @flags.any? { |f| f[/^Kicking$/i] };       end    
     

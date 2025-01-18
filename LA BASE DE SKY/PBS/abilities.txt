@@ -1252,9 +1252,6 @@ Description = Su caparazón encierra energía de todos los tipos. Gracias a ello
 Name = Teracaparazón
 Description = Cuando Terapagos adopta la Forma Astral, anula todos los efectos del tiempo atmosférico y de los campos que haya en el terreno gracias a su poder oculto.
 #-------------------------------
-
-
-#-------------------------------
 [CRYPTIC]
 Name = Críptico
 Description = Potencia sus características al tener Unowns aliados.
@@ -1282,3 +1279,23 @@ Description = Levitación y Piel Celeste.
 [CHILLDUDE]
 Name = Mente fría
 Description = El Pokémon siempre actúa con lentitud, pero aumenta 30% la potencia de los movimientos.
+#------------------------------
+[POWEROFFRIENDSHIP]
+Name = Poder de la amistad
+Description = Al entrar en combate, su Ataque y su Ataque Especial aumentan un poco por cada miembro del equipo que siga con vida hasta el momento.
+#------------------------------
+[DIVINEMOTH]
+Name = Polilla divina
+Description = Al entrar en combate, su Ataque Especial y Velocidad aumentan.
+#------------------------------
+[NOCTURNAL]
+Name = Nocturnidad
+Description = Al entrar en combate, invoca oscuridad que daña a todos los Pokémon durante turnos.
+#------------------------------
+[PREDATOR]
+Name = Depredador
+Description = Al derrotar a un Pokémon rival, se cura un 25% de su vida máxima.
+#------------------------------
+[FIELDEXPLORER]
+Name = Explorador
+Description = Potencia un 50% los movimientos que se pueden aprender por MO.

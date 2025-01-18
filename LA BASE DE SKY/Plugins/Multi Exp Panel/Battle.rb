@@ -1,3 +1,9 @@
+#===============================================================================
+# CREDITOS
+# Swdfm
+#===============================================================================
+
+
 class Battle
   def pbGainExp
     values = []
@@ -7,7 +13,7 @@ class Battle
     return if !@internalBattle || !@expGain
     # Go through each battler in turn to find the Pokémon that participated in
     # battle against it, and award those Pokémon Exp/EVs
-    expAll = $player.has_exp_all || $bag.has?(:EXPALL)
+    expAll = true
     p1 = pbParty(0)
     @battlers.each do |b|
       next unless b&.opposes?   # Can only gain Exp from fainted foes
@@ -24,7 +30,7 @@ class Battle
       if !expAll
         eachInTeam(0, 0) do |pkmn, i|
           next if !pkmn.able?
-          next if !pkmn.hasItem?(:EXPSHARE) && GameData::Item.try_get(@initialItems[0][i]) != :EXPSHARE
+          next if !pkmn.hasItem?(:EXPSHARE) && GameData::Item.try_get(@initialItems[0][i]) != :EXPSHARE && !pkmn.expshare
           expShare.push(i)
         end
       end
@@ -62,7 +68,7 @@ class Battle
       s = Swdfm_Exp_Screen.new(values)
       # Clear the participants array
       for i in 0...$player.party.size
-        next if values[i] == 0
+        next if values[i] == 0 or !values[i]
         pbActualLevelUpAndGatherMoves(i, values[i])
       end
       b.participants = []
@@ -116,7 +122,7 @@ class Battle
     end
     # Foreign Pokémon gain more Exp
     isOutsider = (pkmn.owner.id != pbPlayer.id ||
-                 (pkmn.owner.language != 0 && pkmn.owner.language != pbPlayer.language))
+                  (pkmn.owner.language != 0 && pkmn.owner.language != pbPlayer.language))
     if isOutsider
       if pkmn.owner.language != 0 && pkmn.owner.language != pbPlayer.language
         exp = (exp * 1.7).floor
@@ -146,7 +152,7 @@ class Battle
   
   def pbActualLevelUpAndGatherMoves(idxParty, expGained)
     pkmn = pbParty(0)[idxParty]
-    $stats.total_exp_gained += expGained
+    $stats.total_exp_gained += expGained if expGained
     battler  = pbFindBattler(idxParty)
     new_lvl  = pkmn.growth_rate.level_from_exp(pkmn.exp + expGained)
     moves    = []
@@ -161,8 +167,8 @@ class Battle
     battler&.pbUpdate(false)
     @scene.pbRefreshOne(battler.index) if battler
     return if moves.empty?
-	moves.each { |m|
-  	  pbLearnMove(idxParty, m)
-	}
+  moves.each { |m|
+      pbLearnMove(idxParty, m)
+  }
   end
 end

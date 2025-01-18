@@ -1,4 +1,4 @@
-﻿# See the documentation on the wiki to learn how to edit this file.
+﻿# Consulta la documentación en la wiki para aprender cómo editar este archivo.
 #-------------------------------
 [CAMPER,Liam]
 LoseText = ¡Qué gran combate!
@@ -9,10 +9,10 @@ Pokemon = BONSLY,11
 Items = FULLRESTORE,FULLRESTORE
 LoseText = ¡Muy bien hecho!
 Pokemon = GEODUDE,12
+    Form = 1
     Moves = DEFENSECURL,HEADSMASH,ROCKPOLISH,ROCKTHROW
     AbilityIndex = 0
     Gender = male
-	Form = 1
     IV = 20,20,20,20,20,20
 Pokemon = ONIX,14
     Name = Rocky
@@ -130,6 +130,118 @@ Pokemon = STUFFUL,14
 Pokemon = MIMIKYU,16
     Moves = SHADOWSNEAK,SCRATCH,DRAININGKISS
 #-------------------------------
+[BBEG,Moridon]
+LoseText = ¿He vuelto a perder?
+Pokemon = SLOWKING,23
+    Form = 1
+    Moves = ACID,EERIESPELL,TOXIC,CHILLYRECEPTION
+    AbilityIndex = 2
+    Item = BLACKSLUDGE
+Pokemon = YAMASK,22
+    Form = 1
+    Moves = DISABLE,NIGHTSHADE,THIEF,WILLOWISP
+    Item = MUSCLEBAND
+Pokemon = HOUNDOUR,22
+    Moves = TAUNT,INCINERATE,BITE,PSYCHICFANGS
+    Nature = ADAMANT
+#-------------------------------
+[NOCANON,Lumine]
+Items = MEGARING
+LoseText = ...
+Pokemon = KECLEON,28
+    Moves = SHADOWSNEAK,SLASH,BRICKBREAK,AERIALACE
+    AbilityIndex = 2
+    Item = WEAKNESSPOLICY
+Pokemon = LUNATONE,28
+    Moves = COSMICPOWER,STOREDPOWER,TOXIC,MOONLIGHT
+    AbilityIndex = 0
+    Item = LEFTOVERS
+Pokemon = SHIINOTIC,29
+    Moves = STRENGTHSAP,MEGADRAIN,DRAININGKISS
+    AbilityIndex = 1
+    Item = BIGROOT
+Pokemon = AERODACTYL,30
+    Moves = STEALTHROCK,ROAR,ROCKSLIDE,WINGATTACK
+    Item = FOCUSSASH
+#-------------------------------
+[IMPOSTOR,Rojo]
+LoseText = ...
+Pokemon = ORBEETLE,38
+    Moves = STICKYWEB,INFESTATION,REFLECT,LIGHTSCREEN
+    Item = LIGHTCLAY
+Pokemon = STUNFISK,37
+    Form = 1
+    Moves = BULLDOZE,ROCKSLIDE,YAWN,PAINSPLIT
+    Item = LEFTOVERS
+Pokemon = DITTO,38
+    AbilityIndex = 2
+    Item = CHOICESCARF
+Pokemon = AMOONGUSS,39
+    Moves = TOXIC,GIGADRAIN,SLUDGEBOMB,CLEARSMOG
+    Item = ROCKYHELMET
+#-------------------------------
+[PAPI,Swolio]
+Items = MEGARING
+LoseText = ...
+Pokemon = SLAKING,48
+    Moves = GIGAIMPACT,EARTHQUAKE,PLAYROUGH,OUTRAGE
+    Item = CHOICEBAND
+Pokemon = PERRSERKER,48
+    Moves = IRONHEAD,UTURN,CLOSECOMBAT,RAINDANCE
+    AbilityIndex = 2
+    Item = ASSAULTVEST
+Pokemon = MACHAMP,49
+    Moves = CLOSECOMBAT,FACADE,KNOCKOFF,BULLETPUNCH
+    AbilityIndex = 0
+    Item = FLAMEORB
+Pokemon = SWAMPERT,49
+    Moves = WATERFALL,EARTHQUAKE,ICEPUNCH,SUPERPOWER
+    AbilityIndex = 2
+    Item = MEGASTONE
+#-------------------------------
+[MANADA,monstruos]
+Items = MEGARING
+LoseText = ...
+Pokemon = EMOLGA,53
+    Name = Kadachi
+    Moves = ACROBATICS,KNOCKOFF,SPARK,ROOST
+    AbilityIndex = 2
+Pokemon = MILOTIC,53
+    Name = Mizutsune
+    Moves = SCALD,RECOVER,HAZE,DRAININGKISS
+    Item = LEFTOVERS
+Pokemon = GARCHOMP,53
+    Name = Diablos
+    Moves = SWORDSDANCE,SCALESHOT,EARTHQUAKE,FIREFANG
+    Item = YACHEBERRY
+Pokemon = CORVIKNIGHT,53
+    Name = Kushala
+    Moves = BODYPRESS,BRAVEBIRD,BULKUP,ROOST
+    AbilityIndex = 2
+    Item = ROCKYHELMET
+Pokemon = CHARIZARD,54
+    Name = Rathalos
+    Moves = FLAMETHROWER,AIRSLASH,HURRICANE
+    Item = MEGASTONEX
+#-------------------------------
+[PROFETA,Zawezo]
+LoseText = ...
+Pokemon = BRONZONG,57
+    Moves = STEALTHROCK,GYROBALL,EARTHQUAKE,TOXIC
+    Item = LEFTOVERS
+Pokemon = NIDORINO,56
+    Moves = SLUDGEWAVE,EARTHPOWER,FIREBLAST,THUNDERBOLT
+    Item = EVIOLITE
+Pokemon = XATU,58
+    Moves = PSYCHIC,FOULPLAY,ROOST,UTURN
+    AbilityIndex = 2
+    Item = ROCKYHELMET
+Pokemon = VOLCARONA,59
+    Moves = QUIVERDANCE,ROOST,FIERYDANCE,BUGBUZZ
+    Item = HEAVYDUTYBOOTS
+Pokemon = MIRAIDON,59
+    Moves = ELECTRODRIFT,DRAGONPULSE,VOLTSWITCH
+#-------------------------------
 [TRIPULANTE,Azul]
 LoseText = ...
 Pokemon = TOXEL,33
@@ -148,36 +260,69 @@ Pokemon = ZUBAT,36
 [TRIPULANTE,Rosa]
 LoseText = ...
 Pokemon = GLOOM,36
-#------------------------------
+#-------------------------------
 [TRIPULANTE,Amarillo]
 LoseText = ...
 Pokemon = MORELULL,36
 Pokemon = SKIPLOOM,36
-#------------------------------
+#-------------------------------
 [TRIPULANTE,Naranja]
-LoseText = ... 
+LoseText = ...
 Pokemon = WEEPINBELL,36
-#------------------------------
+#-------------------------------
 [TRIPULANTE,Verde]
-LoseText = ... 
+LoseText = ...
 Pokemon = SERVINE,36
 Pokemon = BAYLEEF,36
-#------------------------------
+#-------------------------------
 [TRIPULANTE,Cian]
-LoseText = ... 
+LoseText = ...
 Pokemon = ROSELIA,36
 Pokemon = IVYSAUR,36
-#------------------------------
+#-------------------------------
+[ESTRATEGA,Pingu]
+LoseText = ...
+Pokemon = EMPOLEON,33
+Pokemon = PRINPLUP,32
+Pokemon = PIPLUP,33
+#-------------------------------
+[ESTRATEGA,Pengu]
+LoseText = ...
+Pokemon = IRONBUNDLE,33
+Pokemon = DELIBIRD,32
+#-------------------------------
+[ESTRATEGA,Pangu]
+LoseText = ...
+Pokemon = EISCUE,36
+#-------------------------------
+[ESTRATEGA,Pinga]
+LoseText = ...
+Pokemon = WIGLETT,36
+#-------------------------------
+[ESTRATEGA,Pongu]
+LoseText = ...
+Pokemon = MORELULL,36
+Pokemon = SKIPLOOM,36
+#-------------------------------
+[ESTRATEGA,Pungu]
+LoseText = ...
+Pokemon = WEEPINBELL,36
+#-------------------------------
+[ESTRATEGA,Pengo]
+LoseText = ...
+Pokemon = SERVINE,36
+Pokemon = BAYLEEF,36
+#-------------------------------
 [EXPLORADOR,Yurian]
+Items = HEAVYDUTYBOOTS
 LoseText = ...
 Pokemon = SAMUROTT,57
     Form = 1
     Moves = CEASELESSEDGE,RAZORSHELL,TAUNT,AQUAJET
-    Item = FOCUSSASH
     AbilityIndex = 2
+    Item = FOCUSSASH
 Pokemon = ARMAROUGE,57
     Moves = ARMORCANNON,CALMMIND,PSYSHOCK,ENERGYBALL
-    Items = HEAVYDUTYBOOTS
 Pokemon = GREATTUSK,57
     Moves = BULKUP,EARTHQUAKE,CLOSECOMBAT,HEADLONGRUSH
     Item = BOOSTERENERGY
@@ -188,22 +333,45 @@ Pokemon = ZYGARDE,58
 Pokemon = DECIDUEYE,58
     Moves = SPIRITSHACKLE,DEFOG,UTURN,GRASSKNOT
     AbilityIndex = 2
-#------------------------------
+#-------------------------------
 [CLERIGO,Lylgivunt]
+LoseText = ...
 Pokemon = CORVIKNIGHT,50
-	Shiny = true
+    Shiny = true
 Pokemon = ABSERAPH,50
 Pokemon = SIRFETCHD,50
 Pokemon = HOOH,50
 Pokemon = GLALIBERG,50
 #-------------------------------
-[MAYORDOMO,Devere]
+[MAYORDOMO,Deverè]
 Items = POTION,POTION
 LoseText = Espero que haya disfrutado del combate
 Pokemon = INDEEDEE,11
 Pokemon = NINETALES,11
 Pokemon = DARTRIX,12
-    Item = EVIOLITE	
+    Item = EVIOLITE
 Pokemon = BEARTIC,11
 Pokemon = ZAMAZENTA,11
-	Item = RUSTEDSHIELD
+    Item = RUSTEDSHIELD
+#------------------------------
+[PICARO,Hiro]
+LoseText = ...
+Pokemon = KUBFU,35
+    Moves = BULKUP,BRICKBREAK,HEADBUTT,AERIALACE
+Pokemon = KLEFKI,36
+    Moves = FLASHCANNON,DRAININGKISS,THUNDERWAVE,SUBSTITUTE
+Pokemon = MORGREM,36
+    Moves = PLAYROUGH,PARTINGSHOT,SUCKERPUNCH,SWAGGER
+Pokemon = SNEASLER,37
+    Moves = DIRECLAW,BRICKBREAK,HONECLAWS,METALCLAW
+#------------------------------
+[ENANO,Thorin]
+LoseText = ...
+Pokemon = GLIMMORA,43
+    Moves = STEALTHROCK,VENOSHOCK,TOXICSPIKES,SPIKYSHIELD
+Pokemon = BOMBIRDIER,44
+    Moves = PAYBACK,ROCKTOMB,PLUCK,WHIRLWIND
+Pokemon = PERSIAN,44
+    Moves = PLAYROUGH,PARTINGSHOT,SUCKERPUNCH,SWAGGER
+Pokemon = GHOLDENGO,45
+    Moves = MAKEITRAIN,SHADOWBALL,PAYDAY,NASTYPLOT

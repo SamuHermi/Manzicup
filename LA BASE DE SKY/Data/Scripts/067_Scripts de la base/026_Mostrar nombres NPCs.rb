@@ -130,18 +130,18 @@ module NameBox
   # Colores asociados a cada personaje
   NPCCOLORS = {
     # "Nombre" => [ColorBase, Sombra]
-    "Hermi" => [Color.new(248, 152,  24), Color.new(248, 200, 152)],
-    "Iria" => [Color.new(  0, 112, 248), Color.new(120, 184, 232)],
-    "Samer" => [Color.new(208,  56, 184),Color.new(232, 160, 224)],
-    "Isa" => [Color.new( 72, 216, 216), Color.new(168, 224, 224)],
-    "Bra" => [Color.new( 96, 176,  72), Color.new(174, 208, 144)],
-    "Pablo" => [Color.new(232,  32,  16), Color.new(248, 168, 184)],
+    "Hermi" => [Color.new(234, 159,  80), Color.new(199, 128, 54)],
+    "Iria" => [Color.new(  0, 112, 248), Color.new(0, 88, 196)],
+    "Samer" => [Color.new(208,  56, 184),Color.new(157, 42, 138)],
+    "Isa" => [Color.new( 10, 182, 230), Color.new(14, 129, 161)],
+    "Bra" => [Color.new(19, 189, 18), Color.new(52, 149, 51)],
+    "Pablo" => [Color.new(232,  32,  16), Color.new(166, 6, 6)],
     "Brais" => [Color.new(114,  64, 232), Color.new(184, 168, 224)],
-    "Jess" => [Color.new(52, 52, 52), Color.new(100, 100, 100)],
+    "Jess" => [Color.new(100, 100, 100), Color.new(52, 52, 52)],
     "Ana" =>  [Color.new(200, 200, 200), Color.new(150, 150, 150)],
-    "Rodri" => [Color.new(232, 208,  32), Color.new(248, 232, 136)],
-    "Sabo" => [Color.new(60, 35, 85),Color.new(52, 31, 74)],
-    "Nerea" => [Color.new(25, 177, 192),Color.new(21, 166, 181)],
+    "Rodri" => [Color.new(232, 208,  32), Color.new(174, 163, 18)],
+    "Sabo" => [Color.new(144, 111, 121),Color.new(94, 77, 82)],
+    "Nerea" => [Color.new(0, 232, 217),Color.new(21, 166, 181)],
     }
 
   # Si esto está en true el cuadro del nombre del NPC será del mismo estilo que el cuadro de texto elegido

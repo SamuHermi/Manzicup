@@ -1,0 +1,8287 @@
+poke = Pokemon.new(:BULBASAUR)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SAPPYSEED)
+		when (1)
+			poke.learn_move(:MALIGNANTCHAIN)
+		when (2)
+			poke.learn_move(:EARTHPOWER)
+		when (3)
+			poke.learn_move(:MATCHAGOTCHA)
+	end
+end
+
+poke = Pokemon.new(:CHARMANDER)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DRAGONDANCE)
+		when (1)
+			poke.learn_move(:BITTERBLADE)
+		when (2)
+			poke.learn_move(:EARTHPOWER)
+		when (3)
+			poke.learn_move(:OBLIVIONWING)
+	end
+end
+
+poke = Pokemon.new(:SQUIRTLE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FREEZEDRY)
+		when (1)
+			poke.learn_move(:ARMORCANNON)
+		when (2)
+			poke.learn_move(:BOUNCYBUBBLE)
+		when (3)
+			poke.learn_move(:ORIGINPULSE)
+	end
+end
+
+poke = Pokemon.new(:CATERPIE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SANDSEARSTORM)
+		when (1)
+			poke.learn_move(:SILKTRAP)
+		when (2)
+			poke.learn_move(:TWINBEAM)
+		when (3)
+			poke.learn_move(:BLEAKWINDSTORM)
+	end
+end
+
+poke = Pokemon.new(:METAPOD)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SANDSEARSTORM)
+		when (1)
+			poke.learn_move(:SILKTRAP)
+		when (2)
+			poke.learn_move(:TWINBEAM)
+		when (3)
+			poke.learn_move(:BLEAKWINDSTORM)
+	end
+end
+
+poke = Pokemon.new(:BUTTERFREE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SANDSEARSTORM)
+		when (1)
+			poke.learn_move(:SILKTRAP)
+		when (2)
+			poke.learn_move(:TWINBEAM)
+		when (3)
+			poke.learn_move(:BLEAKWINDSTORM)
+	end
+end
+
+poke = Pokemon.new(:WEEDLE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:THOUSANDARROWS)
+		when (1)
+			poke.learn_move(:NOXIOUSTORQUE)
+		when (2)
+			poke.learn_move(:ATTACKORDER)
+		when (3)
+			poke.learn_move(:VICTORYDANCE)
+	end
+end
+
+poke = Pokemon.new(:PIDGEY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:WILDBOLTSTORM)
+		when (1)
+			poke.learn_move(:SANDSEARSTORM)
+		when (2)
+			poke.learn_move(:NASTYPLOT)
+		when (3)
+			poke.learn_move(:BOOMBURST)
+	end
+end
+
+poke = Pokemon.new(:RATTATA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:HYPERFANG)
+		when (1)
+			poke.learn_move(:PSYCHICFANGS)
+		when (2)
+			poke.learn_move(:FIREFANG)
+		when (3)
+			poke.learn_move(:EXTREMESPEED)
+	end
+end
+
+poke = Pokemon.new(:SPEAROW)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FLOATYFALL)
+		when (1)
+			poke.learn_move(:HYPERDRILL)
+		when (2)
+			poke.learn_move(:TIDYUP)
+		when (3)
+			poke.learn_move(:TRIPLEARROWS)
+	end
+end
+
+poke = Pokemon.new(:EKANS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:NOXIOUSTORQUE)
+		when (1)
+			poke.learn_move(:DRAGONDANCE)
+		when (2)
+			poke.learn_move(:SLACKOFF)
+		when (3)
+			poke.learn_move(:SHEDTAIL)
+	end
+end
+
+poke = Pokemon.new(:PIKACHU)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MOONBLAST)
+		when (1)
+			poke.learn_move(:TRIPLEAXEL)
+		when (2)
+			poke.learn_move(:FIERYDANCE)
+		when (3)
+			poke.learn_move(:AURAWHEEL)
+	end
+end
+
+poke = Pokemon.new(:SANDSHREW)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:HIGHHORSEPOWER)
+		when (1)
+			poke.learn_move(:DIRECLAW)
+		when (2)
+			poke.learn_move(:SHOREUP)
+		when (3)
+			poke.learn_move(:MIGHTYCLEAVE)
+	end
+end
+
+poke = Pokemon.new(:NIDORANfE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:CALMMIND)
+		when (1)
+			poke.learn_move(:MOONLIGHT)
+		when (2)
+			poke.learn_move(:MALIGNANTCHAIN)
+		when (3)
+			poke.learn_move(:SANDSEARSTORM)
+	end
+end
+
+poke = Pokemon.new(:NIDORANmA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DRAGONDANCE)
+		when (1)
+			poke.learn_move(:MOUNTAINGALE)
+		when (2)
+			poke.learn_move(:NOXIOUSTORQUE)
+		when (3)
+			poke.learn_move(:PRECIPICEBLADES)
+	end
+endl
+
+poke = Pokemon.new(:CLEFAIRY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:CALMMIND)
+		when (1)
+			poke.learn_move(:EARTHPOWER)
+		when (2)
+			poke.learn_move(:WISH)
+		when (3)
+			poke.learn_move(:LIGHTOFRUIN)
+	end
+end
+
+poke = Pokemon.new(:VULPIX)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MOONBLAST)
+		when (1)
+			poke.learn_move(:INFERNALPARADE)
+		when (2)
+			poke.learn_move(:MORNINGSUN)
+		when (3)
+			poke.learn_move(:TAILGLOW)
+	end
+end
+
+poke = Pokemon.new(:JIGGLYPUFF)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DRAINPUNCH)
+		when (1)
+			poke.learn_move(:GRAVAPPLE)
+		when (2)
+			poke.learn_move(:SOFTBOILED)
+		when (3)
+			poke.learn_move(:EXTREMESPEED)
+	end
+end
+
+poke = Pokemon.new(:ZUBAT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FLOATYFALL)
+		when (1)
+			poke.learn_move(:DIRECLAW)
+		when (2)
+			poke.learn_move(:SWORDSDANCE)
+		when (3)
+			poke.learn_move(:COLLISIONCOURSE)
+	end
+end
+
+poke = Pokemon.new(:ODDISH)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SLUDGEBOMB)
+		when (1)
+			poke.learn_move(:FIERYDANCE)
+		when (2)
+			poke.learn_move(:STRENGTHSAP)
+		when (3)
+			poke.learn_move(:SPORE)
+	end
+end
+
+poke = Pokemon.new(:PARAS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:LEECHLIFE)
+		when (1)
+			poke.learn_move(:HORNLEECH)
+		when (2)
+			poke.learn_move(:CRABHAMMER)
+		when (3)
+			poke.learn_move(:SAPPYSEED)
+	end
+end
+
+poke = Pokemon.new(:VENONAT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SLUDGEBOMB)
+		when (1)
+			poke.learn_move(:TOXICTHREAD)
+		when (2)
+			poke.learn_move(:EARTHPOWER)
+		when (3)
+			poke.learn_move(:STOREDPOWER)
+	end
+end
+
+poke = Pokemon.new(:DIGLETT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TRIPLEDIVE)
+		when (1)
+			poke.learn_move(:SWORDSDANCE)
+		when (2)
+			poke.learn_move(:TRIPLEAXEL)
+		when (3)
+			poke.learn_move(:HEADLONGRUSH)
+	end
+end
+
+poke = Pokemon.new(:MEOWTH)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:HEARTSTAMP)
+		when (1)
+			poke.learn_move(:SWORDSDANCE)
+		when (2)
+			poke.learn_move(:SIZZLYSLIDE)
+		when (3)
+			poke.learn_move(:TAILSLAP)
+	end
+end
+
+poke = Pokemon.new(:PSYDUCK)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FROSTBREATH)
+		when (1)
+			poke.learn_move(:AQUASTEP)
+		when (2)
+			poke.learn_move(:MYSTICALPOWER)
+		when (3)
+			poke.learn_move(:BOUNCYBUBBLE)
+	end
+end
+
+poke = Pokemon.new(:MANKEY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DRAINPUNCH)
+		when (1)
+			poke.learn_move(:SLACKOFF)
+		when (2)
+			poke.learn_move(:METEORMASH)
+		when (3)
+			poke.learn_move(:NORETREAT)
+	end
+end
+
+poke = Pokemon.new(:GROWLITHE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ZINGZAP)
+		when (1)
+			poke.learn_move(:PARTINGSHOT)
+		when (2)
+			poke.learn_move(:MORNINGSUN)
+		when (3)
+			poke.learn_move(:SACREDFIRE)
+	end
+end
+
+poke = Pokemon.new(:POLIWAG)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SLACKOFF)
+		when (1)
+			poke.learn_move(:WILDBOLTSTORM)
+		when (2)
+			poke.learn_move(:DRAINPUNCH)
+		when (3)
+			poke.learn_move(:SURGINGSTRIKES)
+	end
+end
+
+poke = Pokemon.new(:ABRA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:AURASPHERE)
+		when (1)
+			poke.learn_move(:BADDYBAD)
+		when (2)
+			poke.learn_move(:ICEBEAM)
+		when (3)
+			poke.learn_move(:PSYSTRIKE)
+	end
+end
+
+poke = Pokemon.new(:MACHOP)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:COMBATTORQUE)
+		when (1)
+			poke.learn_move(:METEORMASH)
+		when (2)
+			poke.learn_move(:MOUNTAINGALE)
+		when (3)
+			poke.learn_move(:FISSURE)
+	end
+end
+
+poke = Pokemon.new(:BELLSPROUT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SOLARBLADE)
+		when (1)
+			poke.learn_move(:STRENGTHSAP)
+		when (2)
+			poke.learn_move(:FIRELASH)
+		when (3)
+			poke.learn_move(:VICTORYDANCE)
+	end
+end
+
+poke = Pokemon.new(:TENTACOOL)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BANEFULBUNKER)
+		when (1)
+			poke.learn_move(:MALIGNANTCHAIN)
+		when (2)
+			poke.learn_move(:BOUNCYBUBBLE)
+		when (3)
+			poke.learn_move(:STRENGTHSAP)
+	end
+end
+
+poke = Pokemon.new(:GEODUDE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FLAREBLITZ)
+		when (1)
+			poke.learn_move(:HEADSMASH)
+		when (2)
+			poke.learn_move(:SHOREUP)
+		when (3)
+			poke.learn_move(:SHELLSMASH)
+	end
+end
+
+poke = Pokemon.new(:PONYTA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:HEADLONGRUSH)
+		when (1)
+			poke.learn_move(:FIRELASH)
+		when (2)
+			poke.learn_move(:SWORDSDANCE)
+		when (3)
+			poke.learn_move(:VOLTTACKLE)
+	end
+end
+
+poke = Pokemon.new(:SLOWPOKE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BOUNCYBUBBLE)
+		when (1)
+			poke.learn_move(:FROSTBREATH)
+		when (2)
+			poke.learn_move(:SHEDTAIL)
+		when (3)
+			poke.learn_move(:MYSTICALPOWER)
+	end
+end
+
+poke = Pokemon.new(:MAGNEMITE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:PARABOLICCHARGE)
+		when (1)
+			poke.learn_move(:FLAMETHROWER)
+		when (2)
+			poke.learn_move(:ICEBEAM)
+		when (3)
+			poke.learn_move(:THUNDERCLAP)
+	end
+end
+
+poke = Pokemon.new(:FARFETCH'D)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:IVYCUDGEL)
+		when (1)
+			poke.learn_move(:TRIPLEARROWS)
+		when (2)
+			poke.learn_move(:DRILLRUN)
+		when (3)
+			poke.learn_move(:VICTORYDANCE)
+	end
+end
+
+poke = Pokemon.new(:DODUO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TRIPLEAXEL)
+		when (1)
+			poke.learn_move(:HYPERDRILL)
+		when (2)
+			poke.learn_move(:FLOATYFALL)
+		when (3)
+			poke.learn_move(:TRIPLEARROWS)
+	end
+end
+
+poke = Pokemon.new(:SEEL)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FREEZEDRY)
+		when (1)
+			poke.learn_move(:BOUNCYBUBBLE)
+		when (2)
+			poke.learn_move(:SLACKOFF)
+		when (3)
+			poke.learn_move(:STEAMERUPTION)
+	end
+end
+
+poke = Pokemon.new(:GRIMER)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SUCKERPUNCH)
+		when (1)
+			poke.learn_move(:CURSE)
+		when (2)
+			poke.learn_move(:NOXIOUSTORQUE)
+		when (3)
+			poke.learn_move(:STRENGTHSAP)
+	end
+end
+
+poke = Pokemon.new(:SHELLDER)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ROCKBLAST)
+		when (1)
+			poke.learn_move(:WATERSHURIKEN)
+		when (2)
+			poke.learn_move(:BANEFULBUNKER)
+		when (3)
+			poke.learn_move(:BONERUSH)
+	end
+end
+poke = Pokemon.new(:GASTLY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MALIGNANTCHAIN)
+		when (1)
+			poke.learn_move(:AURASPHERE)
+		when (2)
+			poke.learn_move(:PARTINGSHOT)
+		when (3)
+			poke.learn_move(:DARKVOID)
+	end
+end
+
+poke = Pokemon.new(:ONIX)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SHOREUP)
+		when (1)
+			poke.learn_move(:THOUSANDWAVES)
+		when (2)
+			poke.learn_move(:COIL)
+		when (3)
+			poke.learn_move(:DIAMONDSTORM)
+	end
+end
+
+poke = Pokemon.new(:DROWZEE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BADDYBAD)
+		when (1)
+			poke.learn_move(:STRENGTHSAP)
+		when (2)
+			poke.learn_move(:LUMINACRASH)
+		when (3)
+			poke.learn_move(:DARKVOID)
+	end
+end
+
+poke = Pokemon.new(:KRABBY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DIRECLAW)
+		when (1)
+			poke.learn_move(:DRAGONHAMMER)
+		when (2)
+			poke.learn_move(:IVYCUDGEL)
+		when (3)
+			poke.learn_move(:JETPUNCH)
+	end
+end
+
+poke = Pokemon.new(:VOLTORB)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:NASTYPLOT)
+		when (1)
+			poke.learn_move(:FUSIONFLARE)
+		when (2)
+			poke.learn_move(:FROSTBREATH)
+		when (3)
+			poke.learn_move(:ELECTRODRIFT)
+	end
+end
+
+poke = Pokemon.new(:EXEGGCUTE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FICKLEBEAM)
+		when (1)
+			poke.learn_move(:APPLEACID)
+		when (2)
+			poke.learn_move(:TRICKROOM)
+		when (3)
+			poke.learn_move(:LUMINACRASH)
+	end
+end
+
+poke = Pokemon.new(:CUBONE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:HEADSMASH)
+		when (1)
+			poke.learn_move(:WOODHAMMER)
+		when (2)
+			poke.learn_move(:SHADOWSNEAK)
+		when (3)
+			poke.learn_move(:BITTERBLADE)
+	end
+end
+
+poke = Pokemon.new(:HITMONLEE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:VICTORYDANCE)
+		when (1)
+			poke.learn_move(:THUNDEROUSKICK)
+		when (2)
+			poke.learn_move(:METEORMASH)
+		when (3)
+			poke.learn_move(:WICKEDBLOW)
+	end
+end
+
+poke = Pokemon.new(:HITMONCHAN)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:VICTORYDANCE)
+		when (1)
+			poke.learn_move(:THUNDEROUSKICK)
+		when (2)
+			poke.learn_move(:METEORMASH)
+		when (3)
+			poke.learn_move(:WICKEDBLOW)
+	end
+end
+
+poke = Pokemon.new(:LICKITUNG)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:CRUSHGRIP)
+		when (1)
+			poke.learn_move(:FIRELASH)
+		when (2)
+			poke.learn_move(:SLACKOFF)
+		when (3)
+			poke.learn_move(:MAGICALTORQUE)
+	end
+end
+
+poke = Pokemon.new(:KOFFING)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SCALD)
+		when (1)
+			poke.learn_move(:RECOVER)
+		when (2)
+			poke.learn_move(:BODYPRESS)
+		when (3)
+			poke.learn_move(:MALIGNANTCHAIN)
+	end
+end
+
+poke = Pokemon.new(:RHYHORN)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SHOREUP)
+		when (1)
+			poke.learn_move(:ICEHAMMER)
+		when (2)
+			poke.learn_move(:ACCELEROCK)
+		when (3)
+			poke.learn_move(:HEADSMASH)
+	end
+end
+
+poke = Pokemon.new(:CHANSEY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:COTTONGUARD)
+		when (1)
+			poke.learn_move(:SEISMICTOSS)
+		when (2)
+			poke.learn_move(:SIZZLYSLIDE)
+		when (3)
+			poke.learn_move(:REVIVALBLESSING)
+	end
+end
+
+poke = Pokemon.new(:TANGELA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:NATURESMADNESS)
+		when (1)
+			poke.learn_move(:SNAPTRAP)
+		when (2)
+			poke.learn_move(:PARTINGSHOT)
+		when (3)
+			poke.learn_move(:SAPPYSEED)
+	end
+end
+
+poke = Pokemon.new(:KANGASKHAN)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:POWERUPPUNCH)
+		when (1)
+			poke.learn_move(:TRAILBLAZE)
+		when (2)
+			poke.learn_move(:FACADE)
+		when (3)
+			poke.learn_move(:SEISMICTOSS)
+	end
+end
+
+poke = Pokemon.new(:HORSEA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SNIPESHOT)
+		when (1)
+			poke.learn_move(:FROSTBREATH)
+		when (2)
+			poke.learn_move(:SLUDGEBOMB)
+		when (3)
+			poke.learn_move(:CLANGINGSCALES)
+	end
+end
+
+poke = Pokemon.new(:GOLDEEN)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:GLACIALLANCE)
+		when (1)
+			poke.learn_move(:SUPERCELLSLAM)
+		when (2)
+			poke.learn_move(:DRAGONDANCE)
+		when (3)
+			poke.learn_move(:FISHIOUSREND)
+	end
+end
+
+poke = Pokemon.new(:STARYU)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:CALMMIND)
+		when (1)
+			poke.learn_move(:BOUNCYBUBBLE)
+		when (2)
+			poke.learn_move(:MOONBLAST)
+		when (3)
+			poke.learn_move(:MYSTICALPOWER)
+	end
+end
+
+poke = Pokemon.new(:MR.MIME)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:CHILLYRECEPTION)
+		when (1)
+			poke.learn_move(:MOONBLAST)
+		when (2)
+			poke.learn_move(:FROSTBREATH)
+		when (3)
+			poke.learn_move(:LUMINACRASH)
+	end
+end
+
+poke = Pokemon.new(:SCYTHER)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MIGHTYCLEAVE)
+		when (1)
+			poke.learn_move(:GEARGRIND)
+		when (2)
+			poke.learn_move(:STORMTHROW)
+		when (3)
+			poke.learn_move(:BITTERBLADE)
+	end
+end
+
+poke = Pokemon.new(:JYNX)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:LUSTERPURGE)
+		when (1)
+			poke.learn_move(:AURASPHERE)
+		when (2)
+			poke.learn_move(:FREEZEDRY)
+		when (3)
+			poke.learn_move(:QUIVERDANCE)
+	end
+end
+
+poke = Pokemon.new(:ELECTABUZZ)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FIRELASH)
+		when (1)
+			poke.learn_move(:ZINGZAP)
+		when (2)
+			poke.learn_move(:MOUNTAINGALE)
+		when (3)
+			poke.learn_move(:SHIFTGEAR)
+	end
+end
+
+poke = Pokemon.new(:MAGMAR)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:THUNDERCLAP)
+		when (1)
+			poke.learn_move(:EARTHPOWER)
+		when (2)
+			poke.learn_move(:ENERGYBALL)
+		when (3)
+			poke.learn_move(:BLUEFLARE)
+	end
+end
+
+poke = Pokemon.new(:PINSIR)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:HEADLONGRUSH)
+		when (1)
+			poke.learn_move(:LEECHLIFE)
+		when (2)
+			poke.learn_move(:CRUSHGRIP)
+		when (3)
+			poke.learn_move(:EXTREMESPEED)
+	end
+end
+
+poke = Pokemon.new(:TAUROS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SWORDSDANCE)
+		when (1)
+			poke.learn_move(:FIRELASH)
+		when (2)
+			poke.learn_move(:WICKEDTORQUE)
+		when (3)
+			poke.learn_move(:COLLISIONCOURSE)
+	end
+end
+
+poke = Pokemon.new(:MAGIKARP)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FLIPTURN)
+		when (1)
+			poke.learn_move(:ICESPINNER)
+		when (2)
+			poke.learn_move(:DRAGONASCENT)
+		when (3)
+			poke.learn_move(:SURGINGSTRIKES)
+	end
+end
+
+poke = Pokemon.new(:LAPRAS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:RECOVER)
+		when (1)
+			poke.learn_move(:FREEZEDRY)
+		when (2)
+			poke.learn_move(:SCALD)
+		when (3)
+			poke.learn_move(:SHELLSMASH)
+	end
+end
+
+poke = Pokemon.new(:DITTO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MIMIC)
+		when (1)
+			poke.learn_move(:SKETCH)
+		when (2)
+			poke.learn_move(:METRONOME)
+		when (3)
+			poke.learn_move(:IMPRISON)
+	end
+end
+
+poke = Pokemon.new(:EEVEE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:WISH)
+		when (1)
+			poke.learn_move(:NORETREAT)
+		when (2)
+			poke.learn_move(:ZIPPYZAP)
+		when (3)
+			poke.learn_move(:BOOMBURST)
+	end
+end
+
+poke = Pokemon.new(:PORYGON)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:THUNDERCLAP)
+		when (1)
+			poke.learn_move(:AURASPHERE)
+		when (2)
+			poke.learn_move(:FLAMETHROWER)
+		when (3)
+			poke.learn_move(:TECHNOBLAST)
+	end
+end
+
+poke = Pokemon.new(:OMANYTE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FREEZEDRY)
+		when (1)
+			poke.learn_move(:GIGADRAIN)
+		when (2)
+			poke.learn_move(:POWERGEM)
+		when (3)
+			poke.learn_move(:STEAMERUPTION)
+	end
+end
+
+poke = Pokemon.new(:KABUTO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:CEASELESSEDGE)
+		when (1)
+			poke.learn_move(:HIGHHORSEPOWER)
+		when (2)
+			poke.learn_move(:CRABHAMMER)
+		when (3)
+			poke.learn_move(:MIGHTYCLEAVE)
+	end
+end
+
+poke = Pokemon.new(:AERODACTYL)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FLOATYFALL)
+		when (1)
+			poke.learn_move(:FLAREBLITZ)
+		when (2)
+			poke.learn_move(:SWORDSDANCE)
+		when (3)
+			poke.learn_move(:MIGHTYCLEAVE)
+	end
+end
+
+poke = Pokemon.new(:SNORLAX)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:STUFFCHEEKS)
+		when (1)
+			poke.learn_move(:GRAVAPPLE)
+		when (2)
+			poke.learn_move(:SLACKOFF)
+		when (3)
+			poke.learn_move(:EXTREMESPEED)
+	end
+end
+
+poke = Pokemon.new(:ARTICUNO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:EARTHPOWER)
+		when (1)
+			poke.learn_move(:CALMMIND)
+		when (2)
+			poke.learn_move(:AURORAVEIL)
+		when (3)
+			poke.learn_move(:AEROBLAST)
+	end
+end
+
+poke = Pokemon.new(:ZAPDOS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BLEAKWINDSTORM)
+		when (1)
+			poke.learn_move(:CALMMIND)
+		when (2)
+			poke.learn_move(:SANDSEARSTORM)
+		when (3)
+			poke.learn_move(:ELECTROSHOT)
+	end
+end
+
+poke = Pokemon.new(:MOLTRES)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:EARTHPOWER)
+		when (1)
+			poke.learn_move(:CALMMIND)
+		when (2)
+			poke.learn_move(:AEROBLAST)
+		when (3)
+			poke.learn_move(:TORCHSONG)
+	end
+end
+
+poke = Pokemon.new(:DRATINI)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DRAGONHAMMER)
+		when (1)
+			poke.learn_move(:CRUSHGRIP)
+		when (2)
+			poke.learn_move(:FIRELASH)
+		when (3)
+			poke.learn_move(:GIGATONHAMMER)
+	end
+end
+
+poke = Pokemon.new(:MEWTWO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:METEORMASH)
+		when (1)
+			poke.learn_move(:MOONBLAST)
+		when (2)
+			poke.learn_move(:THUNDEROUSKICK)
+		when (3)
+			poke.learn_move(:PHOTONGEYSER)
+	end
+end
+
+poke = Pokemon.new(:MEW)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:PHOTONGEYSER)
+		when (1)
+			poke.learn_move(:MOONBLAST)
+		when (2)
+			poke.learn_move(:ASTRALBARRAGE)
+		when (3)
+			poke.learn_move(:SHELLSMASH)
+	end
+end
+
+poke = Pokemon.new(:CHIKORITA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SAPPYSEED)
+		when (1)
+			poke.learn_move(:STONEAXE)
+		when (2)
+			poke.learn_move(:DRAGONDANCE)
+		when (3)
+			poke.learn_move(:SPORE)
+	end
+end
+
+poke = Pokemon.new(:CYNDAQUIL)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:NASTYPLOT)
+		when (1)
+			poke.learn_move(:EARTHPOWER)
+		when (2)
+			poke.learn_move(:FIERYDANCE)
+		when (3)
+			poke.learn_move(:ELECTRODRIFT)
+	end
+end
+
+poke = Pokemon.new(:TOTODILE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:THUNDERPUNCH)
+		when (1)
+			poke.learn_move(:DRAGONDANCE)
+		when (2)
+			poke.learn_move(:TRIPLEAXEL)
+		when (3)
+			poke.learn_move(:SURGINGSTRIKES)
+	end
+end
+
+poke = Pokemon.new(:SENTRET)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TIDYUP)
+		when (1)
+			poke.learn_move(:FAKEOUT)
+		when (2)
+			poke.learn_move(:NUZZLE)
+		when (3)
+			poke.learn_move(:EXTREMESPEED)
+	end
+end
+
+poke = Pokemon.new(:HOOTHOOT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:CALMMIND)
+		when (1)
+			poke.learn_move(:ESPERWING)
+		when (2)
+			poke.learn_move(:AEROBLAST)
+		when (3)
+			poke.learn_move(:BOOMBURST)
+	end
+end
+
+poke = Pokemon.new(:LEDYBA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:POLLENPUFF)
+		when (1)
+			poke.learn_move(:MATBLOCK)
+		when (2)
+			poke.learn_move(:PARTINGSHOT)
+		when (3)
+			poke.learn_move(:SPORE)
+	end
+end
+
+poke = Pokemon.new(:SPINARAK)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:PARTINGSHOT)
+		when (1)
+			poke.learn_move(:ATTACKORDER)
+		when (2)
+			poke.learn_move(:GASTROACID)
+		when (3)
+			poke.learn_move(:STRENGTHSAP)
+	end
+end
+
+poke = Pokemon.new(:CHINCHOU)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:THUNDERCLAP)
+		when (1)
+			poke.learn_move(:BOUNCYBUBBLE)
+		when (2)
+			poke.learn_move(:THUNDERCAGE)
+		when (3)
+			poke.learn_move(:TAILGLOW)
+	end
+end
+
+poke = Pokemon.new(:PICHU)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MOONBLAST)
+		when (1)
+			poke.learn_move(:TRIPLEAXEL)
+		when (2)
+			poke.learn_move(:FIERYDANCE)
+		when (3)
+			poke.learn_move(:AURAWHEEL)
+	end
+end
+
+poke = Pokemon.new(:CLEFFA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:CALMMIND)
+		when (1)
+			poke.learn_move(:EARTHPOWER)
+		when (2)
+			poke.learn_move(:WISH)
+		when (3)
+			poke.learn_move(:LIGHTOFRUIN)
+	end
+end
+
+poke = Pokemon.new(:IGGLYBUFF)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DRAINPUNCH)
+		when (1)
+			poke.learn_move(:GRAVAPPLE)
+		when (2)
+			poke.learn_move(:SOFTBOILED)
+		when (3)
+			poke.learn_move(:EXTREMESPEED)
+	end
+end
+
+poke = Pokemon.new(:TOGEPI)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SCORCHINGSANDS)
+		when (1)
+			poke.learn_move(:SPLISHYSPLASH)
+		when (2)
+			poke.learn_move(:RELICSONG)
+		when (3)
+			poke.learn_move(:FIERYDANCE)
+	end
+end
+
+poke = Pokemon.new(:TOGETIC)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SCORCHINGSANDS)
+		when (1)
+			poke.learn_move(:SPLISHYSPLASH)
+		when (2)
+			poke.learn_move(:RELICSONG)
+		when (3)
+			poke.learn_move(:FIERYDANCE)
+	end
+end
+
+poke = Pokemon.new(:NATU)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:REVIVALBLESSING)
+		when (1)
+			poke.learn_move(:NASTYPLOT)
+		when (2)
+			poke.learn_move(:MOONBLAST)
+		when (3)
+			poke.learn_move(:OBLIVIONWING)
+	end
+end
+
+poke = Pokemon.new(:MAREEP)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ICEBEAM)
+		when (1)
+			poke.learn_move(:PARABOLICCHARGE)
+		when (2)
+			poke.learn_move(:COREENFORCER)
+		when (3)
+			poke.learn_move(:TAILGLOW)
+	end
+end
+
+poke = Pokemon.new(:MARILL)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:JETPUNCH)
+		when (1)
+			poke.learn_move(:MAGICALTORQUE)
+		when (2)
+			poke.learn_move(:SWORDSDANCE)
+		when (3)
+			poke.learn_move(:SURGINGSTRIKES)
+	end
+end
+
+poke = Pokemon.new(:SUDOWOODO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ACCELEROCK)
+		when (1)
+			poke.learn_move(:SWORDSDANCE)
+		when (2)
+			poke.learn_move(:STRENGTHSAP)
+		when (3)
+			poke.learn_move(:SAPPYSEED)
+	end
+end
+
+poke = Pokemon.new(:HOPPIP)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FLOATYFALL)
+		when (1)
+			poke.learn_move(:STRENGTHSAP)
+		when (2)
+			poke.learn_move(:SAPPYSEED)
+		when (3)
+			poke.learn_move(:SPORE)
+	end
+end
+
+poke = Pokemon.new(:AIPOM)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ROCKBLAST)
+		when (1)
+			poke.learn_move(:STORMTHROW)
+		when (2)
+			poke.learn_move(:FAKEOUT)
+		when (3)
+			poke.learn_move(:SWORDSDANCE)
+	end
+end
+
+poke = Pokemon.new(:SUNKERN)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SPORE)
+		when (1)
+			poke.learn_move(:QUIVERDANCE)
+		when (2)
+			poke.learn_move(:FIERYDANCE)
+		when (3)
+			poke.learn_move(:HYDROSTEAM)
+	end
+end
+
+poke = Pokemon.new(:YANMA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:NASTYPLOT)
+		when (1)
+			poke.learn_move(:EARTHPOWER)
+		when (2)
+			poke.learn_move(:HEATWAVE)
+		when (3)
+			poke.learn_move(:BLEAKWINDSTORM)
+	end
+end
+
+poke = Pokemon.new(:WOOPER)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SIZZLYSLIDE)
+		when (1)
+			poke.learn_move(:RECOVER)
+		when (2)
+			poke.learn_move(:SHEDTAIL)
+		when (3)
+			poke.learn_move(:SURGINGSTRIKES)
+	end
+end
+
+poke = Pokemon.new(:MURKROW)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TRIPLEARROWS)
+		when (1)
+			poke.learn_move(:FLOATYFALL)
+		when (2)
+			poke.learn_move(:TIDYUP)
+		when (3)
+			poke.learn_move(:WICKEDBLOW)
+	end
+end
+
+poke = Pokemon.new(:MISDREAVUS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TAKEHEART)
+		when (1)
+			poke.learn_move(:MOONBLAST)
+		when (2)
+			poke.learn_move(:AURASPHERE)
+		when (3)
+			poke.learn_move(:MOONGEISTBEAM)
+	end
+end
+
+poke = Pokemon.new(:UNOWN)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:NATUREPOWER)
+		when (1)
+			poke.learn_move(:COSMICPOWER)
+		when (2)
+			poke.learn_move(:ANCIENTPOWER)
+		when (3)
+			poke.learn_move(:MYSTICALPOWER)
+	end
+end
+
+poke = Pokemon.new(:WOBBUFFET)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:RECOVER)
+		when (1)
+			poke.learn_move(:SHEDTAIL)
+		when (2)
+			poke.learn_move(:TAUNT)
+		when (3)
+			poke.learn_move(:COMEUPPANCE)
+	end
+end
+
+poke = Pokemon.new(:GIRAFARIG)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MYSTICALPOWER)
+		when (1)
+			poke.learn_move(:NIGHTDAZE)
+		when (2)
+			poke.learn_move(:RECOVER)
+		when (3)
+			poke.learn_move(:BOOMBURST)
+	end
+end
+
+poke = Pokemon.new(:PINECO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:METALBURST)
+		when (1)
+			poke.learn_move(:SHOREUP)
+		when (2)
+			poke.learn_move(:BODYPRESS)
+		when (3)
+			poke.learn_move(:DIAMONDSTORM)
+	end
+end
+
+poke = Pokemon.new(:DUNSPARCE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:WICKEDTORQUE)
+		when (1)
+			poke.learn_move(:MAGICALTORQUE)
+		when (2)
+			poke.learn_move(:BLAZINGTORQUE)
+		when (3)
+			poke.learn_move(:EXTREMESPEED)
+	end
+end
+
+poke = Pokemon.new(:GLIGAR)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FLOATYFALL)
+		when (1)
+			poke.learn_move(:THOUSANDWAVES)
+		when (2)
+			poke.learn_move(:SPIKYSHIELD)
+		when (3)
+			poke.learn_move(:MIGHTYCLEAVE)
+	end
+end
+
+poke = Pokemon.new(:SNUBBULL)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FACADE)
+		when (1)
+			poke.learn_move(:HIGHHORSEPOWER)
+		when (2)
+			poke.learn_move(:SWORDSDANCE)
+		when (3)
+			poke.learn_move(:EXTREMESPEED)
+	end
+end
+
+poke = Pokemon.new(:QWILFISH)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BARBBARRAGE)
+		when (1)
+			poke.learn_move(:BANEFULBUNKER)
+		when (2)
+			poke.learn_move(:RECOVER)
+		when (3)
+			poke.learn_move(:FISHIOUSREND)
+	end
+end
+
+poke = Pokemon.new(:SHUCKLE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:STUFFCHEEKS)
+		when (1)
+			poke.learn_move(:HEALORDER)
+		when (2)
+			poke.learn_move(:BODYPRESS)
+		when (3)
+			poke.learn_move(:SALTCURE)
+	end
+end
+
+poke = Pokemon.new(:HERACROSS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ROCKBLAST)
+		when (1)
+			poke.learn_move(:FIRSTIMPRESSION)
+		when (2)
+			poke.learn_move(:ICICLESPEAR)
+		when (3)
+			poke.learn_move(:TIDYUP)
+	end
+end
+
+poke = Pokemon.new(:SNEASEL)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DIRECLAW)
+		when (1)
+			poke.learn_move(:DARKESTLARIAT)
+		when (2)
+			poke.learn_move(:TRIPLEAXEL)
+		when (3)
+			poke.learn_move(:CLOSECOMBAT)
+	end
+end
+
+poke = Pokemon.new(:TEDDIURSA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MOUNTAINGALE)
+		when (1)
+			poke.learn_move(:FAKEOUT)
+		when (2)
+			poke.learn_move(:SLACKOFF)
+		when (3)
+			poke.learn_move(:PRECIPICEBLADES)
+	end
+end
+
+poke = Pokemon.new(:SLUGMA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BURNINGBULWARK)
+		when (1)
+			poke.learn_move(:POWERGEM)
+		when (2)
+			poke.learn_move(:SOLARBEAM)
+		when (3)
+			poke.learn_move(:MAGMASTORM)
+	end
+end
+
+poke = Pokemon.new(:SWINUB)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SLACKOFF)
+		when (1)
+			poke.learn_move(:MOUNTAINGALE)
+		when (2)
+			poke.learn_move(:STONEAXE)
+		when (3)
+			poke.learn_move(:PRECIPICEBLADES)
+	end
+end
+
+poke = Pokemon.new(:CORSOLA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SCALD)
+		when (1)
+			poke.learn_move(:FREEZEDRY)
+		when (2)
+			poke.learn_move(:STRENGTHSAP)
+		when (3)
+			poke.learn_move(:SALTCURE)
+	end
+end
+
+poke = Pokemon.new(:REMORAID)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:WATERSHURIKEN)
+		when (1)
+			poke.learn_move(:TAKEHEART)
+		when (2)
+			poke.learn_move(:SHELLSIDEARM)
+		when (3)
+			poke.learn_move(:BOUNCYBUBBLE)
+	end
+end
+
+poke = Pokemon.new(:DELIBIRD)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BONEMERANG)
+		when (1)
+			poke.learn_move(:FLOATYFALL)
+		when (2)
+			poke.learn_move(:VICTORYDANCE)
+		when (3)
+			poke.learn_move(:GLACIALLANCE)
+	end
+end
+
+poke = Pokemon.new(:MANTINE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SPLISHYSPLASH)
+		when (1)
+			poke.learn_move(:FREEZYFROST)
+		when (2)
+			poke.learn_move(:NASTYPLOT)
+		when (3)
+			poke.learn_move(:OBLIVIONWING)
+	end
+end
+
+poke = Pokemon.new(:SKARMORY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ROOST)
+		when (1)
+			poke.learn_move(:BODYPRESS)
+		when (2)
+			poke.learn_move(:SPIKYSHIELD)
+		when (3)
+			poke.learn_move(:BEAKBLAST)
+	end
+end
+
+poke = Pokemon.new(:HOUNDOUR)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:EARTHPOWER)
+		when (1)
+			poke.learn_move(:THUNDERBOLT)
+		when (2)
+			poke.learn_move(:MOONBLAST)
+		when (3)
+			poke.learn_move(:FIERYWRATH)
+	end
+end
+
+poke = Pokemon.new(:PHANPY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SHOREUP)
+		when (1)
+			poke.learn_move(:SWORDSDANCE)
+		when (2)
+			poke.learn_move(:MOUNTAINGALE)
+		when (3)
+			poke.learn_move(:COLLISIONCOURSE)
+	end
+end
+
+poke = Pokemon.new(:STANTLER)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:THUNDEROUSKICK)
+		when (1)
+			poke.learn_move(:PHOTONGEYSER)
+		when (2)
+			poke.learn_move(:SWORDSDANCE)
+		when (3)
+			poke.learn_move(:BOOMBURST)
+	end
+end
+
+poke = Pokemon.new(:SMEARGLE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:CONVERSION)
+		when (1)
+			poke.learn_move(:BURNINGBULWARK)
+		when (2)
+			poke.learn_move(:SALTCURE)
+		when (3)
+			poke.learn_move(:DARKVOID)
+	end
+end
+
+poke = Pokemon.new(:TYROGUE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:VICTORYDANCE)
+		when (1)
+			poke.learn_move(:THUNDEROUSKICK)
+		when (2)
+			poke.learn_move(:METEORMASH)
+		when (3)
+			poke.learn_move(:WICKEDBLOW)
+	end
+end
+
+poke = Pokemon.new(:HITMONTOP)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:VICTORYDANCE)
+		when (1)
+			poke.learn_move(:THUNDEROUSKICK)
+		when (2)
+			poke.learn_move(:METEORMASH)
+		when (3)
+			poke.learn_move(:WICKEDBLOW)
+	end
+end
+
+poke = Pokemon.new(:SMOOCHUM)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:LUSTERPURGE)
+		when (1)
+			poke.learn_move(:AURASPHERE)
+		when (2)
+			poke.learn_move(:FREEZEDRY)
+		when (3)
+			poke.learn_move(:QUIVERDANCE)
+	end
+end
+
+poke = Pokemon.new(:ELEKID)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FIRELASH)
+		when (1)
+			poke.learn_move(:ZINGZAP)
+		when (2)
+			poke.learn_move(:MOUNTAINGALE)
+		when (3)
+			poke.learn_move(:SHIFTGEAR)
+	end
+end
+
+poke = Pokemon.new(:MAGBY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:THUNDERCLAP)
+		when (1)
+			poke.learn_move(:EARTHPOWER)
+		when (2)
+			poke.learn_move(:ENERGYBALL)
+		when (3)
+			poke.learn_move(:BLUEFLARE)
+	end
+end
+
+poke = Pokemon.new(:MILTANK)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BODYPRESS)
+		when (1)
+			poke.learn_move(:BULKUP)
+		when (2)
+			poke.learn_move(:KNOCKOFF)
+		when (3)
+			poke.learn_move(:SIZZLYSLIDE)
+	end
+end
+
+poke = Pokemon.new(:BLISSEY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:COTTONGUARD)
+		when (1)
+			poke.learn_move(:SEISMICTOSS)
+		when (2)
+			poke.learn_move(:SIZZLYSLIDE)
+		when (3)
+			poke.learn_move(:REVIVALBLESSING)
+	end
+end
+
+poke = Pokemon.new(:RAIKOU)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:PARABOLICCHARGE)
+		when (1)
+			poke.learn_move(:NASTYPLOT)
+		when (2)
+			poke.learn_move(:FROSTBREATH)
+		when (3)
+			poke.learn_move(:ELECTRODRIFT)
+	end
+end
+
+poke = Pokemon.new(:ENTEI)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BURNINGBULWARK)
+		when (1)
+			poke.learn_move(:DRAGONDANCE)
+		when (2)
+			poke.learn_move(:EARTHQUAKE)
+		when (3)
+			poke.learn_move(:PYROBALL)
+	end
+end
+
+poke = Pokemon.new(:SUICUNE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:RECOVER)
+		when (1)
+			poke.learn_move(:NASTYPLOT)
+		when (2)
+			poke.learn_move(:FREEZEDRY)
+		when (3)
+			poke.learn_move(:STEAMERUPTION)
+	end
+end
+
+poke = Pokemon.new(:LARVITAR)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DRAGONDANCE)
+		when (1)
+			poke.learn_move(:MOUNTAINGALE)
+		when (2)
+			poke.learn_move(:SHOREUP)
+		when (3)
+			poke.learn_move(:DIAMONDSTORM)
+	end
+end
+
+poke = Pokemon.new(:LUGIA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:NASTYPLOT)
+		when (1)
+			poke.learn_move(:LUMINACRASH)
+		when (2)
+			poke.learn_move(:AURASPHERE)
+		when (3)
+			poke.learn_move(:OBLIVIONWING)
+	end
+end
+
+poke = Pokemon.new(:HO-OH)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BRAVEBIRD)
+		when (1)
+			poke.learn_move(:DRAGONDANCE)
+		when (2)
+			poke.learn_move(:REVIVALBLESSING)
+		when (3)
+			poke.learn_move(:BOLTBEAK)
+	end
+end
+
+poke = Pokemon.new(:CELEBI)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:PHOTONGEYSER)
+		when (1)
+			poke.learn_move(:MATCHAGOTCHA)
+		when (2)
+			poke.learn_move(:REVIVALBLESSING)
+		when (3)
+			poke.learn_move(:QUIVERDANCE)
+	end
+end
+
+poke = Pokemon.new(:TREECKO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:NASTYPLOT)
+		when (1)
+			poke.learn_move(:COREENFORCER)
+		when (2)
+			poke.learn_move(:FLAMETHROWER)
+		when (3)
+			poke.learn_move(:SEEDFLARE)
+	end
+end
+
+poke = Pokemon.new(:TORCHIC)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:THUNDEROUSKICK)
+		when (1)
+			poke.learn_move(:ZINGZAP)
+		when (2)
+			poke.learn_move(:BURNINGBULWARK)
+		when (3)
+			poke.learn_move(:PYROBALL)
+	end
+end
+
+poke = Pokemon.new(:MUDKIP)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SHOREUP)
+		when (1)
+			poke.learn_move(:MOUNTAINGALE)
+		when (2)
+			poke.learn_move(:AQUASTEP)
+		when (3)
+			poke.learn_move(:PRECIPICEBLADES)
+	end
+end
+
+poke = Pokemon.new(:POOCHYENA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:JAWLOCK)
+		when (1)
+			poke.learn_move(:CLOSECOMBAT)
+		when (2)
+			poke.learn_move(:DIRECLAW)
+		when (3)
+			poke.learn_move(:NORETREAT)
+	end
+end
+
+poke = Pokemon.new(:ZIGZAGOON)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:EXTREMESPEED)
+		when (1)
+			poke.learn_move(:NUZZLE)
+		when (2)
+			poke.learn_move(:HIGHHORSEPOWER)
+		when (3)
+			poke.learn_move(:TIDYUP)
+	end
+end
+
+poke = Pokemon.new(:WURMPLE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BATONPASS)
+		when (1)
+			poke.learn_move(:BLEAKWINDSTORM)
+		when (2)
+			poke.learn_move(:STOREDPOWER)
+		when (3)
+			poke.learn_move(:MALIGNANTCHAIN)
+	end
+end
+
+poke = Pokemon.new(:LOTAD)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:REVELATIONDANCE)
+		when (1)
+			poke.learn_move(:APPLEACID)
+		when (2)
+			poke.learn_move(:ICEBEAM)
+		when (3)
+			poke.learn_move(:QUIVERDANCE)
+	end
+end
+
+poke = Pokemon.new(:SEEDOT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SWORDSDANCE)
+		when (1)
+			poke.learn_move(:SACREDSWORD)
+		when (2)
+			poke.learn_move(:KOWTOWCLEAVE)
+		when (3)
+			poke.learn_move(:BITTERBLADE)
+	end
+end
+
+poke = Pokemon.new(:TAILLOW)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BOOMBURST)
+		when (1)
+			poke.learn_move(:FACADE)
+		when (2)
+			poke.learn_move(:HEADLONGRUSH)
+		when (3)
+			poke.learn_move(:NORETREAT)
+	end
+end
+
+poke = Pokemon.new(:WINGULL)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:THUNDER)
+		when (1)
+			poke.learn_move(:FLIPTURN)
+		when (2)
+			poke.learn_move(:CALMMIND)
+		when (3)
+			poke.learn_move(:STEAMERUPTION)
+	end
+end
+
+poke = Pokemon.new(:RALTS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:PSYBLADE)
+		when (1)
+			poke.learn_move(:BITTERBLADE)
+		when (2)
+			poke.learn_move(:NORETREAT)
+		when (3)
+			poke.learn_move(:BOOMBURST)
+	end
+end
+
+poke = Pokemon.new(:SURSKIT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:POLLENPUFF)
+		when (1)
+			poke.learn_move(:FIERYDANCE)
+		when (2)
+			poke.learn_move(:BOUNCYBUBBLE)
+		when (3)
+			poke.learn_move(:AEROBLAST)
+	end
+end
+
+poke = Pokemon.new(:SHROOMISH)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ACCELEROCK)
+		when (1)
+			poke.learn_move(:TRAILBLAZE)
+		when (2)
+			poke.learn_move(:STORMTHROW)
+		when (3)
+			poke.learn_move(:SAPPYSEED)
+	end
+end
+
+poke = Pokemon.new(:SLAKOTH)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FACADE)
+		when (1)
+			poke.learn_move(:DRAINPUNCH)
+		when (2)
+			poke.learn_move(:KNOCKOFF)
+		when (3)
+			poke.learn_move(:SKILLSWAP)
+	end
+end
+
+poke = Pokemon.new(:NINCADA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ATTACKORDER)
+		when (1)
+			poke.learn_move(:STICKYWEB)
+		when (2)
+			poke.learn_move(:SPIRITSHACKLE)
+		when (3)
+			poke.learn_move(:SHELLSMASH)
+	end
+end
+
+poke = Pokemon.new(:WHISMUR)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ALLURINGVOICE)
+		when (1)
+			poke.learn_move(:SHIFTGEAR)
+		when (2)
+			poke.learn_move(:SPARKLINGARIA)
+		when (3)
+			poke.learn_move(:TORCHSONG)
+	end
+end
+
+poke = Pokemon.new(:MAKUHITA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:COMBATTORQUE)
+		when (1)
+			poke.learn_move(:SLACKOFF)
+		when (2)
+			poke.learn_move(:HEATCRASH)
+		when (3)
+			poke.learn_move(:DOUBLEIRONBASH)
+	end
+end
+
+poke = Pokemon.new(:AZURILL)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:JETPUNCH)
+		when (1)
+			poke.learn_move(:MAGICALTORQUE)
+		when (2)
+			poke.learn_move(:SWORDSDANCE)
+		when (3)
+			poke.learn_move(:SURGINGSTRIKES)
+	end
+end
+
+poke = Pokemon.new(:NOSEPASS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SHOREUP)
+		when (1)
+			poke.learn_move(:BODYPRESS)
+		when (2)
+			poke.learn_move(:CALMMIND)
+		when (3)
+			poke.learn_move(:TACHYONCUTTER)
+	end
+end
+
+poke = Pokemon.new(:SKITTY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:THUNDEROUSKICK)
+		when (1)
+			poke.learn_move(:ENTRAINMENT)
+		when (2)
+			poke.learn_move(:TIDYUP)
+		when (3)
+			poke.learn_move(:VCREATE)
+	end
+end
+
+poke = Pokemon.new(:SABLEYE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:RECOVER)
+		when (1)
+			poke.learn_move(:TOPSYTURVY)
+		when (2)
+			poke.learn_move(:CURSE)
+		when (3)
+			poke.learn_move(:SALTCURE)
+	end
+end
+
+poke = Pokemon.new(:MAWILE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BULLETPUNCH)
+		when (1)
+			poke.learn_move(:MAGICALTORQUE)
+		when (2)
+			poke.learn_move(:EARTHQUAKE)
+		when (3)
+			poke.learn_move(:SHIFTGEAR)
+	end
+end
+
+poke = Pokemon.new(:ARON)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:HEADSMASH)
+		when (1)
+			poke.learn_move(:BODYPRESS)
+		when (2)
+			poke.learn_move(:SHOREUP)
+		when (3)
+			poke.learn_move(:SALTCURE)
+	end
+end
+
+poke = Pokemon.new(:MEDITITE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:THUNDEROUSKICK)
+		when (1)
+			poke.learn_move(:SUCKERPUNCH)
+		when (2)
+			poke.learn_move(:BULLETPUNCH)
+		when (3)
+			poke.learn_move(:PHOTONGEYSER)
+	end
+end
+
+poke = Pokemon.new(:ELECTRIKE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FROSTBREATH)
+		when (1)
+			poke.learn_move(:HEATWAVE)
+		when (2)
+			poke.learn_move(:NASTYPLOT)
+		when (3)
+			poke.learn_move(:ELECTRODRIFT)
+	end
+end
+
+poke = Pokemon.new(:PLUSLE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FLAMETHROWER)
+		when (1)
+			poke.learn_move(:GLITZYGLOW)
+		when (2)
+			poke.learn_move(:SPLISHYSPLASH)
+		when (3)
+			poke.learn_move(:TAILGLOW)
+	end
+end
+
+poke = Pokemon.new(:MINUN)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ICEBEAM)
+		when (1)
+			poke.learn_move(:BADDYBAD)
+		when (2)
+			poke.learn_move(:SPARKLYSWIRL)
+		when (3)
+			poke.learn_move(:TAILGLOW)
+	end
+end
+
+poke = Pokemon.new(:VOLBEAT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BATONPASS)
+		when (1)
+			poke.learn_move(:STICKYWEB)
+		when (2)
+			poke.learn_move(:DECORATE)
+		when (3)
+			poke.learn_move(:VICTORYDANCE)
+	end
+end
+
+poke = Pokemon.new(:ILLUMISE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:PARTINGSHOT)
+		when (1)
+			poke.learn_move(:GLITZYGLOW)
+		when (2)
+			poke.learn_move(:POWDER)
+		when (3)
+			poke.learn_move(:QUIVERDANCE)
+	end
+end
+
+poke = Pokemon.new(:ROSELIA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FIERYDANCE)
+		when (1)
+			poke.learn_move(:ACIDSPRAY)
+		when (2)
+			poke.learn_move(:BOUNCYBUBBLE)
+		when (3)
+			poke.learn_move(:QUIVERDANCE)
+	end
+end
+
+poke = Pokemon.new(:GULPIN)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MALIGNANTCHAIN)
+		when (1)
+			poke.learn_move(:EARTHPOWER)
+		when (2)
+			poke.learn_move(:CALMMIND)
+		when (3)
+			poke.learn_move(:STRENGTHSAP)
+	end
+end
+
+poke = Pokemon.new(:CARVANHA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:THUNDERFANG)
+		when (1)
+			poke.learn_move(:SWORDSDANCE)
+		when (2)
+			poke.learn_move(:OBSTRUCT)
+		when (3)
+			poke.learn_move(:SURGINGSTRIKES)
+	end
+end
+
+poke = Pokemon.new(:WAILMER)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TAKEHEART)
+		when (1)
+			poke.learn_move(:COMEUPPANCE)
+		when (2)
+			poke.learn_move(:SLACKOFF)
+		when (3)
+			poke.learn_move(:STEAMERUPTION)
+	end
+end
+
+poke = Pokemon.new(:NUMEL)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TRICKROOM)
+		when (1)
+			poke.learn_move(:ENERGYBALL)
+		when (2)
+			poke.learn_move(:SLACKOFF)
+		when (3)
+			poke.learn_move(:BLUEFLARE)
+	end
+end
+
+poke = Pokemon.new(:TORKOAL)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MORNINGSUN)
+		when (1)
+			poke.learn_move(:BURNINGBULWARK)
+		when (2)
+			poke.learn_move(:BODYPRESS)
+		when (3)
+			poke.learn_move(:HYDROSTEAM)
+	end
+end
+
+poke = Pokemon.new(:SPOINK)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:AURASPHERE)
+		when (1)
+			poke.learn_move(:MILKDRINK)
+		when (2)
+			poke.learn_move(:EXPANDINGFORCE)
+		when (3)
+			poke.learn_move(:TAILGLOW)
+	end
+end
+
+poke = Pokemon.new(:SPINDA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SUPERPOWER)
+		when (1)
+			poke.learn_move(:SLACKOFF)
+		when (2)
+			poke.learn_move(:FLEURCANNON)
+		when (3)
+			poke.learn_move(:VCREATE)
+	end
+end
+
+poke = Pokemon.new(:TRAPINCH)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FIRELASH)
+		when (1)
+			poke.learn_move(:DRAGONDARTS)
+		when (2)
+			poke.learn_move(:THOUSANDARROWS)
+		when (3)
+			poke.learn_move(:DRAGONENERGY)
+	end
+end
+
+poke = Pokemon.new(:CACNEA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:EARTHPOWER)
+		when (1)
+			poke.learn_move(:CEASELESSEDGE)
+		when (2)
+			poke.learn_move(:NIGHTDAZE)
+		when (3)
+			poke.learn_move(:SAPPYSEED)
+	end
+end
+
+poke = Pokemon.new(:SWABLU)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ROOST)
+		when (1)
+			poke.learn_move(:NASTYPLOT)
+		when (2)
+			poke.learn_move(:FLOATYFALL)
+		when (3)
+			poke.learn_move(:BOOMBURST)
+	end
+end
+
+poke = Pokemon.new(:ZANGOOSE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FACADE)
+		when (1)
+			poke.learn_move(:HIGHHORSEPOWER)
+		when (2)
+			poke.learn_move(:EXTREMESPEED)
+		when (3)
+			poke.learn_move(:TIDYUP)
+	end
+end
+
+poke = Pokemon.new(:SEVIPER)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ICEBEAM)
+		when (1)
+			poke.learn_move(:BITTERBLADE)
+		when (2)
+			poke.learn_move(:SUCKERPUNCH)
+		when (3)
+			poke.learn_move(:NORETREAT)
+	end
+end
+
+poke = Pokemon.new(:LUNATONE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:REVELATIONDANCE)
+		when (1)
+			poke.learn_move(:MOONGEISTBEAM)
+		when (2)
+			poke.learn_move(:SHELLSMASH)
+		when (3)
+			poke.learn_move(:LUMINACRASH)
+	end
+end
+
+poke = Pokemon.new(:SOLROCK)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MIGHTYCLEAVE)
+		when (1)
+			poke.learn_move(:PHOTONGEYSER)
+		when (2)
+			poke.learn_move(:SHELLSMASH)
+		when (3)
+			poke.learn_move(:SACREDFIRE)
+	end
+end
+
+poke = Pokemon.new(:BARBOACH)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DRAGONDANCE)
+		when (1)
+			poke.learn_move(:ZINGZAP)
+		when (2)
+			poke.learn_move(:ICESPINNER)
+		when (3)
+			poke.learn_move(:SURGINGSTRIKES)
+	end
+end
+
+poke = Pokemon.new(:CORPHISH)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:CEASELESSEDGE)
+		when (1)
+			poke.learn_move(:SHELLSIDEARM)
+		when (2)
+			poke.learn_move(:SUCKERPUNCH)
+		when (3)
+			poke.learn_move(:JETPUNCH)
+	end
+end
+
+poke = Pokemon.new(:BALTOY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:RECOVER)
+		when (1)
+			poke.learn_move(:GLARE)
+		when (2)
+			poke.learn_move(:RUINATION)
+		when (3)
+			poke.learn_move(:MYSTICALPOWER)
+	end
+end
+
+poke = Pokemon.new(:LILEEP)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:POWERGEM)
+		when (1)
+			poke.learn_move(:SCALD)
+		when (2)
+			poke.learn_move(:STRENGTHSAP)
+		when (3)
+			poke.learn_move(:SAPPYSEED)
+	end
+end
+
+poke = Pokemon.new(:ANORITH)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FIRSTIMPRESSION)
+		when (1)
+			poke.learn_move(:LEECHLIFE)
+		when (2)
+			poke.learn_move(:DRAGONDANCE)
+		when (3)
+			poke.learn_move(:MIGHTYCLEAVE)
+	end
+end
+
+poke = Pokemon.new(:FEEBAS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:CALMMIND)
+		when (1)
+			poke.learn_move(:FREEZEDRY)
+		when (2)
+			poke.learn_move(:MOONBLAST)
+		when (3)
+			poke.learn_move(:STEAMERUPTION)
+	end
+end
+
+poke = Pokemon.new(:CASTFORM)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BOOMBURST)
+		when (1)
+			poke.learn_move(:HYDROSTEAM)
+		when (2)
+			poke.learn_move(:ERUPTION)
+		when (3)
+			poke.learn_move(:QUIVERDANCE)
+	end
+end
+
+poke = Pokemon.new(:KECLEON)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ZIPPYZAP)
+		when (1)
+			poke.learn_move(:COIL)
+		when (2)
+			poke.learn_move(:EXTREMESPEED)
+		when (3)
+			poke.learn_move(:MULTIATTACK)
+	end
+end
+
+poke = Pokemon.new(:SHUPPET)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:STORMTHROW)
+		when (1)
+			poke.learn_move(:TIDYUP)
+		when (2)
+			poke.learn_move(:PARTINGSHOT)
+		when (3)
+			poke.learn_move(:SPECTRALTHIEF)
+	end
+end
+
+poke = Pokemon.new(:DUSKULL)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BULKUP)
+		when (1)
+			poke.learn_move(:DRAINPUNCH)
+		when (2)
+			poke.learn_move(:RECOVER)
+		when (3)
+			poke.learn_move(:RAGEFIST)
+	end
+end
+
+poke = Pokemon.new(:TROPIUS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:STUFFCHEEKS)
+		when (1)
+			poke.learn_move(:EARTHPOWER)
+		when (2)
+			poke.learn_move(:APPLEACID)
+		when (3)
+			poke.learn_move(:SAPPYSEED)
+	end
+end
+
+poke = Pokemon.new(:CHIMECHO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BUZZYBUZZ)
+		when (1)
+			poke.learn_move(:EERIESPELL)
+		when (2)
+			poke.learn_move(:TORCHSONG)
+		when (3)
+			poke.learn_move(:BOOMBURST)
+	end
+end
+
+poke = Pokemon.new(:ABSOL)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:KOWTOWCLEAVE)
+		when (1)
+			poke.learn_move(:SACREDSWORD)
+		when (2)
+			poke.learn_move(:PSYBLADE)
+		when (3)
+			poke.learn_move(:BITTERBLADE)
+	end
+end
+
+poke = Pokemon.new(:WYNAUT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:RECOVER)
+		when (1)
+			poke.learn_move(:SHEDTAIL)
+		when (2)
+			poke.learn_move(:TAUNT)
+		when (3)
+			poke.learn_move(:COMEUPPANCE)
+	end
+end
+
+poke = Pokemon.new(:SNORUNT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FREEZYFROST)
+		when (1)
+			poke.learn_move(:EXTREMESPEED)
+		when (2)
+			poke.learn_move(:EARTHPOWER)
+		when (3)
+			poke.learn_move(:NORETREAT)
+	end
+end
+
+poke = Pokemon.new(:SPHEAL)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FLIPTURN)
+		when (1)
+			poke.learn_move(:FREEZEDRY)
+		when (2)
+			poke.learn_move(:SLACKOFF)
+		when (3)
+			poke.learn_move(:STEAMERUPTION)
+	end
+end
+
+poke = Pokemon.new(:CLAMPERL)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SHELLSIDEARM)
+		when (1)
+			poke.learn_move(:BOUNCYBUBBLE)
+		when (2)
+			poke.learn_move(:FREEZEDRY)
+		when (3)
+			poke.learn_move(:STEAMERUPTION)
+	end
+end
+
+poke = Pokemon.new(:RELICANTH)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DRAGONDANCE)
+		when (1)
+			poke.learn_move(:SHOREUP)
+		when (2)
+			poke.learn_move(:WAVECRASH)
+		when (3)
+			poke.learn_move(:DIAMONDSTORM)
+	end
+end
+
+poke = Pokemon.new(:LUVDISC)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BATONPASS)
+		when (1)
+			poke.learn_move(:HEARTSWAP)
+		when (2)
+			poke.learn_move(:GLITZYGLOW)
+		when (3)
+			poke.learn_move(:REVIVALBLESSING)
+	end
+end
+
+poke = Pokemon.new(:BAGON)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FLOATYFALL)
+		when (1)
+			poke.learn_move(:FIRELASH)
+		when (2)
+			poke.learn_move(:DRAGONDANCE)
+		when (3)
+			poke.learn_move(:DRAGONDARTS)
+	end
+end
+
+poke = Pokemon.new(:BELDUM)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:HEADLONGRUSH)
+		when (1)
+			poke.learn_move(:DRAINPUNCH)
+		when (2)
+			poke.learn_move(:TRIPLEAXEL)
+		when (3)
+			poke.learn_move(:SHIFTGEAR)
+	end
+end
+
+poke = Pokemon.new(:REGIROCK)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:STONEAXE)
+		when (1)
+			poke.learn_move(:BODYPRESS)
+		when (2)
+			poke.learn_move(:SHOREUP)
+		when (3)
+			poke.learn_move(:SALTCURE)
+	end
+end
+
+poke = Pokemon.new(:REGICE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:EARTHPOWER)
+		when (1)
+			poke.learn_move(:TAKEHEART)
+		when (2)
+			poke.learn_move(:RECOVER)
+		when (3)
+			poke.learn_move(:FREEZEDRY)
+	end
+end
+
+poke = Pokemon.new(:REGISTEEL)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BODYPRESS)
+		when (1)
+			poke.learn_move(:SIZZLYSLIDE)
+		when (2)
+			poke.learn_move(:RECOVER)
+		when (3)
+			poke.learn_move(:GIGATONHAMMER)
+	end
+end
+
+poke = Pokemon.new(:LATIAS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:COREENFORCER)
+		when (1)
+			poke.learn_move(:FUSIONFLARE)
+		when (2)
+			poke.learn_move(:SPARKLYSWIRL)
+		when (3)
+			poke.learn_move(:MYSTICALPOWER)
+	end
+end
+
+poke = Pokemon.new(:LATIOS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:COREENFORCER)
+		when (1)
+			poke.learn_move(:BLUEFLARE)
+		when (2)
+			poke.learn_move(:NASTYPLOT)
+		when (3)
+			poke.learn_move(:TACHYONCUTTER)
+	end
+end
+
+poke = Pokemon.new(:KYOGRE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:WILDBOLTSTORM)
+		when (1)
+			poke.learn_move(:HURRICANE)
+		when (2)
+			poke.learn_move(:FREEZYFROST)
+		when (3)
+			poke.learn_move(:BOUNCYBUBBLE)
+	end
+end
+
+poke = Pokemon.new(:GROUDON)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:STONEAXE)
+		when (1)
+			poke.learn_move(:SOLARBLADE)
+		when (2)
+			poke.learn_move(:MORNINGSUN)
+		when (3)
+			poke.learn_move(:SACREDFIRE)
+	end
+end
+
+poke = Pokemon.new(:RAYQUAZA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:VCREATE)
+		when (1)
+			poke.learn_move(:DRAGONDARTS)
+		when (2)
+			poke.learn_move(:COREENFORCER)
+		when (3)
+			poke.learn_move(:OBLIVIONWING)
+	end
+end
+
+poke = Pokemon.new(:JIRACHI)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TACHYONCUTTER)
+		when (1)
+			poke.learn_move(:TRIPLEARROWS)
+		when (2)
+			poke.learn_move(:ROCKSLIDE)
+		when (3)
+			poke.learn_move(:SHELLSMASH)
+	end
+end
+
+poke = Pokemon.new(:DEOXYS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:COLLISIONCOURSE)
+		when (1)
+			poke.learn_move(:FUSIONFLARE)
+		when (2)
+			poke.learn_move(:PARTINGSHOT)
+		when (3)
+			poke.learn_move(:LUMINACRASH)
+	end
+end
+
+poke = Pokemon.new(:TURTWIG)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SHELLSMASH)
+		when (1)
+			poke.learn_move(:MIGHTYCLEAVE)
+		when (2)
+			poke.learn_move(:ICESPINNER)
+		when (3)
+			poke.learn_move(:SAPPYSEED)
+	end
+end
+
+poke = Pokemon.new(:CHIMCHAR)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FIERYDANCE)
+		when (1)
+			poke.learn_move(:SECRETSWORD)
+		when (2)
+			poke.learn_move(:TRIPLEAXEL)
+		when (3)
+			poke.learn_move(:SACREDFIRE)
+	end
+end
+
+poke = Pokemon.new(:PIPLUP)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:KINGSSHIELD)
+		when (1)
+			poke.learn_move(:TACHYONCUTTER)
+		when (2)
+			poke.learn_move(:FREEZEDRY)
+		when (3)
+			poke.learn_move(:STEAMERUPTION)
+	end
+end
+
+poke = Pokemon.new(:STARLY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SWORDSDANCE)
+		when (1)
+			poke.learn_move(:HEADCHARGE)
+		when (2)
+			poke.learn_move(:FLAREBLITZ)
+		when (3)
+			poke.learn_move(:EXTREMESPEED)
+	end
+end
+
+poke = Pokemon.new(:BIDOOF)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:EXTREMESPEED)
+		when (1)
+			poke.learn_move(:COSMICPOWER)
+		when (2)
+			poke.learn_move(:POWERTRIP)
+		when (3)
+			poke.learn_move(:AQUASTEP)
+	end
+end
+
+poke = Pokemon.new(:KRICKETOT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BONEMERANG)
+		when (1)
+			poke.learn_move(:VICTORYDANCE)
+		when (2)
+			poke.learn_move(:STONEAXE)
+		when (3)
+			poke.learn_move(:POPULATIONBOMB)
+	end
+end
+
+poke = Pokemon.new(:SHINX)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FIRELASH)
+		when (1)
+			poke.learn_move(:TRIPLEAXEL)
+		when (2)
+			poke.learn_move(:ZIPPYZAP)
+		when (3)
+			poke.learn_move(:BOLTSTRIKE)
+	end
+end
+
+poke = Pokemon.new(:BUDEW)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FIERYDANCE)
+		when (1)
+			poke.learn_move(:ACIDSPRAY)
+		when (2)
+			poke.learn_move(:BOUNCYBUBBLE)
+		when (3)
+			poke.learn_move(:QUIVERDANCE)
+	end
+end
+
+poke = Pokemon.new(:CRANIDOS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:VOLTTACKLE)
+		when (1)
+			poke.learn_move(:ACCELEROCK)
+		when (2)
+			poke.learn_move(:FLAREBLITZ)
+		when (3)
+			poke.learn_move(:SHIFTGEAR)
+	end
+end
+
+poke = Pokemon.new(:SHIELDON)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SHOREUP)
+		when (1)
+			poke.learn_move(:BODYPRESS)
+		when (2)
+			poke.learn_move(:KINGSSHIELD)
+		when (3)
+			poke.learn_move(:DIAMONDSTORM)
+	end
+end
+
+poke = Pokemon.new(:BURMY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FIERYDANCE)
+		when (1)
+			poke.learn_move(:DEFENDORDER)
+		when (2)
+			poke.learn_move(:HEALORDER)
+		when (3)
+			poke.learn_move(:SAPPYSEED)
+	end
+end
+
+poke = Pokemon.new(:COMBEE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SPORE)
+		when (1)
+			poke.learn_move(:FLOATYFALL)
+		when (2)
+			poke.learn_move(:KINGSSHIELD)
+		when (3)
+			poke.learn_move(:VICTORYDANCE)
+	end
+end
+
+poke = Pokemon.new(:PACHIRISU)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FREEZYFROST)
+		when (1)
+			poke.learn_move(:SIZZLYSLIDE)
+		when (2)
+			poke.learn_move(:SLACKOFF)
+		when (3)
+			poke.learn_move(:ZIPPYZAP)
+	end
+end
+
+poke = Pokemon.new(:BUIZEL)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:JETPUNCH)
+		when (1)
+			poke.learn_move(:TRIPLEAXEL)
+		when (2)
+			poke.learn_move(:SUPERCELLSLAM)
+		when (3)
+			poke.learn_move(:SURGINGSTRIKES)
+	end
+end
+
+poke = Pokemon.new(:CHERUBI)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SLEEPPOWDER)
+		when (1)
+			poke.learn_move(:STRENGTHSAP)
+		when (2)
+			poke.learn_move(:FIRELASH)
+		when (3)
+			poke.learn_move(:FLOWERTRICK)
+	end
+end
+
+poke = Pokemon.new(:SHELLOS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BOUNCYBUBBLE)
+		when (1)
+			poke.learn_move(:SCORCHINGSANDS)
+		when (2)
+			poke.learn_move(:FREEZEDRY)
+		when (3)
+			poke.learn_move(:STEAMERUPTION)
+	end
+end
+
+poke = Pokemon.new(:DRIFLOON)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:WILLOWISP)
+		when (1)
+			poke.learn_move(:MINDBLOWN)
+		when (2)
+			poke.learn_move(:CALMMIND)
+		when (3)
+			poke.learn_move(:OBLIVIONWING)
+	end
+end
+
+poke = Pokemon.new(:BUNEARY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TRIPLEAXEL)
+		when (1)
+			poke.learn_move(:SWORDSDANCE)
+		when (2)
+			poke.learn_move(:THUNDEROUSKICK)
+		when (3)
+			poke.learn_move(:MULTIATTACK)
+	end
+end
+
+poke = Pokemon.new(:GLAMEOW)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:PARTINGSHOT)
+		when (1)
+			poke.learn_move(:HIGHHORSEPOWER)
+		when (2)
+			poke.learn_move(:SWORDSDANCE)
+		when (3)
+			poke.learn_move(:EXTREMESPEED)
+	end
+end
+
+poke = Pokemon.new(:CHINGLING)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BUZZYBUZZ)
+		when (1)
+			poke.learn_move(:EERIESPELL)
+		when (2)
+			poke.learn_move(:TORCHSONG)
+		when (3)
+			poke.learn_move(:BOOMBURST)
+	end
+end
+
+poke = Pokemon.new(:STUNKY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:CEASELESSEDGE)
+		when (1)
+			poke.learn_move(:KNOCKOFF)
+		when (2)
+			poke.learn_move(:RECOVER)
+		when (3)
+			poke.learn_move(:DIRECLAW)
+	end
+end
+
+poke = Pokemon.new(:BRONZOR)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:RECOVER)
+		when (1)
+			poke.learn_move(:TACHYONCUTTER)
+		when (2)
+			poke.learn_move(:GLARE)
+		when (3)
+			poke.learn_move(:LUMINACRASH)
+	end
+end
+
+poke = Pokemon.new(:BONSLY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ACCELEROCK)
+		when (1)
+			poke.learn_move(:SWORDSDANCE)
+		when (2)
+			poke.learn_move(:STRENGTHSAP)
+		when (3)
+			poke.learn_move(:SAPPYSEED)
+	end
+end
+
+poke = Pokemon.new(:MIMEJR.)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:CHILLYRECEPTION)
+		when (1)
+			poke.learn_move(:MOONBLAST)
+		when (2)
+			poke.learn_move(:FROSTBREATH)
+		when (3)
+			poke.learn_move(:LUMINACRASH)
+	end
+end
+
+poke = Pokemon.new(:HAPPINY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:COTTONGUARD)
+		when (1)
+			poke.learn_move(:SEISMICTOSS)
+		when (2)
+			poke.learn_move(:SIZZLYSLIDE)
+		when (3)
+			poke.learn_move(:REVIVALBLESSING)
+	end
+end
+
+poke = Pokemon.new(:CHATOT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SPARKLINGARIA)
+		when (1)
+			poke.learn_move(:BOOMBURST)
+		when (2)
+			poke.learn_move(:BATONPASS)
+		when (3)
+			poke.learn_move(:TORCHSONG)
+	end
+end
+
+poke = Pokemon.new(:SPIRITOMB)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:PARTINGSHOT)
+		when (1)
+			poke.learn_move(:BADDYBAD)
+		when (2)
+			poke.learn_move(:STRENGTHSAP)
+		when (3)
+			poke.learn_move(:SPECTRALTHIEF)
+	end
+end
+
+poke = Pokemon.new(:GIBLE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DRAGONDANCE)
+		when (1)
+			poke.learn_move(:BITTERBLADE)
+		when (2)
+			poke.learn_move(:DRAGONHAMMER)
+		when (3)
+			poke.learn_move(:PRECIPICEBLADES)
+	end
+end
+
+poke = Pokemon.new(:MUNCHLAX)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:STUFFCHEEKS)
+		when (1)
+			poke.learn_move(:GRAVAPPLE)
+		when (2)
+			poke.learn_move(:SLACKOFF)
+		when (3)
+			poke.learn_move(:EXTREMESPEED)
+	end
+end
+
+poke = Pokemon.new(:RIOLU)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:THUNDEROUSKICK)
+		when (1)
+			poke.learn_move(:TACHYONCUTTER)
+		when (2)
+			poke.learn_move(:TRIPLEAXEL)
+		when (3)
+			poke.learn_move(:SUNSTEELSTRIKE)
+	end
+end
+
+poke = Pokemon.new(:HIPPOPOTAS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SHOREUP)
+		when (1)
+			poke.learn_move(:STONEAXE)
+		when (2)
+			poke.learn_move(:BULKUP)
+		when (3)
+			poke.learn_move(:SALTCURE)
+	end
+end
+
+poke = Pokemon.new(:SKORUPI)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:COIL)
+		when (1)
+			poke.learn_move(:DIRECLAW)
+		when (2)
+			poke.learn_move(:CRABHAMMER)
+		when (3)
+			poke.learn_move(:WICKEDBLOW)
+	end
+end
+
+poke = Pokemon.new(:CROAGUNK)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DIRECLAW)
+		when (1)
+			poke.learn_move(:ICESPINNER)
+		when (2)
+			poke.learn_move(:THUNDEROUSKICK)
+		when (3)
+			poke.learn_move(:VICTORYDANCE)
+	end
+end
+
+poke = Pokemon.new(:CARNIVINE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:STRENGTHSAP)
+		when (1)
+			poke.learn_move(:FIRELASH)
+		when (2)
+			poke.learn_move(:COIL)
+		when (3)
+			poke.learn_move(:SAPPYSEED)
+	end
+end
+
+poke = Pokemon.new(:FINNEON)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:QUIVERDANCE)
+		when (1)
+			poke.learn_move(:BOUNCYBUBBLE)
+		when (2)
+			poke.learn_move(:FREEZEDRY)
+		when (3)
+			poke.learn_move(:ORIGINPULSE)
+	end
+end
+
+poke = Pokemon.new(:MANTYKE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SPLISHYSPLASH)
+		when (1)
+			poke.learn_move(:FREEZYFROST)
+		when (2)
+			poke.learn_move(:NASTYPLOT)
+		when (3)
+			poke.learn_move(:OBLIVIONWING)
+	end
+end
+
+poke = Pokemon.new(:SNOVER)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:LANDSWRATH)
+		when (1)
+			poke.learn_move(:POWDER)
+		when (2)
+			poke.learn_move(:CALMMIND)
+		when (3)
+			poke.learn_move(:MATCHAGOTCHA)
+	end
+end
+
+poke = Pokemon.new(:ROTOM)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:STRENGTHSAP)
+		when (1)
+			poke.learn_move(:FIERYDANCE)
+		when (2)
+			poke.learn_move(:SPLISHYSPLASH)
+		when (3)
+			poke.learn_move(:ELECTRODRIFT)
+	end
+end
+
+poke = Pokemon.new(:UXIE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:COSMICPOWER)
+		when (1)
+			poke.learn_move(:SECRETSWORD)
+		when (2)
+			poke.learn_move(:RECOVER)
+		when (3)
+			poke.learn_move(:SPARKLYSWIRL)
+	end
+end
+
+poke = Pokemon.new(:MESPRIT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TAILGLOW)
+		when (1)
+			poke.learn_move(:AURASPHERE)
+		when (2)
+			poke.learn_move(:RECOVER)
+		when (3)
+			poke.learn_move(:LUMINACRASH)
+	end
+end
+
+poke = Pokemon.new(:AZELF)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:PSYSTRIKE)
+		when (1)
+			poke.learn_move(:ICEBEAM)
+		when (2)
+			poke.learn_move(:MOONBLAST)
+		when (3)
+			poke.learn_move(:TAILGLOW)
+	end
+end
+
+poke = Pokemon.new(:DIALGA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:COREENFORCER)
+		when (1)
+			poke.learn_move(:TAKEHEART)
+		when (2)
+			poke.learn_move(:RECOVER)
+		when (3)
+			poke.learn_move(:MAKEITRAIN)
+	end
+end
+
+poke = Pokemon.new(:PALKIA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MALIGNANTCHAIN)
+		when (1)
+			poke.learn_move(:TAKEHEART)
+		when (2)
+			poke.learn_move(:RECOVER)
+		when (3)
+			poke.learn_move(:ORIGINPULSE)
+	end
+end
+
+poke = Pokemon.new(:HEATRAN)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MATCHAGOTCHA)
+		when (1)
+			poke.learn_move(:RECOVER)
+		when (2)
+			poke.learn_move(:ERUPTION)
+		when (3)
+			poke.learn_move(:TACHYONCUTTER)
+	end
+end
+
+poke = Pokemon.new(:REGIGIGAS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SKILLSWAP)
+		when (1)
+			poke.learn_move(:RECOVER)
+		when (2)
+			poke.learn_move(:EXTREMESPEED)
+		when (3)
+			poke.learn_move(:GIGATONHAMMER)
+	end
+end
+
+poke = Pokemon.new(:GIRATINA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DRAGONDANCE)
+		when (1)
+			poke.learn_move(:GLAIVERUSH)
+		when (2)
+			poke.learn_move(:RECOVER)
+		when (3)
+			poke.learn_move(:SPECTRALTHIEF)
+	end
+end
+
+poke = Pokemon.new(:CRESSELIA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:COSMICPOWER)
+		when (1)
+			poke.learn_move(:BODYPRESS)
+		when (2)
+			poke.learn_move(:SIZZLYSLIDE)
+		when (3)
+			poke.learn_move(:LUMINACRASH)
+	end
+end
+
+poke = Pokemon.new(:PHIONE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BOUNCYBUBBLE)
+		when (1)
+			poke.learn_move(:FREEZEDRY)
+		when (2)
+			poke.learn_move(:STOREDPOWER)
+		when (3)
+			poke.learn_move(:ORIGINPULSE)
+	end
+end
+
+poke = Pokemon.new(:MANAPHY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BOUNCYBUBBLE)
+		when (1)
+			poke.learn_move(:FROSTBREATH)
+		when (2)
+			poke.learn_move(:WILDBOLTSTORM)
+		when (3)
+			poke.learn_move(:ORIGINPULSE)
+	end
+end
+
+poke = Pokemon.new(:DARKRAI)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FIERYWRATH)
+		when (1)
+			poke.learn_move(:MOONBLAST)
+		when (2)
+			poke.learn_move(:FIERYDANCE)
+		when (3)
+			poke.learn_move(:MAKEITRAIN)
+	end
+end
+
+poke = Pokemon.new(:SHAYMIN)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MATCHAGOTCHA)
+		when (1)
+			poke.learn_move(:FIERYDANCE)
+		when (2)
+			poke.learn_move(:AEROBLAST)
+		when (3)
+			poke.learn_move(:QUIVERDANCE)
+	end
+end
+
+poke = Pokemon.new(:ARCEUS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:NORETREAT)
+		when (1)
+			poke.learn_move(:COLLISIONCOURSE)
+		when (2)
+			poke.learn_move(:ASTRALBARRAGE)
+		when (3)
+			poke.learn_move(:MULTIATTACK)
+	end
+end
+
+poke = Pokemon.new(:VICTINI)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BLUEFLARE)
+		when (1)
+			poke.learn_move(:BOLTSTRIKE)
+		when (2)
+			poke.learn_move(:LUSTERPURGE)
+		when (3)
+			poke.learn_move(:VICTORYDANCE)
+	end
+end
+
+poke = Pokemon.new(:SNIVY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FLAMETHROWER)
+		when (1)
+			poke.learn_move(:CLANGINGSCALES)
+		when (2)
+			poke.learn_move(:MAKEITRAIN)
+		when (3)
+			poke.learn_move(:FLEURCANNON)
+	end
+end
+
+poke = Pokemon.new(:TEPIG)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:WAVECRASH)
+		when (1)
+			poke.learn_move(:VOLTTACKLE)
+		when (2)
+			poke.learn_move(:AXEKICK)
+		when (3)
+			poke.learn_move(:VICTORYDANCE)
+	end
+end
+
+poke = Pokemon.new(:OSHAWOTT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TRIPLEAXEL)
+		when (1)
+			poke.learn_move(:SHELLSIDEARM)
+		when (2)
+			poke.learn_move(:SACREDSWORD)
+		when (3)
+			poke.learn_move(:SHELLSMASH)
+	end
+end
+
+poke = Pokemon.new(:PATRAT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FAKEOUT)
+		when (1)
+			poke.learn_move(:SWORDSDANCE)
+		when (2)
+			poke.learn_move(:DYNAMICPUNCH)
+		when (3)
+			poke.learn_move(:EXTREMESPEED)
+	end
+end
+
+poke = Pokemon.new(:LILLIPUP)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:CLOSECOMBAT)
+		when (1)
+			poke.learn_move(:BODYSLAM)
+		when (2)
+			poke.learn_move(:HIGHHORSEPOWER)
+		when (3)
+			poke.learn_move(:LASTRESPECTS)
+	end
+end
+
+poke = Pokemon.new(:PURRLOIN)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ENCORE)
+		when (1)
+			poke.learn_move(:OBSTRUCT)
+		when (2)
+			poke.learn_move(:PARTINGSHOT)
+		when (3)
+			poke.learn_move(:WICKEDBLOW)
+	end
+end
+
+poke = Pokemon.new(:PANSAGE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SWORDSDANCE)
+		when (1)
+			poke.learn_move(:FIRELASH)
+		when (2)
+			poke.learn_move(:EARTHQUAKE)
+		when (3)
+			poke.learn_move(:IVYCUDGEL)
+	end
+end
+
+poke = Pokemon.new(:PANSEAR)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:NASTYPLOT)
+		when (1)
+			poke.learn_move(:HYDROSTEAM)
+		when (2)
+			poke.learn_move(:SCORCHINGSANDS)
+		when (3)
+			poke.learn_move(:TORCHSONG)
+	end
+end
+
+poke = Pokemon.new(:PANPOUR)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:NASTYPLOT)
+		when (1)
+			poke.learn_move(:ENERGYBALL)
+		when (2)
+			poke.learn_move(:EARTHPOWER)
+		when (3)
+			poke.learn_move(:STEAMERUPTION)
+	end
+end
+
+poke = Pokemon.new(:MUNNA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:COSMICPOWER)
+		when (1)
+			poke.learn_move(:AURASPHERE)
+		when (2)
+			poke.learn_move(:LUNARBLESSING)
+		when (3)
+			poke.learn_move(:MYSTICALPOWER)
+	end
+end
+
+poke = Pokemon.new(:PIDOVE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:GUNKSHOT)
+		when (1)
+			poke.learn_move(:TIDYUP)
+		when (2)
+			poke.learn_move(:FLOATYFALL)
+		when (3)
+			poke.learn_move(:TRIPLEARROWS)
+	end
+end
+
+poke = Pokemon.new(:BLITZLE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:HORNLEECH)
+		when (1)
+			poke.learn_move(:SWORDSDANCE)
+		when (2)
+			poke.learn_move(:FLAREBLITZ)
+		when (3)
+			poke.learn_move(:BOLTSTRIKE)
+	end
+end
+
+poke = Pokemon.new(:ROGGENROLA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BODYPRESS)
+		when (1)
+			poke.learn_move(:CURSE)
+		when (2)
+			poke.learn_move(:SHOREUP)
+		when (3)
+			poke.learn_move(:DIAMONDSTORM)
+	end
+end
+
+poke = Pokemon.new(:WOOBAT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ESPERWING)
+		when (1)
+			poke.learn_move(:STOREDPOWER)
+		when (2)
+			poke.learn_move(:MYSTICALFIRE)
+		when (3)
+			poke.learn_move(:OBLIVIONWING)
+	end
+end
+
+poke = Pokemon.new(:DRILBUR)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:METEORMASH)
+		when (1)
+			poke.learn_move(:MOUNTAINGALE)
+		when (2)
+			poke.learn_move(:SHIFTGEAR)
+		when (3)
+			poke.learn_move(:PRECIPICEBLADES)
+	end
+end
+
+poke = Pokemon.new(:AUDINO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TAKEHEART)
+		when (1)
+			poke.learn_move(:MOONBLAST)
+		when (2)
+			poke.learn_move(:WISH)
+		when (3)
+			poke.learn_move(:MATCHAGOTCHA)
+	end
+end
+
+poke = Pokemon.new(:TIMBURR)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MACHPUNCH)
+		when (1)
+			poke.learn_move(:DRAINPUNCH)
+		when (2)
+			poke.learn_move(:ICEHAMMER)
+		when (3)
+			poke.learn_move(:DOUBLEIRONBASH)
+	end
+end
+
+poke = Pokemon.new(:TYMPOLE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:JETPUNCH)
+		when (1)
+			poke.learn_move(:HIGHHORSEPOWER)
+		when (2)
+			poke.learn_move(:BULKUP)
+		when (3)
+			poke.learn_move(:SURGINGSTRIKES)
+	end
+end
+
+poke = Pokemon.new(:THROH)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MACHPUNCH)
+		when (1)
+			poke.learn_move(:SLACKOFF)
+		when (2)
+			poke.learn_move(:METEORMASH)
+		when (3)
+			poke.learn_move(:RAGEFIST)
+	end
+end
+
+poke = Pokemon.new(:SAWK)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DRAINPUNCH)
+		when (1)
+			poke.learn_move(:SUCKERPUNCH)
+		when (2)
+			poke.learn_move(:METEORMASH)
+		when (3)
+			poke.learn_move(:VICTORYDANCE)
+	end
+end
+
+poke = Pokemon.new(:SEWADDLE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:STONEAXE)
+		when (1)
+			poke.learn_move(:PSYCHOCUT)
+		when (2)
+			poke.learn_move(:BITTERBLADE)
+		when (3)
+			poke.learn_move(:VICTORYDANCE)
+	end
+end
+
+poke = Pokemon.new(:VENIPEDE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BANEFULBUNKER)
+		when (1)
+			poke.learn_move(:LEECHLIFE)
+		when (2)
+			poke.learn_move(:NOXIOUSTORQUE)
+		when (3)
+			poke.learn_move(:POWERTRIP)
+	end
+end
+
+poke = Pokemon.new(:COTTONEE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:POLLENPUFF)
+		when (1)
+			poke.learn_move(:PARTINGSHOT)
+		when (2)
+			poke.learn_move(:SLEEPPOWDER)
+		when (3)
+			poke.learn_move(:SEEDFLARE)
+	end
+end
+
+poke = Pokemon.new(:PETILIL)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:THUNDEROUSKICK)
+		when (1)
+			poke.learn_move(:SPARKLINGARIA)
+		when (2)
+			poke.learn_move(:FIERYDANCE)
+		when (3)
+			poke.learn_move(:FLOWERTRICK)
+	end
+end
+
+poke = Pokemon.new(:BASCULIN)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:LASTRESPECTS)
+		when (1)
+			poke.learn_move(:CLOSECOMBAT)
+		when (2)
+			poke.learn_move(:SPLISHYSPLASH)
+		when (3)
+			poke.learn_move(:NORETREAT)
+	end
+end
+
+poke = Pokemon.new(:SANDILE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DIRECLAW)
+		when (1)
+			poke.learn_move(:HEADLONGRUSH)
+		when (2)
+			poke.learn_move(:FIRELASH)
+		when (3)
+			poke.learn_move(:WICKEDBLOW)
+	end
+end
+
+poke = Pokemon.new(:DARUMAKA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DRAINPUNCH)
+		when (1)
+			poke.learn_move(:ZIPPYZAP)
+		when (2)
+			poke.learn_move(:HEADLONGRUSH)
+		when (3)
+			poke.learn_move(:PYROBALL)
+	end
+end
+
+poke = Pokemon.new(:MARACTUS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:EARTHPOWER)
+		when (1)
+			poke.learn_move(:QUIVERDANCE)
+		when (2)
+			poke.learn_move(:FIERYDANCE)
+		when (3)
+			poke.learn_move(:SEEDFLARE)
+	end
+end
+
+poke = Pokemon.new(:DWEBBLE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:CRABHAMMER)
+		when (1)
+			poke.learn_move(:STONEAXE)
+		when (2)
+			poke.learn_move(:LEECHLIFE)
+		when (3)
+			poke.learn_move(:MIGHTYCLEAVE)
+	end
+end
+
+poke = Pokemon.new(:SCRAGGY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SUCKERPUNCH)
+		when (1)
+			poke.learn_move(:BULLETPUNCH)
+		when (2)
+			poke.learn_move(:NOXIOUSTORQUE)
+		when (3)
+			poke.learn_move(:VICTORYDANCE)
+	end
+end
+
+poke = Pokemon.new(:SIGILYPH)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MOONBLAST)
+		when (1)
+			poke.learn_move(:CALMMIND)
+		when (2)
+			poke.learn_move(:ESPERWING)
+		when (3)
+			poke.learn_move(:OBLIVIONWING)
+	end
+end
+
+poke = Pokemon.new(:YAMASK)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:STRENGTHSAP)
+		when (1)
+			poke.learn_move(:GLARE)
+		when (2)
+			poke.learn_move(:AURASPHERE)
+		when (3)
+			poke.learn_move(:ASTRALBARRAGE)
+	end
+end
+
+poke = Pokemon.new(:TIRTOUGA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ICESPINNER)
+		when (1)
+			poke.learn_move(:AQUASTEP)
+		when (2)
+			poke.learn_move(:SHOREUP)
+		when (3)
+			poke.learn_move(:MIGHTYCLEAVE)
+	end
+end
+
+poke = Pokemon.new(:ARCHEN)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ROOST)
+		when (1)
+			poke.learn_move(:EARTHQUAKE)
+		when (2)
+			poke.learn_move(:FLOATYFALL)
+		when (3)
+			poke.learn_move(:MIGHTYCLEAVE)
+	end
+end
+
+poke = Pokemon.new(:TRUBBISH)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:COIL)
+		when (1)
+			poke.learn_move(:RECOVER)
+		when (2)
+			poke.learn_move(:DIRECLAW)
+		when (3)
+			poke.learn_move(:GIGATONHAMMER)
+	end
+end
+
+poke = Pokemon.new(:ZORUA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MALIGNANTCHAIN)
+		when (1)
+			poke.learn_move(:MOONBLAST)
+		when (2)
+			poke.learn_move(:SECRETSWORD)
+		when (3)
+			poke.learn_move(:FIERYWRATH)
+	end
+end
+
+poke = Pokemon.new(:MINCCINO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ICICLESPEAR)
+		when (1)
+			poke.learn_move(:TIDYUP)
+		when (2)
+			poke.learn_move(:KNOCKOFF)
+		when (3)
+			poke.learn_move(:POPULATIONBOMB)
+	end
+end
+
+poke = Pokemon.new(:GOTHITA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:RECOVER)
+		when (1)
+			poke.learn_move(:MOONBLAST)
+		when (2)
+			poke.learn_move(:AURASPHERE)
+		when (3)
+			poke.learn_move(:LUMINACRASH)
+	end
+end
+
+poke = Pokemon.new(:SOLOSIS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MISTBALL)
+		when (1)
+			poke.learn_move(:SPEEDSWAP)
+		when (2)
+			poke.learn_move(:FLAMETHROWER)
+		when (3)
+			poke.learn_move(:LIGHTOFRUIN)
+	end
+end
+
+poke = Pokemon.new(:DUCKLETT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SPLISHYSPLASH)
+		when (1)
+			poke.learn_move(:SANDSEARSTORM)
+		when (2)
+			poke.learn_move(:WILDBOLTSTORM)
+		when (3)
+			poke.learn_move(:QUIVERDANCE)
+	end
+end
+
+poke = Pokemon.new(:VANILLITE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:EARTHPOWER)
+		when (1)
+			poke.learn_move(:AURORAVEIL)
+		when (2)
+			poke.learn_move(:CALMMIND)
+		when (3)
+			poke.learn_move(:SPARKLYSWIRL)
+	end
+end
+
+poke = Pokemon.new(:DEERLING)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TIDYUP)
+		when (1)
+			poke.learn_move(:FLOWERTRICK)
+		when (2)
+			poke.learn_move(:BODYSLAM)
+		when (3)
+			poke.learn_move(:COMBATTORQUE)
+	end
+end
+
+poke = Pokemon.new(:EMOLGA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ICICLECRASH)
+		when (1)
+			poke.learn_move(:ZINGZAP)
+		when (2)
+			poke.learn_move(:FLOATYFALL)
+		when (3)
+			poke.learn_move(:ELECTRIFY)
+	end
+end
+
+poke = Pokemon.new(:KARRABLAST)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:LEECHLIFE)
+		when (1)
+			poke.learn_move(:BITTERBLADE)
+		when (2)
+			poke.learn_move(:OBSTRUCT)
+		when (3)
+			poke.learn_move(:DOUBLEIRONBASH)
+	end
+end
+
+poke = Pokemon.new(:FOONGUS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:POLLENPUFF)
+		when (1)
+			poke.learn_move(:PARTINGSHOT)
+		when (2)
+			poke.learn_move(:FOULPLAY)
+		when (3)
+			poke.learn_move(:SAPPYSEED)
+	end
+end
+
+poke = Pokemon.new(:FRILLISH)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:CALMMIND)
+		when (1)
+			poke.learn_move(:BUZZYBUZZ)
+		when (2)
+			poke.learn_move(:FREEZEDRY)
+		when (3)
+			poke.learn_move(:STEAMERUPTION)
+	end
+end
+
+poke = Pokemon.new(:ALOMOMOLA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FLIPTURN)
+		when (1)
+			poke.learn_move(:HEARTSWAP)
+		when (2)
+			poke.learn_move(:GLITZYGLOW)
+		when (3)
+			poke.learn_move(:REVIVALBLESSING)
+	end
+end
+
+poke = Pokemon.new(:JOLTIK)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:WILDBOLTSTORM)
+		when (1)
+			poke.learn_move(:PARABOLICCHARGE)
+		when (2)
+			poke.learn_move(:EARTHPOWER)
+		when (3)
+			poke.learn_move(:QUIVERDANCE)
+	end
+end
+
+poke = Pokemon.new(:FERROSEED)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SYNTHESIS)
+		when (1)
+			poke.learn_move(:COMBATTORQUE)
+		when (2)
+			poke.learn_move(:SPIKYSHIELD)
+		when (3)
+			poke.learn_move(:SAPPYSEED)
+	end
+end
+
+poke = Pokemon.new(:KLINK)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TRIPLEAXEL)
+		when (1)
+			poke.learn_move(:HIGHHORSEPOWER)
+		when (2)
+			poke.learn_move(:RECOVER)
+		when (3)
+			poke.learn_move(:AURAWHEEL)
+	end
+end
+
+poke = Pokemon.new(:TYNAMO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SCALD)
+		when (1)
+			poke.learn_move(:STRENGTHSAP)
+		when (2)
+			poke.learn_move(:FIRELASH)
+		when (3)
+			poke.learn_move(:AURAWHEEL)
+	end
+end
+
+poke = Pokemon.new(:ELGYEM)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:THUNDERCLAP)
+		when (1)
+			poke.learn_move(:BADDYBAD)
+		when (2)
+			poke.learn_move(:AURASPHERE)
+		when (3)
+			poke.learn_move(:PHOTONGEYSER)
+	end
+end
+
+poke = Pokemon.new(:LITWICK)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:PARTINGSHOT)
+		when (1)
+			poke.learn_move(:EARTHPOWER)
+		when (2)
+			poke.learn_move(:MOONBLAST)
+		when (3)
+			poke.learn_move(:TORCHSONG)
+	end
+end
+
+poke = Pokemon.new(:AXEW)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:STONEAXE)
+		when (1)
+			poke.learn_move(:DIRECLAW)
+		when (2)
+			poke.learn_move(:BITTERBLADE)
+		when (3)
+			poke.learn_move(:GLAIVERUSH)
+	end
+end
+
+poke = Pokemon.new(:CUBCHOO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MOUNTAINGALE)
+		when (1)
+			poke.learn_move(:AQUASTEP)
+		when (2)
+			poke.learn_move(:ICESHARD)
+		when (3)
+			poke.learn_move(:COLLISIONCOURSE)
+	end
+end
+
+poke = Pokemon.new(:CRYOGONAL)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FREEZINGGLARE)
+		when (1)
+			poke.learn_move(:AURORAVEIL)
+		when (2)
+			poke.learn_move(:NASTYPLOT)
+		when (3)
+			poke.learn_move(:ORIGINPULSE)
+	end
+end
+
+poke = Pokemon.new(:SHELMET)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:POWERGEM)
+		when (1)
+			poke.learn_move(:NASTYPLOT)
+		when (2)
+			poke.learn_move(:EARTHPOWER)
+		when (3)
+			poke.learn_move(:STEAMERUPTION)
+	end
+end
+
+poke = Pokemon.new(:STUNFISK)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:THUNDERCLAP)
+		when (1)
+			poke.learn_move(:SANDSEARSTORM)
+		when (2)
+			poke.learn_move(:STRENGTHSAP)
+		when (3)
+			poke.learn_move(:THUNDERCAGE)
+	end
+end
+
+poke = Pokemon.new(:MIENFOO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:GUNKSHOT)
+		when (1)
+			poke.learn_move(:SUPERCELLSLAM)
+		when (2)
+			poke.learn_move(:MOUNTAINGALE)
+		when (3)
+			poke.learn_move(:WICKEDBLOW)
+	end
+end
+
+poke = Pokemon.new(:DRUDDIGON)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FIRELASH)
+		when (1)
+			poke.learn_move(:MORNINGSUN)
+		when (2)
+			poke.learn_move(:DRAGONDARTS)
+		when (3)
+			poke.learn_move(:CLANGOROUSSOUL)
+	end
+end
+
+poke = Pokemon.new(:GOLETT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SHIFTGEAR)
+		when (1)
+			poke.learn_move(:DRAINPUNCH)
+		when (2)
+			poke.learn_move(:HEADLONGRUSH)
+		when (3)
+			poke.learn_move(:RAGEFIST)
+	end
+end
+
+poke = Pokemon.new(:PAWNIARD)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SUCKERPUNCH)
+		when (1)
+			poke.learn_move(:CEASELESSEDGE)
+		when (2)
+			poke.learn_move(:BITTERBLADE)
+		when (3)
+			poke.learn_move(:LASTRESPECTS)
+	end
+end
+
+poke = Pokemon.new(:BOUFFALANT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SLACKOFF)
+		when (1)
+			poke.learn_move(:HIGHJUMPKICK)
+		when (2)
+			poke.learn_move(:HEADSMASH)
+		when (3)
+			poke.learn_move(:FLAREBLITZ)
+	end
+end
+
+poke = Pokemon.new(:RUFFLET)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FLOATYFALL)
+		when (1)
+			poke.learn_move(:AURASPHERE)
+		when (2)
+			poke.learn_move(:NORETREAT)
+		when (3)
+			poke.learn_move(:BOLTBEAK)
+	end
+end
+
+poke = Pokemon.new(:VULLABY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FOULPLAY)
+		when (1)
+			poke.learn_move(:BODYPRESS)
+		when (2)
+			poke.learn_move(:ROOST)
+		when (3)
+			poke.learn_move(:RUINATION)
+	end
+end
+
+poke = Pokemon.new(:HEATMOR)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:EARTHPOWER)
+		when (1)
+			poke.learn_move(:OVERHEAT)
+		when (2)
+			poke.learn_move(:THUNDERBOLT)
+		when (3)
+			poke.learn_move(:VCREATE)
+	end
+end
+
+poke = Pokemon.new(:DURANT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:HIGHHORSEPOWER)
+		when (1)
+			poke.learn_move(:FIRSTIMPRESSION)
+		when (2)
+			poke.learn_move(:SWORDSDANCE)
+		when (3)
+			poke.learn_move(:BEHEMOTHBASH)
+	end
+end
+
+poke = Pokemon.new(:DEINO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FIERYWRATH)
+		when (1)
+			poke.learn_move(:ESPERWING)
+		when (2)
+			poke.learn_move(:SLUDGEBOMB)
+		when (3)
+			poke.learn_move(:FICKLEBEAM)
+	end
+end
+
+poke = Pokemon.new(:LARVESTA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:THUNDERBOLT)
+		when (1)
+			poke.learn_move(:MAGMASTORM)
+		when (2)
+			poke.learn_move(:EARTHPOWER)
+		when (3)
+			poke.learn_move(:MATCHAGOTCHA)
+	end
+end
+
+poke = Pokemon.new(:COBALION)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BEHEMOTHBLADE)
+		when (1)
+			poke.learn_move(:MIGHTYCLEAVE)
+		when (2)
+			poke.learn_move(:CEASELESSEDGE)
+		when (3)
+			poke.learn_move(:VICTORYDANCE)
+	end
+end
+
+poke = Pokemon.new(:TERRAKION)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MIGHTYCLEAVE)
+		when (1)
+			poke.learn_move(:HEADLONGRUSH)
+		when (2)
+			poke.learn_move(:CEASELESSEDGE)
+		when (3)
+			poke.learn_move(:VICTORYDANCE)
+	end
+end
+
+poke = Pokemon.new(:VIRIZION)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:PSYBLADE)
+		when (1)
+			poke.learn_move(:SAPPYSEED)
+		when (2)
+			poke.learn_move(:CEASELESSEDGE)
+		when (3)
+			poke.learn_move(:VICTORYDANCE)
+	end
+end
+
+poke = Pokemon.new(:TORNADUS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SANDSEARSTORM)
+		when (1)
+			poke.learn_move(:PARTINGSHOT)
+		when (2)
+			poke.learn_move(:SPLISHYSPLASH)
+		when (3)
+			poke.learn_move(:OBLIVIONWING)
+	end
+end
+
+poke = Pokemon.new(:THUNDURUS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SANDSEARSTORM)
+		when (1)
+			poke.learn_move(:HURRICANE)
+		when (2)
+			poke.learn_move(:FROSTBREATH)
+		when (3)
+			poke.learn_move(:ELECTROSHOT)
+	end
+end
+
+poke = Pokemon.new(:RESHIRAM)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ENERGYBALL)
+		when (1)
+			poke.learn_move(:TAKEHEART)
+		when (2)
+			poke.learn_move(:FICKLEBEAM)
+		when (3)
+			poke.learn_move(:ERUPTION)
+	end
+end
+
+poke = Pokemon.new(:ZEKROM)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TRIPLEAXEL)
+		when (1)
+			poke.learn_move(:THUNDEROUSKICK)
+		when (2)
+			poke.learn_move(:DRAGONHAMMER)
+		when (3)
+			poke.learn_move(:BOLTBEAK)
+	end
+end
+
+poke = Pokemon.new(:LANDORUS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:STONEAXE)
+		when (1)
+			poke.learn_move(:FLOATYFALL)
+		when (2)
+			poke.learn_move(:ROOST)
+		when (3)
+			poke.learn_move(:BLEAKWINDSTORM)
+	end
+end
+
+poke = Pokemon.new(:KYUREM)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DRAGONDARTS)
+		when (1)
+			poke.learn_move(:GLACIALLANCE)
+		when (2)
+			poke.learn_move(:NORETREAT)
+		when (3)
+			poke.learn_move(:DRAGONENERGY)
+	end
+end
+
+poke = Pokemon.new(:KELDEO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BOUNCYBUBBLE)
+		when (1)
+			poke.learn_move(:THUNDERBOLT)
+		when (2)
+			poke.learn_move(:ICEBEAM)
+		when (3)
+			poke.learn_move(:STEAMERUPTION)
+	end
+end
+
+poke = Pokemon.new(:MELOETTA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BODYSLAM)
+		when (1)
+			poke.learn_move(:TORCHSONG)
+		when (2)
+			poke.learn_move(:TRIPLEARROWS)
+		when (3)
+			poke.learn_move(:BOOMBURST)
+	end
+end
+
+poke = Pokemon.new(:GENESECT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:EXTREMESPEED)
+		when (1)
+			poke.learn_move(:SHIFTGEAR)
+		when (2)
+			poke.learn_move(:BEHEMOTHBASH)
+		when (3)
+			poke.learn_move(:TACHYONCUTTER)
+	end
+end
+
+poke = Pokemon.new(:CHESPIN)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:COMBATTORQUE)
+		when (1)
+			poke.learn_move(:SYNTHESIS)
+		when (2)
+			poke.learn_move(:CEASELESSEDGE)
+		when (3)
+			poke.learn_move(:SAPPYSEED)
+	end
+end
+
+poke = Pokemon.new(:FENNEKIN)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TWINBEAM)
+		when (1)
+			poke.learn_move(:FIERYDANCE)
+		when (2)
+			poke.learn_move(:THUNDERBOLT)
+		when (3)
+			poke.learn_move(:SPARKLYSWIRL)
+	end
+end
+
+poke = Pokemon.new(:FROAKIE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MOONBLAST)
+		when (1)
+			poke.learn_move(:SHELLSIDEARM)
+		when (2)
+			poke.learn_move(:FIERYWRATH)
+		when (3)
+			poke.learn_move(:STEAMERUPTION)
+	end
+end
+
+poke = Pokemon.new(:BUNNELBY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DRAINPUNCH)
+		when (1)
+			poke.learn_move(:TIDYUP)
+		when (2)
+			poke.learn_move(:FACADE)
+		when (3)
+			poke.learn_move(:EXTREMESPEED)
+	end
+end
+
+poke = Pokemon.new(:FLETCHLING)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DRILLRUN)
+		when (1)
+			poke.learn_move(:BURNINGBULWARK)
+		when (2)
+			poke.learn_move(:HEADSMASH)
+		when (3)
+			poke.learn_move(:VOLTTACKLE)
+	end
+end
+
+poke = Pokemon.new(:SCATTERBUG)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FOCUSBLAST)
+		when (1)
+			poke.learn_move(:AFTERYOU)
+		when (2)
+			poke.learn_move(:DECORATE)
+		when (3)
+			poke.learn_move(:BLIZZARD)
+	end
+end
+
+poke = Pokemon.new(:LITLEO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:EARTHPOWER)
+		when (1)
+			poke.learn_move(:NASTYPLOT)
+		when (2)
+			poke.learn_move(:BURNINGBULWARK)
+		when (3)
+			poke.learn_move(:BLUEFLARE)
+	end
+end
+
+poke = Pokemon.new(:FLABÉBÉ)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:GLITZYGLOW)
+		when (1)
+			poke.learn_move(:MYSTICALFIRE)
+		when (2)
+			poke.learn_move(:TAKEHEART)
+		when (3)
+			poke.learn_move(:SEEDFLARE)
+	end
+end
+
+poke = Pokemon.new(:SKIDDO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:HIGHHORSEPOWER)
+		when (1)
+			poke.learn_move(:GRASSYGLIDE)
+		when (2)
+			poke.learn_move(:STONEAXE)
+		when (3)
+			poke.learn_move(:SAPPYSEED)
+	end
+end
+
+poke = Pokemon.new(:PANCHAM)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DRAINPUNCH)
+		when (1)
+			poke.learn_move(:SUCKERPUNCH)
+		when (2)
+			poke.learn_move(:METEORMASH)
+		when (3)
+			poke.learn_move(:WICKEDBLOW)
+	end
+end
+
+poke = Pokemon.new(:FURFROU)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TIDYUP)
+		when (1)
+			poke.learn_move(:SLACKOFF)
+		when (2)
+			poke.learn_move(:COMBATTORQUE)
+		when (3)
+			poke.learn_move(:MULTIATTACK)
+	end
+end
+
+poke = Pokemon.new(:ESPURR)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:LUSTERPURGE)
+		when (1)
+			poke.learn_move(:MOONBLAST)
+		when (2)
+			poke.learn_move(:AURASPHERE)
+		when (3)
+			poke.learn_move(:DARKVOID)
+	end
+end
+
+poke = Pokemon.new(:HONEDGE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TACHYONCUTTER)
+		when (1)
+			poke.learn_move(:SHADOWBONE)
+		when (2)
+			poke.learn_move(:BITTERBLADE)
+		when (3)
+			poke.learn_move(:BEHEMOTHBLADE)
+	end
+end
+
+poke = Pokemon.new(:SPRITZEE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SPEEDSWAP)
+		when (1)
+			poke.learn_move(:REVIVALBLESSING)
+		when (2)
+			poke.learn_move(:ROOST)
+		when (3)
+			poke.learn_move(:TORCHSONG)
+	end
+end
+
+poke = Pokemon.new(:SWIRLIX)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BELLYDRUM)
+		when (1)
+			poke.learn_move(:HEADLONGRUSH)
+		when (2)
+			poke.learn_move(:MAGICALTORQUE)
+		when (3)
+			poke.learn_move(:REVIVALBLESSING)
+	end
+end
+
+poke = Pokemon.new(:INKAY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:POWERTRIP)
+		when (1)
+			poke.learn_move(:SPINOUT)
+		when (2)
+			poke.learn_move(:RECOVER)
+		when (3)
+			poke.learn_move(:PSYCHOBOOST)
+	end
+end
+
+poke = Pokemon.new(:BINACLE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TRIPLEAXEL)
+		when (1)
+			poke.learn_move(:CRABHAMMER)
+		when (2)
+			poke.learn_move(:DIRECLAW)
+		when (3)
+			poke.learn_move(:MIGHTYCLEAVE)
+	end
+end
+
+poke = Pokemon.new(:SKRELP)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:STRENGTHSAP)
+		when (1)
+			poke.learn_move(:TRICKROOM)
+		when (2)
+			poke.learn_move(:CALMMIND)
+		when (3)
+			poke.learn_move(:COREENFORCER)
+	end
+end
+
+poke = Pokemon.new(:CLAUNCHER)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SHELLSMASH)
+		when (1)
+			poke.learn_move(:ARMORCANNON)
+		when (2)
+			poke.learn_move(:ENERGYBALL)
+		when (3)
+			poke.learn_move(:ORIGINPULSE)
+	end
+end
+
+poke = Pokemon.new(:HELIOPTILE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:WEATHERBALL)
+		when (1)
+			poke.learn_move(:HYDROSTEAM)
+		when (2)
+			poke.learn_move(:EARTHPOWER)
+		when (3)
+			poke.learn_move(:BOOMBURST)
+	end
+end
+
+poke = Pokemon.new(:TYRUNT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DRAGONHAMMER)
+		when (1)
+			poke.learn_move(:FLAREBLITZ)
+		when (2)
+			poke.learn_move(:VOLTTACKLE)
+		when (3)
+			poke.learn_move(:SHIFTGEAR)
+	end
+end
+
+poke = Pokemon.new(:AMAURA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:RECOVER)
+		when (1)
+			poke.learn_move(:WRINGOUT)
+		when (2)
+			poke.learn_move(:POWERGEM)
+		when (3)
+			poke.learn_move(:GEOMANCY)
+	end
+end
+
+poke = Pokemon.new(:HAWLUCHA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TRIPLEAXEL)
+		when (1)
+			poke.learn_move(:HIGHHORSEPOWER)
+		when (2)
+			poke.learn_move(:FLOATYFALL)
+		when (3)
+			poke.learn_move(:WICKEDBLOW)
+	end
+end
+
+poke = Pokemon.new(:DEDENNE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BOOMBURST)
+		when (1)
+			poke.learn_move(:FAKEOUT)
+		when (2)
+			poke.learn_move(:NASTYPLOT)
+		when (3)
+			poke.learn_move(:REVIVALBLESSING)
+	end
+end
+
+poke = Pokemon.new(:CARBINK)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BODYPRESS)
+		when (1)
+			poke.learn_move(:SHOREUP)
+		when (2)
+			poke.learn_move(:SPARKLYSWIRL)
+		when (3)
+			poke.learn_move(:DIAMONDSTORM)
+	end
+end
+
+poke = Pokemon.new(:GOOMY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DRAGONHAMMER)
+		when (1)
+			poke.learn_move(:RECOVER)
+		when (2)
+			poke.learn_move(:CALMMIND)
+		when (3)
+			poke.learn_move(:MAKEITRAIN)
+	end
+end
+
+poke = Pokemon.new(:KLEFKI)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:HEALBELL)
+		when (1)
+			poke.learn_move(:ENCORE)
+		when (2)
+			poke.learn_move(:INSTRUCT)
+		when (3)
+			poke.learn_move(:TOPSYTURVY)
+	end
+end
+
+poke = Pokemon.new(:PHANTUMP)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:RAGEFIST)
+		when (1)
+			poke.learn_move(:SLEEPPOWDER)
+		when (2)
+			poke.learn_move(:SYNTHESIS)
+		when (3)
+			poke.learn_move(:SAPPYSEED)
+	end
+end
+
+poke = Pokemon.new(:PUMPKABOO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SPIRITSHACKLE)
+		when (1)
+			poke.learn_move(:FIRELASH)
+		when (2)
+			poke.learn_move(:DIRECLAW)
+		when (3)
+			poke.learn_move(:SAPPYSEED)
+	end
+end
+
+poke = Pokemon.new(:BERGMITE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:STONEAXE)
+		when (1)
+			poke.learn_move(:METALBURST)
+		when (2)
+			poke.learn_move(:BODYPRESS)
+		when (3)
+			poke.learn_move(:GLACIALLANCE)
+	end
+end
+
+poke = Pokemon.new(:NOIBAT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:AEROBLAST)
+		when (1)
+			poke.learn_move(:OVERDRIVE)
+		when (2)
+			poke.learn_move(:NASTYPLOT)
+		when (3)
+			poke.learn_move(:CLANGINGSCALES)
+	end
+end
+
+poke = Pokemon.new(:XERNEAS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:EARTHPOWER)
+		when (1)
+			poke.learn_move(:SPRINGTIDESTORM)
+		when (2)
+			poke.learn_move(:STRENGTHSAP)
+		when (3)
+			poke.learn_move(:TAILGLOW)
+	end
+end
+
+poke = Pokemon.new(:YVELTAL)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SHELLSIDEARM)
+		when (1)
+			poke.learn_move(:POWERTRIP)
+		when (2)
+			poke.learn_move(:FIERYWRATH)
+		when (3)
+			poke.learn_move(:CLANGOROUSSOUL)
+	end
+end
+
+poke = Pokemon.new(:ZYGARDE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DRAGONDARTS)
+		when (1)
+			poke.learn_move(:HEALORDER)
+		when (2)
+			poke.learn_move(:CLANGOROUSSOUL)
+		when (3)
+			poke.learn_move(:DOUBLEIRONBASH)
+	end
+end
+
+poke = Pokemon.new(:DIANCIE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MAGICALTORQUE)
+		when (1)
+			poke.learn_move(:FIERYDANCE)
+		when (2)
+			poke.learn_move(:SHOREUP)
+		when (3)
+			poke.learn_move(:GEOMANCY)
+	end
+end
+
+poke = Pokemon.new(:HOOPA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:PHOTONGEYSER)
+		when (1)
+			poke.learn_move(:SECRETSWORD)
+		when (2)
+			poke.learn_move(:FIERYWRATH)
+		when (3)
+			poke.learn_move(:SHELLSMASH)
+	end
+end
+
+poke = Pokemon.new(:VOLCANION)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:HYDROSTEAM)
+		when (1)
+			poke.learn_move(:CALMMIND)
+		when (2)
+			poke.learn_move(:ENERGYBALL)
+		when (3)
+			poke.learn_move(:MAGMASTORM)
+	end
+end
+
+poke = Pokemon.new(:ROWLET)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:THOUSANDARROWS)
+		when (1)
+			poke.learn_move(:SHADOWBONE)
+		when (2)
+			poke.learn_move(:FIRSTIMPRESSION)
+		when (3)
+			poke.learn_move(:VICTORYDANCE)
+	end
+end
+
+poke = Pokemon.new(:LITTEN)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SUCKERPUNCH)
+		when (1)
+			poke.learn_move(:PARTINGSHOT)
+		when (2)
+			poke.learn_move(:SLACKOFF)
+		when (3)
+			poke.learn_move(:SACREDFIRE)
+	end
+end
+
+poke = Pokemon.new(:POPPLIO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:PSYCHICNOISE)
+		when (1)
+			poke.learn_move(:BOUNCYBUBBLE)
+		when (2)
+			poke.learn_move(:OVERDRIVE)
+		when (3)
+			poke.learn_move(:TORCHSONG)
+	end
+end
+
+poke = Pokemon.new(:PIKIPEK)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DUALWINGBEAT)
+		when (1)
+			poke.learn_move(:BONERUSH)
+		when (2)
+			poke.learn_move(:BURNINGBULWARK)
+		when (3)
+			poke.learn_move(:POPULATIONBOMB)
+	end
+end
+
+poke = Pokemon.new(:YUNGOOS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:EXTREMESPEED)
+		when (1)
+			poke.learn_move(:KNOCKOFF)
+		when (2)
+			poke.learn_move(:TIDYUP)
+		when (3)
+			poke.learn_move(:MULTIATTACK)
+	end
+end
+
+poke = Pokemon.new(:GRUBBIN)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ICEBEAM)
+		when (1)
+			poke.learn_move(:EARTHPOWER)
+		when (2)
+			poke.learn_move(:THUNDERCLAP)
+		when (3)
+			poke.learn_move(:QUIVERDANCE)
+	end
+end
+
+poke = Pokemon.new(:CRABRAWLER)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:JETPUNCH)
+		when (1)
+			poke.learn_move(:SHOREUP)
+		when (2)
+			poke.learn_move(:SUCKERPUNCH)
+		when (3)
+			poke.learn_move(:SURGINGSTRIKES)
+	end
+end
+
+poke = Pokemon.new(:ORICORIO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:QUIVERDANCE)
+		when (1)
+			poke.learn_move(:FIERYDANCE)
+		when (2)
+			poke.learn_move(:THUNDERCLAP)
+		when (3)
+			poke.learn_move(:OBLIVIONWING)
+	end
+end
+
+poke = Pokemon.new(:CUTIEFLY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:STICKYWEB)
+		when (1)
+			poke.learn_move(:SLEEPPOWDER)
+		when (2)
+			poke.learn_move(:HEATWAVE)
+		when (3)
+			poke.learn_move(:SPARKLYSWIRL)
+	end
+end
+
+poke = Pokemon.new(:ROCKRUFF)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:HIGHHORSEPOWER)
+		when (1)
+			poke.learn_move(:TIDYUP)
+		when (2)
+			poke.learn_move(:ICESPINNER)
+		when (3)
+			poke.learn_move(:MIGHTYCLEAVE)
+	end
+end
+
+poke = Pokemon.new(:WISHIWASHI)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:HEALORDER)
+		when (1)
+			poke.learn_move(:FREEZEDRY)
+		when (2)
+			poke.learn_move(:WATERSHURIKEN)
+		when (3)
+			poke.learn_move(:TAILGLOW)
+	end
+end
+
+poke = Pokemon.new(:MAREANIE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:CEASELESSEDGE)
+		when (1)
+			poke.learn_move(:SIZZLYSLIDE)
+		when (2)
+			poke.learn_move(:BODYPRESS)
+		when (3)
+			poke.learn_move(:LEECHSEED)
+	end
+end
+
+poke = Pokemon.new(:MUDBRAY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BODYPRESS)
+		when (1)
+			poke.learn_move(:YAWN)
+		when (2)
+			poke.learn_move(:SHOREUP)
+		when (3)
+			poke.learn_move(:THOUSANDWAVES)
+	end
+end
+
+poke = Pokemon.new(:DEWPIDER)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:JETPUNCH)
+		when (1)
+			poke.learn_move(:SILKTRAP)
+		when (2)
+			poke.learn_move(:SWORDSDANCE)
+		when (3)
+			poke.learn_move(:AQUASTEP)
+	end
+end
+
+poke = Pokemon.new(:FOMANTIS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SUPERPOWER)
+		when (1)
+			poke.learn_move(:HEADLONGRUSH)
+		when (2)
+			poke.learn_move(:ICEHAMMER)
+		when (3)
+			poke.learn_move(:BITTERBLADE)
+	end
+end
+
+poke = Pokemon.new(:MORELULL)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:CALMMIND)
+		when (1)
+			poke.learn_move(:SAPPYSEED)
+		when (2)
+			poke.learn_move(:DRAININGKISS)
+		when (3)
+			poke.learn_move(:MATCHAGOTCHA)
+	end
+end
+
+poke = Pokemon.new(:SALANDIT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SCALD)
+		when (1)
+			poke.learn_move(:SLUDGEWAVE)
+		when (2)
+			poke.learn_move(:COREENFORCER)
+		when (3)
+			poke.learn_move(:ERUPTION)
+	end
+end
+
+poke = Pokemon.new(:STUFFUL)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DRAINPUNCH)
+		when (1)
+			poke.learn_move(:METEORMASH)
+		when (2)
+			poke.learn_move(:TRIPLEAXEL)
+		when (3)
+			poke.learn_move(:RAGEFIST)
+	end
+end
+
+poke = Pokemon.new(:BOUNSWEET)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TRIPLEAXEL)
+		when (1)
+			poke.learn_move(:AQUASTEP)
+		when (2)
+			poke.learn_move(:THUNDEROUSKICK)
+		when (3)
+			poke.learn_move(:SAPPYSEED)
+	end
+end
+
+poke = Pokemon.new(:COMFEY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:REVIVALBLESSING)
+		when (1)
+			poke.learn_move(:TAKEHEART)
+		when (2)
+			poke.learn_move(:STRENGTHSAP)
+		when (3)
+			poke.learn_move(:MATCHAGOTCHA)
+	end
+end
+
+poke = Pokemon.new(:ORANGURU)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:JUNGLEHEALING)
+		when (1)
+			poke.learn_move(:YAWN)
+		when (2)
+			poke.learn_move(:FOLLOWME)
+		when (3)
+			poke.learn_move(:LUMINACRASH)
+	end
+end
+
+poke = Pokemon.new(:PASSIMIAN)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:PYROBALL)
+		when (1)
+			poke.learn_move(:SUCKERPUNCH)
+		when (2)
+			poke.learn_move(:ZINGZAP)
+		when (3)
+			poke.learn_move(:VICTORYDANCE)
+	end
+end
+
+poke = Pokemon.new(:WIMPOD)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TRIPLEAXEL)
+		when (1)
+			poke.learn_move(:OBSTRUCT)
+		when (2)
+			poke.learn_move(:JETPUNCH)
+		when (3)
+			poke.learn_move(:SURGINGSTRIKES)
+	end
+end
+
+poke = Pokemon.new(:SANDYGAST)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BITTERMALICE)
+		when (1)
+			poke.learn_move(:SPLISHYSPLASH)
+		when (2)
+			poke.learn_move(:TAKEHEART)
+		when (3)
+			poke.learn_move(:SALTCURE)
+	end
+end
+
+poke = Pokemon.new(:PYUKUMUKU)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:COMEUPPANCE)
+		when (1)
+			poke.learn_move(:BANEFULBUNKER)
+		when (2)
+			poke.learn_move(:TOXICSPIKES)
+		when (3)
+			poke.learn_move(:SALTCURE)
+	end
+end
+
+poke = Pokemon.new(:TYPENULL)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DIRECLAW)
+		when (1)
+			poke.learn_move(:RECOVER)
+		when (2)
+			poke.learn_move(:COMBATTORQUE)
+		when (3)
+			poke.learn_move(:NORETREAT)
+	end
+end
+
+poke = Pokemon.new(:MINIOR)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:EARTHPOWER)
+		when (1)
+			poke.learn_move(:FLOATYFALL)
+		when (2)
+			poke.learn_move(:ZINGZAP)
+		when (3)
+			poke.learn_move(:DIAMONDSTORM)
+	end
+end
+
+poke = Pokemon.new(:KOMALA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SLACKOFF)
+		when (1)
+			poke.learn_move(:EXTREMESPEED)
+		when (2)
+			poke.learn_move(:KNOCKOFF)
+		when (3)
+			poke.learn_move(:COLLISIONCOURSE)
+	end
+end
+
+poke = Pokemon.new(:TURTONATOR)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BURNINGBULWARK)
+		when (1)
+			poke.learn_move(:MORNINGSUN)
+		when (2)
+			poke.learn_move(:BODYPRESS)
+		when (3)
+			poke.learn_move(:COREENFORCER)
+	end
+end
+
+poke = Pokemon.new(:TOGEDEMARU)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FAKEOUT)
+		when (1)
+			poke.learn_move(:METALBURST)
+		when (2)
+			poke.learn_move(:METEORMASH)
+		when (3)
+			poke.learn_move(:AURAWHEEL)
+	end
+end
+
+poke = Pokemon.new(:MIMIKYU)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SPIRITBREAK)
+		when (1)
+			poke.learn_move(:TIDYUP)
+		when (2)
+			poke.learn_move(:FIRELASH)
+		when (3)
+			poke.learn_move(:SPECTRALTHIEF)
+	end
+end
+
+poke = Pokemon.new(:BRUXISH)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:PLAYROUGH)
+		when (1)
+			poke.learn_move(:FIREFANG)
+		when (2)
+			poke.learn_move(:DRAGONDANCE)
+		when (3)
+			poke.learn_move(:SURGINGSTRIKES)
+	end
+end
+
+poke = Pokemon.new(:DRAMPA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SLACKOFF)
+		when (1)
+			poke.learn_move(:TRICKROOM)
+		when (2)
+			poke.learn_move(:COREENFORCER)
+		when (3)
+			poke.learn_move(:BOOMBURST)
+	end
+end
+
+poke = Pokemon.new(:DHELMISE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SHADOWBONE)
+		when (1)
+			poke.learn_move(:IVYCUDGEL)
+		when (2)
+			poke.learn_move(:TRIPLEDIVE)
+		when (3)
+			poke.learn_move(:STRENGTHSAP)
+	end
+end
+
+poke = Pokemon.new(:JANGMOO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BODYPRESS)
+		when (1)
+			poke.learn_move(:SHELLSIDEARM)
+		when (2)
+			poke.learn_move(:SECRETSWORD)
+		when (3)
+			poke.learn_move(:GLAIVERUSH)
+	end
+end
+
+poke = Pokemon.new(:TAPUKOKO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MAGICALTORQUE)
+		when (1)
+			poke.learn_move(:TRIPLEAXEL)
+		when (2)
+			poke.learn_move(:SWORDSDANCE)
+		when (3)
+			poke.learn_move(:BOLTSTRIKE)
+	end
+end
+
+poke = Pokemon.new(:TAPULELE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MOONLIGHT)
+		when (1)
+			poke.learn_move(:NASTYPLOT)
+		when (2)
+			poke.learn_move(:HEATWAVE)
+		when (3)
+			poke.learn_move(:EXPANDINGFORCE)
+	end
+end
+
+poke = Pokemon.new(:TAPUBULU)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SAPPYSEED)
+		when (1)
+			poke.learn_move(:DRAINPUNCH)
+		when (2)
+			poke.learn_move(:MAGICALTORQUE)
+		when (3)
+			poke.learn_move(:VICTORYDANCE)
+	end
+end
+
+poke = Pokemon.new(:TAPUFINI)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:AURASPHERE)
+		when (1)
+			poke.learn_move(:EARTHPOWER)
+		when (2)
+			poke.learn_move(:RECOVER)
+		when (3)
+			poke.learn_move(:QUIVERDANCE)
+	end
+end
+
+poke = Pokemon.new(:COSMOG)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:PHOTONGEYSER)
+		when (1)
+			poke.learn_move(:PRECIPICEBLADES)
+		when (2)
+			poke.learn_move(:SACREDFIRE)
+		when (3)
+			poke.learn_move(:ASTRALBARRAGE)
+	end
+end
+
+poke = Pokemon.new(:SOLGALEO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:PHOTONGEYSER)
+		when (1)
+			poke.learn_move(:PRECIPICEBLADES)
+		when (2)
+			poke.learn_move(:SACREDFIRE)
+		when (3)
+			poke.learn_move(:ASTRALBARRAGE)
+	end
+end
+
+poke = Pokemon.new(:BUZZWOLE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FIRSTIMPRESSION)
+		when (1)
+			poke.learn_move(:COMBATTORQUE)
+		when (2)
+			poke.learn_move(:ROCKBLAST)
+		when (3)
+			poke.learn_move(:DOUBLEIRONBASH)
+	end
+end
+
+poke = Pokemon.new(:PHEROMOSA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SECRETSWORD)
+		when (1)
+			poke.learn_move(:MAKEITRAIN)
+		when (2)
+			poke.learn_move(:ATTACKORDER)
+		when (3)
+			poke.learn_move(:DIAMONDSTORM)
+	end
+end
+
+poke = Pokemon.new(:XURKITREE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FLAMETHROWER)
+		when (1)
+			poke.learn_move(:GIGADRAIN)
+		when (2)
+			poke.learn_move(:TAILGLOW)
+		when (3)
+			poke.learn_move(:THUNDERCLAP)
+	end
+end
+
+poke = Pokemon.new(:CELESTEELA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:RECOVER)
+		when (1)
+			poke.learn_move(:BUZZYBUZZ)
+		when (2)
+			poke.learn_move(:SANDSEARSTORM)
+		when (3)
+			poke.learn_move(:OBLIVIONWING)
+	end
+end
+
+poke = Pokemon.new(:KARTANA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MIGHTYCLEAVE)
+		when (1)
+			poke.learn_move(:PSYBLADE)
+		when (2)
+			poke.learn_move(:BITTERBLADE)
+		when (3)
+			poke.learn_move(:BEHEMOTHBLADE)
+	end
+end
+
+poke = Pokemon.new(:GUZZLORD)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SUCKERPUNCH)
+		when (1)
+			poke.learn_move(:COMEUPPANCE)
+		when (2)
+			poke.learn_move(:SLACKOFF)
+		when (3)
+			poke.learn_move(:SHEDTAIL)
+	end
+end
+
+poke = Pokemon.new(:NECROZMA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DYNAMAXCANNON)
+		when (1)
+			poke.learn_move(:SACREDFIRE)
+		when (2)
+			poke.learn_move(:ASTRALBARRAGE)
+		when (3)
+			poke.learn_move(:CLANGOROUSSOUL)
+	end
+end
+
+poke = Pokemon.new(:MAGEARNA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:STRENGTHSAP)
+		when (1)
+			poke.learn_move(:EARTHPOWER)
+		when (2)
+			poke.learn_move(:MOONBLAST)
+		when (3)
+			poke.learn_move(:MAKEITRAIN)
+	end
+end
+
+poke = Pokemon.new(:MARSHADOW)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:POWERUPPUNCH)
+		when (1)
+			poke.learn_move(:TRIPLEAXEL)
+		when (2)
+			poke.learn_move(:METEORMASH)
+		when (3)
+			poke.learn_move(:STORMTHROW)
+	end
+end
+
+poke = Pokemon.new(:POIPOLE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MALIGNANTCHAIN)
+		when (1)
+			poke.learn_move(:ICEBEAM)
+		when (2)
+			poke.learn_move(:ARMORCANNON)
+		when (3)
+			poke.learn_move(:CLANGINGSCALES)
+	end
+end
+
+poke = Pokemon.new(:NAGANADEL)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MALIGNANTCHAIN)
+		when (1)
+			poke.learn_move(:ICEBEAM)
+		when (2)
+			poke.learn_move(:ARMORCANNON)
+		when (3)
+			poke.learn_move(:CLANGINGSCALES)
+	end
+end
+
+poke = Pokemon.new(:STAKATAKA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:HEAVYSLAM)
+		when (1)
+			poke.learn_move(:SHOREUP)
+		when (2)
+			poke.learn_move(:CURSE)
+		when (3)
+			poke.learn_move(:SALTCURE)
+	end
+end
+
+poke = Pokemon.new(:BLACEPHALON)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:STEELBEAM)
+		when (1)
+			poke.learn_move(:MOONBLAST)
+		when (2)
+			poke.learn_move(:CHLOROBLAST)
+		when (3)
+			poke.learn_move(:MOONGEISTBEAM)
+	end
+end
+
+poke = Pokemon.new(:ZERAORA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SWORDSDANCE)
+		when (1)
+			poke.learn_move(:TRIPLEAXEL)
+		when (2)
+			poke.learn_move(:BOLTSTRIKE)
+		when (3)
+			poke.learn_move(:PYROBALL)
+	end
+end
+
+poke = Pokemon.new(:MELTAN)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BULLETPUNCH)
+		when (1)
+			poke.learn_move(:DRAINPUNCH)
+		when (2)
+			poke.learn_move(:BULKUP)
+		when (3)
+			poke.learn_move(:PLASMAFISTS)
+	end
+end
+
+poke = Pokemon.new(:GROOKEY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:HIGHHORSEPOWER)
+		when (1)
+			poke.learn_move(:CLANGOROUSSOUL)
+		when (2)
+			poke.learn_move(:GRASSYGLIDE)
+		when (3)
+			poke.learn_move(:SAPPYSEED)
+	end
+end
+
+poke = Pokemon.new(:SCORBUNNY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:EXTREMESPEED)
+		when (1)
+			poke.learn_move(:HIGHJUMPKICK)
+		when (2)
+			poke.learn_move(:TRIPLEAXEL)
+		when (3)
+			poke.learn_move(:BOLTSTRIKE)
+	end
+end
+
+poke = Pokemon.new(:SOBBLE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:AEROBLAST)
+		when (1)
+			poke.learn_move(:FROSTBREATH)
+		when (2)
+			poke.learn_move(:ENERGYBALL)
+		when (3)
+			poke.learn_move(:NASTYPLOT)
+	end
+end
+
+poke = Pokemon.new(:SKWOVET)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SUCKERPUNCH)
+		when (1)
+			poke.learn_move(:SLACKOFF)
+		when (2)
+			poke.learn_move(:COIL)
+		when (3)
+			poke.learn_move(:POPULATIONBOMB)
+	end
+end
+
+poke = Pokemon.new(:ROOKIDEE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ROOST)
+		when (1)
+			poke.learn_move(:BODYPRESS)
+		when (2)
+			poke.learn_move(:KINGSSHIELD)
+		when (3)
+			poke.learn_move(:BEHEMOTHBASH)
+	end
+end
+
+poke = Pokemon.new(:BLIPBUG)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:HEALORDER)
+		when (1)
+			poke.learn_move(:LUSTERPURGE)
+		when (2)
+			poke.learn_move(:SLEEPPOWDER)
+		when (3)
+			poke.learn_move(:TAILGLOW)
+	end
+end
+
+poke = Pokemon.new(:NICKIT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BADDYBAD)
+		when (1)
+			poke.learn_move(:FLAMETHROWER)
+		when (2)
+			poke.learn_move(:SPARKLYSWIRL)
+		when (3)
+			poke.learn_move(:MAKEITRAIN)
+	end
+end
+
+poke = Pokemon.new(:GOSSIFLEUR)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:PARTINGSHOT)
+		when (1)
+			poke.learn_move(:STRENGTHSAP)
+		when (2)
+			poke.learn_move(:SAPPYSEED)
+		when (3)
+			poke.learn_move(:SEEDFLARE)
+	end
+end
+
+poke = Pokemon.new(:WOOLOO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:PSYSHIELDBASH)
+		when (1)
+			poke.learn_move(:MILKDRINK)
+		when (2)
+			poke.learn_move(:BODYPRESS)
+		when (3)
+			poke.learn_move(:MULTIATTACK)
+	end
+end
+
+poke = Pokemon.new(:CHEWTLE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ICEFANG)
+		when (1)
+			poke.learn_move(:PSYCHICFANGS)
+		when (2)
+			poke.learn_move(:SHELLSMASH)
+		when (3)
+			poke.learn_move(:MIGHTYCLEAVE)
+	end
+end
+
+poke = Pokemon.new(:YAMPER)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ICEFANG)
+		when (1)
+			poke.learn_move(:SWORDSDANCE)
+		when (2)
+			poke.learn_move(:THUNDERFANG)
+		when (3)
+			poke.learn_move(:BOLTSTRIKE)
+	end
+end
+
+poke = Pokemon.new(:ROLYCOLY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BITTERBLADE)
+		when (1)
+			poke.learn_move(:BODYPRESS)
+		when (2)
+			poke.learn_move(:BULKUP)
+		when (3)
+			poke.learn_move(:DIAMONDSTORM)
+	end
+end
+
+poke = Pokemon.new(:APPLIN)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:COREENFORCER)
+		when (1)
+			poke.learn_move(:DRAGONHAMMER)
+		when (2)
+			poke.learn_move(:FLOWERTRICK)
+		when (3)
+			poke.learn_move(:MATCHAGOTCHA)
+	end
+end
+
+poke = Pokemon.new(:SILICOBRA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SHOREUP)
+		when (1)
+			poke.learn_move(:SHEDTAIL)
+		when (2)
+			poke.learn_move(:MOUNTAINGALE)
+		when (3)
+			poke.learn_move(:THOUSANDARROWS)
+	end
+end
+
+poke = Pokemon.new(:CRAMORANT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:APPLEACID)
+		when (1)
+			poke.learn_move(:SURF)
+		when (2)
+			poke.learn_move(:SCORCHINGSANDS)
+		when (3)
+			poke.learn_move(:OBLIVIONWING)
+	end
+end
+
+poke = Pokemon.new(:ARROKUDA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SUPERCELLSLAM)
+		when (1)
+			poke.learn_move(:TRIPLEDIVE)
+		when (2)
+			poke.learn_move(:ICESPINNER)
+		when (3)
+			poke.learn_move(:SWORDSDANCE)
+	end
+end
+
+poke = Pokemon.new(:TOXEL)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:NASTYPLOT)
+		when (1)
+			poke.learn_move(:BUGBUZZ)
+		when (2)
+			poke.learn_move(:SPARKLINGARIA)
+		when (3)
+			poke.learn_move(:TORCHSONG)
+	end
+end
+
+poke = Pokemon.new(:SIZZLIPEDE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BURNINGBULWARK)
+		when (1)
+			poke.learn_move(:ZINGZAP)
+		when (2)
+			poke.learn_move(:FIRSTIMPRESSION)
+		when (3)
+			poke.learn_move(:BITTERBLADE)
+	end
+end
+
+poke = Pokemon.new(:CLOBBOPUS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:STORMTHROW)
+		when (1)
+			poke.learn_move(:JETPUNCH)
+		when (2)
+			poke.learn_move(:MACHPUNCH)
+		when (3)
+			poke.learn_move(:SURGINGSTRIKES)
+	end
+end
+
+poke = Pokemon.new(:SINISTEA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SCALD)
+		when (1)
+			poke.learn_move(:TAKEHEART)
+		when (2)
+			poke.learn_move(:SPARKLYSWIRL)
+		when (3)
+			poke.learn_move(:MATCHAGOTCHA)
+	end
+end
+
+poke = Pokemon.new(:HATENNA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:RECOVER)
+		when (1)
+			poke.learn_move(:MOONBLAST)
+		when (2)
+			poke.learn_move(:BUZZYBUZZ)
+		when (3)
+			poke.learn_move(:TORCHSONG)
+	end
+end
+
+poke = Pokemon.new(:IMPIDIMP)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ENCORE)
+		when (1)
+			poke.learn_move(:PARTINGSHOT)
+		when (2)
+			poke.learn_move(:TOPSYTURVY)
+		when (3)
+			poke.learn_move(:WICKEDBLOW)
+	end
+end
+
+poke = Pokemon.new(:MILCERY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MOONBLAST)
+		when (1)
+			poke.learn_move(:CHILLYRECEPTION)
+		when (2)
+			poke.learn_move(:EARTHPOWER)
+		when (3)
+			poke.learn_move(:GEOMANCY)
+	end
+end
+
+poke = Pokemon.new(:FALINKS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:COMBATTORQUE)
+		when (1)
+			poke.learn_move(:PSYSHIELDBASH)
+		when (2)
+			poke.learn_move(:HEALORDER)
+		when (3)
+			poke.learn_move(:POPULATIONBOMB)
+	end
+end
+
+poke = Pokemon.new(:PINCURCHIN)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TRICKROOM)
+		when (1)
+			poke.learn_move(:VOLTSWITCH)
+		when (2)
+			poke.learn_move(:STRENGTHSAP)
+		when (3)
+			poke.learn_move(:THUNDERCLAP)
+	end
+end
+
+poke = Pokemon.new(:SNOM)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FROSTBREATH)
+		when (1)
+			poke.learn_move(:HEALORDER)
+		when (2)
+			poke.learn_move(:EARTHPOWER)
+		when (3)
+			poke.learn_move(:SPORE)
+	end
+end
+
+poke = Pokemon.new(:STONJOURNER)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BODYPRESS)
+		when (1)
+			poke.learn_move(:HELPINGHAND)
+		when (2)
+			poke.learn_move(:ACCELEROCK)
+		when (3)
+			poke.learn_move(:DIAMONDSTORM)
+	end
+end
+
+poke = Pokemon.new(:EISCUE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TRIPLEAXEL)
+		when (1)
+			poke.learn_move(:AQUASTEP)
+		when (2)
+			poke.learn_move(:AXEKICK)
+		when (3)
+			poke.learn_move(:SHELLSMASH)
+	end
+end
+
+poke = Pokemon.new(:INDEEDEE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MATCHAGOTCHA)
+		when (1)
+			poke.learn_move(:EXPANDINGFORCE)
+		when (2)
+			poke.learn_move(:MOONBLAST)
+		when (3)
+			poke.learn_move(:REVIVALBLESSING)
+	end
+end
+
+poke = Pokemon.new(:MORPEKO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TRIPLEAXEL)
+		when (1)
+			poke.learn_move(:OBSTRUCT)
+		when (2)
+			poke.learn_move(:SWORDSDANCE)
+		when (3)
+			poke.learn_move(:COLLISIONCOURSE)
+	end
+end
+
+poke = Pokemon.new(:CUFANT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:LIQUIDATION)
+		when (1)
+			poke.learn_move(:CURSE)
+		when (2)
+			poke.learn_move(:COMBATTORQUE)
+		when (3)
+			poke.learn_move(:GIGATONHAMMER)
+	end
+end
+
+poke = Pokemon.new(:DRACOZOLT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TRIPLEAXEL)
+		when (1)
+			poke.learn_move(:GUNKSHOT)
+		when (2)
+			poke.learn_move(:FIRELASH)
+		when (3)
+			poke.learn_move(:DRAGONDANCE)
+	end
+end
+
+poke = Pokemon.new(:ARCTOZOLT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MOUNTAINGALE)
+		when (1)
+			poke.learn_move(:AQUASTEP)
+		when (2)
+			poke.learn_move(:HIGHHORSEPOWER)
+		when (3)
+			poke.learn_move(:SHIFTGEAR)
+	end
+end
+
+poke = Pokemon.new(:DRACOVISH)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TRIPLEAXEL)
+		when (1)
+			poke.learn_move(:DRAGONHAMMER)
+		when (2)
+			poke.learn_move(:THUNDERFANG)
+		when (3)
+			poke.learn_move(:DRAGONDANCE)
+	end
+end
+
+poke = Pokemon.new(:ARCTOVISH)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ICEFANG)
+		when (1)
+			poke.learn_move(:THUNDERFANG)
+		when (2)
+			poke.learn_move(:HIGHHORSEPOWER)
+		when (3)
+			poke.learn_move(:SHIFTGEAR)
+	end
+end
+
+poke = Pokemon.new(:DURALUDON)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:COREENFORCER)
+		when (1)
+			poke.learn_move(:BODYPRESS)
+		when (2)
+			poke.learn_move(:RECOVER)
+		when (3)
+			poke.learn_move(:TACHYONCUTTER)
+	end
+end
+
+poke = Pokemon.new(:DREEPY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SHADOWBONE)
+		when (1)
+			poke.learn_move(:POWERUPPUNCH)
+		when (2)
+			poke.learn_move(:FIRELASH)
+		when (3)
+			poke.learn_move(:DIRECLAW)
+	end
+end
+
+poke = Pokemon.new(:ZACIAN)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MAGICALTORQUE)
+		when (1)
+			poke.learn_move(:MIGHTYCLEAVE)
+		when (2)
+			poke.learn_move(:BITTERBLADE)
+		when (3)
+			poke.learn_move(:PRECIPICEBLADES)
+	end
+end
+
+poke = Pokemon.new(:ZAMAZENTA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BULKUP)
+		when (1)
+			poke.learn_move(:BODYPRESS)
+		when (2)
+			poke.learn_move(:SLACKOFF)
+		when (3)
+			poke.learn_move(:DIAMONDSTORM)
+	end
+end
+
+poke = Pokemon.new(:ETERNATUS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BODYPRESS)
+		when (1)
+			poke.learn_move(:NASTYPLOT)
+		when (2)
+			poke.learn_move(:MALIGNANTCHAIN)
+		when (3)
+			poke.learn_move(:DRAGONENERGY)
+	end
+end
+
+poke = Pokemon.new(:KUBFU)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:METEORMASH)
+		when (1)
+			poke.learn_move(:DRAINPUNCH)
+		when (2)
+			poke.learn_move(:JETPUNCH)
+		when (3)
+			poke.learn_move(:DRAGONDANCE)
+	end
+end
+
+poke = Pokemon.new(:ZARUDE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SAPPYSEED)
+		when (1)
+			poke.learn_move(:MIGHTYCLEAVE)
+		when (2)
+			poke.learn_move(:WICKEDBLOW)
+		when (3)
+			poke.learn_move(:VICTORYDANCE)
+	end
+end
+
+poke = Pokemon.new(:REGIELEKI)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:NASTYPLOT)
+		when (1)
+			poke.learn_move(:ICEBEAM)
+		when (2)
+			poke.learn_move(:EARTHPOWER)
+		when (3)
+			poke.learn_move(:ELECTRODRIFT)
+	end
+end
+
+poke = Pokemon.new(:REGIDRAGO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:METEORMASH)
+		when (1)
+			poke.learn_move(:FLAMETHROWER)
+		when (2)
+			poke.learn_move(:TAKEHEART)
+		when (3)
+			poke.learn_move(:DRAGONDARTS)
+	end
+end
+
+poke = Pokemon.new(:GLASTRIER)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SPEEDSWAP)
+		when (1)
+			poke.learn_move(:SLACKOFF)
+		when (2)
+			poke.learn_move(:HIGHHORSEPOWER)
+		when (3)
+			poke.learn_move(:GLACIALLANCE)
+	end
+end
+
+poke = Pokemon.new(:SPECTRIER)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:EARTHPOWER)
+		when (1)
+			poke.learn_move(:PARTINGSHOT)
+		when (2)
+			poke.learn_move(:AURASPHERE)
+		when (3)
+			poke.learn_move(:ASTRALBARRAGE)
+	end
+end
+
+poke = Pokemon.new(:CALYREX)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SAPPYSEED)
+		when (1)
+			poke.learn_move(:RECOVER)
+		when (2)
+			poke.learn_move(:SECRETSWORD)
+		when (3)
+			poke.learn_move(:PHOTONGEYSER)
+	end
+end
+
+poke = Pokemon.new(:ENAMORUS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:AEROBLAST)
+		when (1)
+			poke.learn_move(:THOUSANDARROWS)
+		when (2)
+			poke.learn_move(:STOREDPOWER)
+		when (3)
+			poke.learn_move(:FLEURCANNON)
+	end
+end
+
+poke = Pokemon.new(:SPRIGATITO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FIRELASH)
+		when (1)
+			poke.learn_move(:TRIPLEAXEL)
+		when (2)
+			poke.learn_move(:SUCKERPUNCH)
+		when (3)
+			poke.learn_move(:WICKEDBLOW)
+	end
+end
+
+poke = Pokemon.new(:FUECOCO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ALLURINGVOICE)
+		when (1)
+			poke.learn_move(:SLACKOFF)
+		when (2)
+			poke.learn_move(:OVERDRIVE)
+		when (3)
+			poke.learn_move(:MOONGEISTBEAM)
+	end
+end
+
+poke = Pokemon.new(:QUAXLY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DRAGONDANCE)
+		when (1)
+			poke.learn_move(:TRIPLEAXEL)
+		when (2)
+			poke.learn_move(:POWERTRIP)
+		when (3)
+			poke.learn_move(:THUNDEROUSKICK)
+	end
+end
+
+poke = Pokemon.new(:LECHONK)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MILKDRINK)
+		when (1)
+			poke.learn_move(:PSYSHIELDBASH)
+		when (2)
+			poke.learn_move(:FILLETAWAY)
+		when (3)
+			poke.learn_move(:MULTIATTACK)
+	end
+end
+
+poke = Pokemon.new(:TAROUNTULA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:STONEAXE)
+		when (1)
+			poke.learn_move(:LEECHLIFE)
+		when (2)
+			poke.learn_move(:THIEF)
+		when (3)
+			poke.learn_move(:SPORE)
+	end
+end
+
+poke = Pokemon.new(:NYMBLE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:KNOCKOFF)
+		when (1)
+			poke.learn_move(:FELLSTINGER)
+		when (2)
+			poke.learn_move(:ATTACKORDER)
+		when (3)
+			poke.learn_move(:WICKEDBLOW)
+	end
+end
+
+poke = Pokemon.new(:PAWMI)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DRAINPUNCH)
+		when (1)
+			poke.learn_move(:METEORMASH)
+		when (2)
+			poke.learn_move(:JETPUNCH)
+		when (3)
+			poke.learn_move(:PLASMAFISTS)
+	end
+end
+
+poke = Pokemon.new(:TANDEMAUS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BATONPASS)
+		when (1)
+			poke.learn_move(:COVET)
+		when (2)
+			poke.learn_move(:SIZZLYSLIDE)
+		when (3)
+			poke.learn_move(:REVIVALBLESSING)
+	end
+end
+
+poke = Pokemon.new(:FIDOUGH)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SOFTBOILED)
+		when (1)
+			poke.learn_move(:HIGHHORSEPOWER)
+		when (2)
+			poke.learn_move(:SIZZLYSLIDE)
+		when (3)
+			poke.learn_move(:TIDYUP)
+	end
+end
+
+poke = Pokemon.new(:SMOLIV)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:STRENGTHSAP)
+		when (1)
+			poke.learn_move(:EARTHPOWER)
+		when (2)
+			poke.learn_move(:CALMMIND)
+		when (3)
+			poke.learn_move(:BOOMBURST)
+	end
+end
+
+poke = Pokemon.new(:SQUAWKABILLY)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:PARTINGSHOT)
+		when (1)
+			poke.learn_move(:EARTHQUAKE)
+		when (2)
+			poke.learn_move(:FLAREBLITZ)
+		when (3)
+			poke.learn_move(:EXTREMESPEED)
+	end
+end
+
+poke = Pokemon.new(:NACLI)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BODYPRESS)
+		when (1)
+			poke.learn_move(:TOXIC)
+		when (2)
+			poke.learn_move(:CURSE)
+		when (3)
+			poke.learn_move(:DIAMONDSTORM)
+	end
+end
+
+poke = Pokemon.new(:CHARCADET)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SACREDSWORD)
+		when (1)
+			poke.learn_move(:PHOTONGEYSER)
+		when (2)
+			poke.learn_move(:MOONBLAST)
+		when (3)
+			poke.learn_move(:SPECTRALTHIEF)
+	end
+end
+
+poke = Pokemon.new(:TADBULB)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:PARABOLICCHARGE)
+		when (1)
+			poke.learn_move(:SCALD)
+		when (2)
+			poke.learn_move(:EARTHPOWER)
+		when (3)
+			poke.learn_move(:ELECTROSHOT)
+	end
+end
+
+poke = Pokemon.new(:WATTREL)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:NASTYPLOT)
+		when (1)
+			poke.learn_move(:SPLISHYSPLASH)
+		when (2)
+			poke.learn_move(:SANDSEARSTORM)
+		when (3)
+			poke.learn_move(:ELECTROSHOT)
+	end
+end
+
+poke = Pokemon.new(:MASCHIFF)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:PARTINGSHOT)
+		when (1)
+			poke.learn_move(:CLOSECOMBAT)
+		when (2)
+			poke.learn_move(:PSYCHICFANGS)
+		when (3)
+			poke.learn_move(:NORETREAT)
+	end
+end
+
+poke = Pokemon.new(:SHROODLE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:GASTROACID)
+		when (1)
+			poke.learn_move(:PARTINGSHOT)
+		when (2)
+			poke.learn_move(:TOXIC)
+		when (3)
+			poke.learn_move(:SKETCH)
+	end
+end
+
+poke = Pokemon.new(:BRAMBLIN)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TAILWIND)
+		when (1)
+			poke.learn_move(:STRENGTHSAP)
+		when (2)
+			poke.learn_move(:FLOWERTRICK)
+		when (3)
+			poke.learn_move(:LASTRESPECTS)
+	end
+end
+
+poke = Pokemon.new(:TOEDSCOOL)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:STRENGTHSAP)
+		when (1)
+			poke.learn_move(:TOPSYTURVY)
+		when (2)
+			poke.learn_move(:SAPPYSEED)
+		when (3)
+			poke.learn_move(:TAILGLOW)
+	end
+end
+
+poke = Pokemon.new(:KLAWF)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:CRABHAMMER)
+		when (1)
+			poke.learn_move(:SHOREUP)
+		when (2)
+			poke.learn_move(:MIGHTYCLEAVE)
+		when (3)
+			poke.learn_move(:SHELLSMASH)
+	end
+end
+
+poke = Pokemon.new(:CAPSAKID)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:STRENGTHSAP)
+		when (1)
+			poke.learn_move(:APPLEACID)
+		when (2)
+			poke.learn_move(:FROSTBREATH)
+		when (3)
+			poke.learn_move(:TORCHSONG)
+	end
+end
+
+poke = Pokemon.new(:RELLOR)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:HEALBLOCK)
+		when (1)
+			poke.learn_move(:RECOVER)
+		when (2)
+			poke.learn_move(:HEATWAVE)
+		when (3)
+			poke.learn_move(:LUMINACRASH)
+	end
+end
+
+poke = Pokemon.new(:FLITTLE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:COSMICPOWER)
+		when (1)
+			poke.learn_move(:AURASPHERE)
+		when (2)
+			poke.learn_move(:ROOST)
+		when (3)
+			poke.learn_move(:FIERYDANCE)
+	end
+end
+
+poke = Pokemon.new(:TINKATINK)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MAGICALTORQUE)
+		when (1)
+			poke.learn_move(:PYROBALL)
+		when (2)
+			poke.learn_move(:IVYCUDGEL)
+		when (3)
+			poke.learn_move(:SHIFTGEAR)
+	end
+end
+
+poke = Pokemon.new(:WIGLETT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SHELLSMASH)
+		when (1)
+			poke.learn_move(:ICICLECRASH)
+		when (2)
+			poke.learn_move(:SEEDBOMB)
+		when (3)
+			poke.learn_move(:SURGINGSTRIKES)
+	end
+end
+
+poke = Pokemon.new(:BOMBIRDIER)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FLOATYFALL)
+		when (1)
+			poke.learn_move(:SWORDSDANCE)
+		when (2)
+			poke.learn_move(:SUCKERPUNCH)
+		when (3)
+			poke.learn_move(:MIGHTYCLEAVE)
+	end
+end
+
+poke = Pokemon.new(:FINIZEN)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TRIPLEAXEL)
+		when (1)
+			poke.learn_move(:DRAINPUNCH)
+		when (2)
+			poke.learn_move(:HEADLONGRUSH)
+		when (3)
+			poke.learn_move(:SURGINGSTRIKES)
+	end
+end
+
+poke = Pokemon.new(:VAROOM)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:COMBATTORQUE)
+		when (1)
+			poke.learn_move(:UTURN)
+		when (2)
+			poke.learn_move(:BLAZINGTORQUE)
+		when (3)
+			poke.learn_move(:NOXIOUSTORQUE)
+	end
+end
+
+poke = Pokemon.new(:CYCLIZAR)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:PARTINGSHOT)
+		when (1)
+			poke.learn_move(:FIRELASH)
+		when (2)
+			poke.learn_move(:MAGICALTORQUE)
+		when (3)
+			poke.learn_move(:GLAIVERUSH)
+	end
+end
+
+poke = Pokemon.new(:ORTHWORM)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SIZZLYSLIDE)
+		when (1)
+			poke.learn_move(:COIL)
+		when (2)
+			poke.learn_move(:BODYPRESS)
+		when (3)
+			poke.learn_move(:SHOREUP)
+	end
+end
+
+poke = Pokemon.new(:GLIMMET)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:CALMMIND)
+		when (1)
+			poke.learn_move(:EARTHPOWER)
+		when (2)
+			poke.learn_move(:FIERYDANCE)
+		when (3)
+			poke.learn_move(:MALIGNANTCHAIN)
+	end
+end
+
+poke = Pokemon.new(:GREAVARD)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SHADOWBONE)
+		when (1)
+			poke.learn_move(:YAWN)
+		when (2)
+			poke.learn_move(:SHOREUP)
+		when (3)
+			poke.learn_move(:COLLISIONCOURSE)
+	end
+end
+
+poke = Pokemon.new(:FLAMIGO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:THUNDEROUSKICK)
+		when (1)
+			poke.learn_move(:TRIPLEAXEL)
+		when (2)
+			poke.learn_move(:FLOATYFALL)
+		when (3)
+			poke.learn_move(:VICTORYDANCE)
+	end
+end
+
+poke = Pokemon.new(:CETODDLE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MOUNTAINGALE)
+		when (1)
+			poke.learn_move(:HIGHHORSEPOWER)
+		when (2)
+			poke.learn_move(:SLACKOFF)
+		when (3)
+			poke.learn_move(:DRAGONDANCE)
+	end
+end
+
+poke = Pokemon.new(:VELUZA)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:PSYBLADE)
+		when (1)
+			poke.learn_move(:FLIPTURN)
+		when (2)
+			poke.learn_move(:ICESPINNER)
+		when (3)
+			poke.learn_move(:BITTERBLADE)
+	end
+end
+
+poke = Pokemon.new(:DONDOZO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SOFTBOILED)
+		when (1)
+			poke.learn_move(:SIZZLYSLIDE)
+		when (2)
+			poke.learn_move(:BREAKINGSWIPE)
+		when (3)
+			poke.learn_move(:SALTCURE)
+	end
+end
+
+poke = Pokemon.new(:TATSUGIRI)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SLUDGEBOMB)
+		when (1)
+			poke.learn_move(:FILLETAWAY)
+		when (2)
+			poke.learn_move(:COREENFORCER)
+		when (3)
+			poke.learn_move(:STEAMERUPTION)
+	end
+end
+
+poke = Pokemon.new(:GREATTUSK)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:STONEAXE)
+		when (1)
+			poke.learn_move(:MORNINGSUN)
+		when (2)
+			poke.learn_move(:COLLISIONCOURSE)
+		when (3)
+			poke.learn_move(:SHIFTGEAR)
+	end
+end
+
+poke = Pokemon.new(:SCREAMTAIL)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TORCHSONG)
+		when (1)
+			poke.learn_move(:GLITZYGLOW)
+		when (2)
+			poke.learn_move(:MOONLIGHT)
+		when (3)
+			poke.learn_move(:SPARKLYSWIRL)
+	end
+end
+
+poke = Pokemon.new(:BRUTEBONNET)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SAPPYSEED)
+		when (1)
+			poke.learn_move(:STRENGTHSAP)
+		when (2)
+			poke.learn_move(:EARTHQUAKE)
+		when (3)
+			poke.learn_move(:WICKEDBLOW)
+	end
+end
+
+poke = Pokemon.new(:FLUTTERMANE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MOONLIGHT)
+		when (1)
+			poke.learn_move(:NASTYPLOT)
+		when (2)
+			poke.learn_move(:EARTHPOWER)
+		when (3)
+			poke.learn_move(:MOONGEISTBEAM)
+	end
+end
+
+poke = Pokemon.new(:SLITHERWING)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MIGHTYCLEAVE)
+		when (1)
+			poke.learn_move(:THUNDEROUSKICK)
+		when (2)
+			poke.learn_move(:FIRELASH)
+		when (3)
+			poke.learn_move(:VICTORYDANCE)
+	end
+end
+
+poke = Pokemon.new(:SANDYSHOCKS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MORNINGSUN)
+		when (1)
+			poke.learn_move(:ICEBEAM)
+		when (2)
+			poke.learn_move(:NASTYPLOT)
+		when (3)
+			poke.learn_move(:THUNDERCLAP)
+	end
+end
+
+poke = Pokemon.new(:IRONTREADS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FUSIONBOLT)
+		when (1)
+			poke.learn_move(:BULKUP)
+		when (2)
+			poke.learn_move(:SHOREUP)
+		when (3)
+			poke.learn_move(:SUNSTEELSTRIKE)
+	end
+end
+
+poke = Pokemon.new(:IRONBUNDLE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:EARTHPOWER)
+		when (1)
+			poke.learn_move(:BOUNCYBUBBLE)
+		when (2)
+			poke.learn_move(:NASTYPLOT)
+		when (3)
+			poke.learn_move(:STEAMERUPTION)
+	end
+end
+
+poke = Pokemon.new(:IRONHANDS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DRAINPUNCH)
+		when (1)
+			poke.learn_move(:BULKUP)
+		when (2)
+			poke.learn_move(:PLASMAFISTS)
+		when (3)
+			poke.learn_move(:ICEHAMMER)
+	end
+end
+
+poke = Pokemon.new(:IRONJUGULIS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FIERYWRATH)
+		when (1)
+			poke.learn_move(:ROOST)
+		when (2)
+			poke.learn_move(:NASTYPLOT)
+		when (3)
+			poke.learn_move(:OBLIVIONWING)
+	end
+end
+
+poke = Pokemon.new(:IRONMOTH)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:EARTHPOWER)
+		when (1)
+			poke.learn_move(:SEARINGSHOT)
+		when (2)
+			poke.learn_move(:MALIGNANTCHAIN)
+		when (3)
+			poke.learn_move(:QUIVERDANCE)
+	end
+end
+
+poke = Pokemon.new(:IRONTHORNS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DIAMONDSTORM)
+		when (1)
+			poke.learn_move(:SHOREUP)
+		when (2)
+			poke.learn_move(:SHIFTGEAR)
+		when (3)
+			poke.learn_move(:PLASMAFISTS)
+	end
+end
+
+poke = Pokemon.new(:FRIGIBAX)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BEHEMOTHBLADE)
+		when (1)
+			poke.learn_move(:DRAGONDANCE)
+		when (2)
+			poke.learn_move(:MOUNTAINGALE)
+		when (3)
+			poke.learn_move(:PRECIPICEBLADES)
+	end
+end
+
+poke = Pokemon.new(:GIMMIGHOUL)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:HAPPYHOUR)
+		when (1)
+			poke.learn_move(:AURASPHERE)
+		when (2)
+			poke.learn_move(:SURF)
+		when (3)
+			poke.learn_move(:ASTRALBARRAGE)
+	end
+end
+
+poke = Pokemon.new(:WO-CHIEN)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SPORE)
+		when (1)
+			poke.learn_move(:FIERYWRATH)
+		when (2)
+			poke.learn_move(:SAPPYSEED)
+		when (3)
+			poke.learn_move(:STRENGTHSAP)
+	end
+end
+
+poke = Pokemon.new(:CHIEN-PAO)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:KNOCKOFF)
+		when (1)
+			poke.learn_move(:PARTINGSHOT)
+		when (2)
+			poke.learn_move(:TRIPLEAXEL)
+		when (3)
+			poke.learn_move(:BITTERBLADE)
+	end
+end
+
+poke = Pokemon.new(:TING-LU)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SHOREUP)
+		when (1)
+			poke.learn_move(:CEASELESSEDGE)
+		when (2)
+			poke.learn_move(:SAPPYSEED)
+		when (3)
+			poke.learn_move(:PRECIPICEBLADES)
+	end
+end
+
+poke = Pokemon.new(:CHI-YU)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FIERYWRATH)
+		when (1)
+			poke.learn_move(:HYDROSTEAM)
+		when (2)
+			poke.learn_move(:MORNINGSUN)
+		when (3)
+			poke.learn_move(:BLUEFLARE)
+	end
+end
+
+poke = Pokemon.new(:ROARINGMOON)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FIRELASH)
+		when (1)
+			poke.learn_move(:DRAGONHAMMER)
+		when (2)
+			poke.learn_move(:SUCKERPUNCH)
+		when (3)
+			poke.learn_move(:WICKEDBLOW)
+	end
+end
+
+poke = Pokemon.new(:IRONVALIANT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:PLASMAFISTS)
+		when (1)
+			poke.learn_move(:NORETREAT)
+		when (2)
+			poke.learn_move(:SECRETSWORD)
+		when (3)
+			poke.learn_move(:MAGICALTORQUE)
+	end
+end
+
+poke = Pokemon.new(:KORAIDON)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SUNSTEELSTRIKE)
+		when (1)
+			poke.learn_move(:SOLARBLADE)
+		when (2)
+			poke.learn_move(:DRAGONDARTS)
+		when (3)
+			poke.learn_move(:BITTERBLADE)
+	end
+end
+
+poke = Pokemon.new(:MIRAIDON)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ICEBEAM)
+		when (1)
+			poke.learn_move(:CLANGOROUSSOUL)
+		when (2)
+			poke.learn_move(:COREENFORCER)
+		when (3)
+			poke.learn_move(:RISINGVOLTAGE)
+	end
+end
+
+poke = Pokemon.new(:WALKINGWAKE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BOUNCYBUBBLE)
+		when (1)
+			poke.learn_move(:NASTYPLOT)
+		when (2)
+			poke.learn_move(:SLUDGEWAVE)
+		when (3)
+			poke.learn_move(:COREENFORCER)
+	end
+end
+
+poke = Pokemon.new(:IRONLEAVES)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BITTERBLADE)
+		when (1)
+			poke.learn_move(:UTURN)
+		when (2)
+			poke.learn_move(:MIGHTYCLEAVE)
+		when (3)
+			poke.learn_move(:VICTORYDANCE)
+	end
+end
+
+poke = Pokemon.new(:POLTCHAGEIST)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:PARABOLICCHARGE)
+		when (1)
+			poke.learn_move(:BOUNCYBUBBLE)
+		when (2)
+			poke.learn_move(:LEECHSEED)
+		when (3)
+			poke.learn_move(:SPARKLYSWIRL)
+	end
+end
+
+poke = Pokemon.new(:OKIDOGI)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:COMBATTORQUE)
+		when (1)
+			poke.learn_move(:TIDYUP)
+		when (2)
+			poke.learn_move(:DIRECLAW)
+		when (3)
+			poke.learn_move(:WICKEDBLOW)
+	end
+end
+
+poke = Pokemon.new(:MUNKIDORI)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:PSYSTRIKE)
+		when (1)
+			poke.learn_move(:HEATWAVE)
+		when (2)
+			poke.learn_move(:EARTHPOWER)
+		when (3)
+			poke.learn_move(:MALIGNANTCHAIN)
+	end
+end
+
+poke = Pokemon.new(:FEZANDIPITI)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BARBBARRAGE)
+		when (1)
+			poke.learn_move(:BONEMERANG)
+		when (2)
+			poke.learn_move(:TRIPLEAXEL)
+		when (3)
+			poke.learn_move(:VICTORYDANCE)
+	end
+end
+
+poke = Pokemon.new(:OGERPON)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SLEEPPOWDER)
+		when (1)
+			poke.learn_move(:BONEMERANG)
+		when (2)
+			poke.learn_move(:TRIPLEAXEL)
+		when (3)
+			poke.learn_move(:FLOWERTRICK)
+	end
+end
+
+poke = Pokemon.new(:GOUGINGFIRE)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:EXTREMESPEED)
+		when (1)
+			poke.learn_move(:BULKUP)
+		when (2)
+			poke.learn_move(:SACREDFIRE)
+		when (3)
+			poke.learn_move(:GLAIVERUSH)
+	end
+end
+
+poke = Pokemon.new(:RAGINGBOLT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:NASTYPLOT)
+		when (1)
+			poke.learn_move(:FLAMETHROWER)
+		when (2)
+			poke.learn_move(:MORNINGSUN)
+		when (3)
+			poke.learn_move(:ELECTRODRIFT)
+	end
+end
+
+poke = Pokemon.new(:IRONBOULDER)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:PSYBLADE)
+		when (1)
+			poke.learn_move(:KOWTOWCLEAVE)
+		when (2)
+			poke.learn_move(:STONEAXE)
+		when (3)
+			poke.learn_move(:BITTERBLADE)
+	end
+end
+
+poke = Pokemon.new(:IRONCROWN)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:NASTYPLOT)
+		when (1)
+			poke.learn_move(:SECRETSWORD)
+		when (2)
+			poke.learn_move(:PSYSTRIKE)
+		when (3)
+			poke.learn_move(:ELECTRODRIFT)
+	end
+end
+
+poke = Pokemon.new(:TERAPAGOS)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MOONBLAST)
+		when (1)
+			poke.learn_move(:RECOVER)
+		when (2)
+			poke.learn_move(:ICEBEAM)
+		when (3)
+			poke.learn_move(:SHELLSMASH)
+	end
+end
+
+poke = Pokemon.new(:PECHARUNT)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TAKEHEART)
+		when (1)
+			poke.learn_move(:BODYPRESS)
+		when (2)
+			poke.learn_move(:SAPPYSEED)
+		when (3)
+			poke.learn_move(:KINGSSHIELD)
+	end
+end
+
+poke = Pokemon.new(:RATTATA_1)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FALSESURRENDER)
+		when (1)
+			poke.learn_move(:PSYCHICFANGS)
+		when (2)
+			poke.learn_move(:COIL)
+		when (3)
+			poke.learn_move(:EXTREMESPEED)
+	end
+end
+
+poke = Pokemon.new(:SANDSHREW_1)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SPIKYSHIELD)
+		when (1)
+			poke.learn_move(:AQUACUTTER)
+		when (2)
+			poke.learn_move(:SHIFTGEAR)
+		when (3)
+			poke.learn_move(:GLACIALLANCE)
+	end
+end
+
+poke = Pokemon.new(:VULPIX_1)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MOONBLAST)
+		when (1)
+			poke.learn_move(:PARTINGSHOT)
+		when (2)
+			poke.learn_move(:EARTHPOWER)
+		when (3)
+			poke.learn_move(:REVIVALBLESSING)
+	end
+end
+
+poke = Pokemon.new(:DIGLETT_1)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:THOUSANDWAVES)
+		when (1)
+			poke.learn_move(:SWORDSDANCE)
+		when (2)
+			poke.learn_move(:TRIPLEDIVE)
+		when (3)
+			poke.learn_move(:MOUNTAINGALE)
+	end
+end
+
+poke = Pokemon.new(:MEOWTH_1)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:BADDYBAD)
+		when (1)
+			poke.learn_move(:BUZZYBUZZ)
+		when (2)
+			poke.learn_move(:PARTINGSHOT)
+		when (3)
+			poke.learn_move(:MAKEITRAIN)
+	end
+end
+
+poke = Pokemon.new(:GEODUDE_1)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:THOUSANDWAVES)
+		when (1)
+			poke.learn_move(:BULKUP)
+		when (2)
+			poke.learn_move(:STONEAXE)
+		when (3)
+			poke.learn_move(:EXTREMESPEED)
+	end
+end
+
+poke = Pokemon.new(:GRIMER_1)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SUCKERPUNCH)
+		when (1)
+			poke.learn_move(:BARBBARRAGE)
+		when (2)
+			poke.learn_move(:RECOVER)
+		when (3)
+			poke.learn_move(:SURGINGSTRIKES)
+	end
+end
+
+poke = Pokemon.new(:EXEGGUTOR)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FICKLEBEAM)
+		when (1)
+			poke.learn_move(:APPLEACID)
+		when (2)
+			poke.learn_move(:TRICKROOM)
+		when (3)
+			poke.learn_move(:LUMINACRASH)
+	end
+end
+
+poke = Pokemon.new(:FLOETTE_1)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MINDBLOWN)
+		when (1)
+			poke.learn_move(:CHLOROBLAST)
+		when (2)
+			poke.learn_move(:LUSTERPURGE)
+		when (3)
+			poke.learn_move(:QUIVERDANCE)
+	end
+end
+
+poke = Pokemon.new(:MEOWTH_2)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:LIQUIDATION)
+		when (1)
+			poke.learn_move(:HORNLEECH)
+		when (2)
+			poke.learn_move(:BULLETPUNCH)
+		when (3)
+			poke.learn_move(:BEHEMOTHBASH)
+	end
+end
+
+poke = Pokemon.new(:PONYTA_1)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MAGICALTORQUE)
+		when (1)
+			poke.learn_move(:EXTREMESPEED)
+		when (2)
+			poke.learn_move(:FLAREBLITZ)
+		when (3)
+			poke.learn_move(:PHOTONGEYSER)
+	end
+end
+
+poke = Pokemon.new(:SLOWPOKE_1)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SHEDTAIL)
+		when (1)
+			poke.learn_move(:BADDYBAD)
+		when (2)
+			poke.learn_move(:MOONBLAST)
+		when (3)
+			poke.learn_move(:PHOTONGEYSER)
+	end
+end
+
+poke = Pokemon.new(:FARFETCHD_1)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ROOST)
+		when (1)
+			poke.learn_move(:SACREDSWORD)
+		when (2)
+			poke.learn_move(:KINGSSHIELD)
+		when (3)
+			poke.learn_move(:BEHEMOTHBLADE)
+	end
+end
+
+poke = Pokemon.new(:ARTICUNO_1)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SECRETSWORD)
+		when (1)
+			poke.learn_move(:NIGHTDAZE)
+		when (2)
+			poke.learn_move(:ICEBEAM)
+		when (3)
+			poke.learn_move(:OBLIVIONWING)
+	end
+end
+
+poke = Pokemon.new(:ZAPDOS_1)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:TIDYUP)
+		when (1)
+			poke.learn_move(:FLOATYFALL)
+		when (2)
+			poke.learn_move(:ROOST)
+		when (3)
+			poke.learn_move(:BOLTBEAK)
+	end
+end
+
+poke = Pokemon.new(:MOLTRES_1)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ROOST)
+		when (1)
+			poke.learn_move(:SLUDGEBOMB)
+		when (2)
+			poke.learn_move(:FLAMETHROWER)
+		when (3)
+			poke.learn_move(:OBLIVIONWING)
+	end
+end
+
+poke = Pokemon.new(:CORSOLA_1)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SHELLSMASH)
+		when (1)
+			poke.learn_move(:AURASPHERE)
+		when (2)
+			poke.learn_move(:INFERNALPARADE)
+		when (3)
+			poke.learn_move(:ASTRALBARRAGE)
+	end
+end
+
+poke = Pokemon.new(:ZIGZAGOON_1)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:CEASELESSEDGE)
+		when (1)
+			poke.learn_move(:FACADE)
+		when (2)
+			poke.learn_move(:PARTINGSHOT)
+		when (3)
+			poke.learn_move(:EXTREMESPEED)
+	end
+end
+
+poke = Pokemon.new(:DARUMAKA_1)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:ICESPINNER)
+		when (1)
+			poke.learn_move(:ZINGZAP)
+		when (2)
+			poke.learn_move(:DRAINPUNCH)
+		when (3)
+			poke.learn_move(:PYROBALL)
+	end
+end
+
+poke = Pokemon.new(:YAMASK_1)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:STRENGTHSAP)
+		when (1)
+			poke.learn_move(:DIRECLAW)
+		when (2)
+			poke.learn_move(:THOUSANDWAVES)
+		when (3)
+			poke.learn_move(:SPECTRALTHIEF)
+	end
+end
+
+poke = Pokemon.new(:STUNFISK_1)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:SPIKYSHIELD)
+		when (1)
+			poke.learn_move(:THOUSANDARROWS)
+		when (2)
+			poke.learn_move(:STRENGTHSAP)
+		when (3)
+			poke.learn_move(:DOUBLEIRONBASH)
+	end
+end
+
+poke = Pokemon.new(:GROWLITHE_1)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:WAVECRASH)
+		when (1)
+			poke.learn_move(:HEADSMASH)
+		when (2)
+			poke.learn_move(:VOLTTACKLE)
+		when (3)
+			poke.learn_move(:DRAGONDANCE)
+	end
+end
+
+poke = Pokemon.new(:VOLTORB_1)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:FROSTBREATH)
+		when (1)
+			poke.learn_move(:NASTYPLOT)
+		when (2)
+			poke.learn_move(:APPLEACID)
+		when (3)
+			poke.learn_move(:ELECTRODRIFT)
+	end
+end
+
+poke = Pokemon.new(:QWILFISH_1)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:CEASELESSEDGE)
+		when (1)
+			poke.learn_move(:KNOCKOFF)
+		when (2)
+			poke.learn_move(:RECOVER)
+		when (3)
+			poke.learn_move(:FISHIOUSREND)
+	end
+end
+
+poke = Pokemon.new(:SNEASEL_1)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:DRAINPUNCH)
+		when (1)
+			poke.learn_move(:KNOCKOFF)
+		when (2)
+			poke.learn_move(:PSYCHICFANGS)
+		when (3)
+			poke.learn_move(:TRIPLEAXEL)
+	end
+end
+
+poke = Pokemon.new(:ZORUA_1)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:MOONBLAST)
+		when (1)
+			poke.learn_move(:HYPERVOICE)
+		when (2)
+			poke.learn_move(:PARTINGSHOT)
+		when (3)
+			poke.learn_move(:BLOODMOON)
+	end
+end
+
+poke = Pokemon.new(:TAUROS_1)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:NORETREAT)
+		when (1)
+			poke.learn_move(:BLAZINGTORQUE)
+		when (2)
+			poke.learn_move(:AQUASTEP)
+		when (3)
+			poke.learn_move(:THUNDEROUSKICK)
+	end
+end
+
+poke = Pokemon.new(:WOOPER_1)
+if prob_move >= 80
+	case (rand(3))
+		when (0)
+			poke.learn_move(:STONEAXE)
+		when (1)
+			poke.learn_move(:RECOVER)
+		when (2)
+			poke.learn_move(:BANEFULBUNKER)
+		when (3)
+			poke.learn_move(:BARBBARRAGE)
+	end
+end
+
