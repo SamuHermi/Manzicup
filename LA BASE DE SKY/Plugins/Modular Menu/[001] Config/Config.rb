@@ -122,8 +122,16 @@ ModularMenu.add_entry(:SAVE, _INTL("Guardar"), "menuSave") do |menu|
     menu.close = false
   end
 end
-# condition to satisfy
-ModularMenu.add_condition(:SAVE) { next !$game_system || !$game_system.save_disabled && !(pbInSafari? || pbInBugContest?) }
+
+
+#-------------------------------------------------------------------------------
+#  Phone
+#-------------------------------------------------------------------------------
+ModularMenu.add_entry(:MESSAGES, _INTL("Mensajes"), "menuMessages") do |menu|
+  pbInstantMessages
+end
+
+
 #-------------------------------------------------------------------------------
 #  Quit Safari-Zone
 #-------------------------------------------------------------------------------
