@@ -233,6 +233,7 @@ module RandomDungeon
       :floor_decoration       => " ",
       :floor_decoration_large => " ",
       :floor_patch            => " ",
+      :void_patch             => " ",
       :wall_top               => " ",
       :wall_1                 => Console.markup_style("=", bg: :brown),
       :wall_2                 => Console.markup_style("=", bg: :brown),
@@ -906,6 +907,58 @@ module RandomDungeon
                   adj_count += 1 if @map_data[x + @buffer_x, y + @buffer_y + 1, 0] == :floor_patch
                   if adj_count >= 2 && rand(100) < adj_count * @parameters.floor_patch_smooth_rate
                     @map_data[x + @buffer_x, y + @buffer_y, 0] = :floor_patch
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
+      if @tileset.has_decoration?(:void_patch)
+        (maxHeight / @parameters.cell_height).times do |j|
+          (maxWidth / @parameters.cell_width).times do |i|
+            next if rand(100) >= @parameters.floor_patch_chance
+            # Random placing of floor patch tiles
+            mid_x = rand(@width-1)
+            mid_y = rand(@height - 1)
+            ((mid_y - @parameters.floor_patch_radius)..(mid_y + @parameters.floor_patch_radius)).each do |y|
+              ((mid_x - @parameters.floor_patch_radius)..(mid_x + @parameters.floor_patch_radius)).each do |x|
+                if @tileset.floor_patch_under_walls
+                  next if @map_data[x + @buffer_x, y + @buffer_y, 0] != :void
+                else
+                  next if @map_data.value(x + @buffer_x, y + @buffer_y) != :void
+                end
+                if (((mid_x - 1)..(mid_x + 1)).include?(x) && ((mid_y - 1)..(mid_y + 1)).include?(y)) ||
+                   rand(100) < @parameters.floor_patch_chance
+                  @map_data[x + @buffer_x, y + @buffer_y, 0] = :void_patch
+                end
+              end
+            end
+            # Smoothing of placed floor patch tiles
+            ((mid_y - @parameters.floor_patch_radius)..(mid_y + @parameters.floor_patch_radius)).each do |y|
+              ((mid_x - @parameters.floor_patch_radius)..(mid_x + @parameters.floor_patch_radius)).each do |x|
+                if @map_data[x + @buffer_x, y + @buffer_y, 0] == :void_patch
+                  adj_count = 0
+                  adj_count += 1 if @map_data[x + @buffer_x - 1, y + @buffer_y, 0] == :void_patch
+                  adj_count += 1 if @map_data[x + @buffer_x, y + @buffer_y - 1, 0] == :void_patch
+                  adj_count += 1 if @map_data[x + @buffer_x + 1, y + @buffer_y, 0] == :void_patch
+                  adj_count += 1 if @map_data[x + @buffer_x, y + @buffer_y + 1, 0] == :void_patch
+                  if adj_count == 0 || (adj_count == 1 && rand(100) < @parameters.floor_patch_smooth_rate * 2)
+                    @map_data[x + @buffer_x, y + @buffer_y, 0] = :void
+                  end
+                else
+                  if @tileset.floor_patch_under_walls
+                    next if @map_data.value(x + @buffer_x, y + @buffer_y) != :void
+                  else
+                    next if @map_data.value(x + @buffer_x, y + @buffer_y) != :void
+                  end
+                  adj_count = 0
+                  adj_count += 1 if @map_data[x + @buffer_x - 1, y + @buffer_y, 0] == :void_patch
+                  adj_count += 1 if @map_data[x + @buffer_x, y + @buffer_y - 1, 0] == :void_patch
+                  adj_count += 1 if @map_data[x + @buffer_x + 1, y + @buffer_y, 0] == :void_patch
+                  adj_count += 1 if @map_data[x + @buffer_x, y + @buffer_y + 1, 0] == :void_patch
+                  if adj_count >= 2 && rand(100) < adj_count * @parameters.floor_patch_smooth_rate
+                    @map_data[x + @buffer_x, y + @buffer_y, 0] = :void_patch
                   end
                 end
               end

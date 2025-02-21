@@ -105,17 +105,18 @@ class Battle::Scene
     #---------------------------------------------------------------------------
     # General UI elements.
     poke = (battler.opposes?) ? battler.displayPokemon : battler.pokemon
+    level = (battler.isRaidBoss?) ? "???" : battler.level.to_s
     movename = (battler.lastMoveUsed) ? GameData::Move.get(battler.lastMoveUsed).name : "---"
     movename = movename[0..12] + "..." if movename.length > 16
     imagePos = [
       [@path + "info_bg", 0, 0],
       [@path + "info_bg_data", 0, 0],
-      [@path + "info_level", xpos + 16, ypos + 106],
-      [@path + "info_gender", xpos + 148, ypos + 22, poke.gender * 22, 0, 22, 22]
+      [@path + "info_level", xpos + 16, ypos + 106]
     ]
+    imagePos.push([@path + "info_gender", xpos + 148, ypos + 22, poke.gender * 22, 0, 22, 22]) if !battler.isRaidBoss?
     textPos  = [
       [_INTL("{1}", poke.name), iconX + 82, iconY - 20, :center, BASE_DARK, SHADOW_DARK],
-      [battler.level.to_s, xpos + 38, ypos + 104, :left, BASE_LIGHT, SHADOW_LIGHT],
+      [_INTL("{1}", level), xpos + 38, ypos + 104, :left, BASE_LIGHT, SHADOW_LIGHT],
       [_INTL("Usó: {1}", movename), xpos + 349, ypos + 104, :center, BASE_LIGHT, SHADOW_LIGHT],
       [_INTL("Turno {1}", @battle.turnCount + 1), Graphics.width - xpos - 32, ypos + 8, :center, BASE_DARK, SHADOW_DARK]
     ]
@@ -407,8 +408,6 @@ class Battle::Scene
     weather = battler.effectiveWeather
     if weather != :None
       if weather == :Hail
-        name = GameData::BattleWeather.get(weather).name
-        desc = _INTL("Los Pokémon que no sean de tipo Hielo reciben daño cada turno. Ventisca siempre acierta.")
         if defined?(Settings::HAIL_WEATHER_TYPE)
           case Settings::HAIL_WEATHER_TYPE
           when 1
@@ -418,23 +417,26 @@ class Battle::Scene
             name = _INTL("Granizo y Nieve")
             desc = _INTL("Combina los efectos de Granizo y Nieve.")
           end
+        else
+          name = GameData::BattleWeather.get(weather).name
+          desc = _INTL("Los Pokémon que no sean de tipo Hielo reciben daño cada turno. Ventisca siempre acierta.")
         end
       else
         name = GameData::BattleWeather.get(weather).name
+        case weather
+        when :Sun         then desc = _INTL("Boosts Fire moves and weakens Water moves.")
+        when :HarshSun    then desc = _INTL("Boosts Fire moves and negates Water moves.")
+        when :Rain        then desc = _INTL("Boosts Water moves and weakens Fire moves.")
+        when :HeavyRain   then desc = _INTL("Boosts Water moves and negates Fire moves.")
+        when :Snow        then desc = _INTL("Boosts Def of Ice types. Blizzard always hits.")
+        when :Sandstorm   then desc = _INTL("Boosts Rock type Sp. Def. Damages unless Rock/Ground/Steel.")
+        when :StrongWinds then desc = _INTL("Flying types won't take super effective damage.")
+        when :ShadowSky   then desc = _INTL("Boosts Shadow moves. Non-Shadow Pokémon damaged each turn.")
+        else                   desc = _INTL("Unknown weather.")
+        end
       end
       tick = (weather == @battle.field.weather) ? @battle.field.weatherDuration : 0
       tick = (tick > 0) ? sprintf("%d/%d", tick, 5) : "--"
-      case weather
-      when :Sun         then desc = _INTL("Potencia los ataques de Fuego y debilita los ataques de Agua.")
-      when :HarshSun    then desc = _INTL("Potencia los ataques de Fuego y niega los ataques de Agua.")
-      when :Rain        then desc = _INTL("Potencia los ataques de Agua y debilita los ataques de Fuego.")
-      when :HeavyRain   then desc = _INTL("Potencia los ataques de Agua y niega los ataques de Fuego.")
-      when :Snow        then desc = _INTL("Potencia la Def. de los tipo Hielo. Ventisca siempre acierta.")
-      when :Sandstorm   then desc = _INTL("Potencia la Def. Esp. de los tipo Roca. Daña a todos menos a los Roca/Tierra/Acero.")
-      when :StrongWinds then desc = _INTL("Voladores no recibirán daño super eficaz.")
-      when :ShadowSky   then desc = _INTL("Potencia los movimientos Oscuros. Pokémon no oscuros reciben daño cada turno.")
-      else                   desc = _INTL("Clima desconocido.")
-      end
       display_effects.push([name, tick, desc])
     end
     #---------------------------------------------------------------------------

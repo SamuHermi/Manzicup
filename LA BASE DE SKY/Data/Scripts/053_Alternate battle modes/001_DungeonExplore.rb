@@ -6,21 +6,46 @@ class DungeonState
     attr_accessor :floorstoboss
     attr_accessor :biome
     attr_accessor :bossesdefeated
+    attr_accessor :trainers_on
+    attr_accessor :objects_on
+    attr_accessor :timer_start
+    attr_accessor :monster_attack
 
-
+    NUM_BIOMES = 9
+    TIME_ALLOWED = 10*60#10    # In seconds
     def initialize
         @floorsexplored = 0
         @floorstoboss = 0
         @bossesdefeated = 0
+        @trainers_on = 0
+        @objects_on = 0
         @inProgress = false
+        @monster_attack = false
     end
     
     def pbStart
       @floorsexplored = 0
       @floorstoboss = 3 + rand(5)
-      @biome = rand(6)
+      @biome = rand(NUM_BIOMES)
       @bossesdefeated = 0
-      @inProgress = true      
+      @inProgress = true     
+      @trainers_on = 0
+      @objects_on = 0
+      @timer_start = System.uptime
+      $stats.dungeon_count += 1
+      @monster_attack = false
+      $player.party.each do |pkmn|
+        pkmn.species = pkmn.species_data.get_baby_species
+        pkmn.level = 5
+        pkmn.calc_stats
+        pkmn.reset_moves
+      end
+    end
+
+    def expired?
+      return false if !pbInDungeon?
+      return false if TIME_ALLOWED <= 0
+      return System.uptime - timer_start >= TIME_ALLOWED
     end
 
     def loseDungeon
@@ -28,18 +53,19 @@ class DungeonState
         pbMessage("\\w[]\\wm\\c[13]\\l[3]" +
         _INTL("¡Todos tus Pokémon te han abandonado!"))
 
-
-        coins_obtained = (3*$player.money**0.9/(100) + 5*Math.exp(-$player.money))
-        coins_obtained = coins_obtained.ceil()
+        if $player.money > 0
+          coins_obtained = (3*$player.money**0.9/(100) + 5*Math.exp(-$player.money))
+          coins_obtained = coins_obtained.ceil()
+        else
+          coins_obtained = 0
+        end
         pbMessage("\\w[]\\wm\\c[13]\\l[3]" +
         _INTL("Todo tu dinero se ha convertido en monedas.\nHas conseguido {1} monedas",coins_obtained))  
         $player.coins += coins_obtained
         $player.money = 0
-  
         $bag.remove_non_important()
       pbMessage("\\w[]\\wm\\c[13]\\l[3]" +
       _INTL("Has perdido todos los objetos"))  
-
       pbEnd
     end
 
@@ -55,14 +81,62 @@ class DungeonState
     def advanceFloor()
       @floorsexplored += 1
       @floorstoboss -= 1
+      pbDungeonState.restartTimer
     end
 
-    def bossDefeat()
+    def randomizeTrainers()
+      @trainers_on = 0
+      @objects_on = 0
+      if $game_map
+        $game_map.events.each_value do |event|
+          prob = rand(100)
+          if event.name[/trainer/i]
+            $game_self_switches[[$game_map.map_id, event.id, "A"]] = true
+            if prob >= 50
+              $game_self_switches[[$game_map.map_id, event.id, "A"]] = false   
+              @trainers_on += 1       
+            end
+          end
+          if event.name[/environment/i]
+            $game_self_switches[[$game_map.map_id, event.id, "A"]] = false
+          end
+          if event.name[/object/i]
+            $game_self_switches[[$game_map.map_id, event.id, "A"]] = true
+            if prob >= 25
+              $game_self_switches[[$game_map.map_id, event.id, "A"]] = false    
+              @objects_on += 1       
+            end
+          end          
+        end
+        $game_map.need_refresh = true
+        
+      end
+    end
+
+    def bossDefeat
       @bossesdefeated +=1
       @floorstoboss = 3 + rand(5)
-      @biome = rand(6)
+      @biome = rand(NUM_BIOMES)
+    end
+
+    def restartTimer
+      @timer_start = System.uptime
     end
 end
+
+
+EventHandlers.add(:on_frame_update, :dungeon_contest_counter,
+  proc {
+    next if !pbDungeonState.expired? || pbDungeonState.floorstoboss == 0
+    next if $game_player.move_route_forcing || pbMapInterpreterRunning? ||
+            $game_temp.message_window_showing
+    pbMessage(_INTL("¡Has pasado demasiado tiempo en esta zona!"))
+    pbMessage(_INTL("¡Un monstruo se ha fijado en ti!"))
+    pbDungeonState.monster_attack = true
+    pbDungeonState.restartTimer
+  }
+)
+
 
 def pbInDungeon?
   return pbDungeonState.pbInDungeon?

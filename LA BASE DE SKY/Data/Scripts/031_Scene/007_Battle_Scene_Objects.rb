@@ -241,7 +241,7 @@ class Battle::Scene::PokemonDataBox < Sprite
     gender_text  = (gender == 0) ? _INTL("♂") : _INTL("♀")
     base_color   = (gender == 0) ? MALE_BASE_COLOR : FEMALE_BASE_COLOR
     shadow_color = (gender == 0) ? MALE_SHADOW_COLOR : FEMALE_SHADOW_COLOR
-    pbDrawTextPositions(self.bitmap, [[gender_text, @spriteBaseX + 126, 12, :left, base_color, shadow_color]])
+    pbDrawTextPositions(self.bitmap, [[gender_text, @spriteBaseX + 120, 14, :left, base_color, shadow_color]])
   end
 
   def draw_status

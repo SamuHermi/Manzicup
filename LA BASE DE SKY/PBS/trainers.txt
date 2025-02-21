@@ -140,7 +140,6 @@ Pokemon = SLOWKING,23
 Pokemon = YAMASK,22
     Form = 1
     Moves = DISABLE,NIGHTSHADE,THIEF,WILLOWISP
-    Item = MUSCLEBAND
 Pokemon = HOUNDOUR,22
     Moves = TAUNT,INCINERATE,BITE,PSYCHICFANGS
     Nature = ADAMANT
@@ -163,22 +162,28 @@ Pokemon = SHIINOTIC,29
 Pokemon = AERODACTYL,30
     Moves = STEALTHROCK,ROAR,ROCKSLIDE,WINGATTACK
     Item = FOCUSSASH
+    AbilityIndex = 1
+	Name = Paimon
 #-------------------------------
 [IMPOSTOR,Rojo]
 LoseText = ...
 Pokemon = ORBEETLE,38
     Moves = STICKYWEB,INFESTATION,REFLECT,LIGHTSCREEN
     Item = LIGHTCLAY
+	EV = 4,0,252,0,0,252
 Pokemon = STUNFISK,37
     Form = 1
     Moves = BULLDOZE,ROCKSLIDE,YAWN,PAINSPLIT
     Item = LEFTOVERS
+	EV = 0,128,252,0,0,128
 Pokemon = DITTO,38
     AbilityIndex = 2
     Item = CHOICESCARF
+	EV = 252,0,4,252,0,0
 Pokemon = AMOONGUSS,39
     Moves = TOXIC,GIGADRAIN,SLUDGEBOMB,CLEARSMOG
     Item = ROCKYHELMET
+	EV = 252,0,4,252,0,0
 #-------------------------------
 [PAPI,Swolio]
 Items = MEGARING
@@ -186,43 +191,22 @@ LoseText = ...
 Pokemon = SLAKING,48
     Moves = GIGAIMPACT,EARTHQUAKE,PLAYROUGH,OUTRAGE
     Item = CHOICEBAND
+	EV = 0,252,128,0,0,128
 Pokemon = PERRSERKER,48
     Moves = IRONHEAD,UTURN,CLOSECOMBAT,RAINDANCE
     AbilityIndex = 2
     Item = ASSAULTVEST
+	EV = 252,252,0,0,0,4
 Pokemon = MACHAMP,49
     Moves = CLOSECOMBAT,FACADE,KNOCKOFF,BULLETPUNCH
     AbilityIndex = 0
+	EV = 0,252,0,252,0,4
     Item = FLAMEORB
 Pokemon = SWAMPERT,49
     Moves = WATERFALL,EARTHQUAKE,ICEPUNCH,SUPERPOWER
     AbilityIndex = 2
     Item = MEGASTONE
-#-------------------------------
-[MANADA,monstruos]
-Items = MEGARING
-LoseText = ...
-Pokemon = EMOLGA,53
-    Name = Kadachi
-    Moves = ACROBATICS,KNOCKOFF,SPARK,ROOST
-    AbilityIndex = 2
-Pokemon = MILOTIC,53
-    Name = Mizutsune
-    Moves = SCALD,RECOVER,HAZE,DRAININGKISS
-    Item = LEFTOVERS
-Pokemon = GARCHOMP,53
-    Name = Diablos
-    Moves = SWORDSDANCE,SCALESHOT,EARTHQUAKE,FIREFANG
-    Item = YACHEBERRY
-Pokemon = CORVIKNIGHT,53
-    Name = Kushala
-    Moves = BODYPRESS,BRAVEBIRD,BULKUP,ROOST
-    AbilityIndex = 2
-    Item = ROCKYHELMET
-Pokemon = CHARIZARD,54
-    Name = Rathalos
-    Moves = FLAMETHROWER,AIRSLASH,HURRICANE
-    Item = MEGASTONEX
+	EV = 0,252,4,252,0,0
 #-------------------------------
 [PROFETA,Zawezo]
 LoseText = ...
@@ -313,6 +297,142 @@ LoseText = ...
 Pokemon = SERVINE,36
 Pokemon = BAYLEEF,36
 #-------------------------------
+[PLANKTON,aaaaAAAA]
+LoseText = ...
+Pokemon = EMPOLEON,33
+Pokemon = PRINPLUP,32
+Pokemon = PIPLUP,33
+#-------------------------------
+[PLANKTON,ooooAAAA]
+LoseText = ...
+Pokemon = IRONBUNDLE,33
+Pokemon = DELIBIRD,32
+#-------------------------------
+[PLANKTON,uuuuAAAA]
+LoseText = ...
+Pokemon = EISCUE,36
+#-------------------------------
+[PLANKTON,uuooAAAA]
+LoseText = ...
+Pokemon = WIGLETT,36
+#-------------------------------
+[PLANKTON,uuuoOOAA]
+LoseText = ...
+Pokemon = MORELULL,36
+Pokemon = SKIPLOOM,36
+#-------------------------------
+[PLANKTON,Plankton]
+LoseText = ...
+Pokemon = WEEPINBELL,36
+#-------------------------------
+[PLANKTON,Plantón]
+LoseText = ...
+Pokemon = SERVINE,36
+Pokemon = BAYLEEF,36
+#-------------------------------
+[ANGEL,Ángel]
+LoseText = ...
+Pokemon = EMPOLEON,33
+Pokemon = PRINPLUP,32
+Pokemon = PIPLUP,33
+#-------------------------------
+[ANGEL,Cosmo]
+LoseText = ...
+Pokemon = IRONBUNDLE,33
+Pokemon = DELIBIRD,32
+#-------------------------------
+[ANGEL,Wanda]
+LoseText = ...
+Pokemon = EISCUE,36
+#-------------------------------
+[ANGEL,Dlanor]
+LoseText = ...
+Pokemon = WIGLETT,36
+#-------------------------------
+[ANGEL,Harambe]
+LoseText = ...
+Pokemon = MORELULL,36
+Pokemon = SKIPLOOM,36
+#-------------------------------
+[ANGEL,Kayle]
+LoseText = ...
+Pokemon = WEEPINBELL,36
+#-------------------------------
+[ANGEL,Pit]
+LoseText = ...
+Pokemon = SERVINE,36
+Pokemon = BAYLEEF,36
+#-------------------------------
+[MINER,Steve]
+LoseText = ...
+Pokemon = CLODSIRE,32
+#-------------------------------
+[MINER,Alex]
+LoseText = ...
+Pokemon = GASTLY,32
+#-------------------------------
+[MINER,Guillermo]
+LoseText = ...
+Pokemon = SHUPPET,31
+Pokemon = DUSKULL,31
+#-------------------------------
+[MINER,Rubén]
+LoseText = ...
+Pokemon = MISDREAVUS,32
+#-------------------------------
+[MINER,Ricardo]
+LoseText = ...
+Pokemon = GREAVARD,30
+Pokemon = PHANTUMP,30
+Pokemon = LITWICK,30
+#-------------------------------
+[MINER,Marcos]
+LoseText = ...
+Pokemon = SHUPPET,31
+Pokemon = DUSKULL,31
+#-------------------------------
+[MINER,Carlos]
+LoseText = ...
+Pokemon = CLODSIRE,32
+#-------------------------------
+[FORTACHON,Valentino]
+LoseText = ...
+Pokemon = TOXEL,33
+Pokemon = ARIADOS,32
+#-------------------------------
+[FORTACHON,Enrique]
+LoseText = ...
+Pokemon = SILICOBRA,33
+Pokemon = SNEASEL,32
+Pokemon = CYCLIZAR,33
+#-------------------------------
+[FORTACHON,Diego]
+LoseText = ...
+Pokemon = ZUBAT,36
+#-------------------------------
+[FORTACHON,Carlos]
+LoseText = ...
+Pokemon = GLOOM,36
+#-------------------------------
+[FORTACHON,Jose]
+LoseText = ...
+Pokemon = MORELULL,36
+Pokemon = SKIPLOOM,36
+#-------------------------------
+[FORTACHON,Jonathan]
+LoseText = ...
+Pokemon = WEEPINBELL,36
+#-------------------------------
+[FORTACHON,]
+LoseText = ...
+Pokemon = SERVINE,36
+Pokemon = BAYLEEF,36
+#-------------------------------
+[FORTACHON,]
+LoseText = ...
+Pokemon = ROSELIA,36
+Pokemon = IVYSAUR,36
+#-------------------------------
 [EXPLORADOR,Yurian]
 Items = HEAVYDUTYBOOTS
 LoseText = ...
@@ -375,3 +495,568 @@ Pokemon = PERSIAN,44
     Moves = PLAYROUGH,PARTINGSHOT,SUCKERPUNCH,SWAGGER
 Pokemon = GHOLDENGO,45
     Moves = MAKEITRAIN,SHADOWBALL,PAYDAY,NASTYPLOT
+#-------------------------------
+[PRINCE,Eldar]
+Items = SUPERPOTION
+LoseText = Admito mi derrota
+Pokemon = NINETALES,50
+    Form = 1
+    AbilityIndex = 0
+    Item = ICYROCK
+Pokemon = AURORUS,50
+	Moves = METEORBEAM,HYPERVOICE,ENCORE,THUNDERWAVE
+	Item = NEVERMELTICE
+Pokemon = CRYOGONAL,50
+	Moves = RECOVER,RAPIDSPIN,KNOCKOFF,FREEZEDRY
+	Item = HEAVYDUTYBOOTS
+Pokemon = LINOONE,50
+	Item = FIGYBERRY
+	Moves = BELLYDRUM,RETURN,EXTREMESPEED,THROATCHOP
+	AbilityIndex = 1
+Pokemon = CALYREX,50
+	Item = FIGYBERRY
+	Moves = SUBSTITUTE,GLACIALLANCE,SWORDSDANCE,LEECHSEED
+	Form = 1
+#-------------------------------
+[HERMI,Hermi]
+LoseText = ...
+Pokemon = MINIOR,50
+    Form = 10
+Pokemon = EMPOLEON,50
+Pokemon = BRELOOM,50
+Pokemon = URSARING,50
+#-------------------------------
+[RODRI,Rodri]
+LoseText = ...
+Pokemon = ROSELIA,50
+Pokemon = FERALIGATR,50
+	Name = RDC
+Pokemon = HONCHKROW,50
+Pokemon = BLAZIKEN,50
+#-------------------------------
+[BRA,Bra]
+LoseText = ...
+Pokemon = TYRANTRUM,50
+Pokemon = SAMUROTT,50
+	Form = 1
+Pokemon = REUNICLUS,50
+Pokemon = SABLEYE,50
+#-------------------------------
+[SAMER,Samer]
+LoseText = ...
+Pokemon = CHARIZARD,50
+Pokemon = AERODACTYL,50
+Pokemon = CAMERUPT,50
+	Name = Samerupt
+Pokemon = PILOSWINE,50
+#-------------------------------
+[BRAIS,Brais]
+LoseText = ...
+Pokemon = BUTTERFREE,50
+Pokemon = PRIMARINA,50
+Pokemon = CHANDELURE,50
+Pokemon = OBSTAGOON,50
+#-------------------------------
+[ISA,Isa]
+LoseText = ...
+Pokemon = EEVEE,5
+    AbilityIndex = 1
+	Form = 1
+Pokemon = VENUSAUR,50
+Pokemon = GOREBYSS,50
+Pokemon = DRAGONAIR,50
+#-------------------------------
+[JESS,Jess]
+LoseText = ...
+Pokemon = FEAROW,50
+Pokemon = DECIDUEYE,50
+	Form = 1
+	Name = Kazuha
+Pokemon = SINISTCHA,50
+Pokemon = ZOROARK,50
+	Form = 1
+#-------------------------------
+[IRIA,Iria]
+LoseText = ...
+Pokemon = BLAZIKEN,50
+Pokemon = ALCREMIE,50
+Pokemon = SANDSLASH,50
+	Form = 1
+Pokemon = CHANSEY,50
+#-------------------------------
+[ANA,Ana]
+LoseText = ...
+Pokemon = KLEFKI,50
+Pokemon = SCEPTILE,50
+	Name = Trenco
+Pokemon = CENTISKORCH,50
+Pokemon = GRAPPLOCT,50
+#-------------------------------
+[PABLO,Pablo]
+LoseText = M'as rotao hermano
+Pokemon = INFERNAPE,50
+Pokemon = PELIPPER,50
+Pokemon = MAROWAK,50
+	Form = 1
+Pokemon = GURDURR,50
+#-------------------------------
+[SABO,Sabo]
+LoseText = Muy buena
+Pokemon = AGGRON,50
+Pokemon = DELPHOX,50
+Pokemon = ROTOM,50
+	Form = 5
+Pokemon = TOXAPEX,50
+#-------------------------------
+[NEREA,Nerea]
+LoseText = Muy buena
+Pokemon = RAPIDASH,50
+Pokemon = MEOWSCARADA,50
+Pokemon = PAWMOT,50
+Pokemon = FLORGES,50
+#-------------------
+# Pokemon World Tournament - Example Tournament
+# Manzidadas
+#-------------------
+[SABO,Sabo,10]
+LoseText = Looks like you were the sturdier of us.
+Items = MEGARING
+Pokemon = BANETTE,50
+	Moves = DRAININGKISS,POWERGEM,SHADOWSNEAK,SHADOWBALL
+	IV = 21,21,21,21,21,21
+	Form = 1
+	Item = MEGASTONE
+Pokemon = SALAMENCE,50
+	Item = HEAVYDUTYBOOTS
+	Moves = DRAGONRUSH,TEMPERFLARE,EARTHQUAKE,DRAGONDANCE
+	AbilityIndex = 0
+	IV = 21,21,21,21,21,21
+	Shiny = true
+Pokemon = DELPHOX,50
+	Moves = NASTYPLOT,FLAMETHROWER,PSYSHOCK,DAZZLINGGLEAM
+	IV = 21,21,21,21,21,21
+Pokemon = AGGRON,50
+	Item = LIECHIBERRY
+	Moves = CURSE,HEAVYSLAM,BODYPRESS,EARTHQUAKE
+	IV = 21,21,21,21,21,21
+	Item = IRONBALL
+Pokemon = LANDORUS,50
+	Item = RINDOBERRY
+	Moves = STEALTHROCK,EARTHQUAKE,UTURN,TAUNT
+	Form = 1
+	IV = 21,21,21,21,21,21
+	Item = ROCKYHELMET
+Pokemon = ROTOM,50
+	Item = ROCKGEM
+	Moves = NASTYPLOT,DISCHARGE,LEAFSTORM,PAINSPLIT
+	IV = 21,21,21,21,21,21
+	Form = 5
+	Item = LEFTOVERS
+#-------------------
+[ANA,Ana,10]
+LoseText = You were pretty tough! I can't wait to face off against you again!
+Items = MEGARING
+Pokemon = KLEFKI,50
+	Item = TOXICORB
+	Moves = SPIKES,THUNDERWAVE,FOULPLAY,SWITCHEROO
+	IV = 21,21,21,21,21,21
+Pokemon = CENTISKORCH,50
+	Item = HEAVYDUTYBOOTS
+	Moves = FIRELASH,LEECHLIFE,POWERWHIP,KNOCKOFF
+	IV = 21,21,21,21,21,21
+Pokemon = WISHIWASHI,50
+	Moves = PSYCHIC,SURF,YAWN,AMNESIA
+	IV = 21,21,21,21,21,21
+	Item = MEGASTONE
+	Form = 2
+Pokemon = DHELMISE,50
+	Item = COLBURBERRY
+	Moves = POWERWHIP,POLTERGEIST,ANCHORSHOT,SYNTHESIS
+	IV = 21,21,21,21,21,21
+	Shiny = true
+Pokemon = SCEPTILE,50
+	Item = LIFEORB
+	Moves = LEAFSTORM,GIGADRAIN,FOCUSBLAST,DRAGONPULSE
+	IV = 21,21,21,21,21,21
+	AbilityIndex = 0
+Pokemon = UXIE,50
+	Item = LEFTOVERS
+	Moves = MYSTICALPOWER,NASTYPLOT,DRAININGKISS,SUBSTITUTE
+	IV = 21,21,21,21,21,21
+#-------------------
+[PABLO,Pablo,10]
+LoseText = You shocked my very core, soldier!
+Items = MEGARING
+Pokemon = ACCELGOR,50
+	Item = MEGASTONE
+	Moves = PROTECT,DOUBLESHOCK,CLOSECOMBAT,POWERWHIP
+	IV = 21,21,21,21,21,21
+	Form = 1
+Pokemon = COPPERAJAH,50
+	Item = ASSAULTVEST
+	Moves = HEAVYSLAM,HEATCRASH,POWERWHIP,STONEEDGE
+	IV = 21,21,21,21,21,21
+	Shiny = true
+	Name = Filifante
+Pokemon = INFERNAPE,50
+	Item = PUNCHINGGLOVE
+	Moves = CLOSECOMBAT,MACHPUNCH,FIREPUNCH,THUNDERPUNCH
+	IV = 21,21,21,21,21,21
+	AbilityIndex = 1
+	Name = Vini
+Pokemon = PELIPPER,50
+	Item = ROCKYHELMET
+	Moves = AIRSLASH,BLIZZARD,SCALD,DEFOG
+	IV = 21,21,21,21,21,21
+	AbilityIndex = 0
+Pokemon = BUZZWOLE,50
+	Item = BIGROOT
+	Moves = DRAINPUNCH,LEECHLIFE,BULKUP,ICEPUNCH
+	IV = 21,21,21,21,21,21
+Pokemon = MAROWAK,50
+	Item = THICKCLUB
+	Moves = POLTERGEIST,FIREPUNCH,LOWKICK,SHADOWBONE
+	IV = 21,21,21,21,21,21
+	AbilityIndex = 1
+	Form = 1
+#-------------------
+[NEREA,Nerea,10]
+Items = MEGARING
+Pokemon = SPECTRIER,50
+	Item = SPELLTAG
+	Moves = NASTYPLOT,SUBSTITUTE,SHADOWBALL,DRAININGKISS
+	IV = 21,21,21,21,21,21
+Pokemon = TANDEMAUS,50
+	Item = MEGASTONE
+	Moves = POPULATIONBOMB,POWERUPPUNCH,EXTREMESPEED,UTURN
+	IV = 21,21,21,21,21,21
+	Form = 1
+Pokemon = MEOWSCARADA,50
+	Item = LIFEORB
+	Moves = ACROBATICS,FLOWERTRICK,SUCKERPUNCH,SHADOWCLAW
+	IV = 21,21,21,21,21,21
+	AbilityIndex = 2
+Pokemon = RAPIDASH,50
+	Item = CHOICESCARF
+	Moves = BLAZEKICK,ROLLINGKICK,HIGHHORSEPOWER,WILDCHARGE
+	IV = 21,21,21,21,21,21
+	AbilityIndex = 0
+Pokemon = CARBINK,50
+	Item = LEFTOVERS
+	Moves = GYROBALL,STEALTHROCK,REFLECT,LIGHTSCREEN
+	IV = 21,21,21,21,21,21
+	AbilityIndex = 1
+	Shiny = true
+Pokemon = DRAGAPULT,50
+	Item = HEAVYDUTYBOOTS
+	Moves = DRAGONDARTS,HEX,WILLOWISP,UTURN
+	IV = 21,21,21,21,21,21
+	AbilityIndex = 1
+#-------------------
+[RODRI,Rodri,10]
+Items = MEGARING
+Pokemon = ROSERADE,50
+	Item = BLACKSLUDGE
+	Moves = TOXICSPIKES,SPIKES,GIGADRAIN,SLUDGEBOMB
+	IV = 21,21,21,21,21,21
+	Name = Plantita
+Pokemon = TOGEKISS,50
+	Item = MEGASTONE
+	Moves = INGRAIN,PAINSPLIT,TOXIC,EARTHPOWER
+	IV = 21,21,21,21,21,21
+	Form = 1
+Pokemon = GARDEVOIR,50
+	Item = KASIBBERRY
+	Moves = CALMMIND,STOREDPOWER,DRAININGKISS,THUNDERBOLT
+	IV = 21,21,21,21,21,21
+	Shiny = true
+	AbilityIndex = 0
+Pokemon = FERALIGATR,50
+	Item = CHOICEBAND
+	Moves = PSYSHOCK,ICEBEAM,CALMMIND,SLACKOFF
+	IV = 21,21,21,21,21,21
+	AbilityIndex = 0
+Pokemon = GIRATINA,50
+	Item = GRISEOUSCORE
+	Moves = POLTERGEIST,DRAGONTAIL,THUNDERWAVE,TAILWIND
+	IV = 21,21,21,21,21,21
+	Form = 1
+Pokemon = HONCHKROW,50
+	Item = LIFEORB
+	Moves = AIRSLASH,THUNDERWAVE,DARKPULSE,HEATWAVE
+	IV = 21,21,21,21,21,21
+#-------------------
+[BRAIS,Brais,10]
+Items = MEGARING
+Pokemon = BUTTERFREE,50
+	Item = LEFTOVERS
+	Moves = QUIVERDANCE,HURRICANE,SLEEPPOWDER,SUBSTITUTE
+	IV = 21,21,21,21,21,21
+Pokemon = PRIMARINA,50
+	Item = WATERGEM
+	Moves = HYPERVOICE,MOONBLAST,ENERGYBALL,ICEBEAM
+	IV = 21,21,21,21,21,21
+Pokemon = CHANDELURE,50
+	Item = CHOICESPECS
+	Moves = SHADOWBALL,ENERGYBALL,FLAMETHROWER,PSYCHIC
+	IV = 21,21,21,21,21,21
+Pokemon = INFERNAPE,50
+	Item = LIFEORB
+	Moves = AURASPHERE
+	IV = 21,21,21,21,21,21
+	AbilityIndex = 2
+	Shiny = true
+Pokemon = GLIGAR,50
+	Item = MEGASTONE
+	Moves = GUILLOTINE,AERIALACE,NIGHTSLASH,BITTERBLADE
+	IV = 21,21,21,21,21,21
+	Form = 1
+Pokemon = RAIKOU,50
+	Item = AIRBALLOON
+	Moves = CALMMIND,SCALD,THUNDERBOLT,VOLTSWITCH
+	IV = 21,21,21,21,21,21
+#-------------------
+[JESS,Jess,10]
+LoseText = Your flame burnt me up!
+Pokemon = CHARIZARD,50
+	Item = HEATROCK
+	Moves = SUNNYDAY,FIREBLAST,SOLARBEAM,FOCUSBLAST
+	IV = 21,21,21,21,21,21
+	AbilityIndex = 2
+Pokemon = TYPHLOSION,50
+	Item = CHOICESPECS
+	Moves = ERUPTION,SCORCHINGSANDS,FOCUSBLAST,FIREBLAST
+	IV = 21,21,21,21,21,21
+	AbilityIndex = 0
+	Shiny = true
+Pokemon = FEAROW,50
+	Item = SCOPELENS
+	Moves = FRUSTRATION,DRILLPECK,DRILLRUN,UTURN
+	IV = 21,21,21,21,21,21
+	AbilityIndex = 2
+Pokemon = UMBREON,50
+	Item = MEGASTONE
+	Moves = BULKUP,QUIVERDANCE,POWERTRIP,STOREDPOWER
+	IV = 21,21,21,21,21,21
+Pokemon = WALKINGWAKE,50
+	Item = CHOICESCARF
+	Moves = HYDROSTEAM,DRAGONPULSE,WEATHERBALL,AQUAJET
+	IV = 21,21,21,21,21,21
+Pokemon = SINISTCHA,50
+	Item = LEFTOVERS
+	Moves = CALMMIND,MATCHAGOTCHA,SHADOWBALL,STRENGTHSAP
+	IV = 21,21,21,21,21,21
+	AbilityIndex = 2
+#-------------------
+[SAMER,Samer,10]
+Items = MEGARING
+Pokemon = CHARIZARD,50
+	Item = WHITEHERB
+	Moves = EARTHQUAKE,ACROBATICS,BLAZEKICK,DRAGONDANCE
+	IV = 21,21,21,21,21,21
+	AbilityIndex = 1
+Pokemon = REVAVROOM,50
+	Item = AIRBALLOON
+	Moves = IRONHEAD,HIGHHORSEPOWER,SHIFTGEAR,GUNKSHOT
+	IV = 21,21,21,21,21,21
+	Shiny = true
+Pokemon = TAUROS,50
+	Item = MEGASTONE
+	Moves = RAGINGBULL,CLOSECOMBAT,SWAGGER,ZENHEADBUTT
+	IV = 21,21,21,21,21,21
+	Form = 4
+Pokemon = AEREXDACTYL,50
+	Item = LIFEORB
+	Moves = STONEEDGE,EARTHQUAKE,DUALWINGBEAT,ROOST
+	IV = 21,21,21,21,21,21
+	AbilityIndex = 1
+Pokemon = MEWTWO,50
+	Item = TWISTEDSPOON
+	Moves = NASTYPLOT,PSYSTRIKE,FLAMETHROWER,GRASSKNOT
+	IV = 21,21,21,21,21,21
+Pokemon = MAMOSWINE,50
+	Item = NEVERMELTICE
+	Moves = EARTHQUAKE,ICICLECRASH,ICESHARD,KNOCKOFF
+	IV = 21,21,21,21,21,21
+	AbilityIndex = 2
+#-------------------
+[ISA,Isa,10]
+Items = MEGARING
+Pokemon = EEVEE,50
+	Item = SILKSCARF
+	Moves = PROTECT,LASTRESORT
+	IV = 21,21,21,21,21,21
+	AbilityIndex = 1
+Pokemon = BRAVIARY,50
+	Item = LIFEORB
+	Moves = PSYCHIC,HURRICANE,HEATWAVE,PROTECT
+	IV = 21,21,21,21,21,21
+	Shiny = true
+	AbilityIndex = 1
+Pokemon = VENUSAUR,50
+	Item = LEFTOVERS
+	Moves = GIGADRAIN,SLUDGEBOMB,EARTHPOWER,SYNTHESIS
+	IV = 21,21,21,21,21,21
+	AbilityIndex = 0
+Pokemon = ABSOL,50
+	Item = MEGASTONE
+	Moves = MOONBLAST,ELECTROSHOT,HYDROPUMP,MIRRORSHOT
+	IV = 21,21,21,21,21,21
+	Form = 1
+Pokemon = KYOGRE,50
+	Item = CHOICESCARF
+	Moves = WATERSPOUT,ORIGINPULSE,THUNDER,ICEBEAM
+	IV = 21,21,21,21,21,21
+Pokemon = DRAGONITE,50
+	Item = WEAKNESSPOLICY
+	Moves = DRAGONPULSE,HURRICANE,BLIZZARD,HYDROPUMP
+	IV = 21,21,21,21,21,21
+	AbilityIndex = 2	
+#-------------------
+[IRIA,Iria,10]
+Items = MEGARING
+Pokemon = BLAZIKEN,50
+	Item = FOCUSSASH
+	Moves = ACROBATICS,BLAZEKICK,LOWKICK,BULKUP
+	IV = 21,21,21,21,21,21
+	AbilityIndex = 1
+Pokemon = CHANSEY,50
+	Item = EVIOLITE
+	Moves = TOXIC,SEISMICTOSS,SOFTBOILED,AROMATHERAPY
+	IV = 21,21,21,21,21,21
+Pokemon = TORRACAT,50
+	Item = WOODSWORD
+	Moves = DARKESTLARIAT,PARTINGSHOT,FLAMETHROWER,WILLOWISP
+	IV = 21,21,21,21,21,21
+	Shiny = true
+	AbilityIndex = 1
+Pokemon = LAPRAS,50
+	Item = MEGASTONE
+	Moves = TERRAINPULSE,HYPERDRILL,OUTRAGE,PSYCHICFANGS
+	IV = 21,21,21,21,21,21
+	AbilityIndex = 0
+	Form = 1
+Pokemon = XERNEAS,50
+	Item = POWERHERB
+	Moves = MOONBLAST,GEOMANCY,THUNDER,SUBSTITUTE
+	IV = 21,21,21,21,21,21
+	Form = 1
+Pokemon = SANDSLASH,50
+	Item = WIDELENS
+	Moves = SWORDSDANCE,TRIPLEAXEL,EARTHQUAKE,KNOCKOFF
+	IV = 21,21,21,21,21,21
+	Form = 1
+	AbilityIndex = 1
+#-------------------
+[HERMI,Hermi,10]
+Items = MEGARING
+Pokemon = EMPOLEON,50
+	Item = AIRBALLOON
+	Moves = SURF,ICEBEAM,GRASSKNOT,ROOST
+	IV = 21,21,21,21,21,21
+Pokemon = MINIOR,50
+	Item = WHITEHERB
+	Moves = SHELLSMASH,MOONBLAST,ENERGYBALL,ICEBEAM
+	IV = 21,21,21,21,21,21
+	Form = 8
+Pokemon = AMPHAROS,50
+	Item = MEGASTONE
+	Moves = DAZZLINGGLEAM,DRAGONENERGY,DISCHARGE,TAILGLOW
+	IV = 21,21,21,21,21,21
+	Form = 2
+Pokemon = TERAPAGOS,50
+	Item = LEFTOVERS
+	Moves = TERASTARSTORM,ICEBEAM,EARTHPOWER,ZENHEADBUTT
+	IV = 21,21,21,21,21,21
+	AbilityIndex = 2
+Pokemon = BRELOOM,50
+	Item = LOADEDDICE
+	Moves = BULLETSEED,SWORDSDANCE,MACHPUNCH,ROCKTOMB
+	IV = 21,21,21,21,21,21
+	AbilityIndex = 2
+Pokemon = MABOSSTIFF,50
+	Item = AIRBALLOON
+	Moves = CRUNCH,PSYCHICFANGS,PLAYROUGH,DESTINYBOND
+	IV = 21,21,21,21,21,21
+	Shiny = true
+#-------------------
+[BRA,Bra,10]
+LoseText = Your flame burnt me up!
+Pokemon = SABLEGEM,50
+	Item = HEAVYDUTYBOOTS
+	Moves = ENCORE,WILLOWISP,RECOVER,KNOCKOFF
+	IV = 21,21,21,21,21,21
+	AbilityIndex = 2
+Pokemon = GARCHOMP,50
+	Item = LOADEDDICE
+	Moves = SWORDSDANCE,EARTHQUAKE,SCALESHOT,FIREFANG
+	IV = 21,21,21,21,21,21
+	AbilityIndex = 2
+	Shiny = true
+Pokemon = CELEBI,50
+	Item = GRASSYSEED
+	Moves = NASTYPLOT,PSYCHIC,AURASPHERE,LEAFSTORM
+	IV = 21,21,21,21,21,21
+	AbilityIndex = 1
+Pokemon = GYARADOS,50
+	Item = MEGASTONE
+	Moves = PYROBALL,WATERFALL,DRAGONDANCE,FLIPTURN
+	IV = 21,21,21,21,21,21
+Pokemon = SAMUROTT,50
+	Item = FOCUSSASH
+	Moves = CEASELESSEDGE,RAZORSHELL,SUCKERPUNCH,AQUAJET
+	IV = 21,21,21,21,21,21
+	Form = 1
+Pokemon = TYRANTRUM,50
+	Item = CHOICEBAND
+	Moves = HEADSMASH,OUTRAGE,CLOSECOMBAT,CRUNCH
+	IV = 21,21,21,21,21,21
+	AbilityIndex = 2
+#-------------------
+# Pokemon World Tournament - Example Tournament
+# Manzidadas
+#-------------------
+[MINER,Steve,1]
+LoseText = ...
+Pokemon = GARGANACL,50
+Pokemon = ELECTRODE,50
+	Moves = EXPLOSION
+	Item = NORMALGEM
+	Form = 1
+Pokemon = EXCADRILL,50
+Pokemon = PARASECT,50
+#-------------------------------
+[ESTRATEGA,Pingu]
+LoseText = ...
+Pokemon = EMPOLEON,50
+Pokemon = DELIBIRD,50
+Pokemon = IRONBUNDLE,50
+Pokemon = ARTICUNO,50
+#-------------------------------
+[ANGEL,Dlanor,1]
+LoseText = ...
+Pokemon = CERULEDGE,50
+Pokemon = ABSERAPH,50
+Pokemon = OMASTAR,50
+Pokemon = TOGEKISS,50
+#-------------------------------
+[PLANKTON,Plantón]
+LoseText = ...
+Pokemon = STARMIE,50
+Pokemon = KINGLER,50
+Pokemon = GREEDENT,50
+Pokemon = PROBOPASS,50
+#-------------------------------
+[TRIPULANTE,Azul]
+LoseText = ...
+Pokemon = LUNATONE,50
+Pokemon = SOLROCK,50
+Pokemon = BEHEEYEM,50
+Pokemon = CLEFABLE,50
+#-------------------------------
+[FORTACHON,Jonathan]
+LoseText = ...
+Pokemon = MACHAMP,50
+Pokemon = SQUAWKABILLY,50
+Pokemon = GRIMMSNARL,50
+Pokemon = TANGROWTH,50

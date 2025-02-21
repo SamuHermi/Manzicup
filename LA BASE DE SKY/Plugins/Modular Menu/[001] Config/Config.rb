@@ -85,18 +85,6 @@ ModularMenu.add_entry(:BAG, _INTL("Mochila"), "menuBag") do |menu|
   end
 end
 #-------------------------------------------------------------------------------
-#  PokeGear
-#-------------------------------------------------------------------------------
-ModularMenu.add_entry(:POKEGEAR, _INTL("Pokégear"), "menuPokegear") do |menu|
-  scene = PokemonPokegear_Scene.new
-  screen = PokemonPokegearScreen.new(scene)
-  pbFadeOutIn(99999) {
-    screen.pbStartScreen
-  }
-end
-# condition to satisfy
-ModularMenu.add_condition(:POKEGEAR) { next $player.has_pokegear }
-#-------------------------------------------------------------------------------
 #  Trainer Card
 #-------------------------------------------------------------------------------
 ModularMenu.add_entry(:TRAINER, _INTL("\\PN"), "menuTrainer") do |menu|
@@ -123,7 +111,7 @@ ModularMenu.add_entry(:SAVE, _INTL("Guardar"), "menuSave") do |menu|
   end
 end
 
-
+ModularMenu.add_condition(:SAVE) { next !pbInDungeon?}
 #-------------------------------------------------------------------------------
 #  Phone
 #-------------------------------------------------------------------------------

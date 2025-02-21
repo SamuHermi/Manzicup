@@ -61,7 +61,7 @@ module VisibleEncounterSettings
   #  0  - means the aggressive pokemon will not switch its movement when player is close to the pokemon
   # >0  - means the aggressive pokemon will switch its movement when the player is at most that much tiles away
 
-  AGG_ANIMATIONS = [7, nil, nil] # default [7, nil, nil]
+  AGG_ANIMATIONS = [16, nil, nil] # default [7, nil, nil]
   # This stores the IDs of your animations in database, where the first animation
   # 1st entry  - the id of the animation in database that triggers when a pokemon becomes aggressive if the player comes it to close.
   # 2nd entry  - the id of the animation in database that triggers on spawning of the aggressive encounter (needs additional animations add on)

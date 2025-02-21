@@ -141,9 +141,9 @@ def getFormattedTextFast(bitmap, xDst, yDst, widthDst, heightDst, text, lineheig
   colorclone = bitmap.font.color
   defaultfontname = bitmap.font.name
   if defaultfontname.is_a?(Array)
-    defaultfontname = defaultfontname.find { |i| Font.exist?(i) } || "Arial"
+    defaultfontname = defaultfontname.find { |i| Font.exist?(i) } || "Power Green"
   elsif !Font.exist?(defaultfontname)
-    defaultfontname = "Arial"
+    defaultfontname = "Power Green"
   end
   defaultfontname = defaultfontname.clone
   havenl = false
@@ -408,9 +408,9 @@ def getFormattedText(bitmap, xDst, yDst, widthDst, heightDst, text, lineheight =
   fontsizestack = []
   defaultcolors = [oldfont.color.clone, nil]
   if defaultfontname.is_a?(Array)
-    defaultfontname = defaultfontname.find { |i| Font.exist?(i) } || "Arial"
+    defaultfontname = defaultfontname.find { |i| Font.exist?(i) } || "Power Green"
   elsif !Font.exist?(defaultfontname)
-    defaultfontname = "Arial"
+    defaultfontname = "Power Green"
   end
   defaultfontname = defaultfontname.clone
   fontname = defaultfontname

@@ -208,10 +208,12 @@ class PokemonPauseMenu_Scene
     elsif pbInDungeon?
       content.push(_INTL("{1}$",$player.money))
       content.push(_INTL("Pisos hasta el jefe: {1}",$PokemonGlobal.dungeonState.floorstoboss))
-      content.push(_INTL("Jefes derrotados: {1}",$PokemonGlobal.dungeonState.bossesdefeated))
+      content.push(_INTL("Quedan {1} objetos",$PokemonGlobal.dungeonState.objects_on))
+      content.push(_INTL("Quedan {1} enemigos",$PokemonGlobal.dungeonState.trainers_on))
+      content.push(_INTL("Nivel máximo: {1}",$game_variables[LevelCapsEX::LEVEL_CAP_VARIABLE]))
     end
     for i in 0...content.length
-      text.push([content[i], 16, 54 + i*50, 0, Color.new(255, 255, 255), Color.new(0, 0, 0, 65)])
+      text.push([content[i], 16, 60 + i*50, 0, Color.new(255, 255, 255), Color.new(0, 0, 0, 65)])
       @sprites["textOverlay"].bitmap.blt(-2, 92 + i*50, bmp, Rect.new(0, 0, bmp.width, bmp.height))
     end
     pbDrawTextPositions(@sprites["textOverlay"].bitmap, text)

@@ -228,14 +228,14 @@ class PokemonStorage
     return false
   end
 
-  def pbStoreCaught(pkmn)
+  def pbStoreCaught(pkmn, lvl=50)
     if Settings::HEAL_STORED_POKEMON && @currentBox >= 0
       old_ready_evo = pkmn.ready_to_evolve
       pkmn.heal
       pkmn.ready_to_evolve = old_ready_evo
     end
-    pkmn.level = 5
-    pkmn.species = pkmn.species_data.get_baby_species
+    pkmn.level = lvl
+    #pkmn.species = pkmn.species_data.get_baby_species
     maxBoxes.times do |j|
       maxPokemon(j).times do |i|
         if self[j, i].nil?

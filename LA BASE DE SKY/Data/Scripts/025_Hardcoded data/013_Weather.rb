@@ -170,5 +170,23 @@ GameData::Weather.register({
   :id_number        => 8,
   :tile_delta_x     => -32,
   :tile_delta_y     => 0,
-  :graphics         => [nil, ["fog_tile_2"]]
+  :graphics         => [nil, ["no_gravity"]]
+})
+
+GameData::Weather.register({
+  :id               => :ShadowSky,
+  :category         => :ShadowSky,
+  :id_number        => 8,
+  :tile_delta_x     => -32,
+  :tile_delta_y     => 0,
+  :graphics         => [nil, ["darkness"]]
+})
+
+GameData::Weather.register({
+  :id               => :StrongWinds,
+  :category         => :StrongWinds,
+  :id_number        => 8,
+  :tile_delta_x     => -32,
+  :tile_delta_y     => 0,
+  :graphics         => [nil, nil]
 })

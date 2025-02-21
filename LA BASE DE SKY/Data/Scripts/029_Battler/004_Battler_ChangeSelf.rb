@@ -20,17 +20,33 @@ class Battle::Battler
     return amt
   end
 
-  def pbRecoverHP(amt, anim = true, anyAnim = true)
+  def pbRecoverHP(amt, anim = true, anyAnim = true,perc = false)
     amt = amt.round
     amt = @totalhp - @hp if amt > @totalhp - @hp
     amt = 1 if amt < 1 && @hp < @totalhp
     oldHP = @hp
-    self.hp += amt
+    if perc
+      case amt
+        when 1
+          @hp = 1
+        when 2
+          @hp = @totalhp / 2
+        when 3
+          @hp = (@totalhp *0.75).round
+        when 4
+          @hp = @totalhp
+        else
+        self.hp += amt
+      end
+    else
+      self.hp += amt
+    end
     PBDebug.log("[HP change] #{pbThis} gained #{amt} HP (#{oldHP} -> #{@hp})") if amt > 0
     raise _INTL("PS menores que 0") if @hp < 0
     raise _INTL("PS más grandes que PS totales") if @hp > @totalhp
     @battle.scene.pbHPChanged(self, oldHP, anim) if anyAnim && amt > 0
     @droppedBelowHalfHP = false if @hp >= @totalhp / 2
+      
     return amt
   end
 

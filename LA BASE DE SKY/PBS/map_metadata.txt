@@ -248,7 +248,6 @@ Name = Bosque
 Outdoor = true
 Dungeon = true
 BattleBack = forest
-Flags = ScaleWildEncounterLevels
 #-------------------------------
 [049]   # Cueva de Roca P1
 Name = Cueva de Roca P1
@@ -432,6 +431,8 @@ Outdoor = true
 Weather = Sun,100
 Dungeon = true
 BattleBack = rocky
+WildBattleBGM = Battle Hell
+TrainerBattleBGM = Battle Hell
 Flags = ScaleWildEncounterLevels
 #-------------------------------
 [079]   # Espacio
@@ -450,7 +451,7 @@ Flags = ScaleWildEncounterLevels
 #-------------------------------
 [081]   # Cementerio
 Name = Cementerio
-Weather = Fog,100
+Weather = ShadowSky,100
 Dungeon = true
 BattleBack = elite8
 WildBattleBGM = Battle Halloween Town
@@ -464,3 +465,15 @@ SnapEdges = true
 [089]   # Gimnasio AmongUs
 Name = Gimnasio AmongUs
 SnapEdges = true
+#-------------------------------
+[092]   # Desierto
+Name = Desierto
+Weather = Sandstorm,100
+Dungeon = true
+BattleBack = desert
+#-------------------------------
+[093]   # Cielo
+Name = Cielo
+Weather = StrongWinds,100
+Dungeon = true
+BattleBack = sky

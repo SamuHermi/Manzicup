@@ -258,6 +258,10 @@ module BattleCreationHelperMethods
         battle.defaultWeather = :Sandstorm
       when :Sun
         battle.defaultWeather = :Sun
+      when :ShadowSky
+        battle.defaultWeather = :ShadowSky    
+      when :StrongWinds
+        battle.defaultWeather = :StrongWinds
       end
     else
       battle.defaultWeather = battleRules["defaultWeather"]

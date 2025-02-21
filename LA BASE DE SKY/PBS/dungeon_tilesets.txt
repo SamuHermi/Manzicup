@@ -1,7 +1,7 @@
 ﻿# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
 [7]   # Mazmorra cueva
-Autotile = 1,floor_patch
+Autotile = 1,floor_decoration
 Tile = 40,void
 Tile = 41,void_decoration
 Tile = 48,void_decoration_large
@@ -80,3 +80,24 @@ Tile = 52,floor_decoration
 Tile = 53,floor_decoration
 Tile = 8,walls
 DoubleWalls = false
+#-------------------------------
+[31]   # Mazmorra desierto
+Autotile = 1, floor_patch
+Tile = 40,void
+Tile = 50,floor_decoration_large
+Tile = 41,void_decoration
+Tile = 42,floor
+Tile = 43,floor_decoration
+Tile = 44,floor_decoration
+Tile = 45,floor_decoration
+Tile = 0,walls
+DoubleWalls = true
+FloorPatchUnderWalls = false
+FloorPatchUnderDecoration = false
+#-------------------------------
+[32]   # Mazmorra espacio
+Autotile = 1, void_patch
+Tile = 40,void
+Tile = 0,walls
+Tile = 43,floor
+Tile = 42,floor_decoration

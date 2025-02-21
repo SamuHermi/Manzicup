@@ -228,6 +228,16 @@ BPPrice = 25
 Flags = Fling_40
 Description = Piedra evolutiva. El Pokémon portador aumentará su Defensa y su Defensa Especial si aún puede evolucionar.
 #-------------------------------
+[WOODSWORD]
+Name = Espada de madera
+NamePlural = Espadas de madera
+Pocket = 1
+Price = 3000
+SellPrice = 2000
+BPPrice = 25
+Flags = Fling_40
+Description = PEl Pokémon portador aumentará su Ataque y su Ataque Especial si aún puede evolucionar.
+#-------------------------------
 [FLOATSTONE]
 Name = Piedra Pómez
 NamePlural = Piedras Pómez

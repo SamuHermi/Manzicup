@@ -159,12 +159,12 @@ class PokemonSummary_Scene
       # Write various bits of text
       textpos = [
         [_INTL("MOVIMIENTOS"), 26, 22, :left, base, shadow],
-        [_INTL("CATEGORÍA"), 20, 128, :left, base, shadow],
-        [_INTL("POTENCIA"), 20, 160, :left, base, shadow],
-        [_INTL("PRECISIÓN"), 20, 192, :left, base, shadow],
+        [_INTL("CATEGORÍA"), 12, 128, :left, base, shadow],
+        [_INTL("POTENCIA"), 12, 160, :left, base, shadow],
+        [_INTL("PRECISIÓN"), 12, 192, :left, base, shadow],
         
       ]
-      textpos.push([_INTL("DATOS"), 92, 81, :left, base, shadow]) if move_to_learn
+      textpos.push([_INTL("INFO"), 100, 85, :left, base, shadow]) if move_to_learn
       imagepos = []
       # Write move names, types and PP amounts for each known move
       yPos = 104

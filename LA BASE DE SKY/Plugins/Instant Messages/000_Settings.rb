@@ -182,10 +182,10 @@ module InstantMessagesSettings
     #               - :Code => N/A
     #------------------------------------------------------------------------------------
     PASSIVE_TRIGGERS_SEQUENCIAL_POOL    = [
-        [:ADVERTISEMENT_TEST_1],
-        [:ADVERTISEMENT_TEST_2, :Switch, 5, true],
-        [:ADVERTISEMENT_TEST_3, :Code, "$game_switches[7] == true"],
-        [:ADVERTISEMENT_TEST_4]
+        #[:ADVERTISEMENT_TEST_1],
+        #[:ADVERTISEMENT_TEST_2, :Switch, 5, true],
+        #[:ADVERTISEMENT_TEST_3, :Code, "$game_switches[7] == true"],
+        #[:ADVERTISEMENT_TEST_4]
     ]
 
     #------------------------------------------------------------------------------------

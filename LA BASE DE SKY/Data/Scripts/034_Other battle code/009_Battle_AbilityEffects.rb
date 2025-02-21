@@ -2244,10 +2244,10 @@ Battle::AbilityEffects::OnBeingHit.add(:PERISHBODY,
     if user.affectedByContactEffect?(Battle::Scene::USE_ABILITY_SPLASH)
       user.effects[PBEffects::PerishSong] = 4
       user.effects[PBEffects::PerishSongUser] = target.index
-      target.effects[PBEffects::PerishSong] = 4
-      target.effects[PBEffects::PerishSongUser] = target.index
+      #target.effects[PBEffects::PerishSong] = 4
+      #target.effects[PBEffects::PerishSongUser] = target.index
       if Battle::Scene::USE_ABILITY_SPLASH
-        battle.pbDisplay(_INTL("¡Ambos Pokémon se debilitarán en tres turnos!"))
+        battle.pbDisplay(_INTL("¡{1} se debilitará en tres turnos!",user.name))
       else
         battle.pbDisplay(_INTL("¡Ambos Pokémon se debilitarán en tres turnos por la habilidad {2} de {1}!",
            target.pbThis(true), target.abilityName))

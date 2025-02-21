@@ -98,3 +98,32 @@ ExtraConnections = 2
 FloorPatches = 3,75,25
 FloorDecorations = 50,200
 VoidDecorations = 50,200
+#-------------------------------
+[desert]
+DungeonSize = 8,6
+CellSize = 10,10
+MinRoomSize = 10,10
+MaxRoomSize = 20,20
+CorridorWidth = 2
+NodeLayout = full
+RoomLayout = full
+RoomChance = 70
+ExtraConnections = 2
+FloorPatches = 3,75,25
+FloorDecorations = 50,200
+VoidDecorations = 50,200
+#-------------------------------
+[heaven]
+DungeonSize = 5,4
+CellSize = 10,10
+MinRoomSize = 5,5
+MaxRoomSize = 9,9
+CorridorWidth = 5
+ShiftCorridors = true
+NodeLayout = full
+RoomLayout = full
+RoomChance = 85
+ExtraConnections = 2
+FloorPatches = 2,75,25
+FloorDecorations = 50,200
+VoidDecorations = 50,200

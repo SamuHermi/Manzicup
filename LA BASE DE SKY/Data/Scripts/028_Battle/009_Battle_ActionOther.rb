@@ -90,7 +90,7 @@ class Battle
   def pbCanMegaEvolve?(idxBattler)
     return false if $game_switches[Settings::NO_MEGA_EVOLUTION]
     return false if !@battlers[idxBattler].hasMega?
-    return false if @battlers[idxBattler].wild?
+    #return false if @battlers[idxBattler].wild?
     return true if $DEBUG && Input.press?(Input::CTRL)
     return false if @battlers[idxBattler].effects[PBEffects::SkyDrop] >= 0
     return false if !pbHasMegaRing?(idxBattler)

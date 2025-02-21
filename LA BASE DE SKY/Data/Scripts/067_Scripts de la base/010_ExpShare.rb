@@ -27,7 +27,7 @@ if Settings::USE_NEW_EXP_SHARE
     class Pokemon
         attr_accessor(:expshare)    # Repartir experiencia
         alias initialize_old initialize
-        def initialize(species,level,player=$player,withMoves=true, recheck_form = true)
+        def initialize(species,level=50,player=$player,withMoves=true, recheck_form = true)
             initialize_old(species, level, player, withMoves)
             @expshare = false
         end 

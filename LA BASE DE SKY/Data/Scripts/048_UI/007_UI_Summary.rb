@@ -467,7 +467,7 @@ class PokemonSummary_Scene
       type_number = GameData::Type.get(type).icon_position
       type_rect = Rect.new(0, type_number * 28, 64, 28)
       type_x = (@pokemon.types.length == 1) ? 402 : 370 + (66 * i)
-      overlay.blt(type_x, 146, @typebitmap.bitmap, type_rect)
+      overlay.blt(type_x, 145, @typebitmap.bitmap, type_rect)
     end
     # Draw Exp bar
     if @pokemon.level < GameData::GrowthRate.max_level
@@ -652,19 +652,19 @@ class PokemonSummary_Scene
     end
     # Write various bits of text
     textpos = [
-      [_INTL("PS"), 292, 82, :center, base, statshadows[:HP]],
-      [sprintf("%d/%d", @pokemon.hp, @pokemon.totalhp), 462, 82, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [_INTL("Ataque"), 248, 126, :left, base, statshadows[:ATTACK]],
+      [_INTL("PS"), 294, 84, :center, base, statshadows[:HP]],
+      [sprintf("%d/%d", @pokemon.hp, @pokemon.totalhp), 462, 84, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+      [_INTL("Ataque"), 294, 126, :center, base, statshadows[:ATTACK]],
       [@pokemon.attack.to_s, 456, 126, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [_INTL("Defensa"), 248, 158, :left, base, statshadows[:DEFENSE]],
+      [_INTL("Defensa"), 294, 158, :center, base, statshadows[:DEFENSE]],
       [@pokemon.defense.to_s, 456, 158, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [_INTL("At. Esp"), 248, 190, :left, base, statshadows[:SPECIAL_ATTACK]],
+      [_INTL("At. Esp"), 294, 190, :center, base, statshadows[:SPECIAL_ATTACK]],
       [@pokemon.spatk.to_s, 456, 190, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [_INTL("Def. Esp"), 248, 222, :left, base, statshadows[:SPECIAL_DEFENSE]],
+      [_INTL("Def. Esp"), 294, 222, :center, base, statshadows[:SPECIAL_DEFENSE]],
       [@pokemon.spdef.to_s, 456, 222, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [_INTL("Velocidad"), 248, 254, :left, base, statshadows[:SPEED]],
+      [_INTL("Velocidad"), 294, 254, :center, base, statshadows[:SPEED]],
       [@pokemon.speed.to_s, 456, 254, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [_INTL("Habilidad"), 224, 290, :left, base, shadow]
+      [_INTL("Habilidad"), 218, 290, :left, base, shadow]
     ]
     # Draw ability name and description
     ability = @pokemon.ability
@@ -763,9 +763,9 @@ class PokemonSummary_Scene
     # Write various bits of text
     textpos = [
       [_INTL("MOVIMIENTOS"), 26, 22, :left, base, shadow],
-      [_INTL("CATEGORÍA"), 20, 128, :left, base, shadow],
-      [_INTL("POTENCIA"), 20, 160, :left, base, shadow],
-      [_INTL("PRECISIÓN"), 20, 192, :left, base, shadow]
+      [_INTL("CATEGORÍA"), 16, 128, :left, base, shadow],
+      [_INTL("POTENCIA"), 16, 160, :left, base, shadow],
+      [_INTL("PRECISIÓN"), 16, 192, :left, base, shadow]
     ]
     imagepos = []
     # Write move names, types and PP amounts for each known move
@@ -829,12 +829,12 @@ class PokemonSummary_Scene
     case selected_move.display_damage(@pokemon)
     when 0 then textpos.push(["---", 216, 160, :right, base, shadow])   # Status move
     when 1 then textpos.push(["???", 216, 160, :right, base, shadow])   # Variable power move
-    else        textpos.push([selected_move.display_damage(@pokemon).to_s, 216, 160, :right, base, shadow])
+    else        textpos.push([selected_move.display_damage(@pokemon).to_s, 200, 160, :center, base, shadow])
     end
     if selected_move.display_accuracy(@pokemon) == 0
-      textpos.push(["---", 216, 192, :right, base, shadow])
+      textpos.push(["---", 200, 192, :center, base, shadow])
     else
-      textpos.push(["#{selected_move.display_accuracy(@pokemon)}%", 216 + overlay.text_size("%").width, 192, :right, base, shadow])
+      textpos.push(["#{selected_move.display_accuracy(@pokemon)}%", 210 + overlay.text_size("%").width, 192, :right, base, shadow])
     end
     # Draw all text
     pbDrawTextPositions(overlay, textpos)

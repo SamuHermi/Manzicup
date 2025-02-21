@@ -131,18 +131,38 @@ module NameBox
   NPCCOLORS = {
     # "Nombre" => [ColorBase, Sombra]
     "Hermi" => [Color.new(234, 159,  80), Color.new(199, 128, 54)],
-    "Iria" => [Color.new(  0, 112, 248), Color.new(0, 88, 196)],
-    "Samer" => [Color.new(208,  56, 184),Color.new(157, 42, 138)],
-    "Isa" => [Color.new( 10, 182, 230), Color.new(14, 129, 161)],
-    "Bra" => [Color.new(19, 189, 18), Color.new(52, 149, 51)],
+    "Iria" =>  [Color.new(  0, 112, 248), Color.new(0, 88, 196)],
+    "Samer" => [Color.new(208,  56, 184), Color.new(157, 42, 138)],
+    "Isa" =>   [Color.new( 10, 182, 230), Color.new(14, 129, 161)],
+    "Bra" =>   [Color.new(19, 189, 18),   Color.new(52, 149, 51)],
     "Pablo" => [Color.new(232,  32,  16), Color.new(166, 6, 6)],
     "Brais" => [Color.new(114,  64, 232), Color.new(184, 168, 224)],
-    "Jess" => [Color.new(100, 100, 100), Color.new(52, 52, 52)],
-    "Ana" =>  [Color.new(200, 200, 200), Color.new(150, 150, 150)],
+    "Jess" =>  [Color.new(100, 100, 100), Color.new(52, 52, 52)],
+    "Ana" =>   [Color.new(200, 200, 200), Color.new(150, 150, 150)],
     "Rodri" => [Color.new(232, 208,  32), Color.new(174, 163, 18)],
-    "Sabo" => [Color.new(144, 111, 121),Color.new(94, 77, 82)],
-    "Nerea" => [Color.new(0, 232, 217),Color.new(21, 166, 181)],
+    "Sabo" =>  [Color.new(144, 111, 121), Color.new(94, 77, 82)],
+    "Nerea" => [Color.new(0, 232, 217),   Color.new(21, 166, 181)],
+
+    "Otaka" =>   [Color.new(218, 172, 200),Color.new(171, 103, 158)],
+    "Moridon" => [Color.new(100, 100, 100),Color.new(94, 77, 82)],
+    "Lumine" =>  [Color.new(255, 205, 141),Color.new(129, 183, 215)],
+    "Swolio" =>  [Color.new(150, 150, 150),Color.new(166, 6, 6)],
+
+    "Mermi" =>          [Color.new(199, 128, 54),  Color.new(234, 159,  80)],
+    "Iria-BEATRICE" =>  [Color.new(0, 88, 196),    Color.new(  0, 112, 248)],
+    "TBD(Samer)" =>     [Color.new(157, 42, 138),  Color.new(208,  56, 184)],
+    "Isssabel" =>       [Color.new(14, 129, 161),  Color.new( 10, 182, 230)],
+    "Uchi" =>           [Color.new(52, 149, 51),   Color.new(19, 189, 18)],
+    "Babatunde" =>      [Color.new(166, 6, 6),     Color.new(232,  32,  16)],
+    "Saku" =>           [Color.new(184, 168, 224), Color.new(114,  64, 232)],
+    "Sukuna" =>         [Color.new(52, 52, 52),    Color.new(100, 100, 100)],
+    "Paxaxa" =>         [Color.new(150, 150, 150), Color.new(200, 200, 200)],
+    "Thirtrep" =>       [Color.new(174, 163, 18),  Color.new(232, 208,  32)],
+    "Sabo Colón" =>     [Color.new(94, 77, 82),    Color.new(144, 111, 121)],
+    "TBD (Nerea)" =>    [Color.new(21, 166, 181),  Color.new(0, 232, 217)]
+
     }
+
 
   # Si esto está en true el cuadro del nombre del NPC será del mismo estilo que el cuadro de texto elegido
   # Si quieren cambiar este comportamiento y definir un skin específico para cada nombre, entonces hay que cambiar la siguiente constante a false

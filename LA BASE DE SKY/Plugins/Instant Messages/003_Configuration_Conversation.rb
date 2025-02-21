@@ -44,65 +44,29 @@
 #
 
 GameData::InstantMessageConversation.register({
-    :id             => :ADVERTISEMENT_TEST_1,
-    :group          => :ADVERTISEMENT_1,
-    :instant        => true,
-    :messages       => [
-                        [1, :Text, _INTL("Please buy Potions!")]
-                    ]
-})
-
-GameData::InstantMessageConversation.register({
-    :id             => :ADVERTISEMENT_TEST_2,
-    :group          => :ADVERTISEMENT_1,
-    :instant        => true,
-    :messages       => [
-                        [1, :Text, _INTL("Please buy Super Potions!")]
-                    ]
-})
-
-GameData::InstantMessageConversation.register({
-    :id             => :ADVERTISEMENT_TEST_3,
-    :group          => :ADVERTISEMENT_1,
-    :instant        => true,
-    :messages       => [
-                        [1, :Text, _INTL("Please buy Hyper Potions!")]
-                    ]
-})
-
-GameData::InstantMessageConversation.register({
-    :id             => :ADVERTISEMENT_TEST_4,
-    :group          => :ADVERTISEMENT_1,
-    :instant        => true,
-    :messages       => [
-                        [1, :Text, _INTL("Please buy Max Potions!")]
-                    ]
-})
-
-GameData::InstantMessageConversation.register({
     :id             => :ADVERTISEMENT_RANDOM_1,
-    :group          => :ADVERTISEMENT_2,
+    :group          => :BILL,
     :instant        => true,
     :messages       => [
-                        [1, :Text, _INTL("Come visit Pokémon Centers!")]
+                        [1, :Text, _INTL("Tiene un sigarro ermano?")]
                     ]
 })
 
 GameData::InstantMessageConversation.register({
     :id             => :ADVERTISEMENT_RANDOM_2,
-    :group          => :ADVERTISEMENT_2,
+    :group          => :JORDIWILD,
     :instant        => true,
     :messages       => [
-                        [1, :Text, _INTL("Come visit Pokémon Marts!")]
+                        [1, :Text, _INTL("Olvidooonaaa, me tienes olvidado")]
                     ]
 })
 
 GameData::InstantMessageConversation.register({
     :id             => :ADVERTISEMENT_RANDOM_3,
-    :group          => :ADVERTISEMENT_2,
+    :group          => :PAPISWOLIO,
     :instant        => true,
     :messages       => [
-                        [1, :Text, _INTL("Come visit Pokémon Gyms!")]
+                        [1, :Text, _INTL("Vete al puto gimnasio")]
                     ]
 })
 

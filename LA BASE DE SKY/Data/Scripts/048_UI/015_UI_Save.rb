@@ -44,13 +44,49 @@ class PokemonSave_Scene
     hour = totalsec / 60 / 60
     min = totalsec / 60 % 60
     mapname = $game_map.name
-    if $player.male?
-      text_tag = shadowc3tag(MALE_TEXT_BASE, MALE_TEXT_SHADOW)
-    elsif $player.female?
-      text_tag = shadowc3tag(FEMALE_TEXT_BASE, FEMALE_TEXT_SHADOW)
+    case $player.character_ID
+    when 1
+      colorText   = MessageConfig::HERMI_TEXT_COLOR
+      colorShadow = MessageConfig::HERMI_TEXT_SHADOW_COLOR
+    when 2
+      colorText   = MessageConfig::IRIA_TEXT_COLOR
+      colorShadow = MessageConfig::IRIA_TEXT_SHADOW_COLOR
+    when 3
+      colorText   = MessageConfig::JESS_TEXT_COLOR
+      colorShadow = MessageConfig::JESS_TEXT_SHADOW_COLOR
+    when 4
+      colorText   = MessageConfig::BRAIS_TEXT_COLOR
+      colorShadow = MessageConfig::BRAIS_TEXT_SHADOW_COLOR  
+    when 5
+      colorText   = MessageConfig::ISA_TEXT_COLOR
+      colorShadow = MessageConfig::ISA_TEXT_SHADOW_COLOR
+    when 6
+      colorText   = MessageConfig::SAMER_TEXT_COLOR
+      colorShadow = MessageConfig::SAMER_TEXT_SHADOW_COLOR
+    when 7
+      colorText   = MessageConfig::RODRI_TEXT_COLOR
+      colorShadow = MessageConfig::RODRI_TEXT_SHADOW_COLOR
+    when 8
+      colorText   = MessageConfig::BRA_TEXT_COLOR
+      colorShadow = MessageConfig::BRA_TEXT_SHADOW_COLOR
+    when 9
+      colorText   = MessageConfig::ANA_TEXT_COLOR
+      colorShadow = MessageConfig::ANA_TEXT_SHADOW_COLOR
+    when 10
+      colorText   = MessageConfig::PABLO_TEXT_COLOR
+      colorShadow = MessageConfig::PABLO_TEXT_SHADOW_COLOR
+    when 11
+      colorText   = MessageConfig::SABO_TEXT_COLOR
+      colorShadow = MessageConfig::SABO_TEXT_SHADOW_COLOR
+    when 12
+      colorText   = MessageConfig::NEREA_TEXT_COLOR
+      colorShadow = MessageConfig::NEREA_TEXT_SHADOW_COLOR
     else
-      text_tag = shadowc3tag(OTHER_TEXT_BASE, OTHER_TEXT_SHADOW)
+      colorText   = TEXT_COLOR
+      colorShadow = TEXT_SHADOW_COLOR          
     end
+    text_tag = shadowc3tag(colorText, colorShadow)
+
     location_tag = shadowc3tag(LOCATION_TEXT_BASE, LOCATION_TEXT_SHADOW)
     loctext = location_tag + "<ac>" + mapname + "</ac></c3>"
     loctext += _INTL("Jugador") + "<r>" + text_tag + $player.name + "</c3><br>"
@@ -99,6 +135,7 @@ class PokemonSaveScreen
 
   def pbSaveScreen
     ret = false
+    #Spriteset_Global.playersprite.
     @scene.pbStartScreen
     if pbConfirmMessage(_INTL("¿Quieres guardar la partida?"))
       if SaveData.exists? && $game_temp.begun_new_game

@@ -79,7 +79,7 @@ end
 #===============================================================================
 class PokemonPartyCancelSprite < PokemonPartyConfirmCancelSprite
   def initialize(viewport = nil)
-    super(_INTL("CANCELAR"), 398, 328, false, viewport)
+    super(_INTL("SALIR"), 398, 328, false, viewport)
   end
 end
 

@@ -89,7 +89,9 @@ class Battle::Battler
   # Defines whether the battler is considered a raid boss.
   #-----------------------------------------------------------------------------
   def isRaidBoss?
-    return @pokemon.immunities.include?(:RAIDBOSS)
+    return false if self.idxOwnSide == 0
+    return false if @battle.pbSideBattlerCount(@index) 
+    return @pokemon&.immunities.include?(:RAIDBOSS)
   end
   
   #-----------------------------------------------------------------------------
@@ -175,7 +177,7 @@ class Battle::Battler
   alias dx_pbFlinch pbFlinch
   def pbFlinch(_user = nil)
     return false if dynamax?
-    return false if @pokemon.immunities.include?(:FLINCH)
+    return false if @pokemon && @pokemon.immunities.include?(:FLINCH)
     return dx_pbFlinch(_user)
   end
   

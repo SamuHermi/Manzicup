@@ -358,11 +358,11 @@ SpecialBattleIntroAnimations.register("alternate_vs_trainer_animation", 50,   # 
       flash.opacity = lerp(255, 0, 0.25, delta_t)
       bar1.ox = lerp(0, -bar1.bitmap.width * 3, 1.2, delta_t)
       bar2.ox = lerp(0, bar2.bitmap.width * 3, 1.2, delta_t)
-      player.x = lerp(-xoffset, 0, 0.25, delta_t - 0.6)
-      trainer.x = lerp(xoffset, 0, 0.25, delta_t - 0.6)
+      player.x = lerp(-xoffset, 28, 0.25, delta_t - 0.6)
+      trainer.x = lerp(xoffset, 40, 0.25, delta_t - 0.6)
     end
-    player.x = 0
-    trainer.x = 0
+    player.x = 28
+    trainer.x = 40
     # Make whole screen flash white again
     flash.opacity = 255
     pbSEPlay("Vs sword")

@@ -7,7 +7,9 @@
 EventHandlers.add(:on_wild_pokemon_created, :automatic_level_scaling,
   proc { |pokemon|
     id = pbGet(LevelScalingSettings::WILD_VARIABLE)
+    Console.echo_li(id.to_s)
     next if id == 0
+    
     AutomaticLevelScaling.difficulty = id
 
     if AutomaticLevelScaling.settings[:use_map_level_for_wild_pokemon]

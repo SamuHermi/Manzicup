@@ -392,7 +392,7 @@ def pbBugContestBattle(pkmn, level = 1)
   # Update Bug Contest game data based on result of battle
   pbBugContestState.ballcount = battle.ballCount
   if pbBugContestState.ballcount == 0
-    pbMessage(_INTL("ALTAVOZ:  ¡El Concurso de Captura de Bichos ha terminadoy!"))
+    pbMessage(_INTL("ALTAVOZ:  ¡El Concurso de Captura de Bichos ha terminado!"))
     pbBugContestState.pbStartJudging
   end
   # Save the result of the battle in Game Variable 1

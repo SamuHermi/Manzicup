@@ -110,6 +110,26 @@ GameData::InstantMessageContact.register({
     :bubble         => "Blue"
 })
 
+GameData::InstantMessageContact.register({
+    :id             => :BILL,
+    :name		    => _INTL("Bill"),
+    :image		    => "Bill",
+    :bubble         => "Green"
+})
+
+GameData::InstantMessageContact.register({
+    :id             => :SWOLIO,
+    :name		    => _INTL("Papi Swolio"),
+    :image		    => "Swolio",
+    :bubble         => "Dark"
+})
+
+GameData::InstantMessageContact.register({
+    :id             => :JORDIWILD,
+    :name		    => _INTL("Jordi Wild"),
+    :image		    => "jordiwild",
+    :bubble         => "Blue"
+})
 #===============================================================================
 # Group registrations
 #
@@ -142,19 +162,19 @@ GameData::InstantMessageGroup.register({
 })
 
 GameData::InstantMessageGroup.register({
-    :id             => :ADVERTISEMENT_2,
-    :title		    => _INTL("Advertisement Two"),
-    :members		=> {1 => :ADVERTISEMENT}
+    :id             => :BILL,
+    :title		    => _INTL("Bill"),
+    :members		=> {1 => :BILL}
 })
 
 GameData::InstantMessageGroup.register({
-    :id             => :ADVERTISEMENT_1,
-    :title		    => _INTL("Advertisement One"),
-    :members		=> {1 => :ADVERTISEMENT}
+    :id             => :PAPISWOLIO,
+    :title		    => _INTL("Papi Swolio"),
+    :members		=> {1 => :SWOLIO}
 })
 
 GameData::InstantMessageGroup.register({
-    :id             => :PROFOAK,
-    :title		    => _INTL("Prof. Oak"),
-    :members		=> {1 => :PROFOAK, 2 => :CHATBOT}
+    :id             => :JORDIWILD,
+    :title		    => _INTL("Dijo que me iba a invitar al Podcast"),
+    :members		=> {1 => :JORDIWILD}
 })

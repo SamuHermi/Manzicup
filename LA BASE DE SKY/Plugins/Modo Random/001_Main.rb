@@ -147,7 +147,7 @@ class Pokemon
     return bst > getMaxBSTCap() || bst < getMinBSTCap()
   end
 
-  def initialize(species,level, owner = $player,withMoves=true, recheck_form = true)
+  def initialize(species,level = 5, owner = $player,withMoves=true, recheck_form = true)
     if $game_switches && $game_switches[RandomizedChallenge::Switch]
       species = RandomizedChallenge::WhiteListedPokemon.shuffle[0]
       if RandomizedChallenge::WhiteListedPokemon.length == 0

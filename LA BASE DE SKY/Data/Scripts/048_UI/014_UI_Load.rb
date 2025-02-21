@@ -75,13 +75,50 @@ class PokemonLoadPanel < Sprite
         else
           textpos.push([_INTL("{1}m", min), 206, 182, :right, TEXT_COLOR, TEXT_SHADOW_COLOR])
         end
-        if @trainer.male?
-          textpos.push([@trainer.name, 112, 70, :left, MALE_TEXT_COLOR, MALE_TEXT_SHADOW_COLOR])
-        elsif @trainer.female?
-          textpos.push([@trainer.name, 112, 70, :left, FEMALE_TEXT_COLOR, FEMALE_TEXT_SHADOW_COLOR])
+        colorText = Color.new(0,0,0)
+        colorShadow = Color.new(0,0,0)
+        case @trainer.character_ID
+        when 1
+          colorText   = MessageConfig::HERMI_TEXT_COLOR
+          colorShadow = MessageConfig::HERMI_TEXT_SHADOW_COLOR
+        when 2
+          colorText   = MessageConfig::IRIA_TEXT_COLOR
+          colorShadow = MessageConfig::IRIA_TEXT_SHADOW_COLOR
+        when 3
+          colorText   = MessageConfig::JESS_TEXT_COLOR
+          colorShadow = MessageConfig::JESS_TEXT_SHADOW_COLOR
+        when 4
+          colorText   = MessageConfig::BRAIS_TEXT_COLOR
+          colorShadow = MessageConfig::BRAIS_TEXT_SHADOW_COLOR  
+        when 5
+          colorText   = MessageConfig::ISA_TEXT_COLOR
+          colorShadow = MessageConfig::ISA_TEXT_SHADOW_COLOR
+        when 6
+          colorText   = MessageConfig::SAMER_TEXT_COLOR
+          colorShadow = MessageConfig::SAMER_TEXT_SHADOW_COLOR
+        when 7
+          colorText   = MessageConfig::RODRI_TEXT_COLOR
+          colorShadow = MessageConfig::RODRI_TEXT_SHADOW_COLOR
+        when 8
+          colorText   = MessageConfig::BRA_TEXT_COLOR
+          colorShadow = MessageConfig::BRA_TEXT_SHADOW_COLOR
+        when 9
+          colorText   = MessageConfig::ANA_TEXT_COLOR
+          colorShadow = MessageConfig::ANA_TEXT_SHADOW_COLOR
+        when 10
+          colorText   = MessageConfig::PABLO_TEXT_COLOR
+          colorShadow = MessageConfig::PABLO_TEXT_SHADOW_COLOR
+        when 11
+          colorText   = MessageConfig::SABO_TEXT_COLOR
+          colorShadow = MessageConfig::SABO_TEXT_SHADOW_COLOR
+        when 12
+          colorText   = MessageConfig::NEREA_TEXT_COLOR
+          colorShadow = MessageConfig::NEREA_TEXT_SHADOW_COLOR
         else
-          textpos.push([@trainer.name, 112, 70, :left, TEXT_COLOR, TEXT_SHADOW_COLOR])
+          colorText   = TEXT_COLOR
+          colorShadow = TEXT_SHADOW_COLOR          
         end
+        textpos.push([@trainer.name, 112, 70, :left, colorText, colorShadow])
         mapname = pbGetMapNameFromId(@mapid)
         mapname.gsub!(/\\PN/, @trainer.name)
         textpos.push([mapname, 386, 16, :right, TEXT_COLOR, TEXT_SHADOW_COLOR])

@@ -6,18 +6,44 @@ module MessageConfig
   LIGHT_TEXT_SHADOW_COLOR  = Color.new(72, 80, 88)
   DARK_TEXT_MAIN_COLOR     = Color.new(80, 80, 88)
   DARK_TEXT_SHADOW_COLOR   = Color.new(160, 160, 168)
-  MALE_TEXT_MAIN_COLOR     = Color.new(48, 80, 200)   # Used by message tag "\b"
-  MALE_TEXT_SHADOW_COLOR   = Color.new(208, 208, 200)
-  FEMALE_TEXT_MAIN_COLOR   = Color.new(224, 8, 8)   # Used by message tag "\r"
-  FEMALE_TEXT_SHADOW_COLOR = Color.new(208, 208, 200)
+  MALE_TEXT_MAIN_COLOR     = Color.new(122, 206, 214)   # Used by message tag "\b"
+  MALE_TEXT_SHADOW_COLOR   = Color.new(53, 135, 181)
+  FEMALE_TEXT_MAIN_COLOR   = Color.new(226, 104, 94)   # Used by message tag "\r"
+  FEMALE_TEXT_SHADOW_COLOR = Color.new(168, 40, 31)
+
+  HERMI_TEXT_COLOR         = Color.new(234, 159,  80)
+  HERMI_TEXT_SHADOW_COLOR  = Color.new(199, 128, 54)
+  IRIA_TEXT_COLOR          = Color.new(  0, 112, 248)
+  IRIA_TEXT_SHADOW_COLOR   = Color.new(0, 88, 196)
+  SAMER_TEXT_COLOR         = Color.new(208,  56, 184)
+  SAMER_TEXT_SHADOW_COLOR  = Color.new(157, 42, 138)
+  ISA_TEXT_COLOR           = Color.new( 10, 182, 230)
+  ISA_TEXT_SHADOW_COLOR    = Color.new(14, 129, 161)
+  BRA_TEXT_COLOR           = Color.new(19, 189, 18)
+  BRA_TEXT_SHADOW_COLOR    = Color.new(52, 149, 51)
+  PABLO_TEXT_COLOR         = Color.new(232,  32,  16)
+  PABLO_TEXT_SHADOW_COLOR  = Color.new(166, 6, 6)
+  BRAIS_TEXT_COLOR         = Color.new(114,  64, 232)
+  BRAIS_TEXT_SHADOW_COLOR  = Color.new(184, 168, 224)
+  JESS_TEXT_COLOR          = Color.new(100, 100, 100)
+  JESS_TEXT_SHADOW_COLOR   = Color.new(52, 52, 52)
+  ANA_TEXT_COLOR           = Color.new(200, 200, 200)
+  ANA_TEXT_SHADOW_COLOR    = Color.new(150, 150, 150)
+  RODRI_TEXT_COLOR         = Color.new(232, 208,  32)
+  RODRI_TEXT_SHADOW_COLOR  = Color.new(174, 163, 18)
+  SABO_TEXT_COLOR          = Color.new(144, 111, 121)
+  SABO_TEXT_SHADOW_COLOR   = Color.new(94, 77, 82)
+  NEREA_TEXT_COLOR         = Color.new(0, 232, 217)
+  NEREA_TEXT_SHADOW_COLOR  = Color.new(21, 166, 181)
+
   FONT_NAME                = "Power Green"
   FONT_SIZE                = 27
   FONT_Y_OFFSET            = 8
   SMALL_FONT_NAME          = "Power Green Small"
   SMALL_FONT_SIZE          = 21
   SMALL_FONT_Y_OFFSET      = 8
-  TINY_FONT_SIZE          = 15
-  TINY_FONT_Y_OFFSET      = 7
+  TINY_FONT_SIZE           = 15
+  TINY_FONT_Y_OFFSET       = 7
   NARROW_FONT_NAME         = "Power Green Narrow"
   NARROW_FONT_SIZE         = 27
   NARROW_FONT_Y_OFFSET     = 8
@@ -414,7 +440,7 @@ end
 # Set a bitmap's font
 #===============================================================================
 # Sets a bitmap's font to the system font.
-def pbSetSystemFont(bitmap)
+def pbSetSystemFont(bitmap,fontname = nil)
   bitmap.font.name = MessageConfig.pbGetSystemFontName
   bitmap.font.size = MessageConfig::FONT_SIZE
   bitmap.text_offset_y = MessageConfig::FONT_Y_OFFSET

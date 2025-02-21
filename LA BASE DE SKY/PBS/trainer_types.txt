@@ -484,6 +484,48 @@ BaseMoney = 100
 BattleBGM = Battle Eliel
 VictoryBGM = Battle victory leader
 #-------------------------------
+[UCHI]
+Name = Team Pera
+Gender = Male
+BaseMoney = 80
+BattleBGM = Battle Pera
+#-------------------------------
+[MERMI]
+Name = Team Pera
+Gender = Male
+BaseMoney = 80
+BattleBGM = Battle Pera
+#-------------------------------
+[SAKU]
+Name = Team Pera
+Gender = Female
+BaseMoney = 80
+BattleBGM = Battle Pera
+#-------------------------------
+[THIRTREP]
+Name = Team Pera
+Gender = Female
+BaseMoney = 80
+BattleBGM = Battle Pera
+#-------------------------------
+[BEATO]
+Name = Team Pera
+Gender = Female
+BaseMoney = 80
+BattleBGM = Battle Pera
+#-------------------------------
+[COLON]
+Name = Team Pera
+Gender = Female
+BaseMoney = 80
+BattleBGM = Battle Pera
+#-------------------------------
+[BABATUNDE]
+Name = Team Pera
+Gender = Female
+BaseMoney = 80
+BattleBGM = Battle Pera
+#-------------------------------
 [TRIPULANTE]
 Name = Tripulante
 Gender = Unknown
@@ -494,6 +536,34 @@ BattleBGM = Battle Amongus
 [ESTRATEGA]
 Name = Estratega
 Gender = Unknown
+BaseMoney = 8
+SkillLevel = 10
+BattleBGM = Battle TFT
+#-------------------------------
+[PLANKTON]
+Name = Plankton
+Gender = Male
+BaseMoney = 8
+SkillLevel = 10
+BattleBGM = Battle TFT
+#-------------------------------
+[MINER]
+Name = Minero
+Gender = Male
+BaseMoney = 8
+SkillLevel = 10
+BattleBGM = Battle TFT
+#-------------------------------
+[ANGEL]
+Name = Bíblicamente Preciso
+Gender = Unknown
+BaseMoney = 8
+SkillLevel = 10
+BattleBGM = Battle TFT
+#-------------------------------
+[FORTACHON]
+Name = Fortachón
+Gender = Male
 BaseMoney = 8
 SkillLevel = 10
 BattleBGM = Battle TFT
@@ -525,12 +595,6 @@ BattleBGM = but nobody came
 [PAPI]
 Name = Daddy
 Gender = Male
-BaseMoney = 100
-BattleBGM = but nobody came
-#-------------------------------
-[MANADA]
-Name = Manada de
-Gender = Female
 BaseMoney = 100
 BattleBGM = but nobody came
 #-------------------------------

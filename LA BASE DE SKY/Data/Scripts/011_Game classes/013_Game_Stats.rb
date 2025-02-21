@@ -56,6 +56,7 @@ class GameStats
   attr_accessor :time_to_enter_hall_of_fame   # In seconds
   attr_accessor :safari_pokemon_caught, :most_captures_per_safari_game
   attr_accessor :bug_contest_count, :bug_contest_wins
+  attr_accessor :dungeon_count
   # Play
   attr_writer   :play_time   # In seconds; the reader also updates the value
   attr_accessor :play_sessions
@@ -141,6 +142,7 @@ class GameStats
     @most_captures_per_safari_game = 0
     @bug_contest_count             = 0
     @bug_contest_wins              = 0
+    @dungeon_count                 = 0
     # Play
     @play_time                     = 0
     @play_sessions                 = 0

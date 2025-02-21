@@ -4,6 +4,7 @@ class Sprite_Timer
     @timer = nil
     @total_sec = nil
     @disposed = false
+    update
   end
 
   def dispose
@@ -38,6 +39,7 @@ class Sprite_Timer
         @timer.text = _ISPRINTF("<ac>{1:02d}:{2:02d}", min, sec)
       end
       @timer.update
+      #@timer.visible = false
     elsif @timer
       @timer.visible = false
     end

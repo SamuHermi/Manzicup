@@ -458,7 +458,6 @@ class Battle
                                   @opponent[0].full_name, @opponent[1].full_name, @opponent[2].full_name))
           end
         end
-      
         # Lose money from losing a battle
         pbLoseMoney
         pbDisplayPaused(_INTL("¡Estás fuera de combate!")) if !@canLose

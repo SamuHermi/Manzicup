@@ -133,6 +133,8 @@ class Battle
         trigger_array.push(trigger + "_repeat_every")
       end
     end
+    trigger_array.push("VariableOver_")
+    trigger_array.push("VariableUnder_")
     return trigger_array
   end
   
@@ -384,6 +386,7 @@ class Battle
     return if @field.effects[effect] <= 0
     @field.effects[effect] -= 1
     return if @field.effects[effect] > 0
+    @scene.pbDeleteTRbg() if effect == PBEffects::TrickRoom
     pbDisplay(msg)
     if effect == PBEffects::MagicRoom
       pbPriority(true).each { |battler| battler.pbItemTerrainStatBoostCheck }
@@ -643,6 +646,27 @@ class Battle::Battler
       @battle.pbDeluxeTriggers(self, nil, "BattlerAttractEnd", @species, @pokemon.types)
     end
   end
+
+  #-----------------------------------------------------------------------------
+  # Midbattle triggers upon a battler fainting.
+  #-----------------------------------------------------------------------------
+  alias dx_pbAbilitiesOnFainting pbAbilitiesOnFainting
+  def pbAbilitiesOnFainting
+    dx_pbAbilitiesOnFainting
+    triggers = ["BattlerFainted", @species, *@pokemon.types]
+    if @battle.pbAllFainted?(@index)
+      lastBattler = true
+      owner = @battle.pbGetOwnerFromBattlerIndex(@index)
+      @battle.battlers.each do |b|
+        next if !b || b.opposes?(@index) || !b.fainted? || b.fainted
+        thisOwner = @battle.pbGetOwnerFromBattlerIndex(b.index)
+        next if thisOwner != owner
+        lastBattler = false
+      end
+      triggers.push("LastBattlerFainted", @species, *@pokemon.types) if lastBattler
+    end
+    @battle.pbDeluxeTriggers(@index, nil, *triggers)
+  end
   
   #-----------------------------------------------------------------------------
   # Midbattle triggers upon a battler's stats being raised.
@@ -871,7 +895,12 @@ class Battle::Scene
       when 4 then triggers.push("BattleEndWin", "BattleEndCapture")
       when 5 then triggers.push("BattleEndLoss", "BattleEndDraw")
       when 3
-        trigger = "BattleEndForfeit"
+        if @battle.wildBattle?
+          trigger = "BattleEndFled"
+          @battle.allOtherSideBattlers.each { |b| trigger = "BattleEndRun" }
+        else
+          trigger = "BattleEndForfeit"
+        end
         triggers.push(trigger)
       end
       @battle.pbDeluxeTriggers(1, nil, *triggers)

@@ -204,18 +204,18 @@ class PokemonPokedexInfo_Scene
     overlay.clear
     # Make certain sprites visible
     @sprites["infosprite"].visible    = (@page == 1)
-    @sprites["areamap"].visible       = (@page == 2) if @sprites["areamap"]
-    @sprites["areahighlight"].visible = (@page == 2) if @sprites["areahighlight"]
-    @sprites["areaoverlay"].visible   = (@page == 2) if @sprites["areaoverlay"]
-    @sprites["formfront"].visible     = (@page == 3) if @sprites["formfront"]
-    @sprites["formback"].visible      = (@page == 3) if @sprites["formback"]
+    #@sprites["areamap"].visible       = (@page == 2) if @sprites["areamap"]
+    #@sprites["areahighlight"].visible = (@page == 2) if @sprites["areahighlight"]
+    #@sprites["areaoverlay"].visible   = (@page == 2) if @sprites["areaoverlay"]
+    @sprites["formfront"].visible     = (@page == 2) if @sprites["formfront"]
+    @sprites["formback"].visible      = (@page == 2) if @sprites["formback"]
+    @sprites["formicon"].visible      = (@page == 2) if @sprites["formicon"]
     @sprites["formicon"].visible      = (@page == 3) if @sprites["formicon"]
-    @sprites["formicon"].visible      = (@page == 4) if @sprites["formicon"]
     # Draw page-specific information
     case page
     when 1 then drawPageInfo
-    when 2 then drawPageArea
-    when 3 then drawPageForms
+    #when 2 then drawPageArea
+    when 2 then drawPageForms
     end
   end
 

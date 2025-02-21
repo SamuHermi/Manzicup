@@ -364,8 +364,8 @@ class GachaScene
     totalheight = 10 #Modificar alto de Info.
     totalwidth = 22 #Modificar ancho de Info. 
     
-    isDarkSkin=isDarkWindowskin(window.windowskin)
-    colortag=""
+    isDarkSkin = isDarkWindowskin(window.windowskin)
+    colortag = ""
     if ($game_message && $game_message.background>0) ||
        ($game_system && $game_system.respond_to?("message_frame") &&
         $game_system.message_frame != 0)

@@ -983,14 +983,13 @@ class Battle::Move::TwoTurnMove < Battle::Move
     @chargingTurn = false
     @damagingTurn = true
     if !user.effects[PBEffects::TwoTurnAttack]
-      if user.isRaidBoss? &&
-         ["TwoTurnAttackInvulnerableInSky",
-          "TwoTurnAttackInvulnerableUnderground",
-          "TwoTurnAttackInvulnerableUnderwater",
-          "TwoTurnAttackInvulnerableInSkyParalyzeTarget",
-          "TwoTurnAttackInvulnerableRemoveProtections",
-          "TwoTurnAttackInvulnerableInSkyTargetCannotAct"].include?(@function)
-        @chargingTurn = true
+      if user.isRaidBoss? && [
+        "TwoTurnAttackInvulnerableInSky",
+        "TwoTurnAttackInvulnerableUnderground",
+        "TwoTurnAttackInvulnerableUnderwater",
+        "TwoTurnAttackInvulnerableInSkyParalyzeTarget",
+        "TwoTurnAttackInvulnerableRemoveProtections",
+        "TwoTurnAttackInvulnerableInSkyTargetCannotAct"].include?(@function_code)
         @damagingTurn = true
       else
         @powerHerb = user.hasActiveItem?(:POWERHERB)
@@ -1005,7 +1004,7 @@ end
 #===============================================================================
 # Sky Drop
 #===============================================================================
-# Fails to work on Dynamax targets or Raid bosses.
+# Fails to work on Dynamax targets or if a Raid Boss is on the field.
 #-------------------------------------------------------------------------------
 class Battle::Move::TwoTurnAttackInvulnerableInSkyTargetCannotAct < Battle::Move::TwoTurnMove
   alias dx_pbFailsAgainstTarget? pbFailsAgainstTarget?

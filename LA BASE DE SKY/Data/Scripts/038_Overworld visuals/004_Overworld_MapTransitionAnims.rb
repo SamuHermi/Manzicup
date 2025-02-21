@@ -92,7 +92,7 @@ def pbStartOver(gameover = false)
       pbMessage("\\w[]\\wm\\c[13]\\l[3]" +
                 _INTL("Has salido corriendo hacia la base para no sufrir más daño..."))
     end
-    #pbLoseDungeon if pbInDungeon?
+    pbLoseDungeon if pbInDungeon?
     pbCancelVehicles
     Followers.clear
     $game_switches[60] = false

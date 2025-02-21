@@ -1,3 +1,4 @@
+=begin
 module OWShadowSettings
   # Set this to true if you want the event name and character name blacklists to be case sensitive.
   CASE_SENSITIVE_BLACKLISTS = false
@@ -6,7 +7,7 @@ module OWShadowSettings
   SHADOWLESS_EVENT_NAME     = [
     "door", "FlechaSalida", "nurse", "Enfermera", "Healing balls", "Balls curativas", "Mart","Tendero", "SmashRock", "RocaRompible", "StrengthBoulder", "PiedraFuerza",
     "CutTree", "ArbolCorte", "HeadbuttTree", "ArbolGolpeCabeza", "BerryPlant", "Planta Bayas", ".shadowless", ".noshadow", ".sl", "Entrada Mazmorra Bosque", "Entrada Cueva", "Relic Stone",
-    "Escalera"
+    "Escalera", "Portal"
   ]
 
   # If the character file and event uses contains one of these words in its filename, it will not have a shadow.
@@ -273,4 +274,4 @@ end
 class Spriteset_Map
   attr_accessor :character_sprites
 end
-
+=end

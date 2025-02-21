@@ -17,6 +17,33 @@ class Swdfm_Exp_Screen
 	  @viewport   = Viewport.new(0, 0, @width, @height)
 	  @viewport.z = 120_000
 	  @do_break   = false
+	  @exp_color = Color.new(229, 0, 0)
+	  case $player.character_ID
+	  when 1
+		@exp_color   = MessageConfig::HERMI_TEXT_COLOR
+	  when 2
+		@exp_color   = MessageConfig::IRIA_TEXT_COLOR
+	  when 3
+		@exp_color   = MessageConfig::JESS_TEXT_COLOR
+	  when 4
+		@exp_color   = MessageConfig::BRAIS_TEXT_COLOR 
+	  when 5
+		@exp_color   = MessageConfig::ISA_TEXT_COLOR
+	  when 6
+		@exp_color   = MessageConfig::SAMER_TEXT_COLOR
+	  when 7
+		@exp_color   = MessageConfig::RODRI_TEXT_COLOR
+	  when 8
+		@exp_color   = MessageConfig::BRA_TEXT_COLOR
+	  when 9
+		@exp_color   =  Color.new(230, 230, 230)
+	  when 10
+		@exp_color   = MessageConfig::PABLO_TEXT_COLOR
+	  when 11
+		@exp_color   = MessageConfig::SABO_TEXT_COLOR
+	  when 12
+		@exp_color   = MessageConfig::NEREA_TEXT_COLOR
+	  end
 	  before_run
 	  run
 	end
@@ -75,9 +102,9 @@ class Swdfm_Exp_Screen
 		end
 		bmp = @sprites["bar_1_#{i}"].bitmap
 		if perc
-			bmp = Swdfm_Bitmap.colour(bmp, EXP_EXP_COLOUR, 0, 0, (bmp.width * perc / 100).floor, bmp.height)
+			bmp = Swdfm_Bitmap.colour(bmp, @exp_color, 0, 0, (bmp.width * perc / 100).floor, bmp.height)
 		else
-			bmp = Swdfm_Bitmap.colour(bmp, EXP_EXP_COLOUR, 0, 0, 0, 0)
+			bmp = Swdfm_Bitmap.colour(bmp, @exp_color, 0, 0, 0, 0)
 		end			
 		@sprites["bar_1_#{i}"].bitmap = bmp
 	  end

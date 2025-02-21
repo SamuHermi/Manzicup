@@ -10,6 +10,7 @@ module GameData
     attr_reader :can_dive
     attr_reader :deep_bush
     attr_reader :shows_grass_rustle
+    attr_reader :shows_dust
     attr_reader :land_wild_encounters
     attr_reader :double_wild_encounters
     attr_reader :battle_environment
@@ -50,6 +51,7 @@ module GameData
       @can_dive               = hash[:can_dive]               || false
       @deep_bush              = hash[:deep_bush]              || false
       @shows_grass_rustle     = hash[:shows_grass_rustle]     || false
+      @shows_dust             = hash[:shows_dust]             || false
       @land_wild_encounters   = hash[:land_wild_encounters]   || false
       @double_wild_encounters = hash[:double_wild_encounters] || false
       @battle_environment     = hash[:battle_environment]
@@ -94,7 +96,9 @@ GameData::TerrainTag.register({
 GameData::TerrainTag.register({
   :id                     => :Sand,
   :id_number              => 3,
-  :battle_environment     => :Sand
+  :battle_environment     => :Sand,
+  :land_wild_encounters   => true,
+  :shows_dust             => true
 })
 
 GameData::TerrainTag.register({
