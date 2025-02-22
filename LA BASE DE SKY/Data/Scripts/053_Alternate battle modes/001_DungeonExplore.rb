@@ -12,7 +12,7 @@ class DungeonState
     attr_accessor :monster_attack
 
     NUM_BIOMES = 9
-    TIME_ALLOWED = 10*60#10    # In seconds
+    TIME_ALLOWED = 15*60#10    # In seconds
     def initialize
         @floorsexplored = 0
         @floorstoboss = 0
@@ -39,6 +39,8 @@ class DungeonState
         pkmn.level = 5
         pkmn.calc_stats
         pkmn.reset_moves
+        next false if pkmn.ev.values.none? { |ev| ev > 0 }
+        GameData::Stat.each_main { |s| pkmn.ev[s.id] = 0 }
       end
     end
 
@@ -67,8 +69,9 @@ class DungeonState
       pbMessage("\\w[]\\wm\\c[13]\\l[3]" +
       _INTL("Has perdido todos los objetos"))  
       pbEnd
+      
     end
-
+    
     def pbInDungeon?
         return @inProgress
     end
@@ -76,6 +79,7 @@ class DungeonState
     def pbEnd
         @inProgress = false
         $game_map.need_refresh = true
+        $game_variables[LevelCapsEX::LEVEL_CAP_VARIABLE] = 100
     end
 
     def advanceFloor()

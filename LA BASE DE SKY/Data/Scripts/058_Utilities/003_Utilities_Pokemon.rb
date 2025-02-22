@@ -86,6 +86,10 @@ def pbReceivePokemon(pkmn, level = 1, see_form = true)
   was_owned = $player.owned?(pkmn.species)
   $player.pokedex.set_seen(pkmn.species)
   $player.pokedex.set_owned(pkmn.species)
+  pkmn.species_data.get_family_species.each do |preevo|
+    $player.pokedex.set_owned(preevo)
+    $player.pokedex.register(preevo)
+  end
   $player.pokedex.register(pkmn) if see_form
   pkmn.unlocked_abilities.push(pkmn.ability_id)
   # Show Pokédex entry for new species if it hasn't been owned before

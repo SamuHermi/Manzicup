@@ -370,9 +370,9 @@ class PokemonSummary_Scene
     case page
     when 1 then drawPageOne
     when 2 then drawPageTwo
-    when 3 then drawPageThree
-    when 4 then drawPageFour
-    when 5 then drawPageFive
+    #when 3 then drawPageThree
+    when 3 then drawPageFour
+    when 4 then drawPageFive
     end
   end
 
@@ -654,15 +654,15 @@ class PokemonSummary_Scene
     textpos = [
       [_INTL("PS"), 294, 84, :center, base, statshadows[:HP]],
       [sprintf("%d/%d", @pokemon.hp, @pokemon.totalhp), 462, 84, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [_INTL("Ataque"), 294, 126, :center, base, statshadows[:ATTACK]],
+      [_INTL("Ataque"), 280, 126, :center, base, statshadows[:ATTACK]],
       [@pokemon.attack.to_s, 456, 126, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [_INTL("Defensa"), 294, 158, :center, base, statshadows[:DEFENSE]],
+      [_INTL("Defensa"), 280, 158, :center, base, statshadows[:DEFENSE]],
       [@pokemon.defense.to_s, 456, 158, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [_INTL("At. Esp"), 294, 190, :center, base, statshadows[:SPECIAL_ATTACK]],
+      [_INTL("At. Esp"), 280, 190, :center, base, statshadows[:SPECIAL_ATTACK]],
       [@pokemon.spatk.to_s, 456, 190, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [_INTL("Def. Esp"), 294, 222, :center, base, statshadows[:SPECIAL_DEFENSE]],
+      [_INTL("Def. Esp"), 280, 222, :center, base, statshadows[:SPECIAL_DEFENSE]],
       [@pokemon.spdef.to_s, 456, 222, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [_INTL("Velocidad"), 294, 254, :center, base, statshadows[:SPEED]],
+      [_INTL("Velocidad"), 280, 254, :center, base, statshadows[:SPEED]],
       [@pokemon.speed.to_s, 456, 254, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
       [_INTL("Habilidad"), 218, 290, :left, base, shadow]
     ]

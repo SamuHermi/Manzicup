@@ -423,12 +423,12 @@ Pokemon = SKIPLOOM,36
 LoseText = ...
 Pokemon = WEEPINBELL,36
 #-------------------------------
-[FORTACHON,]
+[FORTACHON,Paul]
 LoseText = ...
 Pokemon = SERVINE,36
 Pokemon = BAYLEEF,36
 #-------------------------------
-[FORTACHON,]
+[FORTACHON,Bruno]
 LoseText = ...
 Pokemon = ROSELIA,36
 Pokemon = IVYSAUR,36
@@ -836,7 +836,7 @@ Pokemon = FEAROW,50
 	AbilityIndex = 2
 Pokemon = UMBREON,50
 	Item = MEGASTONE
-	Moves = BULKUP,QUIVERDANCE,POWERTRIP,STOREDPOWER
+	Moves = BULKUP,CALMMIND,POWERTRIP,STOREDPOWER
 	IV = 21,21,21,21,21,21
 Pokemon = WALKINGWAKE,50
 	Item = CHOICESCARF

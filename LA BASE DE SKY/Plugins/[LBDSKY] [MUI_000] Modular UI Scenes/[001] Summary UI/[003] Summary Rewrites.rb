@@ -300,6 +300,10 @@ class PokemonSummary_Scene
             pbPlayDecisionSE
             pbRibbonSelection
             dorefresh = true
+          when :page_skills
+            pbPlayDecisionSE
+            pbEVAllocation
+            dorefresh = true
           else
             if !@inbattle
               pbPlayDecisionSE

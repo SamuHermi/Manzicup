@@ -5642,7 +5642,7 @@ ShadowSprite = 0,0,6
 #-------------------------------
 [UMBREON,1]
 BackSprite = -5,10
-FrontSprite = 1,11
+FrontSprite = 1,6
 ShadowSprite = 0,0,3
 #-------------------------------
 [TOGEKISS,1]
@@ -5728,7 +5728,12 @@ ShadowSprite = 4,2,-26
 AnimationSpeed = 3,2
 #-------------------------------
 [WISHIWASHI,3]
-BackSprite = 9,29
+BackSprite = 9,52
 FrontSprite = 6,5
 ShadowSprite = 4,2,4
 AnimationSpeed = 3,2
+#-------------------------------
+[UMBREON,2]
+BackSprite = -5,10
+FrontSprite = 5,0
+ShadowSprite = 0,0,20
