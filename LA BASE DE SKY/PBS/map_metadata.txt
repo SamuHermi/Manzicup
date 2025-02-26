@@ -415,7 +415,6 @@ BattleBack = city
 Name = Cueva
 Dungeon = true
 BattleBack = cave1
-Flags = ScaleWildEncounterLevels
 #-------------------------------
 [077]   # Mar
 Name = Mar
@@ -423,7 +422,6 @@ Outdoor = true
 Weather = HeavyRain,100
 Dungeon = true
 Environment = MovingWater
-Flags = ScaleWildEncounterLevels
 #-------------------------------
 [078]   # Volcán
 Name = Volcán
@@ -433,21 +431,18 @@ Dungeon = true
 BattleBack = rocky
 WildBattleBGM = Battle Hell
 TrainerBattleBGM = Battle Hell
-Flags = ScaleWildEncounterLevels
 #-------------------------------
 [079]   # Espacio
 Name = Espacio
 Weather = NoGravity,100
 Dungeon = true
 BattleBack = distortion
-Flags = ScaleWildEncounterLevels
 #-------------------------------
 [080]   # Pico Nevado
 Name = Pico Nevado
 Weather = Snow,100
 Dungeon = true
 BattleBack = snow
-Flags = ScaleWildEncounterLevels
 #-------------------------------
 [081]   # Cementerio
 Name = Cementerio
@@ -456,7 +451,6 @@ Dungeon = true
 BattleBack = elite8
 WildBattleBGM = Battle Halloween Town
 TrainerBattleBGM = Battle Halloween Town
-Flags = ScaleWildEncounterLevels
 #-------------------------------
 [082]   # Jardín
 Name = Jardín
