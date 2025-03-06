@@ -2588,6 +2588,16 @@ Battle::AbilityEffects::OnEndOfUsingMove.add(:MOXIE,
   }
 )
 
+Battle::AbilityEffects::OnEndOfUsingMove.add(:PREDATOR,
+  proc { |ability, user, targets, move, battle|
+    next if battle.pbAllFainted?(user.idxOpposingSide)
+    numFainted = 0
+    targets.each { |b| numFainted += 1 if b.damageState.fainted }
+    next if numFainted == 0 
+    user.battler.pbRecoverHP(battler.totalhp/4)
+  }
+)
+
 #===============================================================================
 # AfterMoveUseFromTarget handlers
 #===============================================================================
@@ -2745,6 +2755,9 @@ Battle::AbilityEffects::EndOfRoundWeather.add(:RAINDISH,
     battle.pbHideAbilitySplash(battler)
   }
 )
+
+Battle::AbilityEffects::EndOfRoundWeather.copy(:RAINDISH,:SEAGUARDIAN)
+Battle::AbilityEffects::EndOfRoundWeather.copy(:SWIFTSWIM,:SEAGUARDIAN)
 
 Battle::AbilityEffects::EndOfRoundWeather.add(:SOLARPOWER,
   proc { |ability, weather, battler, battle|
@@ -3044,6 +3057,15 @@ Battle::AbilityEffects::OnSwitchIn.add(:MAGNETPULL,
   }
 )
 
+Battle::AbilityEffects::OnSwitchIn.add(:WATERVEIL,
+  proc { |ability, battler, battle, switch_in|
+  battle.pbShowAbilitySplash(battler)
+  battler.pbThis.effects[PBEffects::AquaRing] = true
+  battle.pbDisplay(_INTL("¡{1} se rodeó de un manto de agua!", battler.pbThis))
+  battle.pbHideAbilitySplash(battler)
+  }
+)
+
 Battle::AbilityEffects::OnSwitchIn.add(:DIVINEMOTH,
   proc { |ability, battler, battle, switch_in|
   battler.pbRaiseStatStageByAbility(:SPECIAL_ATTACK, 1, battler)
@@ -3228,6 +3250,12 @@ Battle::AbilityEffects::OnSwitchIn.add(:DRIZZLE,
 Battle::AbilityEffects::OnSwitchIn.add(:DROUGHT,
   proc { |ability, battler, battle, switch_in|
     battle.pbStartWeatherAbility(:Sun, battler)
+  }
+)
+
+Battle::AbilityEffects::OnSwitchIn.add(:NOCTURNAL,
+  proc { |ability, battler, battle, switch_in|
+    battle.pbStartWeatherAbility(:ShadowSky, battler)
   }
 )
 
@@ -3773,6 +3801,13 @@ Battle::AbilityEffects::OnSwitchIn.add(:TABLETSOFRUIN,
 
 Battle::AbilityEffects::OnSwitchIn.copy(:TABLETSOFRUIN, :SWORDOFRUIN, :VESSELOFRUIN, :BEADSOFRUIN)
 
+Battle::AbilityEffects::OnSwitchIn.add(:ILLUMINATE,
+  proc { |ability, battler, battle, switch_in|
+  battle.pbShowAbilitySplash(battler)
+  battle.pbDisplay(_INTL("{2} de {1} redujo el poder ofensivo de los Pokémon de tipo Siniestro!", battler.pbThis, battler.abilityName))
+  battle.pbHideAbilitySplash(battler)
+  }
+)
 
 Battle::AbilityEffects::OnSwitchIn.add(:TERAFORMZERO,
   proc { |ability, battler, battle, switch_in|

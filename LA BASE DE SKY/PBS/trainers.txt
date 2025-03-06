@@ -529,6 +529,7 @@ Pokemon = URSARING,50
 [RODRI,Rodri]
 LoseText = ...
 Pokemon = ROSELIA,50
+	Name = Plantita
 Pokemon = FERALIGATR,50
 	Name = RDC
 Pokemon = HONCHKROW,50
@@ -612,12 +613,11 @@ Pokemon = TOXAPEX,50
 LoseText = Muy buena
 Pokemon = RAPIDASH,50
 Pokemon = MEOWSCARADA,50
-Pokemon = PAWMOT,50
+Pokemon = MANECTRIC,50
 Pokemon = FLORGES,50
-#-------------------
-# Pokemon World Tournament - Example Tournament
-# Manzidadas
-#-------------------
+#-------------------------------
+# Pokemon World Tournament - Manzidadas
+#-------------------------------
 [SABO,Sabo,10]
 LoseText = Looks like you were the sturdier of us.
 Items = MEGARING
@@ -981,7 +981,6 @@ Pokemon = MABOSSTIFF,50
 	Shiny = true
 #-------------------
 [BRA,Bra,10]
-LoseText = Your flame burnt me up!
 Pokemon = SABLEGEM,50
 	Item = HEAVYDUTYBOOTS
 	Moves = ENCORE,WILLOWISP,RECOVER,KNOCKOFF
@@ -1013,8 +1012,8 @@ Pokemon = TYRANTRUM,50
 	IV = 21,21,21,21,21,21
 	AbilityIndex = 2
 #-------------------
-# Pokemon World Tournament - Example Tournament
-# Manzidadas
+# Pokemon World Tournament - NPCs Dungeon
+# 
 #-------------------
 [MINER,Steve,1]
 LoseText = ...

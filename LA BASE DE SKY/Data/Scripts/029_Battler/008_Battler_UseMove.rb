@@ -544,7 +544,7 @@ class Battle::Battler
        move.danceMove?
       dancers = []
       @battle.pbPriority(true).each do |b|
-        dancers.push(b) if b.index != user.index && b.hasActiveAbility?(:DANCER)
+        dancers.push(b) if b.hasActiveAbility?(:DANCER)
       end
       while dancers.length > 0
         nextUser = dancers.pop

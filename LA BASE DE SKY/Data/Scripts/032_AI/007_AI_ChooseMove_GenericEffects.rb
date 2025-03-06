@@ -623,9 +623,6 @@ class Battle::AI
         end
       when :ShadowSky
         # Check for battlers affected by Shadow Sky's effects
-        if b.has_damaging_move_of_type?(:SHADOW)
-          ret += (b.opposes?(move_user)) ? 10 : -10
-        end
         if b.battler.takesShadowSkyDamage?   # End of round damage
           ret += (b.opposes?(move_user)) ? 10 : -10
         end
@@ -634,7 +631,7 @@ class Battle::AI
       if @trainer.medium_skill? && !b.has_active_item?(:UTILITYUMBRELLA)
         beneficial_abilities = {
           :Sun       => [:CHLOROPHYLL, :FLOWERGIFT, :FORECAST, :HARVEST, :LEAFGUARD, :SOLARPOWER],
-          :Rain      => [:DRYSKIN, :FORECAST, :HYDRATION, :RAINDISH, :SWIFTSWIM],
+          :Rain      => [:DRYSKIN, :FORECAST, :HYDRATION, :RAINDISH, :SWIFTSWIM, :SEAGUARDIAN],
           :Sandstorm => [:SANDFORCE, :SANDRUSH, :SANDVEIL],
           :Hail      => [:FORECAST, :ICEBODY, :SLUSHRUSH, :SNOWCLOAK]
         }[weather]

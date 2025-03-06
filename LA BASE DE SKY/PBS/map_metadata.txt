@@ -454,6 +454,7 @@ TrainerBattleBGM = Battle Halloween Town
 #-------------------------------
 [082]   # Jardín
 Name = Jardín
+Outdoor = true
 SnapEdges = true
 #-------------------------------
 [089]   # Gimnasio AmongUs

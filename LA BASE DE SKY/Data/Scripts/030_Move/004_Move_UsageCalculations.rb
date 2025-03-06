@@ -303,6 +303,8 @@ class Battle::Move
       mult = (i.even?) ? multipliers[:attack_multiplier] : multipliers[:defense_multiplier]
       mult *= 0.75 if @battle.pbCheckGlobalAbility(abil) && !user.hasActiveAbility?(abil) && category
     end
+    mult = multipliers[:attack_multiplier]
+    mult *= 0.66 if @battle.pbCheckGlobalAbility(:ILLUMINATE) && !user.hasActiveAbility?(:ILLUMINATE) && target.pbHasType?(:DARK)
     if @battle.field.terrain == :Electric && user.affectedByTerrain? &&
        @function_code == "IncreasePowerWhileElectricTerrain"
       multipliers[:power_multiplier] *= 1.5 if type != :ELECTRIC
@@ -386,6 +388,10 @@ class Battle::Move
     if user.effects[PBEffects::ParentalBond] == 1
       multipliers[:power_multiplier] /= (Settings::MECHANICS_GENERATION >= 7) ? 4 : 2
     end
+        # Parental Bond's second attack
+    if user.effects[PBEffects::Dancer]
+      multipliers[:power_multiplier] /=  2
+    end
     # Other
     if user.effects[PBEffects::MeFirst]
       multipliers[:power_multiplier] *= 1.5
@@ -466,7 +472,7 @@ class Battle::Move
         multipliers[:defense_multiplier] *= 1.5
       end
     when :ShadowSky
-      multipliers[:final_damage_multiplier] *= 1.5 if type == :SHADOW
+      multipliers[:final_damage_multiplier] *= 1.5 if (type == :DARK || type == :GHOST)
     end
     # Critical hits
     if target.damageState.critical
@@ -482,7 +488,7 @@ class Battle::Move
       multipliers[:final_damage_multiplier] *= random / 100.0
     end
     # STAB
-    if type && user.pbHasType?(type)
+    if (type && user.pbHasType?(type)) || user.hasActiveAbility?(:OMNISAPIENCE)
       if user.hasActiveAbility?(:ADAPTABILITY)
         multipliers[:final_damage_multiplier] *= 2
       else

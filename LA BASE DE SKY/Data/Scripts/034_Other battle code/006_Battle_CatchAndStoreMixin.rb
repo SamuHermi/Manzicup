@@ -17,7 +17,7 @@ module Battle::CatchAndStoreMixin
               _INTL("Enviarlo al PC"),
               _INTL("Ver los datos de {1}", pkmn.name),
               _INTL("Comprobar equipo")]
-      cmds.delete_at(1)
+      cmds.delete_at(1) if @sendToBoxes == 2
       loop do
         cmd = pbShowCommands(_INTL("¿Qué quieres hacer con {1}?", pkmn.name), cmds, 99)
         next if cmd == 99 && @sendToBoxes == 2   # Can't cancel if must add to party

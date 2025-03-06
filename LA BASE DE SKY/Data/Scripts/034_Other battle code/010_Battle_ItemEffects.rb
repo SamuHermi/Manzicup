@@ -1176,6 +1176,18 @@ Battle::ItemEffects::DamageCalcFromTarget.add(:EVIOLITE,
   }
 )
 
+Battle::ItemEffects::DamageCalcFromTarget.add(:WOODSWORD,
+  proc { |item, user, target, move, mults, power, type|
+    # NOTE: Eviolite cares about whether the Pokémon itself can evolve, which
+    #       means it also cares about the Pokémon's form. Some forms cannot
+    #       evolve even if the species generally can, and such forms are not
+    #       affected by Eviolite.
+    if target.pokemon.species_data.get_evolutions(true).length > 0
+      mults[:attack_multiplier] *= 1.5
+    end
+  }
+)
+
 Battle::ItemEffects::DamageCalcFromTarget.add(:HABANBERRY,
   proc { |item, user, target, move, mults, power, type|
     target.pbMoveTypeWeakeningBerry(:DRAGON, type, mults)

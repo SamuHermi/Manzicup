@@ -1560,7 +1560,7 @@ class Battle::Move::TypeAndPowerDependOnWeather < Battle::Move
     when :Hail
       ret = :ICE if GameData::Type.exists?(:ICE)
     when :ShadowSky
-      ret = :NONE
+      ret = :DARK if GameData::Type.exists?(:DARK)
     end
     return ret
   end

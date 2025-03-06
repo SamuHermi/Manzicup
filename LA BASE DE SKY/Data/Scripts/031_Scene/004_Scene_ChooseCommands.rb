@@ -168,7 +168,7 @@ class Battle::Scene
       commands = []
       commands[cmdSwitch  = commands.length] = _INTL("Cambiar") if mode == 0 && modParty[idxParty].able? &&
                                                                      (@battle.canSwitch || !canCancel)
-      commands[cmdBoxes   = commands.length] = _INTL("Liberar") if mode == 1
+      commands[cmdBoxes   = commands.length] = _INTL("s") if mode == 1
       commands[cmdSelect  = commands.length] = _INTL("Seleccionar") if mode == 2 && modParty[idxParty].fainted?
       commands[cmdSummary = commands.length] = _INTL("Datos")
       commands[commands.length]              = _INTL("Cancelar")

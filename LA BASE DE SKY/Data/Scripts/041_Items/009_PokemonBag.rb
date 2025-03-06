@@ -223,7 +223,7 @@ class PokemonBag
       for a in 1..20 do
         pocket.each do |item|  
 
-        Console.echo_li(GameData::Item.get(item[0]).name)
+        #Console.echo_li(GameData::Item.get(item[0]).name)
         $bag.remove(GameData::Item.get(item[0]).id,item[1]) if !GameData::Item.get(item[0]).is_important?()
         end
       end

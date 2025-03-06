@@ -610,7 +610,10 @@ class Battle::Battler
 
   def takesShadowSkyDamage?
     return false if !takesIndirectDamage?
-    return false if shadowPokemon?
+    return false if pbHasType?(:DARK) || pbHasType?(:GHOST)
+    return false if inTwoTurnAttack?("TwoTurnAttackInvulnerableUnderground",
+                                     "TwoTurnAttackInvulnerableUnderwater")
+    return false if hasActiveItem?(:SAFETYGOGGLES)
     return true
   end
 

@@ -1299,3 +1299,11 @@ Description = Al derrotar a un Pokémon rival, se cura un 25% de su vida máxima
 [FIELDEXPLORER]
 Name = Explorador
 Description = Potencia un 50% los movimientos que se pueden aprender por MO.
+#------------------------------
+[OMNISAPIENCE]
+Name = Omnisapiencia
+Description = Todos los tipos tienen bonificación de usar movimientos del mismo tipo.
+#------------------------------
+[SEAGUARDIAN]
+Name = Guardián marino
+Description = Cura lluvia y Nado rápido.
