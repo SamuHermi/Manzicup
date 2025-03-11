@@ -235,3 +235,50 @@ GameData::PWTTournament.register({
   },
   :points_won => 10						# A configurable amount of Battle Points won after a tournament.
 })
+
+
+
+
+
+
+
+
+
+
+GameData::PWTTournament.register({
+  :id => :Manzidadas_dificil,			# Internal name of the Tournament to be called
+  :name => _INTL("Habitantes de las mazmorras"),		# Display name of the Tournament in the choice selection box
+  :trainers => [						
+                [:MINER,      "Steve"    ,"","",1,"","",""],
+                [:ESTRATEGA,  "Pingu"    ,"","",1,"","",""], 
+                [:ANGEL,      "Dlanor"   ,"","",1,"","",""],
+                [:PLANKTON,   "Plantón"  ,"","",1,"","",""],
+                [:TRIPULANTE, "Azul"     ,"","",1,"","",""], 
+                [:FORTACHON,  "Jonathan" ,"","",1,"","",""],
+                [:FLOR,       "Margarita","","",1,"","",""],
+                [:SUPERNERD,  "Eustaquio","","",1,"","",""]                   
+				#[:ID,"Trainer Name","Player Victory Dialogue.","Player Lose Dialogue.",Variant Number,"Lobby Dialogue.","Pre-Battle Dialogue.","Post-Battle Dialogue"]  # Trainer 2, etc
+			   ],
+										# Trainers follow this exact format. 
+										# ID and Trainer Name are mandatory.
+										# Victory dialogue will default to "..." if not filled.
+										# Lose dialogue will default to "..." is not filled in either here or trainers.txt. If Lose dialogue is filled here, it overrides the defined line from trainers.txt
+										# Variant Number will default to 0 if not filled.
+										# If there is no Lobby Dialogue they will not appear in the Lobby map
+										# Pre- and Post-battle Dialogue is optional and will display nothing if not filled.
+  #:condition_proc => proc { 			# The conditions under which this Tournament shows up in the choice selection box. Optional.
+	#next $PokemonGlobal.hallOfFameLastNumber > 0 
+  #},					
+  :rules_proc => proc {|length|			# This defines the rules for the rules for an individual tournament. More rules can be found in the Challenge Rules script sections
+	rules = PokemonChallengeRules.new
+    rules.addPokemonRule(NonEggRestriction.new)
+    rules.addPokemonRule(AblePokemonRestriction.new)
+    rules.setNumber(length)
+    rules.setLevelAdjustment(FixedLevelAdjustment.new(50))
+	next rules
+  },
+  :banned_proc => proc {				# Displays a message when a team is ineligable to be used in a tournament.
+	pbMessage(_INTL("Certain exotic species, as well as eggs, are ineligible.\\1"))
+  },
+  :points_won => 3						# A configurable amount of Battle Points won after a tournament.
+})

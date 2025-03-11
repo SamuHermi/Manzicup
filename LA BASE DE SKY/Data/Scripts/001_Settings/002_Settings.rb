@@ -53,7 +53,7 @@ module Settings
   # La cantidad máxima de fichas del Casino que el jugador puede llegar a tener.
   MAX_COINS            = 99_999
   # La cantidad máxima de Puntos de Batalla que el jugador puede llegar a tener.
-  MAX_BATTLE_POINTS    = 9_999
+  MAX_BATTLE_POINTS    = 999_999
   # La cantidad máxima de ceniza que el jugador puede llegar a tener.
   MAX_SOOT             = 9_999
   # La cantidad máxima de caracteres que puede tener el nombre del jugador.
@@ -251,7 +251,7 @@ module Settings
       _INTL("Poké Balls"),
       _INTL("MTs & MOs"),
       _INTL("Bayas"),
-      _INTL("Cartas"),
+      _INTL("Amuletos"),
       _INTL("Obj. Batalla"),
       _INTL("Obj. Clave")
     ]
@@ -262,7 +262,8 @@ module Settings
   BAG_POCKET_AUTO_SORT = [false, false, false, true, true, false, false, false]
   # El máximo número de objetos que puedes tener en la mochila de cada.
   BAG_MAX_PER_SLOT     = 999
-
+  # El máximo número de amuletos que puedes tener en la mochila.
+  BAG_MAX_CHARM        = 10
   #=============================================================================
 
   # El número de cajas de almacenamiento de Pokémon que tiene el PC.

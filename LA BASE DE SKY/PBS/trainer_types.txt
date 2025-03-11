@@ -568,6 +568,13 @@ BaseMoney = 8
 SkillLevel = 10
 BattleBGM = Battle TFT
 #-------------------------------
+[FLOR]
+Name = Flor
+Gender = Male
+BaseMoney = 8
+SkillLevel = 10
+BattleBGM = Battle Flower
+#-------------------------------
 [OTAKA_LIDER]
 Name = Otaka culiada
 Gender = Female

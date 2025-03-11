@@ -476,7 +476,6 @@ class PokemonBagScreen
       cmdDebug    = -1
       commands = []
       # Generate command list
-      commands[cmdRead = commands.length] = _INTL("Leer") if itm.is_mail?
       if ItemHandlers.hasOutHandler(item) || (itm.is_machine? && $player.party.length > 0)
         if ItemHandlers.hasUseText(item)
           commands[cmdUse = commands.length]    = ItemHandlers.getUseText(item)
@@ -496,11 +495,7 @@ class PokemonBagScreen
       # Show commands generated above
       itemname = itm.name
       command = @scene.pbShowCommands(_INTL("Has selecccionado {1}.", itemname), commands)
-      if cmdRead >= 0 && command == cmdRead   # Read mail
-        pbFadeOutIn do
-          pbDisplayMail(Mail.new(item, "", ""))
-        end
-      elsif cmdUse >= 0 && command == cmdUse   # Use item
+      if cmdUse >= 0 && command == cmdUse   # Use item
         ret = pbUseItem(@bag, item, @scene)
         # ret: 0=Item wasn't used; 1=Item used; 2=Close Bag to use in field
         break if ret == 2   # End screen

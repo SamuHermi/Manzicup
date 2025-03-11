@@ -101,19 +101,11 @@ module GameData
     def self.held_icon_filename(item)
       item_data = self.try_get(item)
       return nil if !item_data
-      name_base = (item_data.is_mail?) ? "mail" : "item"
+      name_base = "item"
       # Check for files
       ret = sprintf("Graphics/UI/Party/icon_%s_%s", name_base, item_data.id)
       return ret if pbResolveBitmap(ret)
       return sprintf("Graphics/UI/Party/icon_%s", name_base)
-    end
-
-    def self.mail_filename(item)
-      item_data = self.try_get(item)
-      return nil if !item_data
-      # Check for files
-      ret = sprintf("Graphics/UI/Mail/mail_%s", item_data.id)
-      return pbResolveBitmap(ret) ? ret : nil
     end
 
     def initialize(hash)
@@ -177,8 +169,7 @@ module GameData
     def is_HM?;              return @field_use == 4; end
     def is_TR?;              return @field_use == 5; end
     def is_machine?;         return is_TM? || is_HM? || is_TR?; end
-    def is_mail?;            return has_flag?("Mail") || has_flag?("IconMail"); end
-    def is_icon_mail?;       return has_flag?("IconMail"); end
+    def is_charm?;            return has_flag?("Charm"); end
     def is_poke_ball?;       return has_flag?("PokeBall") || has_flag?("SnagBall"); end
     def is_snag_ball?;       return has_flag?("SnagBall") || (is_poke_ball? && $player.has_snag_machine); end
     def is_berry?;           return has_flag?("Berry"); end
@@ -192,7 +183,7 @@ module GameData
     def is_scent?;           return has_flag?("Scent"); end
 
     def is_important?
-      return true if is_key_item? || is_HM? || is_TM?
+      return true if is_key_item? || is_HM? || is_TM? || is_charm?
       return false
     end
 
@@ -203,7 +194,7 @@ module GameData
     end
 
     def show_quantity?
-      return @show_quantity || !is_important?
+      return @show_quantity || !is_important? || is_charm?
     end
 
     def self.from_pocket(pocket, keys_only = false)

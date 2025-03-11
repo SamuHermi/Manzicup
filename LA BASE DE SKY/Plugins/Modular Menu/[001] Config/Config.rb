@@ -132,7 +132,7 @@ ModularMenu.add_entry(:QUIT, _INTL("\\CONTEST"), "menuQuit") do |menu|
       pbSafariState.decision = 1
       pbSafariState.pbGoToStart
     end
-  else
+  elsif pbInBugContest?
     if Kernel.pbConfirmMessage(_INTL("¿Quieres terminar el concurso?"))
       menu.pbEndScene
       menu.endscene = false
@@ -140,10 +140,20 @@ ModularMenu.add_entry(:QUIT, _INTL("\\CONTEST"), "menuQuit") do |menu|
       pbBugContestState.pbStartJudging
       next
     end
+  else
+    if Kernel.pbConfirmMessage(_INTL("¿Quieres salir de la mazmorra?"))
+      menu.pbEndScene
+      menu.endscene = false
+      menu.close = true
+      pbBGMFade(1.0)
+      pbBGSFade(1.0)
+      pbFadeOutIn{pbStartOver}
+      next
+    end
   end
 end
 # condition to satisfy
-ModularMenu.add_condition(:QUIT) { next pbInSafari? || pbInBugContest? }
+ModularMenu.add_condition(:QUIT) { next pbInSafari? || pbInBugContest? || pbInDungeon?}
 #-------------------------------------------------------------------------------
 #  Options Screen
 #-------------------------------------------------------------------------------

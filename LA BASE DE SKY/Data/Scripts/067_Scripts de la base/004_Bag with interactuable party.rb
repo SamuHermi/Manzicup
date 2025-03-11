@@ -1393,7 +1393,7 @@ class PokemonBag_Scene
             # Generate command list
             commands[cmdSummary = commands.length]       = _INTL("Datos")
             commands[cmdTake = commands.length]          = _INTL("Coger Objeto") if pkmn.hasItem?
-            commands[cmdMove = commands.length]          = _INTL("Mover Objeto") if pkmn.hasItem? && !GameData::Item.get(pkmn.item).is_mail?
+            commands[cmdMove = commands.length]          = _INTL("Mover Objeto") if pkmn.hasItem?
             commands[commands.length]                    = _INTL("Cancelar")
             # Show commands generated above
             if pkmn.hasItem?
@@ -1411,7 +1411,7 @@ class PokemonBag_Scene
                 pbRefresh
               end
               break
-            elsif cmdMove >= 0 && command == cmdMove && pkmn.hasItem? && !GameData::Item.get(pkmn.item).is_mail?  # Move item
+            elsif cmdMove >= 0 && command == cmdMove && pkmn.hasItem?
               oldpkmn = pkmn
               loop do
                 pbPreSelect(oldpkmn)
@@ -1433,8 +1433,6 @@ class PokemonBag_Scene
                   pbClearSwitching; pbRefresh
                   pbDisplay(_INTL("Has equipado {1} a {2}.", newpkmn.name, itemname))
                   break
-                elsif GameData::Item.get(newpkmn.item).is_mail?
-                  pbDisplay(_INTL("Debes quitarle la carta a {1} para equiparle un objeto.", newpkmn.name))
                 else
                   newitem = newpkmn.item
                   newitemname = newitem.name
@@ -1593,7 +1591,6 @@ class PokemonBagScreen
       cmdDebug    = -1
       commands = []
       # Generate command list
-      commands[cmdRead = commands.length]       = _INTL("Leer") if itm.is_mail?
       if ItemHandlers.hasOutHandler(item) || (itm.is_machine? && $player.party.length > 0)
         if ItemHandlers.hasUseText(item)
           commands[cmdUse = commands.length]    = ItemHandlers.getUseText(item)
@@ -1618,11 +1615,7 @@ class PokemonBagScreen
       # Show commands generated above
       itemname = itm.name
       command = @scene.pbShowCommands(_INTL("Has seleccionado {1}.", itemname), commands)
-      if cmdRead >= 0 && command == cmdRead   # Read mail
-        pbFadeOutIn {
-          pbDisplayMail(Mail.new(item, "", ""))
-        }
-      elsif cmdUse >= 0 && command == cmdUse   # Use item
+      if cmdUse >= 0 && command == cmdUse   # Use item
         useType = itm.field_use
         # ret: 0 = Item wasn't used; 1 = Item used; 2 = Close Bag to use in field
         if useType == 1 # Consumables

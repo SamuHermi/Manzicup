@@ -935,26 +935,6 @@ class PokemonPartyScreen
     return ret
   end
 
-  def pbPokemonGiveMailScreen(mailIndex)
-    @scene.pbStartScene(@party, _INTL("¿Dar a qué Pokémon?"))
-    pkmnid = @scene.pbChoosePokemon
-    if pkmnid >= 0
-      pkmn = @party[pkmnid]
-      if pkmn.hasItem? || pkmn.mail
-        pbDisplay(_INTL("Este Pokémon lleva un objeto. No puede llevar cartas."))
-      elsif pkmn.egg?
-        pbDisplay(_INTL("Los Huevos no pueden llevar cartas."))
-      else
-        pbDisplay(_INTL("La Carta se ha transferido desde el Buzón."))
-        pkmn.mail = $PokemonGlobal.mailbox[mailIndex]
-        pkmn.item = pkmn.mail.item
-        $PokemonGlobal.mailbox.delete_at(mailIndex)
-        pbRefreshSingle(pkmnid)
-      end
-    end
-    @scene.pbEndScene
-  end
-
   def pbEndScene
     @scene.pbEndScene
   end
@@ -1349,32 +1329,10 @@ MenuHandlers.add(:party_menu, :switch, {
   }
 })
 
-MenuHandlers.add(:party_menu, :mail, {
-  "name"      => _INTL("Carta"),
-  "order"     => 40,
-  "condition" => proc { |screen, party, party_idx| next !party[party_idx].egg? && party[party_idx].mail },
-  "effect"    => proc { |screen, party, party_idx|
-    pkmn = party[party_idx]
-    command = screen.scene.pbShowCommands(_INTL("¿Qué hacer con la carta?"),
-                                          [_INTL("Leer"), _INTL("Coger"), _INTL("CANCELAR")])
-    case command
-    when 0   # Read
-      pbFadeOutIn do
-        pbDisplayMail(pkmn.mail, pkmn)
-        screen.scene.pbSetHelpText((party.length > 1) ? _INTL("Elige un Pokémon.") : _INTL("Elige un Pokémon o cancela."))
-      end
-    when 1   # Take
-      if pbTakeItemFromPokemon(pkmn, screen)
-        screen.pbRefreshSingle(party_idx)
-      end
-    end
-  }
-})
-
 MenuHandlers.add(:party_menu, :item, {
   "name"      => _INTL("Objeto"),
   "order"     => 50,
-  "condition" => proc { |screen, party, party_idx| next !party[party_idx].egg? && !party[party_idx].mail },
+  "condition" => proc { |screen, party, party_idx| next !party[party_idx].egg? },
   "effect"    => proc { |screen, party, party_idx|
     # Get all commands
     command_list = []
@@ -1432,7 +1390,7 @@ MenuHandlers.add(:party_menu_item, :take, {
 MenuHandlers.add(:party_menu_item, :move, {
   "name"      => _INTL("Mover"),
   "order"     => 40,
-  "condition" => proc { |screen, party, party_idx| next party[party_idx].hasItem? && !party[party_idx].item.is_mail? },
+  "condition" => proc { |screen, party, party_idx| next party[party_idx].hasItem? },
   "effect"    => proc { |screen, party, party_idx|
     pkmn = party[party_idx]
     item = pkmn.item
@@ -1457,10 +1415,6 @@ MenuHandlers.add(:party_menu_item, :move, {
         screen.pbRefresh
         screen.pbDisplay(_INTL("Has equipado {2} a {1}.", newpkmn.name, portionitemname))
         moved = true
-        break
-      elsif newpkmn.item.is_mail?
-        screen.pbDisplay(_INTL("Debes quitar la carta a {1} antes de darle un objeto.", newpkmn.name))
-        next
       end
       # New Pokémon is also holding an item; ask what to do with it
       newitem = newpkmn.item

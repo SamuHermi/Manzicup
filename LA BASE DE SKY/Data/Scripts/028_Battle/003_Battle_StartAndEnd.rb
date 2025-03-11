@@ -361,7 +361,7 @@ class Battle
     else
       tMoney += pbMaxLevelInTeam(0, 0)
     end
-      tMoney *= 2 if @field.effects[PBEffects::AmuletCoin]
+      tMoney *= 1 + ($bag.quantity(:AMULETCOIN)/2)
       tMoney *= 2 if @field.effects[PBEffects::HappyHour]
       oldMoney = pbPlayer.money
       pbPlayer.money += tMoney
@@ -372,7 +372,7 @@ class Battle
       end
     # Pick up money scattered by Pay Day
     if @field.effects[PBEffects::PayDay] > 0
-      @field.effects[PBEffects::PayDay] *= 2 if @field.effects[PBEffects::AmuletCoin]
+      @field.effects[PBEffects::PayDay] *= 1+ ($bag.quantity(:AMULETCOIN)/2)
       @field.effects[PBEffects::PayDay] *= 2 if @field.effects[PBEffects::HappyHour]
       oldMoney = pbPlayer.money
       pbPlayer.money += @field.effects[PBEffects::PayDay]

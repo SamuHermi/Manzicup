@@ -55,58 +55,6 @@ end
 #===============================================================================
 #
 #===============================================================================
-def pbPCMailbox
-  if !$PokemonGlobal.mailbox || $PokemonGlobal.mailbox.length == 0
-    pbMessage(_INTL("No tines cartas guardadas."))
-  else
-    loop do
-      command = 0
-      commands = []
-      $PokemonGlobal.mailbox.each do |mail|
-        commands.push(mail.sender)
-      end
-      commands.push(_INTL("Cancelar"))
-      command = pbShowCommands(nil, commands, -1, command)
-      if command >= 0 && command < $PokemonGlobal.mailbox.length
-        mailIndex = command
-        commandMail = pbMessage(
-          _INTL("¿Qué quieres hacer con la Carta de {1}?", $PokemonGlobal.mailbox[mailIndex].sender),
-          [_INTL("Leer"),
-           _INTL("Mover a Mochila"),
-           _INTL("Dar"),
-           _INTL("Cancelar")], -1
-        )
-        case commandMail
-        when 0   # Read
-          pbFadeOutIn do
-            pbDisplayMail($PokemonGlobal.mailbox[mailIndex])
-          end
-        when 1   # Move to Bag
-          if pbConfirmMessage(_INTL("El mensaje se perderá. ¿Te parece bien?"))
-            if $bag.add($PokemonGlobal.mailbox[mailIndex].item)
-              pbMessage(_INTL("La Carta ha vuelto a la Mochila y su mensaje se ha eliminado."))
-              $PokemonGlobal.mailbox.delete_at(mailIndex)
-            else
-              pbMessage(_INTL("La Mochila está llena."))
-            end
-          end
-        when 2   # Give
-          pbFadeOutIn do
-            sscene = PokemonParty_Scene.new
-            sscreen = PokemonPartyScreen.new(sscene, $player.party)
-            sscreen.pbPokemonGiveMailScreen(mailIndex)
-          end
-        end
-      else
-        break
-      end
-    end
-  end
-end
-
-#===============================================================================
-#
-#===============================================================================
 def pbTrainerPC
   pbMessage("\\se[PC open]" + _INTL("{1} encendió el PC.", $player.name))
   pbTrainerPCMenu
@@ -118,11 +66,9 @@ def pbTrainerPCMenu
   loop do
     command = pbMessage(_INTL("¿Qué quieres hacer?"),
                         [_INTL("Almacenamiento de Objetos"),
-                         _INTL("Buzón"),
                          _INTL("Apagar")], -1, nil, command)
     case command
     when 0 then pbPCItemStorage
-    when 1 then pbPCMailbox
     else        break
     end
   end

@@ -1764,9 +1764,6 @@ class PokemonStorageScreen
       if index >= @storage.maxPokemon(box)
         pbDisplay("No se puede dejar ahí.")
         return
-      elsif @heldpkmn.mail
-        pbDisplay("Debes retirar la carta que lleva.")
-        return
       elsif @heldpkmn.cannot_store
         pbDisplay(_INTL("¡{1} no quiere quedarse en el PC!", @heldpkmn.name))
         return
@@ -1799,10 +1796,6 @@ class PokemonStorageScreen
       pbDisplay(_INTL("¡Es tu último Pokémon!"))
       return false
     end
-    if box != -1 && @heldpkmn.mail
-      pbDisplay("Debes retirar la carta que lleva.")
-      return false
-    end
     if Settings::HEAL_STORED_POKEMON && box >= 0
       old_ready_evo = @heldpkmn.ready_to_evolve
       @heldpkmn.heal
@@ -1823,9 +1816,6 @@ class PokemonStorageScreen
     return if !pokemon
     if pokemon.egg?
       pbDisplay(_INTL("No puedes liberar un Huevo."))
-      return false
-    elsif pokemon.mail
-      pbDisplay(_INTL("Debes retirar la carta que lleva."))
       return false
     elsif pokemon.cannot_release
       pbDisplay(_INTL("¡{1} no quiere separarse de ti!", pokemon.name))
@@ -1881,9 +1871,6 @@ class PokemonStorageScreen
     pokemon = (heldpoke) ? heldpoke : @storage[box, index]
     if pokemon.egg?
       pbDisplay(_INTL("Los Huevos no pueden llevar objetos."))
-      return
-    elsif pokemon.mail
-      pbDisplay(_INTL("Debes retirar la carta que lleva."))
       return
     end
     if pokemon.item

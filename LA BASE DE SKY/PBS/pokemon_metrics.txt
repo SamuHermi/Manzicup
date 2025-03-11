@@ -5635,7 +5635,7 @@ BackSprite = 0,0
 FrontSprite = 0,19
 ShadowSprite = 0,0,8
 #-------------------------------
-[VAALHAZAK]
+[GOREMAGALA]
 BackSprite = 0,0
 FrontSprite = 0,19
 ShadowSprite = 0,0,6

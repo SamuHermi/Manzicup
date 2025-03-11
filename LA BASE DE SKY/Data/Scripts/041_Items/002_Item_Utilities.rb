@@ -783,9 +783,6 @@ def pbGiveItemToPokemon(item, pkmn, scene, pkmnid = 0)
   if pkmn.egg?
     scene.pbDisplay(_INTL("Los Huevos no pueden llevar objetos."))
     return false
-  elsif pkmn.mail
-    scene.pbDisplay(_INTL("La Carta de {1} debe quitarse para equiparle un objeto.", pkmn.name))
-    return false if !pbTakeItemFromPokemon(pkmn, scene)
   end
   if pkmn.hasItem?
     olditemname = pkmn.item.portion_name
@@ -799,21 +796,13 @@ def pbGiveItemToPokemon(item, pkmn, scene, pkmnid = 0)
       if !$bag.add(pkmn.item)
         raise _INTL("No se puede guardar de nuevo el objeto en la mochila por algún motivo") if !$bag.add(item)
         scene.pbDisplay(_INTL("La Bolsa está llena. No se ha quitado el objeto del Pokémon."))
-      elsif GameData::Item.get(item).is_mail?
-        if pbWriteMail(item, pkmn, pkmnid, scene)
-          pkmn.item = item
-          scene.pbDisplay(_INTL("Has quitado {1} de {2} y le has equipado {3}.", olditemname, pkmn.name, newitemname))
-          return true
-        elsif !$bag.add(item)
-          raise _INTL("No se puede guardar de nuevo el objeto en la mochila por algún motivo")
-        end
       else
         pkmn.item = item
         scene.pbDisplay(_INTL("Has quitado {1} de {2} y le has equipado {3}.", olditemname, pkmn.name, newitemname))
         return true
       end
     end
-  elsif !GameData::Item.get(item).is_mail? || pbWriteMail(item, pkmn, pkmnid, scene)
+  else
     $bag.remove(item)
     pkmn.item = item
     scene.pbDisplay(_INTL("{1} lleva equipado {2}.", pkmn.name, newitemname))
@@ -828,22 +817,6 @@ def pbTakeItemFromPokemon(pkmn, scene)
     scene.pbDisplay(_INTL("{1} no lleva nada equipado.", pkmn.name))
   elsif !$bag.can_add?(pkmn.item)
     scene.pbDisplay(_INTL("La Bolsa está llena. No se ha quitado el objeto del Pokémon."))
-  elsif pkmn.mail
-    if scene.pbConfirm(_INTL("¿Quieres guardar la carta quitada en tu PC?"))
-      if pbMoveToMailbox(pkmn)
-        scene.pbDisplay(_INTL("La carta ha sido guardada en el PC."))
-        pkmn.item = nil
-        ret = true
-      else
-        scene.pbDisplay(_INTL("El buzón de tu PC está lleno."))
-      end
-    elsif scene.pbConfirm(_INTL("Si se quita la carta, se perderá. ¿Estás de acuerdo?"))
-      $bag.add(pkmn.item)
-      scene.pbDisplay(_INTL("Has recibido {1} de {2}.", pkmn.item.portion_name, pkmn.name))
-      pkmn.item = nil
-      pkmn.mail = nil
-      ret = true
-    end
   else
     $bag.add(pkmn.item)
     scene.pbDisplay(_INTL("Has recibido {1} de {2}.", pkmn.item.portion_name, pkmn.name))

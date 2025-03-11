@@ -586,22 +586,6 @@ class Pokemon
     return [sp_data.wild_item_common, sp_data.wild_item_uncommon, sp_data.wild_item_rare]
   end
 
-  # @return [Mail, nil] mail held by this Pokémon (nil if there is none)
-  def mail
-    @mail = nil if @mail && (!@mail.item || !hasItem?(@mail.item))
-    return @mail
-  end
-
-  # If mail is a Mail object, gives that mail to this Pokémon. If nil is given,
-  # removes the held mail.
-  # @param mail [Mail, nil] mail to be held by this Pokémon
-  def mail=(mail)
-    if !mail.nil? && !mail.is_a?(Mail)
-      raise ArgumentError, _INTL("Valor inválido {1} dado", mail.inspect)
-    end
-    @mail = mail
-  end
-
   #=============================================================================
   # Moves
   #=============================================================================
@@ -1275,7 +1259,6 @@ class Pokemon
     @nature           = nil
     @nature_for_stats = nil
     @item             = nil
-    @mail             = nil
     @moves            = []
     reset_moves if withMoves
     @first_moves      = []

@@ -621,14 +621,10 @@ MenuHandlers.add(:battle_pokemon_debug_menu, :set_item, {
         item = pbChooseItemList(pkmn.item_id)
         if item && item != pkmn.item_id
           (battler || pkmn).item = item
-          if GameData::Item.get(item).is_mail?
-            pkmn.mail = Mail.new(item, _INTL("Texto"), $player.name)
-          end
         end
       when 1   # Remove item
         if pkmn.hasItem?
           (battler || pkmn).item = nil
-          pkmn.mail = nil
         end
       else
         break

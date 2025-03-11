@@ -12,7 +12,7 @@ class DungeonState
     attr_accessor :monster_attack
 
     NUM_BIOMES = 9
-    TIME_ALLOWED = 15*60#10    # In seconds
+    TIME_ALLOWED = 30*60#10    # In seconds
     def initialize
         @floorsexplored = 0
         @floorstoboss = 0
@@ -26,7 +26,7 @@ class DungeonState
     def pbStart
       @floorsexplored = 0
       @floorstoboss = 3 + rand(5)
-      @biome = rand(NUM_BIOMES)
+      @biome = 0#rand(NUM_BIOMES)
       @bossesdefeated = 0
       @inProgress = true     
       @trainers_on = 0
@@ -63,13 +63,12 @@ class DungeonState
         end
         pbMessage("\\w[]\\wm\\c[13]\\l[3]" +
         _INTL("Todo tu dinero se ha convertido en monedas.\nHas conseguido {1} monedas",coins_obtained))  
-        $player.coins += coins_obtained
+        $player.battle_points += coins_obtained
         $player.money = 0
         $bag.remove_non_important()
       pbMessage("\\w[]\\wm\\c[13]\\l[3]" +
       _INTL("Has perdido todos los objetos"))  
       pbEnd
-      
     end
     
     def pbInDungeon?
@@ -86,6 +85,10 @@ class DungeonState
       @floorsexplored += 1
       @floorstoboss -= 1
       pbDungeonState.restartTimer
+
+      for i in 0...$player.pokemon_count
+            $player.party[i].hp += ($player.party[i].totalhp * (5.0 * $bag.quantity(:OVALCHARM)/ 100.0)).floor
+      end
     end
 
     def randomizeTrainers()
@@ -140,7 +143,6 @@ EventHandlers.add(:on_frame_update, :dungeon_contest_counter,
     pbDungeonState.restartTimer
   }
 )
-
 
 def pbInDungeon?
   return pbDungeonState.pbInDungeon?

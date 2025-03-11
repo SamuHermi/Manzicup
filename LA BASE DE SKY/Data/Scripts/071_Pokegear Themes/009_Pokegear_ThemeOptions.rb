@@ -84,17 +84,3 @@ MenuHandlers.add(:pokegear_theme, :theme_6, {
     next 99999
   }
 })
-
-MenuHandlers.add(:pokegear_theme, :open_mail, {
-  "name"      => _INTL("Silph"),
-  "icon_name" => "silph",
-  "order"     => 16,
-  "effect"    => proc { |menu|
-    $PokemonSystem.pokegear = "Theme 7"
-    scene = PokemonPokegearTheme_Scene.new
-    screen = PokemonPokegearThemeScreen.new(scene)
-    screen.pbStartScreen
-    menu.dispose
-    next 99999
-  }
-})

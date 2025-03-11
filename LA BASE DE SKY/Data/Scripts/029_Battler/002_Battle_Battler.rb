@@ -493,7 +493,6 @@ class Battle::Battler
   def unlosableItem?(check_item)
     return false if !check_item
     item_data = GameData::Item.get(check_item)
-    return true if item_data.is_mail?
     return false if @effects[PBEffects::Transform]
     # Items that change a Pokémon's form
     if mega?   # Check if item was needed for this Mega Evolution

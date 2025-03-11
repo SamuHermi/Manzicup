@@ -361,7 +361,7 @@ class Battle
     else
       tMoney += pbMaxLevelInTeam(0, 0)
     end
-      tMoney *= 2 if @field.effects[PBEffects::AmuletCoin]
+      tMoney *= 1 + ($bag.quantity(:AMULETCOIN)/2)
       tMoney *= 2 if @field.effects[PBEffects::HappyHour]
       oldMoney = pbPlayer.money
       pbPlayer.money += tMoney

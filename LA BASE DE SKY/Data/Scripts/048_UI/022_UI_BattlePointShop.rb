@@ -62,7 +62,7 @@ class BattlePointShopAdapter
   end
 
   def showQuantity?(item)
-    return !GameData::Item.get(item).is_important?
+    return !GameData::Item.get(item).is_important? && GameData::Item.get(item).pocket != 6
   end
 
   def getPrice(item)
@@ -334,7 +334,7 @@ class BattlePointShop_Scene
     ret = 0
     helpwindow = @sprites["helpwindow"]
     itemprice = @adapter.getPrice(item)
-    itemprice /= 2 if !@buying
+     #itemprice /= 2if !@buying
     pbDisplay(helptext, true)
     using(numwindow = Window_AdvancedTextPokemon.new("")) do   # Showing number of items
       pbPrepareWindow(numwindow)
@@ -457,13 +457,14 @@ class BattlePointShopScreen
         pbDisplayPaused(_INTL("No tienes suficientes PB."))
         next
       end
-      if GameData::Item.get(item).is_important?
+      if GameData::Item.get(item).is_important? && !GameData::Item.get(item).is_charm?
         next if !pbConfirm(_INTL("¿Te interesa comprar {1}?\nEl precio son {2} PB.",
                                  itemname, price.to_s_formatted))
         quantity = 1
       else
         maxafford = (price <= 0) ? Settings::BAG_MAX_PER_SLOT : @adapter.getBP / price
         maxafford = Settings::BAG_MAX_PER_SLOT if maxafford > Settings::BAG_MAX_PER_SLOT
+        maxafford = Settings::BAG_MAX_CHARM - $bag.quantity(GameData::Item.get(item)) if maxafford > Settings::BAG_MAX_CHARM && GameData::Item.get(item).is_charm?
         quantity = @scene.pbChooseNumber(
           _INTL("¿Cuántos {1} quieres?", itemnameplural), item, maxafford
         )
@@ -490,7 +491,8 @@ class BattlePointShopScreen
         $stats.battle_points_spent += price
         $stats.mart_items_bought += quantity
         @adapter.setBP(@adapter.getBP - price)
-        @stock.delete_if { |itm| GameData::Item.get(itm).is_important? && $bag.has?(itm) }
+        @stock.delete_if { |itm| GameData::Item.get(itm).is_important? && $bag.has?(itm) && !GameData::Item.get(itm).is_charm?}
+        @stock.delete_if { |itm| $bag.quantity(GameData::Item.get(itm)) >= Settings::BAG_MAX_CHARM &&GameData::Item.get(itm).is_charm?}
         pbDisplayPaused(_INTL("¡Aquí tienes! ¡Muchas gracias!")) { pbSEPlay("Mart buy item") }
       else
         added.times do
@@ -509,7 +511,8 @@ end
 #
 #===============================================================================
 def pbBattlePointShop(stock, speech = nil)
-  stock.delete_if { |item| GameData::Item.get(item).is_important? && $bag.has?(item) }
+  stock.delete_if { |item| GameData::Item.get(item).is_important? && $bag.has?(item) && !GameData::Item.get(item).is_charm?}
+  stock.delete_if { |item| $bag.quantity(GameData::Item.get(item)) >= Settings::BAG_MAX_CHARM && GameData::Item.get(item).is_charm?}
   if speech.nil?
     pbMessage(_INTL("¡Bienvenido al Servicio de Intercambio!"))
     pbMessage(_INTL("Podemos cambiar tus Puntos de Batalla por fabulosos premios."))

@@ -168,6 +168,35 @@ class Battle::Move
     return false
   end
 
+  def type_ui_modifiers(battler)
+    #
+    if @realMove.id == :HIDDENPOWER
+      return pbHiddenPower(battler.pokemon)[0]
+    end
+    if @realMove.display_type(battler.pokemon) == :NORMAL and battler.ability == :PIXILATE # check if battler has ability
+      return :FAIRY # type to return
+    end
+    if @realMove.display_type(battler.pokemon) == :NORMAL and battler.ability == :AERILATE # check if battler has ability
+      return :FLYING # type to return
+    end
+    if @realMove.display_type(battler.pokemon) == :NORMAL and battler.ability == :REFRIGERATE # check if battler has ability
+      return :ICE # type to return
+    end
+    if battler.ability == :NORMALIZE # check if battler has ability
+      return :NORMAL # type to return
+    end
+    move_data = GameData::Move.get(@realMove.id)
+    if move_data.has_flag?("TypeIsUserFirstType")
+      return battler.types[0]
+    end
+    if move_data.has_flag?("TypeIsUserSecondType")
+      return battler.types[1]
+    end
+    if soundMove? && battler.ability == :LIQUIDVOICE # from smellyski
+      return :WATER
+    end
+ end
+
   def display_type(battler)
     case @function_code
     when "TypeDependsOnUserPlate",            # Judgement
@@ -186,8 +215,13 @@ class Battle::Move
       return pbBaseType(battler)
 =end
     end
+    if type_ui_modifiers(battler)
+      return type_ui_modifiers(battler) # get new type if there is one
+      end
     return @realMove.display_type(battler.pokemon)
   end
+
+
 
   def display_damage(battler)
 =begin
