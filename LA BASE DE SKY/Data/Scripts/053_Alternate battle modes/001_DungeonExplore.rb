@@ -11,7 +11,7 @@ class DungeonState
     attr_accessor :timer_start
     attr_accessor :monster_attack
 
-    NUM_BIOMES = 9
+    NUM_BIOMES = 11
     TIME_ALLOWED = 30*60#10    # In seconds
     def initialize
         @floorsexplored = 0
@@ -26,7 +26,7 @@ class DungeonState
     def pbStart
       @floorsexplored = 0
       @floorstoboss = 3 + rand(5)
-      @biome = 0#rand(NUM_BIOMES)
+      @biome = rand(NUM_BIOMES)
       @bossesdefeated = 0
       @inProgress = true     
       @trainers_on = 0

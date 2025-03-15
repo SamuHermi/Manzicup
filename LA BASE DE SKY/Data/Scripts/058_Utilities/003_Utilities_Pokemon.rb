@@ -80,7 +80,7 @@ end
 #===============================================================================
 # Giving Pokémon to the player (will send to storage if party is full)
 #===============================================================================
-def pbReceivePokemon(pkmn, level = 1, see_form = true)
+def pbReceivePokemon(pkmn, level = 100, see_form = true)
   pkmn = Pokemon.new(pkmn, level) if !pkmn.is_a?(Pokemon)
   species_name = pkmn.speciesName
   was_owned = $player.owned?(pkmn.species)

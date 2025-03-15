@@ -192,7 +192,7 @@ class PokemonPauseMenu_Scene
     bmp = pbBitmap("Graphics/Pictures/Common/partyBar")
     content = []
     text = []
-    content.push(_INTL("Monedas: {1}",$player.coins))
+    content.push(_INTL("Monedas: {1}",$player.battle_points))
     if pbInSafari?
       content.push(_INTL("Tiempo: {1}/{2}", pbSafariState.steps, Settings::SAFARI_STEPS)) if Settings::SAFARI_STEPS > 0
       content.push(_INTL("Pokeballs: {1}", pbSafariState.ballcount))

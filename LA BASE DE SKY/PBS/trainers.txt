@@ -237,11 +237,7 @@ Pokemon = SILICOBRA,33
 Pokemon = SNEASEL,32
 Pokemon = CYCLIZAR,33
 #-------------------------------
-[TRIPULANTE,Lima]
-LoseText = ...
-Pokemon = ZUBAT,36
-#-------------------------------
-[TRIPULANTE,Rosa]
+[TRIPULANTE,Rojo]
 LoseText = ...
 Pokemon = GLOOM,36
 #-------------------------------
@@ -260,6 +256,44 @@ Pokemon = SERVINE,36
 Pokemon = BAYLEEF,36
 #-------------------------------
 [TRIPULANTE,Cian]
+LoseText = ...
+Pokemon = ROSELIA,36
+Pokemon = IVYSAUR,36
+#-------------------------------
+[REPO,Azul]
+LoseText = ...
+Pokemon = TOXEL,33
+Pokemon = ARIADOS,32
+#-------------------------------
+[REPO,Morado]
+LoseText = ...
+Pokemon = SILICOBRA,33
+Pokemon = SNEASEL,32
+Pokemon = CYCLIZAR,33
+#-------------------------------
+[REPO,Lima]
+LoseText = ...
+Pokemon = ZUBAT,36
+#-------------------------------
+[REPO,Rosa]
+LoseText = ...
+Pokemon = GLOOM,36
+#-------------------------------
+[REPO,Amarillo]
+LoseText = ...
+Pokemon = MORELULL,36
+Pokemon = SKIPLOOM,36
+#-------------------------------
+[REPO,Naranja]
+LoseText = ...
+Pokemon = WEEPINBELL,36
+#-------------------------------
+[REPO,Verde]
+LoseText = ...
+Pokemon = SERVINE,36
+Pokemon = BAYLEEF,36
+#-------------------------------
+[REPO,Añil]
 LoseText = ...
 Pokemon = ROSELIA,36
 Pokemon = IVYSAUR,36
@@ -1053,7 +1087,6 @@ Pokemon = TYRANTRUM,50
 # Pokemon World Tournament - NPCs Dungeon
 #-------------------
 [MINER,Steve,1]
-LoseText = ...
 Pokemon = GARGANACL,50
 Pokemon = ELECTRODE,50
 	Moves = EXPLOSION
@@ -1062,36 +1095,31 @@ Pokemon = ELECTRODE,50
 Pokemon = EXCADRILL,50
 Pokemon = PARASECT,50
 #-------------------------------
-[ESTRATEGA,Pingu]
-LoseText = ...
+[ESTRATEGA,Pingu,1]
 Pokemon = EMPOLEON,50
 Pokemon = DELIBIRD,50
 Pokemon = IRONBUNDLE,50
-Pokemon = ARTICUNO,50
+Pokemon = EISCUE,50
 #-------------------------------
 [ANGEL,Dlanor,1]
-LoseText = ...
 Pokemon = CERULEDGE,50
 Pokemon = ABSERAPH,50
 Pokemon = OMASTAR,50
 Pokemon = TOGEKISS,50
 #-------------------------------
 [PLANKTON,Plantón,1]
-LoseText = ...
 Pokemon = STARMIE,50
 Pokemon = KINGLER,50
 Pokemon = GREEDENT,50
 Pokemon = PROBOPASS,50
 #-------------------------------
 [TRIPULANTE,Azul,1]
-LoseText = ...
 Pokemon = LUNATONE,50
 Pokemon = SOLROCK,50
 Pokemon = BEHEEYEM,50
 Pokemon = CLEFABLE,50
 #-------------------------------
 [FORTACHON,Jonathan,1]
-LoseText = ...
 Pokemon = MACHAMP,50
 Pokemon = SQUAWKABILLY,50
 Pokemon = GRIMMSNARL,50
@@ -1099,14 +1127,12 @@ Pokemon = TANGROWTH,50
 	Shiny = true
 #-------------------------------
 [FLOR,Margarita,1]
-LoseText = ...
 Pokemon = FLORGES,50
 Pokemon = VENUSAUR,50
 Pokemon = COMFEY,50
 Pokemon = SUNFLORA,50
 #-------------------------------
 [SUPERNERD,Eustaquio,1]
-LoseText = ...
 Pokemon = PORYGON2,50
 Pokemon = CASTFORM,50
 Pokemon = ORBEETLE,50

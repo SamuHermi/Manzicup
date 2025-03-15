@@ -127,3 +127,17 @@ ExtraConnections = 2
 FloorPatches = 2,75,25
 FloorDecorations = 50,200
 VoidDecorations = 50,200
+#-------------------------------
+[labo]
+DungeonSize = 8,6
+CellSize = 10,10
+MinRoomSize = 5,5
+MaxRoomSize = 9,9
+CorridorWidth = 2
+NodeLayout = full
+RoomLayout = full
+RoomChance = 70
+ExtraConnections = 0
+FloorPatches = 3,75,25
+FloorDecorations = 50,100
+VoidDecorations = 50,200

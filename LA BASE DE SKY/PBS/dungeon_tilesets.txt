@@ -101,3 +101,24 @@ Tile = 40,void
 Tile = 0,walls
 Tile = 43,floor
 Tile = 42,floor_decoration
+#-------------------------------
+[33]   # Mazmorra volcan
+Autotile = 1, void
+Autotile = 1, walls
+Tile = 50,floor_decoration_large
+Tile = 52,void_decoration_large
+Tile = 43,floor_decoration
+Autotile = 2,floor_patch
+#Tile = 0,walls
+Tile = 42,floor
+#DoubleWalls = true
+#-------------------------------
+[34]   # Mazmorra espacio
+Autotile = 1, void_patch
+Tile = 9,void
+Tile = 0,walls
+Tile = 42,floor
+Tile = 43,floor_decoration
+Tile = 44,floor_decoration
+Tile = 50,floor_decoration_large
+Tile = 54,floor_decoration_large

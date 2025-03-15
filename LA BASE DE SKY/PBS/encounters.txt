@@ -381,3 +381,12 @@ Land,21
     20,PICHU,1
     10,RIOLU,1
     10,TYROGUE,1
+#-------------------------------
+[096] # Mazmorra
+Land,21
+    20,CHINGLING,1
+    20,CLEFFA,1
+    20,IGGLYBUFF,1
+    20,PICHU,1
+    10,RIOLU,1
+    10,TYROGUE,1

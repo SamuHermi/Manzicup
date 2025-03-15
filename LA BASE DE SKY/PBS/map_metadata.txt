@@ -472,3 +472,14 @@ Name = Cielo
 Weather = StrongWinds,100
 Dungeon = true
 BattleBack = sky
+#-------------------------------
+[096]   # Campo
+Name = Campo
+Dungeon = true
+BattleBack = field
+#-------------------------------
+[097]   # Labo
+Name = Labo
+DarkMap = true
+Dungeon = true
+BattleBack = labo

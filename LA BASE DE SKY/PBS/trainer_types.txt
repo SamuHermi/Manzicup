@@ -575,6 +575,13 @@ BaseMoney = 8
 SkillLevel = 10
 BattleBGM = Battle Flower
 #-------------------------------
+[REPO]
+Name = Semibot
+Gender = Unknown
+BaseMoney = 8
+SkillLevel = 10
+BattleBGM = Battle TFT
+#-------------------------------
 [OTAKA_LIDER]
 Name = Otaka culiada
 Gender = Female

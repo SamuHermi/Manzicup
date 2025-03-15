@@ -256,7 +256,7 @@ GameData::PWTTournament.register({
                 [:TRIPULANTE, "Azul"     ,"","",1,"","",""], 
                 [:FORTACHON,  "Jonathan" ,"","",1,"","",""],
                 [:FLOR,       "Margarita","","",1,"","",""],
-                [:SUPERNERD,  "Eustaquio","","",1,"","",""]                   
+                [:SUPERNERD,  "Eustaquio","","",1,"","",""],                   
 				#[:ID,"Trainer Name","Player Victory Dialogue.","Player Lose Dialogue.",Variant Number,"Lobby Dialogue.","Pre-Battle Dialogue.","Post-Battle Dialogue"]  # Trainer 2, etc
 			   ],
 										# Trainers follow this exact format. 

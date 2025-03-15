@@ -228,13 +228,28 @@ class PokemonStorage
     return false
   end
 
-  def pbStoreCaught(pkmn, lvl=50)
+  def pbStoreCaught(pkmn, lvl=100)
     if Settings::HEAL_STORED_POKEMON && @currentBox >= 0
       old_ready_evo = pkmn.ready_to_evolve
       pkmn.heal
       pkmn.ready_to_evolve = old_ready_evo
     end
     pkmn.level = lvl
+    chance = rand(0,100)
+    Console.echo_li(pkmn.name + ": " + chance.to_s)
+    move = nil
+    if chance>=90
+      move = pkmn.species_data.tutor_moves.sample
+    elsif chance >=80
+      move = pkmn.species_data.egg_moves.sample
+    end
+    pkmn.add_first_move(move)
+    Console.echo_li("Nuevo mov: " + move.name) if move != nil
+    if chance <= 5
+      pkmn.ability_index = 2
+      Console.echo_li("Habilidad oculta")
+    end
+    Console.echo_li("\n")
     #pkmn.species = pkmn.species_data.get_baby_species
     maxBoxes.times do |j|
       maxPokemon(j).times do |i|
@@ -264,12 +279,11 @@ class PokemonStorage
         oldOne.iv[s.id] = newOne.iv[s.id]
       end
     end
-    newOne.moves.each do |m|
-      if(!oldOne.hasMove?(m.id))
-        if pbLearnMove(oldOne, m.id, true, false)
-          oldOne.add_first_move(m.id)
+    newOne.first_moves.each do |m|
+      if(!oldOne.first_moves.include?(m))
+        pbMessage(_INTL("¡{1} ha aprendido {2}!",oldOne.name,GameData::Move.get(m).name))
+          oldOne.add_first_move(m)
         end
-      end
     end
     if newOne.shiny?
       oldOne.shiny = true
@@ -277,7 +291,7 @@ class PokemonStorage
     newOne.unlocked_abilities.each do |i|
       if !oldOne.unlocked_abilities.include?(i)
           oldOne.unlocked_abilities.push(i)
-          pbMessage(_INTL("{1} ha conseguido la habilidad {2}",oldOne.name,GameData::Ability.get(i.name).real_name))
+          pbMessage(_INTL("¡{1} ha conseguido la habilidad {2}!",oldOne.name,GameData::Ability.get(i.name).real_name))
       end
     end
   end

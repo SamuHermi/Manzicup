@@ -60,7 +60,7 @@ module GameData
         ["Pocket",            PocketProperty,                          _INTL("Bolsillo de la Mochila donde se guarda este objeto.")],
         ["Price",             LimitProperty.new(Settings::MAX_MONEY),  _INTL("Precio de compra de este objeto.")],
         ["SellPrice",         LimitProperty2.new(Settings::MAX_MONEY), _INTL("Precio de venta de este objeto. Si esta en blanco, es un cuarto del precio de compra.")],
-        ["BPPrice",           LimitProperty.new(Settings::MAX_BATTLE_POINTS), _INTL("Precio de compra de este objeto en Puntos de Batalla (PB).")],
+        ["BPPrice",           LimitProperty.new(Settings::MAX_BATTLE_POINTS), _INTL("Precio de compra de este objeto en Monedas (PB).")],
         ["FieldUse",          EnumProperty.new(field_use_array),       _INTL("Como se puede usar este objeto fuera de combate.")],
         ["BattleUse",         EnumProperty.new(battle_use_array),      _INTL("Como se puede usar este objeto en combate.")],
         ["Flags",             StringListProperty,                      _INTL("Palabras/frases que pueden usarse para agrupar ciertos tipos de objetos.")],

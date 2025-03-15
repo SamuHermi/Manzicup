@@ -151,7 +151,7 @@ class BattlePointShop_Scene
       @sprites["qtywindow"].y       = Graphics.height - 102 - @sprites["qtywindow"].height
       itemwindow.refresh
     end
-    @sprites["battlepointwindow"].text = _INTL("Puntos de Batalla:\n<r>{1}", @adapter.getBPString)
+    @sprites["battlepointwindow"].text = _INTL("Monedas:\n<r>{1}", @adapter.getBPString)
   end
 
   def pbStartScene(stock, adapter)
@@ -515,7 +515,7 @@ def pbBattlePointShop(stock, speech = nil)
   stock.delete_if { |item| $bag.quantity(GameData::Item.get(item)) >= Settings::BAG_MAX_CHARM && GameData::Item.get(item).is_charm?}
   if speech.nil?
     pbMessage(_INTL("¡Bienvenido al Servicio de Intercambio!"))
-    pbMessage(_INTL("Podemos cambiar tus Puntos de Batalla por fabulosos premios."))
+    pbMessage(_INTL("Podemos cambiar tus Monedas por fabulosos premios."))
   else
     pbMessage(speech)
   end
