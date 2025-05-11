@@ -25,7 +25,7 @@ class PokemonSummary_Scene
     coords = [242, 346]
     pbDisplayHappiness(@pokemon, overlay, coords[0], coords[1])
   end
-  
+=begin
   #-----------------------------------------------------------------------------
   # Aliased to add IV rankings display.
   #-----------------------------------------------------------------------------
@@ -42,7 +42,7 @@ class PokemonSummary_Scene
     return if args.length == 0
     pbDisplayIVRatings(*args)
   end
-  
+=end
   #-----------------------------------------------------------------------------
   # Aliased to add a toggle for the Enhanced Stats display.
   #-----------------------------------------------------------------------------
@@ -214,16 +214,16 @@ class PokemonSummary_Scene
       textpos.push(
         [_INTL("{1}", name), xpos, ypos, align, base, statshadow],
         [_INTL("|"), 424, ypos, :right, base2, shadow2],
-        [@pokemon.ev[s.id].to_s, 408, ypos, :right, base2, shadow2],
-        [@pokemon.iv[s.id].to_s, 456, ypos, :right, base2, shadow2]
+        [@pokemon.ev[s.id].to_s, 456, ypos, :right, base2, shadow2],
+        [@pokemon.iv[s.id].to_s, 512, ypos, :right, base2, shadow2]
       )
       ev_total += @pokemon.ev[s.id]
       iv_total += @pokemon.iv[s.id]
       index += 1
     end
     textpos.push(
-      [_INTL("EV/IV Totales"), 224, 290, :left, base, shadow],
-      [sprintf("%d  |  %d", ev_total, iv_total), 434, 290, :center, base2, shadow2],
+      [_INTL("EV/IV Totales"), 256, 311, :left, base, shadow],
+      [sprintf("%d  |  %d", ev_total, iv_total), 434, 311, :center, base2, shadow2],
       [_INTL("EVs restantes:"), 224, 322, :left, base2, shadow2],
       [sprintf("%d/%d", Pokemon::EV_LIMIT - ev_total, Pokemon::EV_LIMIT), 444, 322, :center, base2, shadow2],
       [_INTL("Tipo de Poder Oculto:"), 224, 354, :left, base2, shadow2]

@@ -25,7 +25,7 @@ class Battle::Scene::PokemonDataBox < Sprite
   FEMALE_BASE_COLOR       = Color.new(248, 88, 40)
   FEMALE_SHADOW_COLOR     = NAME_SHADOW_COLOR
 
-  def initialize(battler, sideSize, viewport = nil)
+  def initialize(battler, sideSize, viewport = nil,trainerFoe = nil)
     super(viewport)
     @battler         = battler
     @sprites         = {}
@@ -35,26 +35,45 @@ class Battle::Scene::PokemonDataBox < Sprite
     @selected        = 0
     @show_hp_numbers = false
     @show_exp_bar    = false
-    initializeDataBoxGraphic(sideSize)
+    initializeDataBoxGraphic(sideSize, trainerFoe)
     initializeOtherGraphics(viewport)
     refresh
   end
 
-  def initializeDataBoxGraphic(sideSize)
+  def initializeDataBoxGraphic(sideSize, battle)
     onPlayerSide = @battler.index.even?
     # Get the data box graphic and set whether the HP numbers/Exp bar are shown
+    if(battle.opponent != nil)
+      if(battle.opponent[@battler.index / 2] == nil)
+        foeName = ""
+      elsif(!(["ANA","BRA","BRAIS","HERMI","IRIA","ISA","NEREA","RODRI","PABLO","SABO","SAMER"].include?(
+        battle.opponent[@battler.index / 2].trainer_type.to_s)))
+        foeName = ""
+      else    
+        foeName = battle.opponent[@battler.index / 2].trainer_type.to_s + "_"
+
+      end
+    else
+      foeName = ""
+    end      
+    playerName = battle.player[@battler.index / 2].trainer_type.to_s + "_"
+
+
+        
     if sideSize == 1   # One Pokémon on side, use the regular dara box BG
-      bgFilename = [_INTL("Graphics/UI/Battle/databox_normal"),
-                    _INTL("Graphics/UI/Battle/databox_normal_foe")][@battler.index % 2]
+
+      bgFilename = [_INTL("Graphics/UI/Battle/" + playerName + "databox_normal"),
+                    _INTL("Graphics/UI/Battle/" + foeName + "databox_normal_foe")][@battler.index % 2]
       if onPlayerSide
         @show_hp_numbers = true
         @show_exp_bar    = true
       end
     else   # Multiple Pokémon on side, use the thin dara box BG
-      bgFilename = [_INTL("Graphics/UI/Battle/databox_thin"),
-                    _INTL("Graphics/UI/Battle/databox_thin_foe")][@battler.index % 2]
+      bgFilename = [_INTL("Graphics/UI/Battle/" + playerName + "databox_thin"),
+                    _INTL("Graphics/UI/Battle/" + foeName + "databox_thin_foe"),
+                    ][@battler.index % 2]
     end
-    @databoxBitmap&.dispose
+    @databoxBitmap&.dispose 
     @databoxBitmap = AnimatedBitmap.new(bgFilename)
     # Determine the co-ordinates of the data box and the left edge padding width
     if onPlayerSide
@@ -116,7 +135,7 @@ class Battle::Scene::PokemonDataBox < Sprite
     super
     @hpBar.x     = value + @spriteBaseX + 102
     @expBar.x    = value + @spriteBaseX + 6
-    @hpNumbers.x = value + @spriteBaseX + 80
+    @hpNumbers.x = value + @spriteBaseX + 74
   end
 
   def y=(value)
@@ -230,9 +249,9 @@ class Battle::Scene::PokemonDataBox < Sprite
 
   def draw_level
     # "Lv" graphic
-    pbDrawImagePositions(self.bitmap, [[_INTL("Graphics/UI/Battle/overlay_lv"), @spriteBaseX + 140, 16]])
+    pbDrawImagePositions(self.bitmap, [[_INTL("Graphics/UI/Battle/overlay_lv"), @spriteBaseX + 130, 16]])
     # Level number
-    pbDrawNumber(@battler.level, self.bitmap, @spriteBaseX + 162, 16)
+    pbDrawNumber(@battler.level, self.bitmap, @spriteBaseX + 152, 16)
   end
 
   def draw_gender
@@ -241,7 +260,7 @@ class Battle::Scene::PokemonDataBox < Sprite
     gender_text  = (gender == 0) ? _INTL("♂") : _INTL("♀")
     base_color   = (gender == 0) ? MALE_BASE_COLOR : FEMALE_BASE_COLOR
     shadow_color = (gender == 0) ? MALE_SHADOW_COLOR : FEMALE_SHADOW_COLOR
-    pbDrawTextPositions(self.bitmap, [[gender_text, @spriteBaseX + 120, 14, :left, base_color, shadow_color]])
+    pbDrawTextPositions(self.bitmap, [[gender_text, @spriteBaseX + 110, 12, :left, base_color, shadow_color]])
   end
 
   def draw_status
@@ -303,9 +322,9 @@ class Battle::Scene::PokemonDataBox < Sprite
     return if !@battler.pokemon
     # Show HP numbers
     if @show_hp_numbers
-      pbDrawNumber(self.hp, @hpNumbers.bitmap, 54, 2, :right)
-      pbDrawNumber(-1, @hpNumbers.bitmap, 54, 2)   # / char
-      pbDrawNumber(@battler.totalhp, @hpNumbers.bitmap, 70, 2)
+      pbDrawNumber(self.hp, @hpNumbers.bitmap, 54, 0, :right)
+      pbDrawNumber(-1, @hpNumbers.bitmap, 54, 0)   # / char
+      pbDrawNumber(@battler.totalhp, @hpNumbers.bitmap, 70, 0)
     end
     # Resize HP bar
     w = 0
@@ -436,7 +455,7 @@ class Battle::Scene::AbilitySplashBar < Sprite
     self.bitmap = @contents
     pbSetSystemFont(self.bitmap)
     # Position the bar
-    self.x       = (side == 0) ? -Graphics.width / 2 : Graphics.width
+    self.x       = (side == 0) ? -Graphics.width / 2 : Graphics.width+64
     self.y       = (side == 0) ? 180 : 80
     self.z       = 120
     self.visible = false

@@ -57,7 +57,7 @@ class BannerReward < Sprite
     
     @starsSprite = Sprite.new(@viewport)
     starsBitmap = Bitmap.new("Graphics/UI/Gacha/Estrellas")
-    @starsSprite.bitmap = Bitmap.new(starsBitmap.width, starsBitmap.height/5)
+    @starsSprite.bitmap = Bitmap.new(starsBitmap.width, starsBitmap.height/6)
     starsY = @starsSprite.bitmap.height*@stars
     starsRect = Rect.new(0, starsY, @starsSprite.bitmap.width, @starsSprite.bitmap.height)
     @starsSprite.bitmap.blt(0, 0, starsBitmap, starsRect)
@@ -143,19 +143,18 @@ class BannerSprite < Sprite
     
     @reward1 = BannerReward.new(0,@rewards[0],@stars[0],@viewport)
     @reward1.x = 16
-    @reward1.y = 150
-    @reward1.zoom_x = 0.5
-    @reward1.zoom_y = 0.5
+    @reward1.y = 180
 
     @reward2 = BannerReward.new(1,@rewards[1],@stars[1],@viewport)
     @reward2.x = 176
-    @reward2.y = 111
-    
+    @reward2.y = 151
+    #@reward2.zoom_x = 2
+    #@reward2.zoom_y = 2  
+
     @reward3 = BannerReward.new(2,@rewards[2],@stars[2],@viewport)
     @reward3.x = 336
     @reward3.y = 50
-    @reward3.zoom_x = 0.5
-    @reward3.zoom_y = 0.5
+
 
 
   end
@@ -163,9 +162,9 @@ class BannerSprite < Sprite
   def x=(value)
     super(value)
     @bgSprite.x = value + @bgSprite.bitmap.width/2
-    @reward1.x = value + 350
-    @reward2.x = value + 206
-    @reward3.x = value + 350
+    @reward1.x = value + 450
+    @reward2.x = value + 306
+    @reward3.x = value + 450
   end
   
   def dispose
@@ -229,26 +228,26 @@ class GachaScene
     @sprites["coinsIcon"] = Sprite.new(@viewport)
     @sprites["coinsIcon"].bitmap = Bitmap.new("Graphics/UI/Gacha/coin")
     @sprites["coinsIcon"].x = 50
-    @sprites["coinsIcon"].y = Graphics.height/2 - 26
+    @sprites["coinsIcon"].y = Graphics.height/2 - 12
     
     @sprites["coins"] = Sprite.new(@viewport)
     @sprites["coins"].bitmap = Bitmap.new(Graphics.width,25)
     @sprites["coins"].x = 70
-    @sprites["coins"].y = Graphics.height/2 - 31 
+    @sprites["coins"].y = Graphics.height/2 - 16
 
     @sprites["costsing"] = Sprite.new(@viewport)
     @sprites["costsing"].bitmap = Bitmap.new(Graphics.width,25)
     pbSetSystemFont(@sprites["costsing"].bitmap)
     @sprites["costsing"].bitmap.font.size = 22
-    @sprites["costsing"].x = 280
-    @sprites["costsing"].y = 344    
+    @sprites["costsing"].x = 430
+    @sprites["costsing"].y = 308  
 
     @sprites["costmult"] = Sprite.new(@viewport)
     @sprites["costmult"].bitmap = Bitmap.new(Graphics.width,25)
     pbSetSystemFont(@sprites["costmult"].bitmap)
     @sprites["costmult"].bitmap.font.size = 22
-    @sprites["costmult"].x = 390
-    @sprites["costmult"].y = 344 
+    @sprites["costmult"].x = 530
+    @sprites["costmult"].y = 308
 
 
     pbSetSystemFont(@sprites["coins"].bitmap)
@@ -266,7 +265,7 @@ class GachaScene
       @sprites["button1"].bitmap = Bitmap.new("Graphics/UI/Gacha/Boton Chiquito")
     end
     @sprites["button1"].x = 16
-    @sprites["button1"].y = 312
+    @sprites["button1"].y = 342
     pbSetSystemFont(@sprites["button1"].bitmap)
     pbDrawShadowText(@sprites["button1"].bitmap,0,5,128,32,"Info.",base,shadow,1)
     
@@ -275,8 +274,8 @@ class GachaScene
     else
       @sprites["button2"].bitmap = Bitmap.new("Graphics/UI/Gacha/Boton")
     end
-    @sprites["button2"].x = 280
-    @sprites["button2"].y = 304
+    @sprites["button2"].x = 430
+    @sprites["button2"].y = 334
     @sprites["button2"].bitmap.font.size = 38
     pbSetSystemFont(@sprites["button2"].bitmap)
     pbDrawShadowText(@sprites["button2"].bitmap,9,12,75,48,"Single",base,shadow,1)
@@ -286,8 +285,8 @@ class GachaScene
     else
       @sprites["button3"].bitmap = Bitmap.new("Graphics/UI/Gacha/Boton")
     end
-    @sprites["button3"].x = 390
-    @sprites["button3"].y = 304
+    @sprites["button3"].x = 530
+    @sprites["button3"].y = 334
     @sprites["button3"].bitmap.font.size = 38
     pbSetSystemFont(@sprites["button3"].bitmap)
     pbDrawShadowText(@sprites["button3"].bitmap,9,12,75,48,"Multi",base,shadow,1)
@@ -298,7 +297,7 @@ class GachaScene
       @sprites["button4"].bitmap = Bitmap.new("Graphics/UI/Gacha/Boton Chiquito")
     end
     @sprites["button4"].x = 120
-    @sprites["button4"].y = 312
+    @sprites["button4"].y = 342
     
     pbSetSystemFont(@sprites["button4"].bitmap)
     pbDrawShadowText(@sprites["button4"].bitmap,0,5,128,32,"Salir",base,shadow,1)
@@ -322,7 +321,7 @@ class GachaScene
     end
     
     @sprites["text"].bitmap.clear
-    drawTextEx(@sprites["text"].bitmap,100,20,300,2,@banners[@banner_sel].name,Color.new(88, 88, 88),Color.new(255, 255, 255))
+    drawTextEx(@sprites["text"].bitmap,100,70,300,2,@banners[@banner_sel].name,Color.new(88, 88, 88),Color.new(255, 255, 255))
     
     @sprites["coins"].bitmap.clear
     pbDrawShadowText(@sprites["coins"].bitmap,0,0,Graphics.width,25,"x"+$player.battle_points.to_s,base,shadow)
@@ -522,7 +521,7 @@ class GachaScene
         when 2 #Single
           if $player.battle_points >= @banners[@banner_sel].cost 
             if pbMessage("¿Quieres hacer un single? SE GUARDARÁ LA PARTIDA",["Sí","No"])==0
-              gachaponRead(@banners[@banner_sel].script,false)
+              gachaponRead(@banner_sel,false,@banners[@banner_sel].type)
               $player.battle_points -= @banners[@banner_sel].cost 
               Game.save
               refresh
@@ -533,7 +532,7 @@ class GachaScene
         when 3 #Multi
           if $player.battle_points >= @banners[@banner_sel].cost * 10
             if pbMessage("¿Quieres hacer un multi? SE GUARDARÁ LA PARTIDA",["Sí","No"])==0
-              gachaponRead(@banners[@banner_sel].script,true)
+              gachaponRead(@banner_sel,true,@banners[@banner_sel].type)
               $player.battle_points -= @banners[@banner_sel].cost * 10
               Game.save
               refresh

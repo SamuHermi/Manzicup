@@ -347,8 +347,8 @@ module RandomDungeon
 
     def initialize(width, height, tileset, parameters = nil)
       @tileset     = tileset
-      @buffer_x    = ((Graphics.width.to_f / Game_Map::TILE_WIDTH) / 2).ceil
-      @buffer_y    = ((Graphics.height.to_f / Game_Map::TILE_HEIGHT) / 2).ceil
+      @buffer_x    = ((512.to_f / Game_Map::TILE_WIDTH) / 2).ceil
+      @buffer_y    = ((384.to_f / Game_Map::TILE_HEIGHT) / 2).ceil
       if @tileset.snap_to_large_grid
         @buffer_x += 1 if @buffer_x.odd?
         @buffer_y += 1 if @buffer_x.odd?

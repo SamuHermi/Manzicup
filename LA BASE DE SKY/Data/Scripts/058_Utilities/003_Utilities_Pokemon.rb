@@ -20,8 +20,9 @@ def pbStorePokemon(pkmn)
     pbMessage(_INTL("¡Las Cajas del PC están llenas y no tienen más espacio!"))
     return
   end
-  pkmn.record_first_moves
-
+  #pkmn.record_first_moves
+  Console.echo_li("\nAl guardar capturado: \n\t")
+  pkmn.first_moves.each { |m| Console.echo_li(m.to_s) }
   stored_box = $PokemonStorage.pbStoreCaught(pkmn)   
   if stored_box.nil?
     pbMessage(_INTL("¡El {1} que tenías se ha potenciado!", pkmn.name))      
@@ -104,6 +105,9 @@ def pbReceivePokemon(pkmn, level = 100, see_form = true)
     end
   end
   # Nickname and add the Pokémon
+  pkmn.calc_stats
+  Console.echo_li("\nAl recibir: \n\t")
+  pkmn.first_moves.each { |m| Console.echo_li(m.to_s) }
   pbStorePokemon(pkmn)
   return true
 end

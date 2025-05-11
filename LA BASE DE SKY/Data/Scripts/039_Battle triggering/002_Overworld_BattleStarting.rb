@@ -315,9 +315,9 @@ module BattleCreationHelperMethods
       pkmn.makeUnprimal
     end
     if $PokemonGlobal.partner
-      $player.heal_party
+      #$player.heal_party
       $PokemonGlobal.partner[3].each do |pkmn|
-        pkmn.heal
+        #pkmn.heal
         pkmn.makeUnmega
         pkmn.makeUnprimal
       end

@@ -108,9 +108,9 @@ class VoltorbFlip
     @sprites["curtainL"].visible = false
     @sprites["curtainR"].visible = false
     @sprites["curtain"].opacity = 100
-    if $player.coins >= Settings::MAX_COINS
-      pbMessage(_INTL("Has reunido {1} Monedas. No puedes acumular más.", Settings::MAX_COINS.to_s_formatted))
-      $player.coins = Settings::MAX_COINS   # As a precaution
+    if $player.battle_points >= Settings::MAX_BATTLE_POINTS
+      pbMessage(_INTL("Has reunido {1} Monedas. No puedes acumular más.", Settings::MAX_BATTLE_POINTS.to_s_formatted))
+      $player.battle_points = Settings::MAX_BATTLE_POINTS   # As a precaution
       @quit = true
 #    elsif !pbConfirmMessage(_INTL("Play Voltorb Flip Lv. {1}?", @level)) && $player.coins < Settings::MAX_COINS
 #      @quit = true
@@ -366,9 +366,9 @@ class VoltorbFlip
         @sprites["level"].bitmap.clear
         pbDrawShadowText(@sprites["level"].bitmap, 8, 154, 118, 28, _INTL("Nivel {1}", @level.to_s),
                          Color.new(60, 60, 60), Color.new(150, 190, 170), 1)
-        old_coins = $player.coins
-        $player.coins += @points
-        $stats.coins_won += $player.coins - old_coins if $player.coins > old_coins
+        old_coins = $player.battle_points
+        $player.battle_points += @points
+        $stats.coins_won += $player.battle_points - old_coins if $player.battle_points > old_coins
         @points = 0
         pbUpdateCoins
         @sprites["curtain"].opacity = 0
@@ -413,9 +413,9 @@ class VoltorbFlip
       elsif pbConfirmMessage(_INTL("Si sales ahora, recibirás {1} Moneda(s). ¿Quieres salir?",
                                    @points.to_s_formatted))
         pbMessage(_INTL("¡{1} recibió {2} Moneda(s)!", $player.name, @points.to_s_formatted))
-        old_coins = $player.coins
-        $player.coins += @points
-        $stats.coins_won += $player.coins - old_coins if $player.coins > old_coins
+        old_coins = $player.battle_points
+        $player.battle_points += @points
+        $stats.coins_won += $player.battle_points - old_coins if $player.battle_points > old_coins
         @points = 0
         pbUpdateCoins
         @sprites["curtain"].opacity = 0
@@ -460,7 +460,7 @@ class VoltorbFlip
   def pbUpdateCoins
     # Update coins display
     @sprites["totalCoins"].bitmap.clear
-    pbCreateCoins($player.coins, 46)
+    pbCreateCoins($player.battle_points, 46)
     pbDrawImagePositions(@sprites["totalCoins"].bitmap, @coins)
     # Update points display
     @sprites["currentCoins"].bitmap.clear
@@ -593,14 +593,8 @@ end
 #
 #===============================================================================
 def pbVoltorbFlip
-  if !$bag.has?(:COINCASE)
-    pbMessage(_INTL("No puedes jugar salvo que tengas un Monedero."))
-  elsif $player.coins == Settings::MAX_COINS
-    pbMessage(_INTL("¡Tu Monedero está lleno!"))
-  else
-    scene = VoltorbFlip.new
-    screen = VoltorbFlipScreen.new(scene)
-    screen.pbStartScreen
-  end
+  scene = VoltorbFlip.new
+  screen = VoltorbFlipScreen.new(scene)
+  screen.pbStartScreen
 end
 

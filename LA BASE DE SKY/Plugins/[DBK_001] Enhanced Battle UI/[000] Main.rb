@@ -65,14 +65,16 @@ class Battle::Scene
         @sprites["info_icon#{b.index}"].z = 300
         pbAddSpriteOutline(["info_icon#{b.index}", @viewport, b.pokemon, PictureOrigin::CENTER])
       end
-      ballY = @sprites["messageBox"].y - 58
-      5.times do |i|
+      ballY = @sprites["messageBox"].y - 58-20
+      7.times do |i|
         case i
-        when 0 then ballX = 64
-        when 1 then ballX = 146
-        when 2 then ballX = 256
-        when 3 then ballX = 366
-        when 4 then ballX = 448
+        when 0 then ballX = 64+64-84
+        when 1 then ballX = 64+64
+        when 2 then ballX = 146+64
+        when 3 then ballX = 256+64
+        when 4 then ballX = 366+64
+		when 5 then ballX = 448+64
+        when 6 then ballX = 448+64+84
         end
         @sprites["ball_icon#{i}"] = ItemIconSprite.new(ballX, ballY, nil, @viewport)
         @sprites["ball_icon#{i}"].visible = false
@@ -106,7 +108,7 @@ class Battle::Scene
     @battle.allBattlers.each do |b|
       @sprites["info_icon#{b.index}"].visible = false
     end
-    5.times { |i| pbUpdateBallIcon(i, nil, true) }
+    7.times { |i| pbUpdateBallIcon(i, nil, true) }
   end
   
   def pbRefreshUIPrompt(idxBattler = nil, window = nil)
@@ -265,14 +267,14 @@ class Battle::Scene::EnhancedUIPrompt < Sprite
     when Battle::Scene::FIGHT_BOX
       @bgSprite.src_rect.y = @bgBitmap.height / 2
       @bgSprite.src_rect.height = @bgBitmap.height / 2
-      offset = -46 if @battler && @battle.pbCanShift?(@battler)
+      #offset = -46 if @battler && @battle.pbCanShift?(@battler)
     else
       @bgSprite.src_rect.y = 0
-      if @battle.pbCanUsePokeBall?(@battler)
+      if @battle.pbCanUsePokeBall?(@battler) 
         @bgSprite.src_rect.height = @bgBitmap.height / 2
       else
         @bgSprite.src_rect.height = 28
-        offset = 24
+       # offset = 24
       end
     end
     @contents = Bitmap.new(@bgBitmap.width, @bgBitmap.height / 2)
@@ -345,7 +347,7 @@ class Battle::Scene::EnhancedUIPrompt < Sprite
     when Battle::Scene::FIGHT_BOX
       @bgSprite.src_rect.y = @bgBitmap.height / 2
       @bgSprite.src_rect.height = @bgBitmap.height / 2
-      offset = -46 if @battle.pbCanShift?(@battler)
+     # offset = -46 if @battle.pbCanShift?(@battler)
     else
       @bgSprite.src_rect.y = 0
       if @battle.pbCanUsePokeBall?(@battler)
@@ -353,7 +355,7 @@ class Battle::Scene::EnhancedUIPrompt < Sprite
       else
         @bgSprite.src_rect.height = 28
         textPos.delete_at(1)
-        offset = 24
+       # offset = 24
       end
     end
     self.y = 236 + offset

@@ -18,7 +18,7 @@ class AutomaticLevelScaling
     only_scale_if_lower: LevelScalingSettings::ONLY_SCALE_IF_LOWER,
     save_trainer_parties: LevelScalingSettings::SAVE_TRAINER_PARTIES,
     use_map_level_for_wild_pokemon: LevelScalingSettings::USE_MAP_LEVEL_FOR_WILD_POKEMON,
-    update_moves: true
+    update_moves: false
   }
 
   def self.difficulty=(id)
@@ -33,17 +33,21 @@ class AutomaticLevelScaling
     return @@settings
   end
 
-  def self.getScaledLevel
+  def self.getScaledLevel(partner = false)
+    
     level = pbBalancedLevel($player.party) - 2 # pbBalancedLevel increses level by 2 to challenge the player
 
     # Difficulty modifiers
     level += @@selected_difficulty.fixed_increase
-
+    random_incr = @@selected_difficulty.random_increase
+    if partner
+      random_incr = 0
+    end
     unless @@settings[:proportional_scaling] || @@settings[:use_map_level_for_wild_pokemon]
-      if @@selected_difficulty.random_increase < 0
-        level += rand(@@selected_difficulty.random_increase..0)
-      elsif @@selected_difficulty.random_increase > 0
-        level += rand(@@selected_difficulty.random_increase)
+      if random_incr < 0
+        level += rand(random_incr..0)
+      elsif random_incr > 0
+        level += rand(random_incr)
       end
     end
 
@@ -139,7 +143,7 @@ class AutomaticLevelScaling
 
   def self.setSettings(
     temporary: false,
-    update_moves: true,
+    update_moves: false,
     automatic_evolutions: LevelScalingSettings::AUTOMATIC_EVOLUTIONS,
     include_non_natural_evolutions: LevelScalingSettings::INCLUDE_NON_NATURAL_EVOLUTIONS,
     include_previous_stages: LevelScalingSettings::INCLUDE_PREVIOUS_STAGES,

@@ -11,8 +11,8 @@ module MessageConfig
   FEMALE_TEXT_MAIN_COLOR   = Color.new(226, 104, 94)   # Used by message tag "\r"
   FEMALE_TEXT_SHADOW_COLOR = Color.new(168, 40, 31)
 
-  HERMI_TEXT_COLOR         = Color.new(255, 169,  98)
-  HERMI_TEXT_SHADOW_COLOR  = Color.new(195, 127,  80)
+  HERMI_TEXT_COLOR         = Color.new(255, 157,  76)
+  HERMI_TEXT_SHADOW_COLOR  = Color.new(202, 104,  58)
   IRIA_TEXT_COLOR          = Color.new(  0, 112, 248)
   IRIA_TEXT_SHADOW_COLOR   = Color.new(  0,  88, 196)
   SAMER_TEXT_COLOR         = Color.new(208,  56, 184)
@@ -25,16 +25,16 @@ module MessageConfig
   PABLO_TEXT_SHADOW_COLOR  = Color.new(166,   6,   6)
   BRAIS_TEXT_COLOR         = Color.new(114,  64, 232)
   BRAIS_TEXT_SHADOW_COLOR  = Color.new(184, 168, 224)
-  JESS_TEXT_COLOR          = Color.new(100, 100, 100)
-  JESS_TEXT_SHADOW_COLOR   = Color.new( 52,  52,  52)
-  ANA_TEXT_COLOR           = Color.new(200, 200, 200)
-  ANA_TEXT_SHADOW_COLOR    = Color.new(150, 150, 150)
-  RODRI_TEXT_COLOR         = Color.new(232, 208,  32)
-  RODRI_TEXT_SHADOW_COLOR  = Color.new(174, 163,  18)
-  SABO_TEXT_COLOR          = Color.new(144, 111, 121)
-  SABO_TEXT_SHADOW_COLOR   = Color.new( 94,  77,  82)
-  NEREA_TEXT_COLOR         = Color.new(  0, 232, 217)
-  NEREA_TEXT_SHADOW_COLOR  = Color.new( 21, 166, 181)
+  RODRI_TEXT_COLOR         = Color.new(100, 100, 100)
+  RODRI_TEXT_SHADOW_COLOR  = Color.new( 52,  52,  52)
+  NEREA_TEXT_COLOR         = Color.new(104, 151, 255)
+  NEREA_TEXT_SHADOW_COLOR  = Color.new( 83, 120, 204)
+  #SABO_TEXT_COLOR          = Color.new(232, 208,  32)
+  #SABO_TEXT_SHADOW_COLOR   = Color.new(174, 163,  18)
+  SABO_TEXT_COLOR          = Color.new(255, 255,  30)
+  SABO_TEXT_SHADOW_COLOR   = Color.new(197, 171,  15)
+  ANA_TEXT_COLOR           = Color.new(  0, 232, 217)
+  ANA_TEXT_SHADOW_COLOR    = Color.new( 21, 166, 181)
 
   FONT_NAME                = "Power Green"
   FONT_SIZE                = 27
@@ -206,6 +206,35 @@ end
 def pbBottomRight(window)
   window.x = Graphics.width - window.width
   window.y = Graphics.height - window.height
+end
+
+def getPlayerName
+  case $player.character_ID
+    when 1
+      messageFilename= "hermi"
+    when 2
+      messageFilename= "iria"
+    when 3
+      messageFilename= "jess"
+    when 4
+      messageFilename= "brais"
+    when 5
+      messageFilename= "isa"
+    when 6
+      messageFilename= "samer"
+    when 7
+      messageFilename= "rodri"
+    when 8
+      messageFilename= "bra"
+    when 9
+      messageFilename= "ana"
+    when 10
+      messageFilename= "pablo"  
+    when 11
+      messageFilename= "sabo" 
+    when 12
+      messageFilename= "nerea"
+  end
 end
 
 def pbBottomLeft(window)

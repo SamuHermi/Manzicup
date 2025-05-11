@@ -139,7 +139,7 @@ module Settings
   SHOW_ITEM_DESCRIPTIONS_ON_RECEIVE = true
   
   # Mostrar MTs y MOs en el recordador
-  SHOW_MTS_MOS_IN_MOVE_RELEARNER = true
+  SHOW_MTS_MOS_IN_MOVE_RELEARNER = false
   
   # Cerrar el recordador luego de cada ataque
   CLOSE_MOVE_RELEARNER_AFTER_TEACHING_MOVE = false

@@ -16,7 +16,7 @@ class Battle::Scene
   PLAYER_BASE_Y        = Settings::SCREEN_HEIGHT - 80
   # Centre middle of the foe's side base graphic
   FOE_BASE_X           = Settings::SCREEN_WIDTH - 128
-  FOE_BASE_Y           = (Settings::SCREEN_HEIGHT * 3 / 4) - 112
+  FOE_BASE_Y           = (Settings::SCREEN_HEIGHT * 3 / 4) - 130
   # Default focal points of user and target in animations - do not change!
   # Is the centre middle of each sprite
   FOCUSUSER_X          = 128
@@ -134,7 +134,7 @@ class Battle::Scene
     @battle.battlers.each_with_index do |battler, i|
       next if !battler
       pbChangePokemon(i, @sprites["pokemon_#{i}"].pkmn)
-      @sprites["dataBox_#{i}"].initializeDataBoxGraphic(@battle.pbSideSize(i))
+      @sprites["dataBox_#{i}"].initializeDataBoxGraphic(@battle.pbSideSize(i),nil)
       @sprites["dataBox_#{i}"].refresh
     end
   end

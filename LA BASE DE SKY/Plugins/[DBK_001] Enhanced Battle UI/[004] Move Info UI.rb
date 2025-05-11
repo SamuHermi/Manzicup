@@ -90,9 +90,9 @@ class Battle::Scene
     typenumber = GameData::Type.get(type).icon_position
     bgnumber = (Settings::USE_MOVE_TYPE_BACKGROUNDS) ? typenumber + 1 : 0
     imagePos = [
-      [@path + "move_bg",      xpos,       ypos,     0, bgnumber * 164, 512, 164],
-      ["Graphics/UI/types",    xpos + 282, ypos + 8, 0, typenumber * 28, 64, 28],
-      ["Graphics/UI/category", xpos + 350, ypos + 8, 0, category * 28, 64, 28]
+      [@path + "move_bg",      xpos,       ypos,     0, bgnumber * 164, 640, 164],
+      ["Graphics/UI/types",    xpos + 282 + 50-22-36, ypos + 6, 0, typenumber * 28, 64, 28],
+      ["Graphics/UI/category", xpos + 350+90-34, ypos + 6, 0, category * 28, 64, 28]
     ]
     pbDrawMoveFlagIcons(xpos, ypos, move, imagePos)
     pbDrawTypeEffectiveness(xpos, ypos, move, type, imagePos)
@@ -197,15 +197,15 @@ class Battle::Scene
     displayPriority = (pri    == 0) ? "---" : (pri > 0) ? "+" + pri.to_s : pri.to_s
     displayChance   = (chance == 0) ? "---" : chance.ceil.to_s + "%"
     textPos.push(
-      [move.name,       xpos + 10,  ypos + 12, :left,   BASE_LIGHT, SHADOW_LIGHT, :outline],
-      [_INTL("Pod:"),    xpos + 256, ypos + 40, :left,   BASE_LIGHT, SHADOW_LIGHT],
-      [displayPower,    xpos + 309, ypos + 40, :center, powBase,    powShadow],
-      [_INTL("Pre:"),    xpos + 348, ypos + 40, :left,   BASE_LIGHT, SHADOW_LIGHT],
-      [displayAccuracy, xpos + 401, ypos + 40, :center, accBase,    accShadow],
-      [_INTL("Pri:"),    xpos + 442, ypos + 40, :left,   BASE_LIGHT, SHADOW_LIGHT],
-      [displayPriority, xpos + 484, ypos + 40, :center, priBase,    priShadow],
-      [_INTL("Efect:"),    xpos + 428, ypos + 12, :left,   BASE_LIGHT, SHADOW_LIGHT],
-      [displayChance,   xpos + 484, ypos + 12, :center, effBase,    effShadow]
+      [move.name,       xpos + 10,  ypos + 12, :left,   BASE_LIGHT, SHADOW_LIGHT],
+      [_INTL("Poder:"),    xpos + 310 + 78 - 14 - 42-14, ypos + 40, :left,   BASE_LIGHT, SHADOW_LIGHT],
+      [displayPower,    xpos + 370+ 78 - 42-4-8, ypos + 40, :center, powBase,    powShadow],
+      [_INTL("Prec.:"),    xpos + 400 + 90 -55, ypos + 40, :left,   BASE_LIGHT, SHADOW_LIGHT],
+      [displayAccuracy, xpos + 433+ 90 + 44-58, ypos + 40, :center, accBase,    accShadow],
+      [_INTL("Prior:"),    xpos + 470 + 108-30, ypos + 40, :left,   BASE_LIGHT, SHADOW_LIGHT],
+      [displayPriority, xpos + 484+ 120 - 62 + 72, ypos + 40, :center, priBase,    priShadow],
+      [_INTL("Efecto:"),    xpos + 455 + 108-30, ypos + 12, :left,   BASE_LIGHT, SHADOW_LIGHT],
+      [displayChance,   xpos + 494 + 122, ypos + 12, :center, effBase,    effShadow]
     )
     textPos.push([bonus[0], xpos + 8, ypos + 132, :left, bonus[1], bonus[2], :outline]) if bonus
     pbDrawTextPositions(@enhancedUIOverlay, textPos)
@@ -218,7 +218,7 @@ class Battle::Scene
   #-----------------------------------------------------------------------------
   def pbDrawMoveFlagIcons(xpos, ypos, move, imagePos)
     flagX = xpos + 6
-    flagY = ypos + 32
+    flagY = ypos + 32+2
     icons = 0
     flags = move.flags.clone
     if GameData::Target.get(move.target).targets_foe
@@ -305,15 +305,15 @@ class Battle::Scene
         when 1 # Abilities that alter additional effect chance.
           next if power == 0 || [0, 100].include?(chance) || battler.ability_id != :SERENEGRACE
           chance = [chance * 2, 100].min
-          bonus = [_INTL("Effect chance boosted by the {1} ability.", battler.abilityName), BASE_RAISED, SHADOW_RAISED]
+          bonus = [_INTL("Efecto secundario aumentado por la habilidad {1}.", battler.abilityName), BASE_RAISED, SHADOW_RAISED]
         #-----------------------------------------------------------------------
         when 2 # Abilities that alter priority.
           oldPri = pri
           pri = Battle::AbilityEffects.triggerPriorityChange(battler.ability, battler, move, pri)
           if pri > oldPri
-            bonus = [_INTL("Priority boosted by the {1} ability.", battler.abilityName), BASE_RAISED, SHADOW_RAISED]
+            bonus = [_INTL("Prioridad aumentada por la habilidad {1}.", battler.abilityName), BASE_RAISED, SHADOW_RAISED]
           elsif pri < oldPri
-            bonus = [_INTL("Priority lowered by the {1} ability.", battler.abilityName), BASE_LOWERED, SHADOW_LOWERED]
+            bonus = [_INTL("Prioridad aumentada por la habilidad {1}.", battler.abilityName), BASE_LOWERED, SHADOW_LOWERED]
           end
         #-----------------------------------------------------------------------
         when 3 # Abilities that alter accuracy.
@@ -324,9 +324,9 @@ class Battle::Scene
           )
           acc = [accMods[:base_accuracy] * accMods[:accuracy_multiplier], 100].min
           if acc > oldAcc || acc == 0
-            bonus = [_INTL("Accuracy boosted by the {1} ability.", battler.abilityName), BASE_RAISED, SHADOW_RAISED]
+            bonus = [_INTL("Precisión aumentada por la habilidad {1}.", battler.abilityName), BASE_RAISED, SHADOW_RAISED]
           elsif acc < oldAcc
-            bonus = [_INTL("Accuracy lowered by the {1} ability.", battler.abilityName), BASE_LOWERED, SHADOW_LOWERED]
+            bonus = [_INTL("Precisión aumentada por la habilidad {1}.", battler.abilityName), BASE_LOWERED, SHADOW_LOWERED]
           end
         #-----------------------------------------------------------------------
         when 4 # Abilities that alter base power.
@@ -360,9 +360,9 @@ class Battle::Scene
         acc = [accMods[:base_accuracy] * accMods[:accuracy_multiplier], 100].min
         if acc != oldAcc
           if acc > oldAcc || acc == 0
-            bonus = [_INTL("Accuracy boosted by the held {1}.", battler.itemName), BASE_RAISED, SHADOW_RAISED]
+            bonus = [_INTL("Precisión aumentada por el {1} equipado.", battler.itemName), BASE_RAISED, SHADOW_RAISED]
           elsif acc < oldAcc
-            bonus = [_INTL("Accuracy lowered by the held {1}.", battler.itemName), BASE_LOWERED, SHADOW_LOWERED]
+            bonus = [_INTL("Precisión disminuida por el {1} equipado.", battler.itemName), BASE_LOWERED, SHADOW_LOWERED]
           end
         end
       end
@@ -374,9 +374,9 @@ class Battle::Scene
         )
         power *= powMults[:power_multiplier]
         if power > oldPower
-          bonus = [_INTL("Power boosted by the held {1}.", battler.itemName), BASE_RAISED, SHADOW_RAISED]
+          bonus = [_INTL("Poder aumentado por el {1} equipado.", battler.itemName), BASE_RAISED, SHADOW_RAISED]
         elsif power < oldPower
-          bonus = [_INTL("Power weakened by the held {1}.", battler.itemName), BASE_LOWERED, SHADOW_LOWERED]
+          bonus = [_INTL("Poder disminuido por el {1} equipado.", battler.itemName), BASE_LOWERED, SHADOW_LOWERED]
         end
       end
     end

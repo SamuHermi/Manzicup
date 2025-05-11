@@ -5384,172 +5384,6 @@ Price = 20
 Flags = Berry,Fling_10,NaturalGift_DARK_80
 Description = Restaura los PS del Pokémon que la usa en un apuro, pero puede causar confusión.
 #-------------------------------
-[RAZZBERRY]
-Name = Baya Frambu
-NamePlural = Bayas Frambu
-Pocket = 5
-Price = 20
-Flags = Berry,Fling_10,NaturalGift_STEEL_80
-Description = Si la plantas en tierra suelta, saldrá una planta de Frambu.
-#-------------------------------
-[BLUKBERRY]
-Name = Baya Oram
-NamePlural = Bayas Oram
-Pocket = 5
-Price = 20
-Flags = Berry,Fling_10,NaturalGift_FIRE_90
-Description = Si la plantas en tierra suelta, saldrá una planta de Oram.
-#-------------------------------
-[NANABBERRY]
-Name = Baya Latano
-NamePlural = Bayas Latano
-Pocket = 5
-Price = 20
-Flags = Berry,Fling_10,NaturalGift_WATER_90
-Description = Si la plantas en tierra suelta, saldrá una planta de Latano.
-#-------------------------------
-[WEPEARBERRY]
-Name = Baya Peragu
-NamePlural = Bayas Peragu
-Pocket = 5
-Price = 20
-Flags = Berry,Fling_10,NaturalGift_ELECTRIC_90
-Description = Si la plantas en tierra suelta, saldrá una planta de Peragu.
-#-------------------------------
-[PINAPBERRY]
-Name = Baya Pinia
-NamePlural = Bayas Pinia
-Pocket = 5
-Price = 20
-Flags = Berry,Fling_10,NaturalGift_GRASS_90
-Description = Si la plantas en tierra suelta, saldrá una planta de Pinia.
-#-------------------------------
-[POMEGBERRY]
-Name = Baya Grana
-NamePlural = Bayas Grana
-Pocket = 5
-Price = 20
-FieldUse = OnPokemon
-Flags = Berry,Fling_10,NaturalGift_ICE_90
-Description = Si la usas en un Pokémon te ganas su amistad, pero también reduces sus PS.
-#-------------------------------
-[KELPSYBERRY]
-Name = Baya Algama
-NamePlural = Bayas Algama
-Pocket = 5
-Price = 20
-FieldUse = OnPokemon
-Flags = Berry,Fling_10,NaturalGift_FIGHTING_90
-Description = Si la usas en un Pokémon te ganas su amistad, pero reduces su Ataque.
-#-------------------------------
-[QUALOTBERRY]
-Name = Baya Ispero
-NamePlural = Bayas Ispero
-Pocket = 5
-Price = 20
-FieldUse = OnPokemon
-Flags = Berry,Fling_10,NaturalGift_POISON_90
-Description = Si la usas en un Pokémon te ganas su amistad, pero reduces su Defensa.
-#-------------------------------
-[HONDEWBERRY]
-Name = Baya Meluce
-NamePlural = Bayas Meluce
-Pocket = 5
-Price = 20
-FieldUse = OnPokemon
-Flags = Berry,Fling_10,NaturalGift_GROUND_90
-Description = Si la usas en un Pokémon te ganas su amistad, pero reduces su Ataque Especial.
-#-------------------------------
-[GREPABERRY]
-Name = Baya Uvav
-NamePlural = Bayas Uvav
-Pocket = 5
-Price = 20
-FieldUse = OnPokemon
-Flags = Berry,Fling_10,NaturalGift_FLYING_90
-Description = Si la usas en un Pokémon te ganas su amistad, pero reduces su Defensa Especial.
-#-------------------------------
-[TAMATOBERRY]
-Name = Baya Tamate
-NamePlural = Bayas Tamate
-Pocket = 5
-Price = 20
-FieldUse = OnPokemon
-Flags = Berry,Fling_10,NaturalGift_PSYCHIC_90
-Description = Si la usas en un Pokémon te ganas su amistad, pero baja su Velocidad.
-#-------------------------------
-[CORNNBERRY]
-Name = Baya Mais
-NamePlural = Bayas Mais
-Pocket = 5
-Price = 20
-Flags = Berry,Fling_10,NaturalGift_BUG_90
-Description = Si la plantas en tierra suelta, saldrá una planta de Mais.
-#-------------------------------
-[MAGOSTBERRY]
-Name = Baya Aostan
-NamePlural = Bayas Aostan
-Pocket = 5
-Price = 20
-Flags = Berry,Fling_10,NaturalGift_ROCK_90
-Description = Si la plantas en tierra suelta, saldrá una planta de Aostan.
-#-------------------------------
-[RABUTABERRY]
-Name = Baya Rautan
-NamePlural = Bayas Rautan
-Pocket = 5
-Price = 20
-Flags = Berry,Fling_10,NaturalGift_GHOST_90
-Description = Si la plantas en tierra suelta, saldrá una planta de Rautan.
-#-------------------------------
-[NOMELBERRY]
-Name = Baya Monli
-NamePlural = Bayas Monli
-Pocket = 5
-Price = 20
-Flags = Berry,Fling_10,NaturalGift_DRAGON_90
-Description = Si la plantas en tierra suelta, saldrá una planta de Monli.
-#-------------------------------
-[SPELONBERRY]
-Name = Baya Wikano
-NamePlural = Bayas Wikano
-Pocket = 5
-Price = 20
-Flags = Berry,Fling_10,NaturalGift_DARK_90
-Description = Si la plantas en tierra suelta, saldrá una planta de Wikano.
-#-------------------------------
-[PAMTREBERRY]
-Name = Baya Plama
-NamePlural = Bayas Plama
-Pocket = 5
-Price = 20
-Flags = Berry,Fling_10,NaturalGift_STEEL_90
-Description = Si la plantas en tierra suelta, saldrá una planta de Plama.
-#-------------------------------
-[WATMELBERRY]
-Name = Baya Sambia
-NamePlural = Bayas Sambia
-Pocket = 5
-Price = 20
-Flags = Berry,Fling_10,NaturalGift_FIRE_100
-Description = Si la plantas en tierra suelta, saldrá una planta de Sambia.
-#-------------------------------
-[DURINBERRY]
-Name = Baya Rudion
-NamePlural = Bayas Rudion
-Pocket = 5
-Price = 20
-Flags = Berry,Fling_10,NaturalGift_WATER_100
-Description = Si la plantas en tierra suelta, saldrá una planta de Rudion.
-#-------------------------------
-[BELUEBERRY]
-Name = Baya Andano
-NamePlural = Bayas Andano
-Pocket = 5
-Price = 20
-Flags = Berry,Fling_10,NaturalGift_ELECTRIC_100
-Description = Si la plantas en tierra suelta, saldrá una planta de Andano.
-#-------------------------------
 [OCCABERRY]
 Name = Baya Caoca
 NamePlural = Bayas Caoca
@@ -6689,3 +6523,13 @@ Price = 0
 FieldUse = Direct
 Flags = KeyItem
 Description = Incubadora que permite mantener 6 huevos hasta que eclosionen.
+#-------------------------------
+[POKEFLUTE]
+Name = Poké Flauta
+NamePlural = Poké Flautas
+Pocket = 8
+Price = 0
+FieldUse = OnPokemon
+BattleUse = Direct
+Flags = KeyItem
+Description = Una flauta que permite despertar a un Pokémon dormido, es el único instrumento que sabes tocar.

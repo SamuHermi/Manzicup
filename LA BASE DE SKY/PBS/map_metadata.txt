@@ -246,6 +246,7 @@ Environment = Rock
 [048]   # Bosque
 Name = Bosque
 Outdoor = true
+SnapEdges = true
 Dungeon = true
 BattleBack = forest
 #-------------------------------
@@ -420,7 +421,9 @@ BattleBack = cave1
 Name = Mar
 Outdoor = true
 Weather = HeavyRain,100
+SnapEdges = true
 Dungeon = true
+BattleBack = water
 Environment = MovingWater
 #-------------------------------
 [078]   # Volcán
@@ -441,6 +444,7 @@ BattleBack = distortion
 [080]   # Pico Nevado
 Name = Pico Nevado
 Weather = Snow,100
+SnapEdges = true
 Dungeon = true
 BattleBack = snow
 #-------------------------------
@@ -455,6 +459,10 @@ TrainerBattleBGM = Battle Halloween Town
 [082]   # Jardín
 Name = Jardín
 Outdoor = true
+SnapEdges = true
+#-------------------------------
+[084]   # Criadero
+Name = Criadero
 SnapEdges = true
 #-------------------------------
 [089]   # Gimnasio AmongUs
@@ -473,6 +481,10 @@ Weather = StrongWinds,100
 Dungeon = true
 BattleBack = sky
 #-------------------------------
+[095]   # Coliseo
+Name = Coliseo
+BattleBack = indoor1
+#-------------------------------
 [096]   # Campo
 Name = Campo
 Dungeon = true
@@ -483,3 +495,31 @@ Name = Labo
 DarkMap = true
 Dungeon = true
 BattleBack = labo
+WildBattleBGM = Battle labo
+#-------------------------------
+[099]   # Colonipenal
+Name = Colonipenal
+SnapEdges = true
+#-------------------------------
+[103]   # Babatundra
+Name = Babatundra
+SnapEdges = true
+#-------------------------------
+[104]   # Sauna
+SnapEdges = true
+#-------------------------------
+[105]   # Cueva de la sierpe
+Name = Cueva de la sierpe
+SnapEdges = true
+#-------------------------------
+[106]   # La niña
+Name = La niña
+SnapEdges = true
+#-------------------------------
+[107]   # Granja
+Name = Granja
+SnapEdges = true
+#-------------------------------
+[108]   # Churruca
+Name = Churruca
+SnapEdges = true

@@ -1,0 +1,5 @@
+Name      = Roulette Minigame
+Version   = 1.1
+Essentials = 21.1
+Website   = https://www.pokecommunity.com/showthread.php?t=318598
+Credits   = FL

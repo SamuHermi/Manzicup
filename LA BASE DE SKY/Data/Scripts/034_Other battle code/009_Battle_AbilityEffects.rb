@@ -1532,7 +1532,7 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:STRIKER,
 
 Battle::AbilityEffects::DamageCalcFromUser.add(:SPEEDFORCE,
   proc { |ability, user, target, move, mults, power, type|
-    mults[:attack_multiplier] += 0.2*user.speed 
+    mults[:attack_multiplier] += 0.1*user.speed 
   }
 )
 
@@ -1629,7 +1629,7 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:SHEERFORCE,
 
 Battle::AbilityEffects::DamageCalcFromUser.add(:SLOWSTART,
   proc { |ability, user, target, move, mults, power, type|
-    mults[:attack_multiplier] /= 2 if user.effects[PBEffects::SlowStart] > 0 && move.physicalMove?
+    mults[:attack_multiplier] /= 2 if user.effects[PBEffects::SlowStart] > 0 #&& move.physicalMove?
   }
 )
 
@@ -2592,9 +2592,12 @@ Battle::AbilityEffects::OnEndOfUsingMove.add(:PREDATOR,
   proc { |ability, user, targets, move, battle|
     next if battle.pbAllFainted?(user.idxOpposingSide)
     numFainted = 0
+    
     targets.each { |b| numFainted += 1 if b.damageState.fainted }
     next if numFainted == 0 
-    user.battler.pbRecoverHP(battler.totalhp/4)
+    battle.pbShowAbilitySplash(user)
+    user.pbRecoverHP(user.totalhp/4)
+    battle.pbHideAbilitySplash(user)
   }
 )
 

@@ -7,7 +7,6 @@
 EventHandlers.add(:on_wild_pokemon_created, :automatic_level_scaling,
   proc { |pokemon|
     id = pbGet(LevelScalingSettings::WILD_VARIABLE)
-    Console.echo_li(id.to_s)
     next if id == 0
     
     AutomaticLevelScaling.difficulty = id
@@ -52,7 +51,7 @@ EventHandlers.add(:on_trainer_load, :automatic_level_scaling,
 )
 
 # Updates partner's pokemon levels after battle
-EventHandlers.add(:on_end_battle, :update_partner_levels,
+EventHandlers.add(:on_start_battle, :update_partner_levels,
   proc { |_decision, _canLose|
     id = pbGet(LevelScalingSettings::TRAINER_VARIABLE)
     next if !$PokemonGlobal.partner || id == 0
@@ -86,6 +85,6 @@ EventHandlers.add(:on_enter_map, :define_map_level,
   proc { |old_map_id|
     next if !AutomaticLevelScaling.settings[:use_map_level_for_wild_pokemon]
     next if $PokemonGlobal.map_levels.has_key?($game_map.map_id)
-    $PokemonGlobal.map_levels[$game_map.map_id] = AutomaticLevelScaling.getScaledLevel
+    $PokemonGlobal.map_levels[$game_map.map_id] = AutomaticLevelScaling.getScaledLevel(true)
   }
 )

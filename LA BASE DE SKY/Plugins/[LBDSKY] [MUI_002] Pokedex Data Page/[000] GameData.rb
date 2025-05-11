@@ -148,9 +148,9 @@ module GameData
       # Determines the species name.
       if GameData::Species.exists?(species)
         prefix = ""
-        if @id.to_s.include?("female")
+        if @id.to_s.downcase.include?("female")
           prefix = " siendo hembra"
-        elsif @id.to_s.include?("male")
+        elsif @id.to_s.downcase.include?("male")
           prefix = " siendo macho"
         end
         form = false if evo == :MOTHIM
@@ -205,7 +205,7 @@ module GameData
         end
       else
         case param
-        when "  "
+        when "MossRock"
           location = (c.empty?) ? "Roca Musgosa" : c[2] + "Roca Musgosa" + c[0]
           param_name = _INTL("cerca de una {1}", location)
         when "IceRock"
@@ -216,27 +216,27 @@ module GameData
           param_name = _INTL("en un {1}", location)
         else
           location = (c.empty?) ? "Área Especial" : c[2] + "Área Especial" + c[0]
-          param_name = _INTL("En un {1}", location)
+          param_name = _INTL("en un {1}", location)
         end
       end
       #-------------------------------------------------------------------------
       # Determines the first portion of the description based on proc type.
       if @event_proc
-        desc = (full) ? "Tiene #{full_name}" : "O" 
+        desc = (full) ? "Hacer que #{full_name}" : "O" 
         desc = _INTL("{1} lanza un evento especial", desc)
       elsif @use_item_proc
-        desc = (full) ? "Usando #{param_name} en #{full_name} " : "Usar #{param_name}"
+        desc = (full) ? "Usando#{param_name} en #{full_name}" : "Usar#{param_name}"
         #desc = _INTL("{1} {2}", desc, param_name)
       elsif @on_trade_proc
         desc = (full) ? _INTL("Intercambio {1}", full_name) : _INTL("Intercambio")
       elsif @after_battle_proc
-        desc = (full) ? "Tiene #{full_name}" : ""
-        desc = _INTL("{1} finaliza una batalla", desc)
+        desc = (full) ? "Hacer que #{full_name}" : ""
+        desc = _INTL("{1} finalice un combate", desc)
       elsif @level_up_proc
         if @any_level_up
-          desc = (full) ? _INTL("Subir de nivel a {1}", full_name) : _INTL("Nivel")
+          desc = (full) ? _INTL("Subir de nivel a {1}", full_name) : _INTL("Subir un nivel")
         else
-          desc = (full) ? "Subir a #{full_name}" : "O"
+          desc = (full) ? _INTL("Subir a") + " #{full_name}" : "O"
           desc = _INTL("{1} al nivel {2}", desc, param)
         end
       elsif @id == :Shedinja
@@ -290,21 +290,21 @@ GameData::Evolution.each do |evo|
   when :HappinessDay                           then evo.description = _INTL("de día con felicidad alta")
   when :HappinessNight                         then evo.description = _INTL("de noche con felicidad alta")
   when :HappinessMove                          then evo.description = _INTL("con felicidad alta y sabiendo el movimiento {1}")
-  when :HappinessMoveType                      then evo.description = _INTL("con felicidad alta y sabiendo un ataque de tipo {1}")
+  when :HappinessMoveType                      then evo.description = _INTL("con felicidad alta y sabiendo un ataque de tipo{1}")
   when :HappinessHoldItem, :HoldItemHappiness  then evo.description = _INTL("con felicidad alta mientras lleva equipado {1}")
   when :Beauty                                 then evo.description = _INTL("con belleza alta")
-  when :HoldItem, :TradeItem                   then evo.description = _INTL("sosteniendo {1}")
-  when :HoldItemMale, :HoldItemFemale          then evo.description = _INTL("sosteniendo {1}")
-  when :DayHoldItem                            then evo.description = _INTL("de día sosteniendo {1}")
-  when :NightHoldItem                          then evo.description = _INTL("de noche sosteniendo {1}")
+  when :HoldItem, :TradeItem                   then evo.description = _INTL("llevando equipado{1}")
+  when :HoldItemMale, :HoldItemFemale          then evo.description = _INTL("llevando equipado{1}")
+  when :DayHoldItem                            then evo.description = _INTL("de día llevando equipado{1}")
+  when :NightHoldItem                          then evo.description = _INTL("de noche llevando equipado{1}")
   when :HasMove                                then evo.description = _INTL("sabiendo el movimiento {1}")
   when :HasMoveType                            then evo.description = _INTL("sabiendo un movimiento tipo {1}")
   when :HasInParty                             then evo.description = _INTL("teniendo a {1} en el equipo")
   when :Location                               then evo.description = _INTL("estando en {1}")
-  when :LocationFlag                           then evo.description = _INTL("mientras {1}")
+  when :LocationFlag                           then evo.description = _INTL("mientras esté {1}")
   when :Region                                 then evo.description = _INTL("estando el la región {1}")
   when :TradeSpecies                           then evo.description = _INTL("por {1}")
-  when :BattleDealCriticalHit                  then evo.description = _INTL("causando {1} or mas golpes críticos")
+  when :BattleDealCriticalHit                  then evo.description = _INTL("causando {1} o más golpes críticos")
   when :EventAfterDamageTaken                  then evo.description = _INTL("tras perder al menos 49 PS")
   when :LevelWalk                              then evo.description = _INTL("tras dar {1} pasos estando como primer pokémon del equipo")
   when :LevelWithPartner                       then evo.description = _INTL("subiendo de nivel junto a un aliado")
@@ -354,7 +354,7 @@ module GameData
       return 0
     end
 		
-	  #---------------------------------------------------------------------------
+	#---------------------------------------------------------------------------
     # Checks a species for all forms that branch off into different evolutions.
     #---------------------------------------------------------------------------
     def branch_evolution_forms

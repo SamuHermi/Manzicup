@@ -25,12 +25,12 @@ class PokemonSummary_Scene
     textpos = [
       [pagename, 26, 22, :left, base, shadow],
       [@pokemon.name, 46, 68, :left, base, shadow],
-      [_INTL("Objeto"), 66, 324, :left, base, shadow]
+      [_INTL("Objeto"),  16, 363, :left, base, shadow]
     ]
     if @pokemon.hasItem?
-      textpos.push([@pokemon.item.name, 16, 358, :left, Color.new(64, 64, 64), Color.new(176, 176, 176)])
+      textpos.push([@pokemon.item.name, 16, 400, :left, Color.new(64, 64, 64), Color.new(176, 176, 176)])
     else
-      textpos.push([_INTL("Ninguno"), 16, 358, :left, Color.new(192, 200, 208), Color.new(208, 216, 224)])
+      textpos.push([_INTL("Ninguno"), 16, 400, :left, Color.new(192, 200, 208), Color.new(208, 216, 224)])
     end
     # Draws additional info for non-Egg Pokemon.
     if !@pokemon.egg?
@@ -97,7 +97,7 @@ class PokemonSummary_Scene
     end
     drawFormattedTextEx(@sprites["overlay"].bitmap, 232, 86, 268, memo)
   end
-  
+
   #-----------------------------------------------------------------------------
   # Rewritten so that the commands that appear in the Options menu are now
   # determined by which options are set in each page handler.
@@ -107,6 +107,7 @@ class PokemonSummary_Scene
     dorefresh = false
     commands = {}
     options = UIHandlers.get_info(:summary, @page_id, :options)
+    options_labels = UIHandlers.get_info(:summary, @page_id, :options_labels)
     options.each do |cmd|
       case cmd
       when :item
@@ -122,6 +123,7 @@ class PokemonSummary_Scene
       when :ability  then commands[cmd] = _INTL("Ver Habilidad")
       when :change_ability then commands[cmd] = _INTL("Cambiar habilidad")
       when :legacy   then commands[cmd] = _INTL("Histórico") if (!@pokemon.egg? && defined?(show_legacy))
+      when Symbol then commands[cmd] = options_labels[cmd] if options_labels[cmd]
       when String    then commands[cmd] = _INTL("#{cmd}")
       end
     end
@@ -195,7 +197,7 @@ class PokemonSummary_Scene
       loop do
         ret = pbChooseMoveToForget(nil)
         break if ret < 0
-        break if $DEBUG || !@pokemon.moves[ret].hidden_move?
+        break if $DEBUG || !@pokemon.moves[ret].hidden_move? || Settings::CAN_FORGET_HMS
         pbMessage(_INTL("MO no pueden ser olvidadas en este momento.")) { pbUpdate }
       end
       if ret >= 0
@@ -300,10 +302,8 @@ class PokemonSummary_Scene
             pbPlayDecisionSE
             pbRibbonSelection
             dorefresh = true
-          when :page_skills
-            pbPlayDecisionSE
+          when :page_allstats
             pbEVAllocation
-            dorefresh = true
           else
             if !@inbattle
               pbPlayDecisionSE

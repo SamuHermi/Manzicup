@@ -154,12 +154,8 @@ class MoveRelearnerScreen
       next if m[0] > pkmn.level || pkmn.hasMove?(m[1])
       moves.push(m[1]) if !moves.include?(m[1])
     end
-    if Settings::MOVE_RELEARNER_CAN_TEACH_MORE_MOVES && pkmn.first_moves
-      tmoves = []
-      pkmn.first_moves.each do |i|
-        tmoves.push(i) if !moves.include?(i) && !pkmn.hasMove?(i)
-      end
-      moves = tmoves + moves   # List first moves before level-up moves
+    pkmn.first_moves.each do |i|
+      moves.push(i) if !moves.include?(i) && !pkmn.hasMove?(i)
     end
     return moves | []   # remove duplicates
   end

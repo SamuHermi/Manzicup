@@ -39,9 +39,9 @@ class Battle::Scene
   def pbUpdateBallSelection(items, index, showDesc = false)
     @enhancedUIOverlay.clear
     return if @enhancedUIToggle != :ball
-    ypos = @sprites["messageBox"].y - 128
+    ypos = @sprites["messageBox"].y - 128-20
     imagePos = [[@path + "pokeball_bg", 0, ypos]]
-    imagePos.push([@path + "pokeball_desc", 0, ypos - 69]) if showDesc
+    imagePos.push([@path + "pokeball_desc", 0, ypos - 72]) if showDesc
     textY = (showDesc) ? ypos - 55 : ypos + 14
     action = (showDesc) ? _INTL("Z: Esconder") : _INTL("Z: Detalles")
     item = GameData::Item.try_get(items[index][0])
@@ -52,8 +52,8 @@ class Battle::Scene
       [action, Graphics.width - 56, textY, :center, BASE_LIGHT],
       [name, Graphics.width / 2, textY, :center, BASE_LIGHT, SHADOW_LIGHT, :outline]
     ]
-    ballY = @sprites["messageBox"].y - 25
-    range = ((index - 2)..(index + 2)).to_a
+    ballY = @sprites["messageBox"].y - 25-20
+    range = ((index - 3)..(index + 3)).to_a
     range.each_with_index do |pos, i|
       if pos < 0 || pos > items.length - 1
         pbUpdateBallIcon(i, nil, true)
@@ -62,15 +62,14 @@ class Battle::Scene
         pbUpdateBallIcon(i, try_item)
         if try_item
           x = @sprites["ball_icon#{i}"].x
-          x += 2 if i == index
-          text_colors = (pos == index) ? [BASE_LIGHT, SHADOW_LIGHT, :outline] : [BASE_DARK, SHADOW_DARK]
-          textPos.push([items[pos][1].to_s, x, ballY, :center, *text_colors])
+         
+          textPos.push([items[pos][1].to_s, x, ballY, :center, BASE_LIGHT, SHADOW_LIGHT])
         end
       end
     end
     pbDrawImagePositions(@enhancedUIOverlay, imagePos)
     pbDrawTextPositions(@enhancedUIOverlay, textPos)
-    drawTextEx(@enhancedUIOverlay, 10, ypos - 21, Graphics.width - 10, 2, 
+    drawTextEx(@enhancedUIOverlay, 10, ypos - 24, Graphics.width - 10, 2, 
       desc, BASE_DARK, SHADOW_DARK) if showDesc
   end
   
@@ -89,13 +88,13 @@ class Battle::Scene
     maxIdx = items.length - 1
     battler = @battle.battlers[idxBattler].pbDirectOpposing(true)
     pbUpdateBallSelection(items, index, showDesc)
-    @sprites["leftarrow"].x = 174
+    @sprites["leftarrow"].x = 174+64
     @sprites["leftarrow"].y = @sprites["ball_icon0"].y
-    @sprites["rightarrow"].x = 298
+    @sprites["rightarrow"].x = 298+64
     @sprites["rightarrow"].y = @sprites["ball_icon0"].y
     loop do
       pbUpdate
-      pbUpdateInfoSprites
+      pbUpdateSpriteHash(@sprites)
       dorefresh = false
       item = items[index][0]
       @sprites["leftarrow"].visible = index > 0

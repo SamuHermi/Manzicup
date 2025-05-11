@@ -61,6 +61,7 @@ class DungeonState
         else
           coins_obtained = 0
         end
+        $game_switches[RandomizedChallenge::Switch] = false
         pbMessage("\\w[]\\wm\\c[13]\\l[3]" +
         _INTL("Todo tu dinero se ha convertido en monedas.\nHas conseguido {1} monedas",coins_obtained))  
         $player.battle_points += coins_obtained

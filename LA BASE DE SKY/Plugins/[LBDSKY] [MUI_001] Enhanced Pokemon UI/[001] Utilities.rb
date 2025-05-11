@@ -34,11 +34,11 @@ def pbDisplayHappiness(pokemon, overlay, xpos, ypos)
   heartsBitmap = AnimatedBitmap.new(path + "happy_meter")
   w = heartsBitmap.width
   h = heartsBitmap.height / 2
-  pbDrawImagePositions(overlay, [[path + "happy_meter", xpos, ypos, 0, 0, w, h]])
+  pbDrawImagePositions(overlay, [[path + "happy_meter", 300, 395, 0, 0, w, h]])
   w = pokemon.happiness * w / 254.0
   w = (w / 2).round * 2
   w = 1 if w < 1
-  overlay.blt(xpos, ypos, heartsBitmap.bitmap, Rect.new(0, h, w, h))
+  overlay.blt(300, 395, heartsBitmap.bitmap, Rect.new(0, h, w, h))
 end
 
 #-------------------------------------------------------------------------------
@@ -55,7 +55,7 @@ def pbDisplayIVRatings(pokemon, overlay, xpos, ypos, horizontal = false)
   style = (Settings::IV_DISPLAY_STYLE == 0) ? 0 : 16
   maxIV = Pokemon::IV_STAT_LIMIT
   offset_x = (horizontal) ? 16 : 0
-  offset_y = (horizontal) ? 0  : 32
+  offset_y = (horizontal) ? 0  : 38
   i = 0
   GameData::Stat.each_main do |s|
     stat = pokemon.iv[s.id]
@@ -73,7 +73,7 @@ def pbDisplayIVRatings(pokemon, overlay, xpos, ypos, horizontal = false)
       end
     end
     imagepos.push([
-      path + "iv_ratings", xpos + (i * offset_x), ypos + (i * offset_y), icon * 16, style, 16, 16
+      path + "iv_ratings", 352 + (i * offset_x), 94 + (i * offset_y), icon * 16, style, 16, 16
     ])
     if s.id == :HP && !horizontal
       ypos += (PluginManager.installed?("BW Summary Screen")) ? 18 : 12 

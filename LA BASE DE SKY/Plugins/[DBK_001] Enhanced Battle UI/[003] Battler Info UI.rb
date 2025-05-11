@@ -117,8 +117,8 @@ class Battle::Scene
     textPos  = [
       [_INTL("{1}", poke.name), iconX + 82, iconY - 20, :center, BASE_DARK, SHADOW_DARK],
       [_INTL("{1}", level), xpos + 38, ypos + 104, :left, BASE_LIGHT, SHADOW_LIGHT],
-      [_INTL("Usó: {1}", movename), xpos + 349, ypos + 104, :center, BASE_LIGHT, SHADOW_LIGHT],
-      [_INTL("Turno {1}", @battle.turnCount + 1), Graphics.width - xpos - 32, ypos + 8, :center, BASE_DARK, SHADOW_DARK]
+      [_INTL("Usó: {1}", movename), xpos + 340, ypos + 104, :center, BASE_LIGHT, SHADOW_LIGHT],
+      [_INTL("Turno {1}", @battle.turnCount + 1), Graphics.width - xpos - 295, ypos + 8, :center, BASE_DARK, SHADOW_DARK]
     ]
     #---------------------------------------------------------------------------
     # Battler icon.
@@ -141,7 +141,7 @@ class Battle::Scene
       hpzone = 0
       hpzone = 1 if battler.hp <= (battler.totalhp / 2).floor
       hpzone = 2 if battler.hp <= (battler.totalhp / 4).floor
-      imagePos.push([@path + "info_hp", 86, 86, 0, hpzone * 6, w, 6])
+      imagePos.push([@path + "info_hp", 104, 86, 0, hpzone * 6, w, 6])
     end
     # Battler status.
     if battler.status != :NONE

@@ -59,7 +59,7 @@ class Battle::Scene
       mode = (battler.effects[PBEffects::Substitute] > 0) ? :show : :hide
       pbUpdateSubstituteSprite(battler.index, mode)
       pbChangePokemon(i, @sprites["pokemon_#{i}"].pkmn)
-      @sprites["dataBox_#{i}"].initializeDataBoxGraphic(@battle.pbSideSize(i))
+      @sprites["dataBox_#{i}"].initializeDataBoxGraphic(@battle.pbSideSize(i),nil)
       @sprites["dataBox_#{i}"].refresh
     end
   end

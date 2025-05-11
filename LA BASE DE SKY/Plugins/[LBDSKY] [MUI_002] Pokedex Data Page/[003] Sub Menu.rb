@@ -2,11 +2,11 @@
 # Used for drawing entire pages worth of species icon sprites at a time.
 #===============================================================================
 class PokemonDataPageSprite < Sprite
-  PAGE_SIZE = 12  # The number of species icons per page.
-  ROW_SIZE  = 6   # The number of species icons per row.
+  PAGE_SIZE = 16  # The number of species icons per page.
+  ROW_SIZE  = 8   # The number of species icons per row.
   ICON_GAP  = 72  # The pixel gap between each species icon.
-  PAGE_X    = 43  # The x coordinates of where the icons are placed.
-  PAGE_Y    = 26  # The y coordinates of where the icons are placed.
+  PAGE_X    = 35  # The x coordinates of where the icons are placed.
+  PAGE_Y    = 36  # The y coordinates of where the icons are placed.
 
   def initialize(list, page, viewport = nil)
     super(viewport)
@@ -259,7 +259,7 @@ class PokemonPokedexInfo_Scene
         else
           full_name = _INTL("{1}", sp.name)
         end
-        if $player.owned?(sp) && pbConfirmMessage(_INTL("¿Saltar a la Página de la Pokédex de <c2=043c3aff>{1}</c2>?", full_name))
+        if $player.owned?(sp) && pbConfirmMessage(_INTL("¿Saltar a la página de la Pokédex de <c2=043c3aff>{1}</c2>?", full_name))
           @dexlist.each_with_index do |dex, i|
             next if dex[:species] != sp.species
             newEntry = i
@@ -447,18 +447,18 @@ class PokemonPokedexInfo_Scene
     pokesprite = @sprites["pokelist"].getPokemon(index)
     name = (species_data) ? species_data.name : _INTL("Volver")
     textpos = [
-      [name, 256, 248, :center, base, shadow, :outline],
-      [sprintf("%d/%d", page + 1, maxpage + 1), 51, 249, :center, base, shadow, :outline]
+      [name, 320, 258, :center, base, shadow, :outline],
+      [sprintf("%d/%d", page + 1, maxpage + 1), 51+12, 249+10, :center, base, shadow, :outline]
     ]
     imagepos = [
-      [path + "submenu", 0, 88, 0, 0, 512, 196], 
+      [path + "submenu", 0, 98, 0, 0, 640, 196], 
       [path + "cursor", pokesprite.x - 5, pokesprite.y - 4, 402, 132, 76, 76]
     ]
     if page < maxpage
-      imagepos.push([path + "page_cursor", 88, 242, 0, 70, 76, 32])
+      imagepos.push([path + "page_cursor", 138, 252, 0, 70, 76, 32])
     end
     if page > 0
-      imagepos.push([path + "page_cursor", 348, 242, 76, 70, 76, 32])
+      imagepos.push([path + "page_cursor", 426, 252, 76, 70, 76, 32])
     end
     #---------------------------------------------------------------------------
     # Draws header and message box if viewing moves.
@@ -467,7 +467,7 @@ class PokemonPokedexInfo_Scene
       imagepos.push(
         [path + "heading", 0, 40], 
         [path + "messagebox", 0, Graphics.height - 100],
-        [path + "submenu", 468, 244, 440, 392, 28, 28]
+        [path + "submenu", 468+90, 244+7, 440, 392, 28, 28]
       )
       case cursor
       when :move
@@ -502,17 +502,17 @@ class PokemonPokedexInfo_Scene
       end
     else
       if GameData::Ability.exists?(cursor)
-        view = "Habilidades de la especie"
+        view = _INTL("Habilidades de la especie")
       elsif GameData::Item.exists?(cursor)
-        view = "Objetos equipados de la especie"
+        view = _INTL("Objetos equipados de la especie")
       else
-        view = (@viewingMoves) ? "Movimientos de la especie" : "datos de la especie"
+        view = (@viewingMoves) ? _INTL("Movimientos de la especie") : _INTL("datos de la especie")
       end
-      data_text = DATA_TEXT_TAGS[0] + "Volver a #{view}."
+      data_text = DATA_TEXT_TAGS[0] + _INTL("Volver a") + " #{view}."
     end
     pbDrawImagePositions(overlay, imagepos)
     pbDrawTextPositions(overlay, textpos)
-    drawFormattedTextEx(overlay, 34, 294, 446, _INTL("{1}", data_text))
+    drawFormattedTextEx(overlay, 34+25, 294+38, 528, _INTL("{1}", data_text))
   end
   
   #-----------------------------------------------------------------------------
@@ -601,7 +601,7 @@ class PokemonPokedexInfo_Scene
     shadow = Color.new(72, 72, 72)
     path = Settings::POKEDEX_DATA_PAGE_GRAPHICS_PATH
     textpos = []
-    imagepos = [[path + "submenu", 0, 88, 0, 196, 512, 196]]
+    imagepos = [[path + "submenu", 0, 98, 0, 196, 640, 196]]
     last_idx = list.length - 1
     case index
     when 0        then real_idx = 0
@@ -623,43 +623,43 @@ class PokemonPokedexInfo_Scene
         case cursor
         when :item
           case num
-          when 0 then note = "Común"
-          when 1 then note = "Poco común"
-          when 2 then note = "Raro"
+          when 0 then note = _INTL("Común")
+          when 1 then note = _INTL("Poco común")
+          when 2 then note = _INTL("Raro")
           end
         when :ability
           case num
-          when 0 then note = "Habil. #{list.index(id) + 1}"
-          when 1 then note = "H. Oculta"
-          when 2 then note = "H. Especial"
+          when 0 then note = _INTL("Habil.") + " #{list.index(id) + 1}"
+          when 1 then note = _INTL("H. Oculta")
+          when 2 then note = _INTL("H. Especial")
           end
         end
         idx = num
         break if !nil_or_empty?(note)
       end
       case idx
-      when 1 then imagepos.push([path + "submenu", 50, 104 + 42 * i, 0, 392, 412, 40])
-      when 2 then imagepos.push([path + "submenu", 50, 104 + 42 * i, 0, 432, 412, 40])
+      when 1 then imagepos.push([path + "submenu", 114, 114 + 42 * i, 0, 392, 412, 40])
+      when 2 then imagepos.push([path + "submenu", 114, 114 + 42 * i, 0, 432, 412, 40])
       end
       if index < list.length - 1
-        textpos.push([sprintf("%d/%d", index + 1, list.length - 1), 115, 243, :center, base, shadow, :outline])
+        textpos.push([sprintf("%d/%d", index + 1, list.length - 1), 115+68, 253, :center, base, shadow, :outline])
       end
       if id.is_a?(Symbol)
         textpos.push(
-          [_INTL("{1}", note), 115, 114 + 42 * i, :center, base, shadow, :outline],
-          [data.get(id).name, 326, 114 + 42 * i, :center, base, shadow, :outline]
+          [_INTL("{1}", note), 115+64, 124 + 42 * i, :center, base, shadow, :outline],
+          [data.get(id).name, 326+64, 124 + 42 * i, :center, base, shadow, :outline]
         )
       else
-        imagepos.push([path + "submenu", 98, 110 + 42 * i, 468, 392, 34, 28])
-        textpos.push([id, 326, 114 + 42 * i, :center, base, Color.new(148, 148, 148), :outline])
+        imagepos.push([path + "submenu", 98+64, 120 + 42 * i, 468, 392, 34, 28])
+        textpos.push([id, 326+64, 124 + 42 * i, :center, base, Color.new(148, 148, 148), :outline])
       end
     end
-    imagepos.push([path + "cursor", 184, 98 + 42 * real_idx, 0, 288, 284, 52])
+    imagepos.push([path + "cursor", 184+64, 98+10 + 42 * real_idx, 0, 288, 284, 52])
     if index < list.length - 1
-      imagepos.push([path + "page_cursor", 248, 236, 0, 70, 76, 32])
+      imagepos.push([path + "page_cursor", 248+42, 246, 0, 70, 76, 32])
     end
     if index > 0
-      imagepos.push([path + "page_cursor", 328, 236, 76, 70, 76, 32])
+      imagepos.push([path + "page_cursor", 328+42, 246, 76, 70, 76, 32])
     end
     pbDrawImagePositions(overlay, imagepos)
     pbDrawTextPositions(overlay, textpos)
@@ -667,8 +667,8 @@ class PokemonPokedexInfo_Scene
     when Symbol
       data_text = DATA_TEXT_TAGS[0] + data.get(list[index]).description
     else
-      data_text = DATA_TEXT_TAGS[0] + "Volver a los datos de la especie."
+      data_text = DATA_TEXT_TAGS[0] + _INTL("Volver a los datos de la especie.")
     end
-    drawFormattedTextEx(overlay, 34, 294, 446, _INTL("{1}", data_text))
+    drawFormattedTextEx(overlay, 34+26, 294+38, 532, _INTL("{1}", data_text))
   end
 end

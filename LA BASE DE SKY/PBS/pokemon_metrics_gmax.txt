@@ -17,7 +17,7 @@ ShadowSprite = 4,-10,8
 #-------------------------------
 [BUTTERFREE,1]
 BackSprite = 0,52
-FrontSprite = 0,13
+FrontSprite = 0,17
 ShadowSprite = 4,0,15
 AnimationSpeed = 1,2
 #-------------------------------
@@ -92,13 +92,13 @@ ShadowSprite = 3,13,8
 #-------------------------------
 [CORVIKNIGHT,1]
 BackSprite = 0,85
-FrontSprite = 7,71
+FrontSprite = 7,87
 ShadowSize = -3
 ShadowSprite = 4,0,-10
 #-------------------------------
 [ORBEETLE,1]
 BackSprite = 4,57
-FrontSprite = -6,22
+FrontSprite = -6,31
 ShadowSize = -2
 ShadowSprite = 4,-15,-2
 #-------------------------------

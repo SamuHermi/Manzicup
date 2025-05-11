@@ -6,7 +6,8 @@ class Banner
   attr_reader :script
   attr_reader :description
   attr_reader :cost
-  def initialize(name, rewards, stars, bg, url, descr, cost)
+  attr_reader :type
+  def initialize(name, rewards, stars, bg, url, descr, cost, type)
     @name        = name
     @rewards     = rewards
     @stars       = stars
@@ -14,6 +15,7 @@ class Banner
     @script      = (url != nil ? pbDownloadToString(url) : nil)
     @description = descr
     @cost        = cost
+    @type        = type
   end
 end
 
@@ -135,7 +137,7 @@ def getGachaLineChunks(value,width,colortag) #Divide un texto en varias líneas 
   return ret
 end
 
-def gachaponRead(string, multi)
+def gachaponRead(string, multi,type)
   veces = 0
   if multi
     veces = 10
@@ -144,15 +146,15 @@ def gachaponRead(string, multi)
   end
   contador = 0
   loop do
-    if string.is_a?(String)
-      $syslock = true
-      while string[/((system)|(Win32API)|(eval)|(pbDownloadToString)|(File)|(Marshal)|(alias)|(Zlib)|(IO)|(\$syslock)|(alias_method))(.*)/]!=nil
-        string[/((system)|(Win32API)|(eval)|(pbDownloadToString)|(File)|(Marshal)|(alias)|(Zlib)|(IO)|(\$syslock)|(alias_method))(.*)/] = ""
-      end
-      eval(string)
-    else
-      defaultBanner
-    end
+    #if string.is_a?(String)
+    #  $syslock = true
+    #  while string[/((system)|(Win32API)|(eval)|(pbDownloadToString)|(File)|(Marshal)|(alias)|(Zlib)|(IO)|(\$syslock)|(alias_method))(.*)/]!=nil
+    #    string[/((system)|(Win32API)|(eval)|(pbDownloadToString)|(File)|(Marshal)|(alias)|(Zlib)|(IO)|(\$syslock)|(alias_method))(.*)/] = ""
+    #  end
+    #  eval(string)
+    #else
+      defaultBanner(string,type)
+    #end
       $syslock = false
     contador += 1
     break if contador >= veces
@@ -169,20 +171,13 @@ def system(*args)
   end
 end
 
-def openGacha
+def openGacha(type)
   banners = []
-  pbMessage(_INTL("Cargando datos...\\wtnp[5]"))
-  begin
-    gachaponRead(pbDownloadToString(CONFIG_URL),false)
-    BANNERS.each_value{|value|
-      banners.insert(0,Banner.new(value["name"],value["rewards"],value["stars"],value["bg"],value["url"],value["descr"], value["cost"]))
-    }
-  rescue 
-    pbMessage(_INTL("No se ha podido conectar con el servidor"))
-    aux = defaultBannerConfig
-    aux.each_value{|value|
-      banners.insert(0, Banner.new(value["name"],value["rewards"],value["stars"],value["bg"],value["url"],value["descr"], value["cost"]))
-    }
-  end
+  aux = defaultBannerConfig
+  aux.each_value{|value|
+    if value["type"] == type
+      banners.insert(0, Banner.new(value["name"],value["rewards"],value["stars"],value["bg"],value["url"],value["descr"], value["cost"],value["type"]))
+    end
+  }
   GachaScene.new(banners)
 end

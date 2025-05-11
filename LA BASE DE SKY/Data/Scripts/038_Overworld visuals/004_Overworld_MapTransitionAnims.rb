@@ -95,7 +95,6 @@ def pbStartOver(gameover = false)
     pbLoseDungeon if pbInDungeon?
     pbCancelVehicles
     Followers.clear
-    $game_switches[60] = false
     $game_switches[Settings::STARTING_OVER_SWITCH] = true
     $game_temp.player_new_map_id    = $PokemonGlobal.pokecenterMapId
     $game_temp.player_new_x         = $PokemonGlobal.pokecenterX

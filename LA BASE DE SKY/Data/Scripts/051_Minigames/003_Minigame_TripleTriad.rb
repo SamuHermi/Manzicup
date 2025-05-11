@@ -68,19 +68,15 @@ class TriadCard
     ret += maxValue * maxValue * 2
     ret *= maxValue
     ret *= (@north + @east + @south + @west)
-    ret /= 10   # Ranges from 2 to 24,000
+    ret /= 100   # Ranges from 2 to 24,000
+    Console.echo_li(@species.to_s + ": " + ret.to_s)
     # Quantize prices to the next highest "unit"
-    if ret > 10_000
-      ret = (1 + (ret / 1000)) * 1000
-    elsif ret > 5000
-      ret = (1 + (ret / 500)) * 500
-    elsif ret > 1000
-      ret = (1 + (ret / 100)) * 100
-    elsif ret > 500
-      ret = (1 + (ret / 50)) * 50
-    else
-      ret = (1 + (ret / 10)) * 10
+    ret = Math.log(ret / 10)
+    if ret < 0
+      ret = 0
     end
+    ret = ((1 + ret)).floor
+    
     return ret
   end
 
@@ -1051,7 +1047,7 @@ def pbBuyTriads
   GameData::Species.each_species do |s|
     next if !$player.owned?(s.species)
     price = TriadCard.new(s.id).price
-    commands.push([price, s.name, _INTL("{1} - ${2}", s.name, price.to_s_formatted), s.id])
+    commands.push([price, s.name, _INTL("{1} - {2} MC", s.name, price.to_s_formatted), s.id])
   end
   if commands.length == 0
     pbMessage(_INTL("No hay cartas que puedas comprar."))
@@ -1066,7 +1062,7 @@ def pbBuyTriads
   cmdwindow = Window_CommandPokemonEx.newWithSize(realcommands, 0, 0, Graphics.width / 2, Graphics.height)
   cmdwindow.z = 99999
   goldwindow = Window_UnformattedTextPokemon.newWithSize(
-    _INTL("Dinero:\n{1}", pbGetGoldString), 0, 0, 32, 32
+    _INTL("Manzicoins:\n{1}", $player.battle_points.to_s_formatted + " MC" ), 0, 0, 32, 32
   )
   goldwindow.resizeToFit(goldwindow.text, Graphics.width)
   goldwindow.x = Graphics.width - goldwindow.width
@@ -1098,11 +1094,11 @@ def pbBuyTriads
       itemname = commands[cmdwindow.index][1]
       cmdwindow.active = false
       cmdwindow.update
-      if $player.money < price
+      if $player.battle_points < price
         pbMessage(_INTL("No tienes suficiente dinero."))
         next
       end
-      maxafford = (price <= 0) ? 99 : $player.money / price
+      maxafford = (price <= 0) ? 99 : $player.battle_points / price
       maxafford = 99 if maxafford > 99
       params = ChooseNumberParams.new
       params.setRange(1, maxafford)
@@ -1113,8 +1109,8 @@ def pbBuyTriads
       )
       next if quantity <= 0
       price *= quantity
-      next if !pbConfirmMessage(_INTL("{1}, y quieres {2}. Serían ${3}. ¿Te parece bien?", itemname, quantity, price.to_s_formatted))
-      if $player.money < price
+      next if !pbConfirmMessage(_INTL("{1}, y quieres {2}. Serían {3} MC. ¿Te parece bien?", itemname, quantity, price.to_s_formatted))
+      if $player.battle_points < price
         pbMessage(_INTL("No tienes suficiente dinero."))
         next
       end
@@ -1123,8 +1119,8 @@ def pbBuyTriads
         next
       end
       $PokemonGlobal.triads.add(item, quantity)
-      $player.money -= price
-      goldwindow.text = _INTL("Dinero:\n{1}", pbGetGoldString)
+      $player.battle_points -= price
+      goldwindow.text = _INTL("Manzicoins:\n{1} MC", $player.battle_points.to_s_formatted)
       pbMessage(_INTL("¡Aquí tienes! ¡Muchas gracias!") + "\\se[Mart buy item]")
     end
   end
@@ -1156,7 +1152,7 @@ def pbSellTriads
   cmdwindow = Window_CommandPokemonEx.newWithSize(commands, 0, 0, Graphics.width / 2, Graphics.height)
   cmdwindow.z = 99999
   goldwindow = Window_UnformattedTextPokemon.newWithSize(
-    _INTL("Dinero:\n{1}", pbGetGoldString), 0, 0, 32, 32
+    _INTL("Manzicoins:\n{1} MC", $player.battle_points.to_s_formatted), 0, 0, 32, 32
   )
   goldwindow.resizeToFit(goldwindow.text, Graphics.width)
   goldwindow.x = Graphics.width - goldwindow.width
@@ -1213,13 +1209,13 @@ def pbSellTriads
           )
         end
         if quantity > 0
-          price /= 4
+          price = (price.to_f / 4).ceil
           price *= quantity
-          if pbConfirmMessage(_INTL("Puedo pagarte ${1}. ¿Te parece bien?", price.to_s_formatted))
-            $player.money += price
-            goldwindow.text = _INTL("Dinero:\n{1}", pbGetGoldString)
+          if pbConfirmMessage(_INTL("Puedo pagarte {1} MC. ¿Te parece bien?", price.to_s_formatted))
+            $player.battle_points += price
+            goldwindow.text = _INTL("Manzicoins:\n{1} MC", $player.battle_points.to_s_formatted)
             $PokemonGlobal.triads.remove(item, quantity)
-            pbMessage(_INTL("Has entregado las cartas de {1} y has recibido ${2}.", itemname, price.to_s_formatted) + "\\se[Mart buy item]")
+            pbMessage(_INTL("Has entregado las cartas de {1} y has recibido {2} MC.", itemname, price.to_s_formatted) + "\\se[Mart buy item]")
             commands = []
             $PokemonGlobal.triads.length.times do |i|
               item = $PokemonGlobal.triads[i]

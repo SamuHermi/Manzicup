@@ -372,7 +372,7 @@ ItemHandlers::UseInField.add(:TOWNMAP, proc { |item|
 })
 
 ItemHandlers::UseInField.add(:COINCASE, proc { |item|
-  pbMessage(_INTL("Monedas: {1}", $player.coins.to_s_formatted))
+  pbMessage(_INTL("Fichas: {1}", $player.coins.to_s_formatted))
   next true
 })
 

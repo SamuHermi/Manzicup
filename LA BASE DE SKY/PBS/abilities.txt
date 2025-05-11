@@ -1269,8 +1269,8 @@ Name = Presencia rara
 Description = Activa espacio raro al entrar.
 #-------------------------------
 [SPEEDFORCE]
-Name = Fuerza centrífuga
-Description = Añade un 20% de la velocidad al daño inflingido.
+Name = Fuerza centríf.
+Description = Añade un 10% de la velocidad al daño inflingido.
 #------------------------------
 [ORNITHES]
 Name = Ornithes

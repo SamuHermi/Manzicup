@@ -1,0 +1,5 @@
+Name      = Mega MewThree's Achievement System
+Version   = 1.1
+Essentials = 21.1
+Website   = https://reliccastle.com/resources/1212/
+Credits   = Mega Mewthree for the original Script, Vendily for updating to v17, Gardenette for updating to v21.1

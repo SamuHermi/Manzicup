@@ -18,8 +18,8 @@ VoidDecorations = 50,200
 [forest]
 DungeonSize = 5,4
 CellSize = 10,10
-MinRoomSize = 4,4
-MaxRoomSize = 8,8
+MinRoomSize = 5,5
+MaxRoomSize = 9,9
 CorridorWidth = 2
 NodeLayout = full
 RoomLayout = full

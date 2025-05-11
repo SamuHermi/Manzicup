@@ -354,7 +354,7 @@ class InstantMessages_Scene
         @picture_alignment = InstantMessagesSettings::PICTURE_ALIGNMENT
         @theme = pbPlayerIMSaved.theme_color
 
-        @max_width = 338
+        @max_width = 466
         @show_index = 0
         @pause_time = pbTXWSecondsToFrameConvert(1.5)
         @system_pause_time = pbTXWSecondsToFrameConvert(0.5)
@@ -395,7 +395,7 @@ class InstantMessages_Scene
             #@sprites["ffwdbutton"].visible = false
         end
         @top_margin = @sprites["top_cover"].height - 6
-        @side_margin = 20
+        @side_margin = 26
         @bottom_margin = @sprites["bottom_cover"].y + 6
 
         pbRefreshGroupTitle
@@ -434,7 +434,7 @@ class InstantMessages_Scene
             when :Enter
                 text_to_show = _INTL("{1} fue añadido al grupo.", @members[@old_texts[i][2]].name)
             when :GroupName
-                text_to_show = _INTL("El nombre del grupo a cambiado a: {1}", @old_texts[i][2])
+                text_to_show = _INTL("El nombre del grupo ha cambiado a: {1}", @old_texts[i][2])
             when :Picture
                 @sprites["old_text_picture#{i}"] = IconSprite.new(0, 0, @viewport)
                 @sprites["old_text_picture#{i}"].setBitmap("Graphics/UI/Instant Messages/Pictures/#{@old_texts[i][2]}")

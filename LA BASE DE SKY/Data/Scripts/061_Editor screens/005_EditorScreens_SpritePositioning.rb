@@ -57,6 +57,7 @@ class SpritePositioner
     baseX, baseY = Battle::Scene.pbBattlerPosition(0)
     @sprites["base_0"] = IconSprite.new(baseX, baseY, @viewport)
     @sprites["base_0"].setBitmap(playerbase)
+    @sprites["base_0"].x = 64
     @sprites["base_0"].x -= @sprites["base_0"].bitmap.width / 2 if @sprites["base_0"].bitmap
     @sprites["base_0"].y -= @sprites["base_0"].bitmap.height if @sprites["base_0"].bitmap
     @sprites["base_0"].z = 1

@@ -32,7 +32,7 @@ end
 UIHandlers.add(:pokedex, :page_data, { 
   "name"      => "DATA",
   "suffix"    => "data",
-  "order"     => 40,
+  "order"     => 70,
   #"condition" => proc { next $game_switches[Settings::POKEDEX_DATA_PAGE_SWITCH] },
   "layout"    => proc { |species, scene| scene.drawPageData }
 })
@@ -46,7 +46,7 @@ class PokemonPokedexInfo_Scene
   # Sets the coordinates for Pokemon family icons on the Data page.
   #-----------------------------------------------------------------------------
   ICONS_POS_Y         = 130
-  ICONS_CENTER        = 369
+  ICONS_CENTER        = 369+78
   ICONS_OFFSET_DOUBLE = 54
   ICONS_LEFT_DOUBLE   = ICONS_CENTER - ICONS_OFFSET_DOUBLE + 2
   ICONS_RIGHT_DOUBLE  = ICONS_CENTER + ICONS_OFFSET_DOUBLE - 2
@@ -92,16 +92,16 @@ class PokemonPokedexInfo_Scene
       @sprites["familyicon#{i}"].y = ICONS_POS_Y
       @sprites["familyicon#{i}"].visible = false
     end
-    @sprites["itemicon"] = ItemIconSprite.new(261, 200, nil, @viewport)
+    @sprites["itemicon"] = ItemIconSprite.new(261+55, 200, nil, @viewport)
     @sprites["itemicon"].blankzero = true
     @sprites["leftarrow"] = AnimatedSprite.new("Graphics/UI/left_arrow", 8, 40, 28, 2, @viewport)
-    @sprites["leftarrow"].x       = -2
-    @sprites["leftarrow"].y       = 46
+    @sprites["leftarrow"].x       = -2+54
+    @sprites["leftarrow"].y       = 46+6
     @sprites["leftarrow"].visible = false
     @sprites["leftarrow"].play
     @sprites["rightarrow"] = AnimatedSprite.new("Graphics/UI/right_arrow", 8, 40, 28, 2, @viewport)
-    @sprites["rightarrow"].x       = 220
-    @sprites["rightarrow"].y       = 46
+    @sprites["rightarrow"].x       = 220+12
+    @sprites["rightarrow"].y       = 46+6
     @sprites["rightarrow"].visible = false
     @sprites["rightarrow"].play
     @sprites["movecmds"] = Window_CommandPokemon.new(@moveCommands, 32)

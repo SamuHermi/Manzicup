@@ -4,8 +4,8 @@
 CONFIG_URL = "https://pastebin.com/raw/NWSm9euB"
 
 TIERCOLORS = [Color.new(255,255,255),Color.new(255,255,255),Color.new(85,182,255),
-                Color.new(164,121,169),Color.new(205,215,74)]
-TIERSOUNDS = ["Gacha_Tier1.ogg","Gacha_Tier2.ogg","Gacha_Tier3.ogg","Gacha_Tier4.ogg","Gacha_Tier5.ogg"]
+                Color.new(164,121,169),Color.new(205,215,74),Color.new(136,222,149)]
+TIERSOUNDS = ["Gacha_Tier1.ogg","Gacha_Tier2.ogg","Gacha_Tier3.ogg","Gacha_Tier4.ogg","Gacha_Tier5.ogg","Gacha_Tier5.ogg"]
 
 FRASES = ["Aprovecha que no tienes dinero y huye de este juego infernal. No merece la pena",
           "Vaya, no tienes monedas... pity! that´s bad",

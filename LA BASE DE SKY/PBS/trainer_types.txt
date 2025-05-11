@@ -403,125 +403,143 @@ VictoryBGM = Battle victory leader
 [HERMI]
 Name = Rival
 Gender = Male
-BaseMoney = 100
+SkillLevel = 100
+BaseMoney = 0
 BattleBGM = Battle Hermi
 VictoryBGM = Battle victory leader
 #-------------------------------
 [IRIA]
 Name = Rival
 Gender = Female
-BaseMoney = 100
+SkillLevel = 100
+BaseMoney = 0
 BattleBGM = Battle Iria
 VictoryBGM = Battle victory leader
 #-------------------------------
 [JESS]
 Name = Rival
 Gender = Female
-BaseMoney = 100
+SkillLevel = 100
+BaseMoney = 0
 BattleBGM = Battle Jess
 VictoryBGM = Battle victory leader
 #-------------------------------
 [BRAIS]
 Name = Rival
 Gender = Male
-BaseMoney = 100
+SkillLevel = 100
+BaseMoney = 0
 BattleBGM = Battle Brais
 VictoryBGM = Battle victory leader
 #-------------------------------
 [SAMER]
 Name = Rival
 Gender = Male
-BaseMoney = 100
+SkillLevel = 100
+BaseMoney = 0
 BattleBGM = Battle Samer
 VictoryBGM = Battle victory leader
 #-------------------------------
 [ISA]
 Name = Rival
 Gender = Female
-BaseMoney = 100
+SkillLevel = 100
+BaseMoney = 0
 BattleBGM = Battle Isa
 VictoryBGM = Battle victory leader
 #-------------------------------
 [RODRI]
 Name = Rival
 Gender = Male
-BaseMoney = 100
+SkillLevel = 100
+BaseMoney = 0
 BattleBGM = Battle Rodri
 VictoryBGM = Battle victory leader
 #-------------------------------
 [BRA]
 Name = Rival
 Gender = Male
-BaseMoney = 100
+SkillLevel = 100
+BaseMoney = 0
 BattleBGM = Battle Bra
 VictoryBGM = Battle victory leader
 #-------------------------------
 [ANA]
 Name = Rival
 Gender = Female
-BaseMoney = 100
+SkillLevel = 100
+BaseMoney = 0
 BattleBGM = Battle Ana
 VictoryBGM = Battle victory leader
 #-------------------------------
 [PABLO]
 Name = Rival
 Gender = Male
-BaseMoney = 100
+SkillLevel = 100
+BaseMoney = 0
 BattleBGM = Battle Pablo
 VictoryBGM = Battle victory leader
 #-------------------------------
 [SABO]
 Name = Rival
 Gender = Male
-BaseMoney = 100
+SkillLevel = 100
+BaseMoney = 0
 BattleBGM = Battle Eliel
 VictoryBGM = Battle victory leader
 #-------------------------------
 [NEREA]
 Name = Rival
 Gender = Female
-BaseMoney = 100
+SkillLevel = 100
+BaseMoney = 0
 BattleBGM = Battle Eliel
 VictoryBGM = Battle victory leader
 #-------------------------------
 [UCHI]
-Name = Team Pera
+Name = Furro del Team Pera
 Gender = Male
 BaseMoney = 80
 BattleBGM = Battle Pera
 #-------------------------------
 [MERMI]
-Name = Team Pera
+Name = Trapito del Team Pera
 Gender = Male
 BaseMoney = 80
 BattleBGM = Battle Pera
 #-------------------------------
 [SAKU]
-Name = Team Pera
+Name = Loli del Team Pera
 Gender = Female
 BaseMoney = 80
 BattleBGM = Battle Pera
 #-------------------------------
 [THIRTREP]
-Name = Team Pera
+Name = Pechugona del Team Pera
 Gender = Female
 BaseMoney = 80
 BattleBGM = Battle Pera
 #-------------------------------
 [BEATO]
-Name = Team Pera
+Name = Bruja del Team Pera
+Gender = Female
+BaseMoney = 80
+BattleBGM = Battle Pera
+#-------------------------------
+[LAMIA]
+Name = Sierpe del Team Pera
 Gender = Female
 BaseMoney = 80
 BattleBGM = Battle Pera
 #-------------------------------
 [COLON]
-Name = Team Pera
+Name = Colón del Team Pera
 Gender = Female
 BaseMoney = 80
 BattleBGM = Battle Pera
 #-------------------------------
 [BABATUNDE]
-Name = Team Pera
+Name = Conquistador del Team Pera
 Gender = Female
 BaseMoney = 80
 BattleBGM = Battle Pera
@@ -580,7 +598,14 @@ Name = Semibot
 Gender = Unknown
 BaseMoney = 8
 SkillLevel = 10
-BattleBGM = Battle TFT
+BattleBGM = Battle Repo
+#-------------------------------
+[BOTANICA]
+Name = Bótanica
+Gender = Female
+BaseMoney = 8
+SkillLevel = 10
+BattleBGM = Battle Claudette
 #-------------------------------
 [OTAKA_LIDER]
 Name = Otaka culiada
@@ -610,13 +635,11 @@ BattleBGM = but nobody came
 Name = Daddy
 Gender = Male
 BaseMoney = 100
-BattleBGM = but nobody came
 #-------------------------------
 [PROFETA]
 Name = Profeta
 Gender = Male
 BaseMoney = 100
-BattleBGM = but nobody came
 #-------------------------------
 [PSICOPATA]
 Name = Aventurero

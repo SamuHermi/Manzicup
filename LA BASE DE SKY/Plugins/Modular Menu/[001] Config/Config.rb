@@ -119,6 +119,15 @@ ModularMenu.add_entry(:MESSAGES, _INTL("Mensajes"), "menuMessages") do |menu|
   pbInstantMessages
 end
 
+ModularMenu.add_entry(:pause_menu, _INTL("Logros"), "menuAchiviements") do |menu|
+
+    pbPlayDecisionSE
+        scene = PokemonAchievements_Scene.new
+        screen = PokemonAchievements.new(scene)
+        pbFadeOutIn(99999) { 
+        screen.pbStartScreen
+      }
+    end
 
 #-------------------------------------------------------------------------------
 #  Quit Safari-Zone

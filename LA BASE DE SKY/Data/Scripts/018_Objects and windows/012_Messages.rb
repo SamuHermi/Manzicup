@@ -329,7 +329,7 @@ end
 
 def pbDisplayCoinsWindow(msgwindow, goldwindow)
   coinString = ($player) ? $player.coins.to_s_formatted : "0"
-  coinwindow = Window_AdvancedTextPokemon.new(_INTL("Monedas:\n<ar>{1}</ar>", coinString))
+  coinwindow = Window_AdvancedTextPokemon.new(_INTL("Fichas:\n<ar>{1}</ar>", coinString))
   coinwindow.setSkin("Graphics/Windowskins/goldskin")
   coinwindow.resizeToFit(coinwindow.text, Graphics.width)
   coinwindow.width = 160 if coinwindow.width <= 160
@@ -345,7 +345,7 @@ end
 
 def pbDisplayBattlePointsWindow(msgwindow)
   pointsString = ($player) ? $player.battle_points.to_s_formatted : "0"
-  pointswindow = Window_AdvancedTextPokemon.new(_INTL("Battle Points:\n<ar>{1}</ar>", pointsString))
+  pointswindow = Window_AdvancedTextPokemon.new(_INTL("Manzicoins:\n<ar>{1}</ar>", pointsString))
   pointswindow.setSkin("Graphics/Windowskins/goldskin")
   pointswindow.resizeToFit(pointswindow.text, Graphics.width)
   pointswindow.width = 160 if pointswindow.width <= 160

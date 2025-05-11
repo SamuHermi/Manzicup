@@ -79,7 +79,7 @@ end
 #===============================================================================
 class PokemonPartyCancelSprite < PokemonPartyConfirmCancelSprite
   def initialize(viewport = nil)
-    super(_INTL("SALIR"), 398, 328, false, viewport)
+    super(_INTL("SALIR"), 500, 390, false, viewport)
   end
 end
 
@@ -88,7 +88,7 @@ end
 #===============================================================================
 class PokemonPartyConfirmSprite < PokemonPartyConfirmCancelSprite
   def initialize(viewport = nil)
-    super(_INTL("CONFIRMAR"), 398, 308, true, viewport)
+    super(_INTL("CONFIRMAR"), 500, 390, true, viewport)
   end
 end
 
@@ -97,7 +97,7 @@ end
 #===============================================================================
 class PokemonPartyCancelSprite2 < PokemonPartyConfirmCancelSprite
   def initialize(viewport = nil)
-    super(_INTL("CANCELAR"), 398, 346, true, viewport)
+    super(_INTL("CANCELAR"), 500, 390, true, viewport)
   end
 end
 
@@ -139,7 +139,7 @@ class PokemonPartyBlankPanel < Sprite
   def initialize(_pokemon, index, viewport = nil)
     super(viewport)
     self.x = (index % 2) * Graphics.width / 2
-    self.y = (16 * (index % 2)) + (96 * (index / 2))
+    self.y = (30 * (index % 2)) + (110 * (index / 2))
     @panelbgsprite = AnimatedBitmap.new("Graphics/UI/Party/panel_blank")
     self.bitmap = @panelbgsprite.bitmap
     @text = nil
@@ -182,7 +182,7 @@ class PokemonPartyPanel < Sprite
     @active = (index == 0)   # true = rounded panel, false = rectangular panel
     @refreshing = true
     self.x = (index % 2) * Graphics.width / 2
-    self.y = (16 * (index % 2)) + (96 * (index / 2))
+    self.y = (30 * (index % 2)) + (110 * (index / 2))
     @panelbgsprite = ChangelingSprite.new(0, 0, viewport)
     @panelbgsprite.z = self.z
     if @active   # Rounded panel
@@ -331,7 +331,7 @@ class PokemonPartyPanel < Sprite
     else
       @hpbgsprite.changeBitmap("APTO")
     end
-    @hpbgsprite.x     = self.x + 96
+    @hpbgsprite.x     = self.x + 136
     @hpbgsprite.y     = self.y + 50
     @hpbgsprite.color = self.color
   end
@@ -394,7 +394,7 @@ class PokemonPartyPanel < Sprite
     base_color   = (@pokemon.male?) ? Color.new(24, 146, 240) : Color.new(249, 93, 210)
     shadow_color = (@pokemon.male?) ? Color.new(13, 73, 119) : Color.new(128, 20, 90)
     pbDrawTextPositions(@overlaysprite.bitmap,
-                        [[gender_text, 224, 22, :left, base_color, shadow_color]])
+                        [[gender_text, 280, 22, :left, base_color, shadow_color]])
   end
 
   def draw_hp
@@ -402,7 +402,7 @@ class PokemonPartyPanel < Sprite
     # HP numbers
     hp_text = sprintf("% 3d /% 3d", @pokemon.hp, @pokemon.totalhp)
     pbDrawTextPositions(@overlaysprite.bitmap,
-                        [[hp_text, 224, 66, :right, TEXT_BASE_COLOR, TEXT_SHADOW_COLOR]])
+                        [[hp_text, 262, 66, :right, TEXT_BASE_COLOR, TEXT_SHADOW_COLOR]])
     # HP bar
     if @pokemon.able?
       w = @pokemon.hp * HP_BAR_WIDTH / @pokemon.totalhp.to_f
@@ -412,7 +412,7 @@ class PokemonPartyPanel < Sprite
       hpzone = 1 if @pokemon.hp <= (@pokemon.totalhp / 2).floor
       hpzone = 2 if @pokemon.hp <= (@pokemon.totalhp / 4).floor
       hprect = Rect.new(0, hpzone * 8, w, 8)
-      @overlaysprite.bitmap.blt(128, 52, @hpbar.bitmap, hprect)
+      @overlaysprite.bitmap.blt(168, 52, @hpbar.bitmap, hprect)
     end
   end
 

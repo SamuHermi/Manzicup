@@ -175,8 +175,8 @@ module Transitions
   #
   #=============================================================================
   class BreakingGlass < Transition_Base
-    NUM_SPRITES_X = 8
-    NUM_SPRITES_Y = 6
+    NUM_SPRITES_X = 10#8
+    NUM_SPRITES_Y = 8#6
 
     def initialize_sprites
       @overworld_sprite.visible = false
@@ -216,8 +216,8 @@ module Transitions
   #
   #=============================================================================
   class ShrinkingPieces < Transition_Base
-    NUM_SPRITES_X = 8
-    NUM_SPRITES_Y = 6
+    NUM_SPRITES_X = 10#8
+    NUM_SPRITES_Y = 8#6
 
     def initialize_sprites
       @overworld_sprite.visible = false
@@ -251,8 +251,8 @@ module Transitions
   #
   #=============================================================================
   class SplashTransition < Transition_Base
-    NUM_SPRITES_X = 16
-    NUM_SPRITES_Y = 12
+    NUM_SPRITES_X = 20#16
+    NUM_SPRITES_Y = 14#12
     SPEED         = 40
 
     def initialize_sprites
@@ -321,7 +321,7 @@ module Transitions
   #=============================================================================
   #
   #=============================================================================
-  class RandomStripeTransition < Transition_Base
+  class FomStripeTransition < Transition_Base
     STRIPE_WIDTH = 2
 
     def initialize_sprites
@@ -401,7 +401,7 @@ module Transitions
   #
   #=============================================================================
   class MosaicTransition < Transition_Base
-    MAX_PIXELLATION_FACTOR = 16
+    MAX_PIXELLATION_FACTOR = 20#16
 
     def initialize_bitmaps
       @buffer_original = @overworld_bitmap.clone   # Copy of original, never changes
@@ -458,8 +458,8 @@ module Transitions
   class SnakeSquares < Transition_Base
     DURATION      = 1.25
     TIME_TO_ZOOM  = 0.2   # In seconds
-    NUM_SPRITES_X = 8
-    NUM_SPRITES_Y = 6   # Must be an even number
+    NUM_SPRITES_X = 10
+    NUM_SPRITES_Y = 8   # Must be an even number
     TOTAL_SPRITES = NUM_SPRITES_X * NUM_SPRITES_Y
 
     def initialize_bitmaps
@@ -526,8 +526,8 @@ module Transitions
   class DiagonalBubble < Transition_Base
     DURATION      = 1.25
     TIME_TO_ZOOM  = 0.2   # In seconds
-    NUM_SPRITES_X = 8
-    NUM_SPRITES_Y = 6
+    NUM_SPRITES_X = 10
+    NUM_SPRITES_Y = 8
     TOTAL_SPRITES = NUM_SPRITES_X * NUM_SPRITES_Y
 
     def initialize_bitmaps

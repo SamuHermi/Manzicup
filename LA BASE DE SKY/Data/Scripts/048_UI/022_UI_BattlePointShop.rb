@@ -7,7 +7,7 @@ class BattlePointShopAdapter
   end
 
   def getBPString
-    return _INTL("{1} PB", $player.battle_points.to_s_formatted)
+    return _INTL("{1} MC", $player.battle_points.to_s_formatted)
   end
 
   def setBP(value)
@@ -76,7 +76,7 @@ class BattlePointShopAdapter
 
   def getDisplayPrice(item, selling = false)
     price = getPrice(item).to_s_formatted
-    return _INTL("{1} PB", price)
+    return _INTL("{1} MC", price)
   end
 
   def addItem(item)
@@ -151,7 +151,7 @@ class BattlePointShop_Scene
       @sprites["qtywindow"].y       = Graphics.height - 102 - @sprites["qtywindow"].height
       itemwindow.refresh
     end
-    @sprites["battlepointwindow"].text = _INTL("Monedas:\n<r>{1}", @adapter.getBPString)
+    @sprites["battlepointwindow"].text = _INTL("Manzicoins:\n<r>{1}", @adapter.getBPString)
   end
 
   def pbStartScene(stock, adapter)
@@ -343,7 +343,7 @@ class BattlePointShop_Scene
       numwindow.height = 64
       numwindow.baseColor = Color.new(88, 88, 80)
       numwindow.shadowColor = Color.new(168, 184, 184)
-      numwindow.text = _INTL("x{1}<r>{2} PB", curnumber, (curnumber * itemprice).to_s_formatted)
+      numwindow.text = _INTL("x{1}<r>{2} MC", curnumber, (curnumber * itemprice).to_s_formatted)
       pbBottomRight(numwindow)
       numwindow.y -= helpwindow.height
       loop do
@@ -356,28 +356,28 @@ class BattlePointShop_Scene
           curnumber -= 10
           curnumber = 1 if curnumber < 1
           if curnumber != oldnumber
-            numwindow.text = _INTL("x{1}<r>{2} PB", curnumber, (curnumber * itemprice).to_s_formatted)
+            numwindow.text = _INTL("x{1}<r>{2} MC", curnumber, (curnumber * itemprice).to_s_formatted)
             pbPlayCursorSE
           end
         elsif Input.repeat?(Input::RIGHT)
           curnumber += 10
           curnumber = maximum if curnumber > maximum
           if curnumber != oldnumber
-            numwindow.text = _INTL("x{1}<r>{2} PB", curnumber, (curnumber * itemprice).to_s_formatted)
+            numwindow.text = _INTL("x{1}<r>{2} MC", curnumber, (curnumber * itemprice).to_s_formatted)
             pbPlayCursorSE
           end
         elsif Input.repeat?(Input::UP)
           curnumber += 1
           curnumber = 1 if curnumber > maximum
           if curnumber != oldnumber
-            numwindow.text = _INTL("x{1}<r>{2} PB", curnumber, (curnumber * itemprice).to_s_formatted)
+            numwindow.text = _INTL("x{1}<r>{2} MC", curnumber, (curnumber * itemprice).to_s_formatted)
             pbPlayCursorSE
           end
         elsif Input.repeat?(Input::DOWN)
           curnumber -= 1
           curnumber = maximum if curnumber < 1
           if curnumber != oldnumber
-            numwindow.text = _INTL("x{1}<r>{2} PB", curnumber, (curnumber * itemprice).to_s_formatted)
+            numwindow.text = _INTL("x{1}<r>{2} MC", curnumber, (curnumber * itemprice).to_s_formatted)
             pbPlayCursorSE
           end
         elsif Input.trigger?(Input::USE)
@@ -454,11 +454,11 @@ class BattlePointShopScreen
       itemnameplural = @adapter.getNamePlural(item)
       price = @adapter.getPrice(item)
       if @adapter.getBP < price
-        pbDisplayPaused(_INTL("No tienes suficientes PB."))
+        pbDisplayPaused(_INTL("No tienes suficientes MC."))
         next
       end
       if GameData::Item.get(item).is_important? && !GameData::Item.get(item).is_charm?
-        next if !pbConfirm(_INTL("¿Te interesa comprar {1}?\nEl precio son {2} PB.",
+        next if !pbConfirm(_INTL("¿Te interesa comprar {1}?\nEl precio son {2} MC.",
                                  itemname, price.to_s_formatted))
         quantity = 1
       else
@@ -471,15 +471,15 @@ class BattlePointShopScreen
         next if quantity == 0
         price *= quantity
         if quantity > 1
-          next if !pbConfirm(_INTL("¿Así que quieres {1} {2}?\nSerían {3} PB.",
+          next if !pbConfirm(_INTL("¿Así que quieres {1} {2}?\nSerían {3} MC.",
                                    quantity, itemnameplural, price.to_s_formatted))
         elsif quantity > 0
-          next if !pbConfirm(_INTL("¿Así que quieres {1} {2}?\nSerían {3} PB.",
+          next if !pbConfirm(_INTL("¿Así que quieres {1} {2}?\nSerían {3} MC.",
                                    quantity, itemname, price.to_s_formatted))
         end
       end
       if @adapter.getBP < price
-        pbDisplayPaused(_INTL("Lo siento, no tienes suficientes PB."))
+        pbDisplayPaused(_INTL("Lo siento, no tienes suficientes Manzicoins."))
         next
       end
       added = 0
@@ -513,17 +513,18 @@ end
 def pbBattlePointShop(stock, speech = nil)
   stock.delete_if { |item| GameData::Item.get(item).is_important? && $bag.has?(item) && !GameData::Item.get(item).is_charm?}
   stock.delete_if { |item| $bag.quantity(GameData::Item.get(item)) >= Settings::BAG_MAX_CHARM && GameData::Item.get(item).is_charm?}
+=begin  
   if speech.nil?
     pbMessage(_INTL("¡Bienvenido al Servicio de Intercambio!"))
-    pbMessage(_INTL("Podemos cambiar tus Monedas por fabulosos premios."))
+    pbMessage(_INTL("Podemos cambiar tus Fichas por fabulosos premios."))
   else
     pbMessage(speech)
   end
+=end
   scene = BattlePointShop_Scene.new
   screen = BattlePointShopScreen.new(scene, stock)
   screen.pbBuyScreen
-  pbMessage(_INTL("Gracias por tu visita."))
-  pbMessage(_INTL("Por favor, visítanos de nuevo cuando hayas conseguido más PB."))
+  pbMessage(_INTL("Muchas gracias."))
   $game_temp.clear_mart_prices
 end
 

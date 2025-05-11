@@ -60,20 +60,22 @@ class PokemonLoadPanel < Sprite
       else
         self.bitmap.blt(0, 0, @bgbitmap.bitmap, Rect.new(0, 444 + ((@selected) ? 46 : 0), @bgbitmap.width, 46))
       end
+       desplaz_menu = 40
+      desplaz_datos = 20
       textpos = []
       if @isContinue
-        textpos.push([@title, 32, 16, :left, TEXT_COLOR, TEXT_SHADOW_COLOR])
-        textpos.push([_INTL("Medallas:"), 32, 118, :left, TEXT_COLOR, TEXT_SHADOW_COLOR])
-        textpos.push([@trainer.badge_count.to_s, 206, 118, :right, TEXT_COLOR, TEXT_SHADOW_COLOR])
-        textpos.push([_INTL("Pokédex:"), 32, 150, :left, TEXT_COLOR, TEXT_SHADOW_COLOR])
-        textpos.push([@trainer.pokedex.seen_count.to_s, 206, 150, :right, TEXT_COLOR, TEXT_SHADOW_COLOR])
-        textpos.push([_INTL("Tiempo:"), 32, 182, :left, TEXT_COLOR, TEXT_SHADOW_COLOR])
+        textpos.push([@title, 32+desplaz_menu, 16, :left, TEXT_COLOR, TEXT_SHADOW_COLOR])
+        textpos.push([_INTL("Medallas:"), 32+desplaz_menu, 118, :left, TEXT_COLOR, TEXT_SHADOW_COLOR])
+        textpos.push([@trainer.badge_count.to_s, 206+desplaz_menu+desplaz_datos, 118, :right, TEXT_COLOR, TEXT_SHADOW_COLOR])
+        textpos.push([_INTL("Pokédex:"), 32+desplaz_menu, 150, :left, TEXT_COLOR, TEXT_SHADOW_COLOR])
+        textpos.push([@trainer.pokedex.seen_count.to_s, 206+desplaz_menu+desplaz_datos, 150, :right, TEXT_COLOR, TEXT_SHADOW_COLOR])
+        textpos.push([_INTL("Tiempo:"), 32+desplaz_menu, 182, :left, TEXT_COLOR, TEXT_SHADOW_COLOR])
         hour = @totalsec / 60 / 60
         min  = @totalsec / 60 % 60
         if hour > 0
-          textpos.push([_INTL("{1}h {2}m", hour, min), 206, 182, :right, TEXT_COLOR, TEXT_SHADOW_COLOR])
+          textpos.push([_INTL("{1}h {2}m", hour, min), 206+desplaz_menu+desplaz_datos, 182, :right, TEXT_COLOR, TEXT_SHADOW_COLOR])
         else
-          textpos.push([_INTL("{1}m", min), 206, 182, :right, TEXT_COLOR, TEXT_SHADOW_COLOR])
+          textpos.push([_INTL("{1}m", min), 206+desplaz_menu+desplaz_datos, 182, :right, TEXT_COLOR, TEXT_SHADOW_COLOR])
         end
         colorText = Color.new(0,0,0)
         colorShadow = Color.new(0,0,0)
@@ -118,12 +120,12 @@ class PokemonLoadPanel < Sprite
           colorText   = TEXT_COLOR
           colorShadow = TEXT_SHADOW_COLOR          
         end
-        textpos.push([@trainer.name, 112, 70, :left, colorText, colorShadow])
-        mapname = pbGetMapNameFromId(@mapid)
+        textpos.push([@trainer.name, 112 + desplaz_menu, 70, :left, colorText, colorShadow])
+       mapname = pbGetMapNameFromId(@mapid)
         mapname.gsub!(/\\PN/, @trainer.name)
-        textpos.push([mapname, 386, 16, :right, TEXT_COLOR, TEXT_SHADOW_COLOR])
+        textpos.push([mapname, 386+desplaz_menu+40, 16, :right, TEXT_COLOR, TEXT_SHADOW_COLOR])
       else
-        textpos.push([@title, 32, 14, :left, TEXT_COLOR, TEXT_SHADOW_COLOR])
+        textpos.push([@title, 32+desplaz_menu, 14, :left, TEXT_COLOR, TEXT_SHADOW_COLOR])
       end
       pbDrawTextPositions(self.bitmap, textpos)
     end
@@ -211,6 +213,7 @@ class PokemonLoad_Scene
       charwidth  = @sprites["player"].bitmap.width
       charheight = @sprites["player"].bitmap.height
       @sprites["player"].x = 112 - (charwidth / 8)
+      @sprites["player"].x       += 40
       @sprites["player"].y = 112 - (charheight / 8)
       @sprites["player"].z = 99999
     end
@@ -218,6 +221,7 @@ class PokemonLoad_Scene
       @sprites["party#{i}"] = PokemonIconSprite.new(pkmn, @viewport)
       @sprites["party#{i}"].setOffset(PictureOrigin::CENTER)
       @sprites["party#{i}"].x = 334 + (66 * (i % 2))
+      @sprites["party#{i}"].x += 70
       @sprites["party#{i}"].y = 112 + (50 * (i / 2))
       @sprites["party#{i}"].z = 99999
     end
@@ -316,7 +320,7 @@ class PokemonLoadScreen
   end
 
   def pbStartLoadScreen
-    pbCheckForUpdates() if defined?(pbCheckForUpdates) # Required for PokéUpdater to check for gameupdates.
+    check_for_updates() if defined?(check_for_updates) # Required for PokéUpdater to check for gameupdates.
     commands = []
     cmd_continue     = -1
     cmd_new_game     = -1
@@ -376,7 +380,7 @@ class PokemonLoadScreen
       when cmd_debug
         pbFadeOutIn { pbDebugMenu(false) }
       when cmd_update
-        pbValidateGameVersionAndUpdate(true) if defined?(pbValidateGameVersionAndUpdate)   
+        validate_game_version_and_update(true) if defined?(validate_game_version_and_update)   
       when cmd_quit
         pbPlayCloseMenuSE
         @scene.pbEndScene

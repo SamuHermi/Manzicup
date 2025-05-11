@@ -5722,9 +5722,9 @@ FrontSprite = 6,16
 ShadowSprite = 2,4,-2
 #-------------------------------
 [WISHIWASHI,2]
-BackSprite = 6,107
-FrontSprite = -2,53
-ShadowSprite = 4,2,-26
+BackSprite = 6,19
+FrontSprite = -2,5
+ShadowSprite = 1,2,7
 AnimationSpeed = 3,2
 #-------------------------------
 [WISHIWASHI,3]
@@ -5737,3 +5737,14 @@ AnimationSpeed = 3,2
 BackSprite = -5,10
 FrontSprite = 5,0
 ShadowSprite = 0,0,20
+#-------------------------------
+[KUSHALADAORA]
+BackSprite = 0,0
+FrontSprite = 4,19
+ShadowSprite = 0,0,0
+#-------------------------------
+[BUTTERFREE,1,female]
+BackSprite = 0,8
+FrontSprite = 0,17
+ShadowSprite = 2,25,25
+AnimationSpeed = 1

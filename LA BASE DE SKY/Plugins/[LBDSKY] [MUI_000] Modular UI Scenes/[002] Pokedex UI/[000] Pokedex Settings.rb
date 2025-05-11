@@ -18,7 +18,7 @@ class PokemonPokedexInfo_Scene
   #-----------------------------------------------------------------------------
   # Sets the X and Y coordinates for the page icons. (Default: [30, 2])
   #-----------------------------------------------------------------------------
-  PAGE_ICONS_POSITION = [30, 2]
+  PAGE_ICONS_POSITION = [30, 6]
   
   #-----------------------------------------------------------------------------
   # Sets the alignment for page icons relative to their coordinates above.

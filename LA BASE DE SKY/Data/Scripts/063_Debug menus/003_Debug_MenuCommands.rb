@@ -860,7 +860,7 @@ MenuHandlers.add(:debug_menu, :set_money, {
     loop do
       cmds = [_INTL("Dinero: {1}$", $player.money.to_s_formatted),
               _INTL("Fichas: {1}", $player.coins.to_s_formatted),
-              _INTL("Monedas: {1}", $player.battle_points.to_s_formatted)]
+              _INTL("Manzicoins: {1}", $player.battle_points.to_s_formatted)]
       cmd = pbShowCommands(nil, cmds, -1, cmd)
       break if cmd < 0
       case cmd

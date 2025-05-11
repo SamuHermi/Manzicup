@@ -15,8 +15,8 @@ class PokemonStorageScene
     buttonshadow = Color.new(80, 80, 80)
     pbDrawTextPositions(
       overlay,
-      [[_INTL("Equipo: {1}", (@storage.party.length rescue 0)), 270, 334, :center, buttonbase, buttonshadow, :outline],
-       [_INTL("Salir"), 447, 334, :center, buttonbase, buttonshadow, :outline]]
+      [[_INTL("Equipo: {1}", (@storage.party.length rescue 0)), 270, 392, :center, buttonbase, buttonshadow, :outline],
+       [_INTL("Salir"), 446, 392, :center, buttonbase, buttonshadow, :outline]]
     )
     pokemon = nil
     if @screen.pbHeldPokemon
@@ -31,8 +31,8 @@ class PokemonStorageScene
     @sprites["pokemon"].visible = true
     base   = Color.new(88, 88, 80)
     shadow = Color.new(168, 184, 184)
-    nonbase   = Color.new(208, 208, 208)
-    nonshadow = Color.new(224, 224, 224)
+    nonbase   = Color.new(90, 82, 82)
+    nonshadow = Color.new(165, 165, 173)
     pokename = pokemon.name
     textstrings = [
       [pokename, 10, 14, :left, base, shadow]
@@ -44,17 +44,18 @@ class PokemonStorageScene
       elsif pokemon.female?
         textstrings.push([_INTL("♀"), 148, 14, :left, Color.new(248, 56, 32), Color.new(224, 152, 144)])
       end
-      imagepos.push([_INTL("Graphics/UI/Storage/overlay_lv"), 6, 246])
-      textstrings.push([pokemon.level.to_s, 30, 240, :left, base, shadow])
+      imagepos.push([_INTL("Graphics/UI/Storage/overlay_lv"), 6246, 240])
+      textstrings.push(["Nv. " + pokemon.level.to_s, 110, 260, :left, base, shadow])
+      textstrings.push([pokemon.nature.name.to_s, 10, 260, :left, base, shadow])
       if pokemon.ability
-        textstrings.push([pokemon.ability.name, 86, 312, :center, base, shadow])
+        textstrings.push([pokemon.ability.name, 90, 350, :center, base, shadow])
       else
-        textstrings.push([_INTL("Sin habilidad"), 86, 312, :center, nonbase, nonshadow])
+        textstrings.push([_INTL("Sin habilidad"), 90, 350, :center, nonbase, nonshadow])
       end
       if pokemon.item
-        textstrings.push([pokemon.item.name, 86, 348, :center, base, shadow])
+        textstrings.push([pokemon.item.name, 90, 382, :center, base, shadow])
       else
-        textstrings.push([_INTL("Sin objeto"), 86, 348, :center, nonbase, nonshadow])
+        textstrings.push([_INTL("Sin objeto"), 90, 382, :center, nonbase, nonshadow])
       end
       if pokemon.shiny?
         pbDrawImagePositions(plugin_overlay, [["Graphics/Pictures/shiny", 134, 16]])
@@ -66,9 +67,9 @@ class PokemonStorageScene
         type_number = GameData::Type.get(type).icon_position
         type_rect = Rect.new(0, type_number * 28, 64, 28)
         type_x = (pokemon.types.length == 1) ? 52 : 18 + (70 * i)
-        overlay.blt(type_x, 272, typebitmap.bitmap, type_rect)
+        overlay.blt(type_x, 300, typebitmap.bitmap, type_rect)
       end
-      drawMarkings(overlay, 70, 240, 128, 20, pokemon.markings)
+      drawMarkings(overlay, 90-50, 262+150, 128, 20, pokemon.markings)
       pbDrawImagePositions(overlay, imagepos)
     end
     pbDrawTextPositions(overlay, textstrings)

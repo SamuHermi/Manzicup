@@ -53,9 +53,10 @@ class Battle::Scene
   def pbUpdateBattlerSelection(idxSide, idxPoke, select = false)
     @enhancedUIOverlay.clear
     return if @enhancedUIToggle != :battler
+	correcc_tam_pant = 64
     ypos = 68
     textPos = []
-    imagePos = [[@path + "select_bg", 0, ypos]]
+    imagePos = [[@path + "select_bg", 0, 125]] # ypos + 55
     2.times do |side|
       trainers = []
       count = @battle.pbSideBattlerCount(side)
@@ -66,11 +67,11 @@ class Battle::Scene
       when 0
         @battle.allSameSideBattlers.each_with_index do |b, i|
           case count
-          when 1 then iconX, bgX = 202, 173
-          when 2 then iconX, bgX = 96 + (208 * i), 68 + (208 * i)
-          when 3 then iconX, bgX = 32 + (168 * i), 4 + (169 * i)
+          when 1 then iconX, bgX = 202+correcc_tam_pant, 173+correcc_tam_pant
+          when 2 then iconX, bgX = 96+correcc_tam_pant + (208 * i), 68 + (208 * i)+correcc_tam_pant
+          when 3 then iconX, bgX = 32+correcc_tam_pant + (168 * i), 4 + (169 * i)+correcc_tam_pant
           end
-          iconY = ypos + 114
+          iconY = ypos + 114+32
           nameX = iconX + 82
           if idxSide == side && idxPoke == i
             base, shadow = BASE_LIGHT, SHADOW_LIGHT
@@ -101,11 +102,11 @@ class Battle::Scene
       when 1
         @battle.allOtherSideBattlers.reverse.each_with_index do |b, i|
           case count
-          when 1 then iconX, bgX = 202, 173
-          when 2 then iconX, bgX = 96 + (208 * i), 68 + (208 * i)
-          when 3 then iconX, bgX = 32 + (168 * i), 4 + (169 * i)
+          when 1 then iconX, bgX = 202+correcc_tam_pant, 173+correcc_tam_pant
+          when 2 then iconX, bgX = 96+correcc_tam_pant + (208 * i), 68 + (208 * i)+correcc_tam_pant
+          when 3 then iconX, bgX = 32+correcc_tam_pant + (168 * i), 4 + (169 * i)+correcc_tam_pant
           end
-          iconY = ypos + 38
+          iconY = ypos + 38+32
           nameX = iconX + 82
           if idxSide == side && idxPoke == i
             base, shadow = BASE_LIGHT, SHADOW_LIGHT
@@ -150,14 +151,14 @@ class Battle::Scene
             else                        ballX = ballXMiddle
             end
           end
-          imagePos.push([@path + "info_owner", ballX - 16, ballY - ballOffset, 0, 0, 128, 20])
+        #  imagePos.push([@path + "info_owner", ballX - 16, ballY - ballOffset, 0, 0, 128, 20])
           NUM_BALLS.times do |slot|
             idx = 0
             if !trainer.party[slot]                   then idx = 3 # Empty
             elsif !trainer.party[slot].able?          then idx = 2 # Fainted
             elsif trainer.party[slot].status != :NONE then idx = 1 # Status
             end
-            imagePos.push([@path + "info_party", ballX + (slot * 16), ballY, idx * 15, 0, 15, 15])
+            imagePos.push([@path + "info_party", ballX + (slot * 16), ballY + 32, idx * 15, 0, 15, 15])
           end
           # Draws each trainer's Wonder Launcher points.
           if @battle.launcherBattle?

@@ -934,6 +934,7 @@ Generation = 6
 [ROTOM,1]
 FormName = Forma Calor
 Types = ELECTRIC,FIRE
+Abilities = WELLBAKEDBODY
 BaseStats = 50,65,107,86,105,107
 BaseExp = 182
 Pokedex = Ha tomado posesión de un horno eléctrico que funciona con un motor especial. Controla el fuego con maña.
@@ -941,6 +942,7 @@ Pokedex = Ha tomado posesión de un horno eléctrico que funciona con un motor e
 [ROTOM,2]
 FormName = Forma Lavado
 Types = ELECTRIC,WATER
+Abilities = WATERABSORB
 BaseStats = 50,65,107,86,105,107
 BaseExp = 182
 Pokedex = Asume esta forma cuando quiere utilizar el agua para hacer fechorías tales como inundar habitaciones.
@@ -948,6 +950,7 @@ Pokedex = Asume esta forma cuando quiere utilizar el agua para hacer fechorías 
 [ROTOM,3]
 FormName = Forma Frío
 Types = ELECTRIC,ICE
+Abilities = REFRIGERATE
 BaseStats = 50,65,107,86,105,107
 BaseExp = 182
 Pokedex = Ha tomado posesión de un frigorífico que funciona con un motor especial. Se vale de su aire gélido para combatir.
@@ -955,6 +958,7 @@ Pokedex = Ha tomado posesión de un frigorífico que funciona con un motor espec
 [ROTOM,4]
 FormName = Forma Ventilador
 Types = ELECTRIC,FLYING
+Abilities = WINDRIDER
 BaseStats = 50,65,107,86,105,107
 BaseExp = 182
 Pokedex = Asume esta forma cuando quiere usar el viento para hacer fechorías tales como esparcir por doquier montañas de documentos importantes.
@@ -2623,7 +2627,7 @@ BaseStats = 115,75,98,45,165,112
 Color = Green
 UnmegaForm = 2
 #-------------------------------
-[LAPRAS,1]
+[LAPRAS,2]
 FormName = Forma Iria
 Types = DRAGON
 Abilities = PSYCHICSURGE
@@ -2631,7 +2635,7 @@ BaseStats = 116,123,90,61,81,64
 Moves = 1,SCRATCH,1,LEER,5,BITE,10,DRAGONTAIL,15,METALCLAW,20,SCARYFACE,25,SLASH,30,DRAGONCLAW,35,HONECLAWS,40,CRUNCH,45,HYPERDRILL,50,OUTRAGE,55,PSYCHICFANGS
 Color = Red
 #-------------------------------
-[LAPRAS,2]
+[LAPRAS,3]
 FormName = Forma Iria (Mega)
 MegaStone = MEGASTONE
 Types = DRAGON
@@ -2690,7 +2694,7 @@ Abilities = SPEEDFORCE
 BaseStats = 85,150,120,180,20,90
 UnmegaForm = 4
 #-------------------------------
-[ABSOL,2]
+[ABSOL,1]
 FormName = Forma Isa
 Types = WATER
 Abilities = DRIZZLE
@@ -2699,7 +2703,7 @@ Moves = 1,DISARMINGVOICE,1,WATERGUN,5,SWEETKISS,10,MIST,10,HAZE,15,AQUARING,20,W
 TutorMoves = BLIZZARD,BRINE,CALMMIND,DAZZLINGGLEAM,DIVE,DRAININGKISS,ENDURE,FACADE,FLING,GIGAIMPACT,GRASSKNOT,GUARDSWAP,HIDDENPOWER,HYDROPUMP,HYPERBEAM,ICEBEAM,ICEPUNCH,ICYWIND,IRONDEFENSE,LIGHTSCREEN,MAGICROOM,MISTYTERRAIN,MUDDYWATER,PLAYROUGH,PROTECT,RAINDANCE,REFLECT,REST,ROUND,SAFEGUARD,SCALD,SHADOWBALL,SLEEPTALK,SMARTSTRIKE,SNORE,STOREDPOWER,SUBSTITUTE,SURF,TAUNT,TRICK,WATERFALL,WHIRLPOOL,WONDERROOM
 Color = Blue
 #-------------------------------
-[ABSOL,3]
+[ABSOL,2]
 FormName = Forma Isa (Mega)
 MegaStone = MEGASTONE
 Types = WATER,STEEL
@@ -2732,9 +2736,9 @@ Abilities = MAGICBOUNCE
 Color = Brown
 UnmegaForm = 1
 #-------------------------------
-[MAGIKARP,2]
+[MAGIKARP,1]
 #-------------------------------
-[GYARADOS,2]
+[GYARADOS,1]
 FormName = Forma Brayan
 Types = WATER,FIRE
 Abilities = DOWNLOAD
@@ -2743,7 +2747,7 @@ Moves = 0,BITE,1,BITE,1,FLAIL,1,SPLASH,1,TACKLE,1,LEER,1,TWISTER,4,WHIRLPOOL,8,I
 TutorMoves = ATTRACT,AVALANCHE,BLIZZARD,BODYSLAM,BOUNCE,BRINE,BRUTALSWING,BULLDOZE,CRUNCH,DARKPULSE,DIVE,DOUBLETEAM,DRAGONDANCE,DRAGONPULSE,EARTHQUAKE,ENDURE,FACADE,FIREBLAST,FLAMETHROWER,GIGAIMPACT,HAIL,HIDDENPOWER,HURRICANE,HYDROPUMP,HYPERBEAM,ICEBEAM,ICEFANG,ICYWIND,IRONHEAD,IRONTAIL,LASHOUT,MUDDYWATER,OUTRAGE,PAYBACK,POWERWHIP,PROTECT,RAINDANCE,REST,ROAR,ROCKSMASH,ROUND,SANDSTORM,SCALD,SCALESHOT,SCARYFACE,SLEEPTALK,SNORE,STONEEDGE,STRENGTH,SUBSTITUTE,SURF,SWAGGER,TAUNT,THUNDER,THUNDERBOLT,THUNDERWAVE,TORMENT,UPROAR,WATERFALL,WATERPULSE,WHIRLPOOL
 Color = Red
 #-------------------------------
-[GYARADOS,3]
+[GYARADOS,2]
 FormName = Forma Brayan (Mega)
 MegaStone = MEGASTONE
 Types = WATER,FIRE
@@ -2818,3 +2822,182 @@ BaseStats = 74,115,90,141,55,95
 Abilities = PARENTALBOND
 UnmegaForm = 1
 Color = Green
+#-------------------------------
+[BUTTERFREE,1]
+FormName = Butterfree Gigantamax
+MegaStone = MEGASTONEG
+BaseStats = 50,55,80,80,140,120
+Abilities = TINTEDLENS
+HiddenAbilities = TINTEDLENS
+Height = 7.0
+Weight = 9.9
+Generation = 8
+#-------------------------------
+[LAPRAS,1]
+FormName = Lapras Gigantamax
+MegaStone = MEGASTONEG
+BaseStats = 130,105,100,60,125,115
+Abilities = LIQUIDVOICE
+HiddenAbilities = LIQUIDVOICE
+Height = 25.0
+Generation = 8
+#-------------------------------
+[SNORLAX,1]
+FormName = Snorlax Gigantamax
+Types = NORMAL,GRASS
+MegaStone = MEGASTONEG
+BaseStats = 160,130,65,30,95,160
+Abilities = THICKFAT
+HiddenAbilities = THICKFAT
+Height = 21.0
+Generation = 8
+#-------------------------------
+[MACHAMP,1]
+FormName = Machamp Gigantamax
+Types = FIGHTING
+MegaStone = MEGASTONEG
+BaseStats = 90,160,110,75,65,110
+Abilities = IRONFIST
+HiddenAbilities = IRONFIST
+Height = 16
+Generation = 8
+#-------------------------------
+[KINGLER,1]
+FormName = Kingler Gigantamax
+Types = WATER
+MegaStone = MEGASTONEG
+BaseStats = 60,150,130,90,50,80
+Abilities = TOUGHCLAWS
+HiddenAbilities = TOUGHCLAWS
+Height = 13
+Generation = 8
+#-------------------------------
+[GARBODOR,1]
+FormName = Garbodor Gigantamax
+Types = POISON,STEEL
+MegaStone = MEGASTONEG
+BaseStats = 80,120,127,55,105,107
+Abilities = STEELYSPIRIT
+HiddenAbilities = STEELYSPIRIT
+Height = 19
+Generation = 8
+#-------------------------------
+[ORBEETLE,1]
+FormName = Orbeetle Gigantamax
+Types = BUG,PSYCHIC
+MegaStone = MEGASTONEG
+BaseStats = 60,45,125,100,135,120
+Abilities = MAGICGUARD
+HiddenAbilities = MAGICGUARD
+Height = 4
+Generation = 8
+#-------------------------------
+[CORVIKNIGHT,1]
+FormName = Corviknight Gigantamax
+Types = FLYING,STEEL
+MegaStone = MEGASTONEG
+BaseStats = 98,137,135,97,53,105
+Abilities = MIRRORARMOR
+HiddenAbilities = MIRRORARMOR
+Height = 22
+Generation = 8
+#-------------------------------
+[COALOSSAL,1]
+FormName = Coalossal Gigantamax
+Types = STEEL,FIRE
+MegaStone = MEGASTONEG
+BaseStats = 110,80,125,30,125,125
+Abilities = EARTHEATER
+HiddenAbilities = EARTHEATER
+Height = 28
+Generation = 8
+#-------------------------------
+[SANDACONDA,1]
+FormName = Sandaconda Gigantamax
+Types = GROUND,FLYING
+MegaStone = MEGASTONEG
+BaseStats = 72,140,160,81,85,90
+Abilities = AERILATE
+HiddenAbilities = AERILATE
+Height = 38
+Generation = 8
+#-------------------------------
+[TOXTRICITY,2]
+FormName = Toxtricity Gigantamax
+Types = POISON,ELECTRIC
+MegaStone = MEGASTONEG
+BaseStats = 75,82,80,121,155,90
+Abilities = PUNKROCK
+HiddenAbilities = PUNKROCK
+Height = 16
+Generation = 8
+#-------------------------------
+[CENTISKORCH,1]
+FormName = Toxtricity Gigantamax
+Types = FIRE,BUG
+MegaStone = MEGASTONEG
+BaseStats = 100,150,80,85,90,110
+Abilities = TURBOBLAZE
+HiddenAbilities = TURBOBLAZE
+Height = 30
+Generation = 8
+#-------------------------------
+[HATTERENE,1]
+FormName = Hatterene Gigantamax
+Types = PSYCHIC,FAIRY
+MegaStone = MEGASTONEG
+BaseStats = 100,150,80,85,90,110
+Abilities = PIXILATE
+HiddenAbilities = PIXILATE
+Height = 21
+Generation = 8
+#-------------------------------
+[GRIMMSNARL,1]
+FormName = Grimmsnarl Gigantamax
+Types = DARK,FAIRY
+MegaStone = MEGASTONEG
+BaseStats = 95,135,75,85,105,110
+Abilities = TANGLINGHAIR
+HiddenAbilities = TANGLINGHAIR
+Height = 15
+Generation = 8
+#-------------------------------
+[COPPERAJAH,1]
+FormName = Copperajah Gigantamax
+Types = STEEL,GROUND
+MegaStone = MEGASTONEG
+BaseStats = 122,160,99,20,110,89
+Abilities = BATTLEARMOR
+HiddenAbilities = BATTLEARMOR
+Height = 30
+Generation = 8
+#-------------------------------
+[CINDERACE,1]
+FormName = Cinderace Gigantamax
+Types = FIRE
+MegaStone = MEGASTONEG
+BaseStats = 80,145,90,140,65,95
+Abilities = STRIKER
+HiddenAbilities = STRIKER
+Height = 14
+Generation = 8
+#-------------------------------
+[INTELEON,1]
+FormName = Inteleon Gigantamax
+Types = WATER
+MegaStone = MEGASTONEG
+BaseStats = 70,85,95,150,150,85
+Abilities = SNIPER
+HiddenAbilities = SNIPER
+Height = 19
+Generation = 8
+#-------------------------------
+[RILLABOOM,1]
+FormName = Rillaboom Gigantamax
+Types = GRASS
+MegaStone = MEGASTONEG
+BaseStats = 100,150,105,75,60,120
+Abilities = PUNKROCK
+HiddenAbilities = PUNKROCK
+Height = 21
+Generation = 8

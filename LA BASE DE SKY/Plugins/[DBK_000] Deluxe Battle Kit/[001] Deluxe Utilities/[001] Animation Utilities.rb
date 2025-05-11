@@ -546,7 +546,7 @@ class Battle::Scene::Animation
     pictureTRAINER = addNewSprite(0, 0, trainer, PictureOrigin::BOTTOM)
     pictureTRAINER.setVisible(delay, false)
     spriteTRAINER = @pictureEx.length - 1
-    @pictureSprites[spriteTRAINER].y = 230
+    @pictureSprites[spriteTRAINER].y = 270
     offsetX = @pictureSprites[spriteTRAINER].bitmap.width / 2
     offsetX += ((base_width - @pictureSprites[spriteTRAINER].bitmap.width) / 2).floor
     delta = (base_width.to_f * 0.75).to_i
@@ -590,7 +590,7 @@ class Battle::Scene::Animation
     picturePOKE.setVisible(delay, false)
     spritePOKE = @pictureEx.length - 1
     @pictureSprites[spritePOKE].mirror = mirror
-    @pictureSprites[spritePOKE].x = battle_pos[0] - 128
+    @pictureSprites[spritePOKE].x = battle_pos[0] - 200
     @pictureSprites[spritePOKE].y = battle_pos[1] + 80
     @pictureSprites[spritePOKE].y += 20 if offset
     @pictureSprites[spritePOKE].z = 999
@@ -621,7 +621,7 @@ class Battle::Scene::Animation
       outline.setVisible(delay, false)
       sprite = @pictureEx.length - 1
       @pictureSprites[sprite].mirror = mirror
-      @pictureSprites[sprite].x = battle_pos[0] + i[0] - 128
+      @pictureSprites[sprite].x = battle_pos[0] + i[0] - 200
       @pictureSprites[sprite].y = battle_pos[1] + i[1] + 80
       @pictureSprites[sprite].y += 20 if offset
       @pictureSprites[sprite].z = 999

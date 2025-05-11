@@ -73,12 +73,13 @@ class Battle::Scene
         pbCreateTrainerFrontSprite(i, p.trainer_type, @battle.opponent.length)
       end
     end
-    # Data boxes and Pokémon sprites
+
+      # Data boxes and Pokémon sprites
     @battle.battlers.each_with_index do |b, i|
       next if !b
-      @sprites["dataBox_#{i}"] = PokemonDataBox.new(b, @battle.pbSideSize(i), @viewport)
+      @sprites["dataBox_#{i}"] = PokemonDataBox.new(b, @battle.pbSideSize(i), @viewport, @battle)
       pbCreatePokemonSprite(i)
-    end
+    end     
     # Wild battle, so set up the Pokémon sprite(s) accordingly
     if @battle.wildBattle?
       @battle.pbParty(1).each_with_index do |pkmn, i|
@@ -110,7 +111,6 @@ class Battle::Scene
       if pbResolveBitmap(sprintf("Graphics/Battlebacks/%s_base0", trialName))
         baseFilename = trialName
       end
-      trialName = sprintf("%s_%s", messageFilename, time)
       if pbResolveBitmap(sprintf("Graphics/Battlebacks/%s_message", trialName))
         messageFilename = trialName
       end
@@ -125,6 +125,8 @@ class Battle::Scene
         end
       end
     end
+
+    messageFilename = getPlayerName()
     # Finalise filenames
     battleBG   = "Graphics/Battlebacks/" + backdropFilename + "_bg"
     playerBase = "Graphics/Battlebacks/" + baseFilename + "_base0"

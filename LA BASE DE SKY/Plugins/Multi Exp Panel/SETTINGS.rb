@@ -29,7 +29,7 @@ class Swdfm_Exp_Screen
   # (Quite complicated!)
   # Half of the difference, in pixels, between 1/3 of the width of the panel and the width of an exp bar
   # Basically, make smaller for a wider exp bar
-  EXP_WIDTH_GAP     = 16
+  EXP_WIDTH_GAP     = 30
   # The size, in pixels, of the edge of each exp bar
   EXP_BAR_EDGE_SIZE = 4
   # What is the shortest amount of time (In seconds, assuming 40fps) that it takes for the exp bars to animate?

@@ -22,7 +22,7 @@ class PokemonSummary_Scene
       @sprites["pokemon"].setPokemonBitmap(@pokemon)
       @sprites["pokeicon"] = PokemonIconSprite.new(@pokemon, @viewport)
       @sprites["pokeicon"].setOffset(PictureOrigin::CENTER)
-      @sprites["pokeicon"].x       = 46
+      @sprites["pokeicon"].x       = 36
       @sprites["pokeicon"].y       = 92
       @sprites["pokeicon"].visible = false
       @sprites["itemicon"] = ItemIconSprite.new(30, 320, @pokemon.item_id, @viewport)
@@ -88,13 +88,13 @@ class PokemonSummary_Scene
       textpos = [
       [_INTL("NOTAS ENTRENADOR"), 26, 22, :left, base, shadow],
       [@pokemon.name, 46, 68, :left, base, shadow],
-      [_INTL("Objeto"), 66, 324, :left, base, shadow]
+      [_INTL("Objeto"), 16, 363, :left, base, shadow]
       ]
       # Write the held item's name
       if @pokemon.hasItem?
-          textpos.push([@pokemon.item.name, 16, 358, :left, Color.new(64, 64, 64), Color.new(176, 176, 176)])
+          textpos.push([@pokemon.item.name, 16, 400, :left, Color.new(64, 64, 64), Color.new(176, 176, 176)])
       else
-          textpos.push([_INTL("Ninguno"), 16, 358, :left, Color.new(192, 200, 208), Color.new(208, 216, 224)])
+          textpos.push([_INTL("Ninguno"), 16, 400, :left, Color.new(192, 200, 208), Color.new(208, 216, 224)])
       end
       # Draw all text
       pbDrawTextPositions(overlay, textpos)
@@ -130,7 +130,7 @@ class PokemonSummary_Scene
           memo += black_text_tag + _INTL("Faltan {1} pasos para que el huevo eclosione.", @pokemon.steps_to_hatch)
       end
       # Draw all text
-      drawFormattedTextEx(overlay, 232, 86, 268, memo)
+      drawFormattedTextEx(overlay, 290, 97, 268, memo)
       # Draw the Pokémon's markings
       drawMarkings(overlay, 84, 292)
   end
@@ -159,16 +159,16 @@ class PokemonSummary_Scene
       # Write various bits of text
       textpos = [
         [_INTL("MOVIMIENTOS"), 26, 22, :left, base, shadow],
-        [_INTL("CATEGORÍA"), 12, 128, :left, base, shadow],
-        [_INTL("POTENCIA"), 12, 160, :left, base, shadow],
-        [_INTL("PRECISIÓN"), 12, 192, :left, base, shadow],
+        [_INTL("CATEGORÍA"), 20, 128, :left, base, shadow],
+        [_INTL("POTENCIA"), 20, 160, :left, base, shadow],
+        [_INTL("PRECISIÓN"), 20, 192, :left, base, shadow],
         
       ]
-      textpos.push([_INTL("INFO"), 100, 85, :left, base, shadow]) if move_to_learn
+      textpos.push([_INTL("DATOS"), 92, 81, :left, base, shadow]) if move_to_learn
       imagepos = []
       # Write move names, types and PP amounts for each known move
       yPos = 104
-      yPos -= 76 if move_to_learn
+      yPos -= 54 if move_to_learn
       limit = (move_to_learn) ? Pokemon::MAX_MOVES + 1 : Pokemon::MAX_MOVES
       limit.times do |i|
         move = @pokemon.moves[i]
@@ -178,10 +178,10 @@ class PokemonSummary_Scene
         end
         if move
           type_number = GameData::Type.get(move.display_type(@pokemon)).icon_position
-          imagepos.push([_INTL("Graphics/UI/types"), 248, yPos - 4, 0, type_number * 28, 64, 28])
-          textpos.push([move.name, 316, yPos, :left, moveBase, moveShadow])
+          imagepos.push([_INTL("Graphics/UI/types"),360, yPos +32, 0, type_number * 28, 64, 28])
+          textpos.push([move.name, 430, yPos+32, :left, moveBase, moveShadow])
           if move.total_pp > 0
-            textpos.push([_INTL("PP"), 342, yPos + 32, :left, moveBase, moveShadow])
+            textpos.push([_INTL("PP"), 560, yPos + 64, :left, moveBase, moveShadow])
             ppfraction = 0
             if move.pp == 0
               ppfraction = 3
@@ -190,7 +190,7 @@ class PokemonSummary_Scene
             elsif move.pp * 2 <= move.total_pp
               ppfraction = 1
             end
-            textpos.push([sprintf("%d/%d", move.pp, move.total_pp), 460, yPos + 32, :right,
+            textpos.push([sprintf("%d/%d", move.pp, move.total_pp), 555, yPos + 64, :right,
                           ppBase[ppfraction], ppShadow[ppfraction]])
           end
         else
@@ -345,12 +345,12 @@ class PokemonSummary_Scene
            [pokemon.level.to_s,46, 98, 0, Color.new(64, 64, 64), Color.new(176, 176, 176)],
            [_INTL("Habilidad:"),230,22,0,base,shadow2],
            [abilityname,336,22,0,base,shadow2],
-           [_INTL("Objeto"), 66, 324, 0, base, shadow2]
+           [_INTL("Objeto"), 16, 363, 0, base, shadow2]
           ] 
         if @pokemon.hasItem?
-          textpos.push([@pokemon.item.name, 16, 358, 0, Color.new(64, 64, 64), Color.new(176, 176, 176)])
+          textpos.push([@pokemon.item.name, 16, 400, 0, Color.new(64, 64, 64), Color.new(176, 176, 176)])
         else
-          textpos.push([_INTL("Ninguno"), 16, 358, 0, Color.new(192, 200, 208), Color.new(208, 216, 224)])
+          textpos.push([_INTL("Ninguno"), 16, 400, 0, Color.new(192, 200, 208), Color.new(208, 216, 224)])
         end
         if @pokemon.male?
           textpos.push([_INTL("♂"), 178, 68, 0, Color.new(24, 112, 216), Color.new(136, 168, 208)])
@@ -362,7 +362,7 @@ class PokemonSummary_Scene
         # Draw the Pokémon's markings
         drawMarkings(overlay, 84, 292)
         pbDrawTextPositions(overlay,textpos)
-        drawTextEx(overlay,240,85,230,10,abilitydesc,Color.new(64,64,64),shadow)  
+        drawTextEx(overlay,244,85,340,10,abilitydesc,Color.new(64,64,64),shadow)  
         loop do
           Graphics.update
           Input.update

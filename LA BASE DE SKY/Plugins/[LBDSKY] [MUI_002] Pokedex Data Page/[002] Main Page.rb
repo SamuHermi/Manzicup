@@ -151,17 +151,19 @@ class PokemonPokedexInfo_Scene
     # Sorts all owned species into compatibility lists.
     #---------------------------------------------------------------------------
     family = species.get_family_species
-    family_evos_temp = species.get_evolutions
+    family_evos_temp = species.get_evolutions(true)
     family_evos = []
     for i in family_evos_temp
       family_evos << (i[0])
     end
+    family_to_insert = []
     blacklisted = [:PICHU_2, :FLOETTE_5, :GIMMIGHOUL_1].include?(species.id) ||
                   species.species == :PIKACHU && (8..15).include?(species.form)
     GameData::Species.each do |sp|
 
       # Family members.
       next if blacklisted
+
       ## NO LO HAS VISTO
       if sp.display_species?(@dexlist, species)
         if family.include?(sp.species)
@@ -169,7 +171,8 @@ class PokemonPokedexInfo_Scene
             special_form, _check_form, _check_item = pbGetSpecialFormData(sp)
             next if !special_form
           end
-          @data_hash[:family] << sp.id
+          # @data_hash[:family] << sp.id if (sp.form == species.form || (family_evos.include?(sp.id) && !@data_hash[:family].include?(sp.id)))
+          family_to_insert << sp if family_evos.include?(sp.species) || sp.form != species.form
         end
       elsif sp.display_species?(@dexlist, species, false, true)
           if family.include?(sp.species)
@@ -177,7 +180,8 @@ class PokemonPokedexInfo_Scene
               special_form, _check_form, _check_item = pbGetSpecialFormData(sp)
               next if !special_form
             end
-            @data_hash[:family] << sp.id
+            # @data_hash[:family] << sp.id if sp.form == species.form || ( sp.id )
+            family_to_insert << sp if family_evos.include?(sp.species) || sp.form != species.form
           end
       end
       #-------------------------------------------------------------------------
@@ -248,6 +252,19 @@ class PokemonPokedexInfo_Scene
             end
           end
         end
+      end
+    end
+    family_to_insert.each do |fam|
+      # Add forms that match the species form directly
+      if fam.form == species.form
+        @data_hash[:family] << fam.id
+      else
+        # Skip if there's another form of this species already added
+        # or if this species isn't in the evolution family
+        next if family_to_insert.any? { |f| f.species == fam.species && f != fam } || 
+                !family_evos.include?(fam.species)
+                
+        @data_hash[:family] << fam.id
       end
     end
     @data_hash.each_key do |key|
@@ -392,12 +409,13 @@ class PokemonPokedexInfo_Scene
     #---------------------------------------------------------------------------
     # Draws species name & typing.
     #---------------------------------------------------------------------------
-    textpos.push([species_data.name, 84,  56, :left, base, Color.black, :outline])
+    textpos.push([species_data.name, 84+30,  56, :left, base, Color.black, :outline])
     if owned
       species_data.types.each_with_index do |type, i|
         type_number = GameData::Type.get(type).icon_position
         type_rect = Rect.new(0, type_number * 32, 96, 32)
-        type_x = (species_data.types.length == 1) ? 347 : 298 + (100 * i)
+        type_x = (species_data.types.length == 1) ? 347 : 308 + (80 * i)
+        type_x += 46
         overlay.blt(type_x, 48, @typebitmap.bitmap, type_rect)
       end
     end
@@ -415,18 +433,18 @@ class PokemonPokedexInfo_Scene
         gender = (@gender == 0) ? [1, 0] : [0, 1]
       end
     end
-    imagepos.push([path + "gender", 10, 48, 32 * gender[0],  0, 32, 32],
-                  [path + "gender", 44, 48, 32 * gender[1], 32, 32, 32])
+    imagepos.push([path + "gender", 10+16, 48, 32 * gender[0],  0, 32, 32],
+                  [path + "gender", 44+16, 48, 32 * gender[1], 32, 32, 32])
     #---------------------------------------------------------------------------
     # Draws habitat icon.
     #---------------------------------------------------------------------------
     habitat = (owned) ? GameData::Habitat.get(species_data.habitat).icon_position : 0
-    imagepos.push([path + "habitats", 445, 174, 0, 48 * habitat, 64, 48])
+    imagepos.push([path + "habitats", 445+106, 174, 0, 48 * habitat, 64, 48])
     #---------------------------------------------------------------------------
     # Draws body shape icon.
     #---------------------------------------------------------------------------
     shape = GameData::BodyShape.get(species_data.shape).icon_position
-    imagepos.push(["Graphics/UI/Pokedex/icon_shapes", 375, 170, 0, 60 * shape, 60, 60])
+    imagepos.push(["Graphics/UI/Pokedex/icon_shapes", 375+89, 170, 0, 60 * shape, 60, 60])
     #---------------------------------------------------------------------------
     # Draws egg group icons.
     #---------------------------------------------------------------------------
@@ -441,18 +459,18 @@ class PokemonPokedexInfo_Scene
     egg_groups.each_with_index do |group, i|
       rectY = GameData::EggGroup.get(group).icon_position
       group_y = (egg_groups.length == 1) ? 188 : 172 + 30 * i
-      imagepos.push([path + "egg_groups", 302, group_y, rectX, 28 * rectY, 62, 28])
+      imagepos.push([path + _INTL("egg_groups"), 302+72, group_y, rectX, 28 * rectY, 62, 28])
     end
     #---------------------------------------------------------------------------
     # Draws the base stats text and bars.
     #---------------------------------------------------------------------------
     textpos.push(
-      [_INTL("PS"),        12, 104, :left, base, shadow, :outline],
-      [_INTL("Ataque"),    12, 132, :left, base, shadow, :outline],
-      [_INTL("Defensa"),   12, 160, :left, base, shadow, :outline],
-      [_INTL("At. Esp."),  12, 188, :left, base, shadow, :outline],
-      [_INTL("Df. Esp."),  12, 216, :left, base, shadow, :outline],
-      [_INTL("Velocid."),  12, 244, :left, base, shadow, :outline]
+      [_INTL("PS"),        12+8, 104+17, :left, base, shadow, :outline],
+      [_INTL("Ataque"),    12+8, 132+17, :left, base, shadow, :outline],
+      [_INTL("Defensa"),   12+8, 160+17, :left, base, shadow, :outline],
+      [_INTL("At. Esp."),  12+8, 188+17, :left, base, shadow, :outline],
+      [_INTL("Df. Esp."),  12+8, 216+17, :left, base, shadow, :outline],
+      [_INTL("Velocidad"),  12+8, 244+17, :left, base, shadow, :outline]
     )
     stats_order = [:HP, :ATTACK, :DEFENSE, :SPECIAL_ATTACK, :SPECIAL_DEFENSE, :SPEED]
     if owned
@@ -461,30 +479,30 @@ class PokemonPokedexInfo_Scene
         w = stat * 100 / 254.0
         w = 1 if w < 1
         w = ((w / 2).round) * 2
-        imagepos.push([path + "overlay_stats", 106, 105 + i * 28, 0, i * 18, w, 18])
+        imagepos.push([path + "overlay_stats", 106+35, 17+105 + i * 28, 0, i * 18, w, 18])
       end
     end
     #---------------------------------------------------------------------------
     # Draws Ability/Move button text.
     #---------------------------------------------------------------------------
-    textpos.push([_INTL("Habilid."), 306, 253, :center, base, shadow, :outline],
-                 [_INTL("Movimien."),434, 253, :center, base, shadow, :outline])			  
+    textpos.push([_INTL("Habilidades"), 365, 253+23-8, :center, base, shadow, :outline],
+                 [_INTL("Movimientos"),535, 253+23-8, :center, base, shadow, :outline])			  
     #---------------------------------------------------------------------------
     # Sets up sprites if the species is a special form.
     #---------------------------------------------------------------------------
     special_form, check_form, _check_item = pbGetSpecialFormData(species_data)
     if special_form
-      imagepos.push([path + "evolutions", 234, ICONS_POS_Y - 34, 0, 64, 272, 64])
+      imagepos.push([path + "evolutions", 234+78, ICONS_POS_Y - 34, 0, 64, 272, 64])
       case special_form
-      when :mega        then imagepos.push(["Graphics/UI/Battle/icon_mega", 259, 49])
-      when :primal      then imagepos.push(["Graphics/UI/Battle/icon_primal_#{species_data.name}", 256, 47])
-      when :ultra       then imagepos.push([Settings::ZMOVE_GRAPHICS_PATH + "icon_ultra", 257, 47])
-      when :gmax, :emax then imagepos.push([Settings::DYNAMAX_GRAPHICS_PATH + "icon_dynamax", 256, 47])
+      when :mega        then imagepos.push(["Graphics/UI/Battle/icon_mega", 259+78-52+302, 49])
+      when :primal      then imagepos.push(["Graphics/UI/Battle/icon_primal_#{species_data.name}", 256+78-52+302, 47])
+      when :ultra       then imagepos.push([Settings::ZMOVE_GRAPHICS_PATH + "icon_ultra", 257+78-52+302, 47])
+      when :gmax, :emax then imagepos.push([Settings::DYNAMAX_GRAPHICS_PATH + "icon_dynamax", 256+78-52+302, 47-4])
       when :tera
         species_data.flags.each do |flag|
           next if !flag[/^TeraType_(\w+)/i]
           pos = GameData::Type.get($~[1].to_sym).icon_position
-          imagepos.push([Settings::TERASTAL_GRAPHICS_PATH + "tera_types", 257, 47, 0, pos * 32, 32, 32])
+          imagepos.push([Settings::TERASTAL_GRAPHICS_PATH + "tera_types", 257+78, 47, 0, pos * 32, 32, 32])
           break
         end
       end
@@ -501,7 +519,7 @@ class PokemonPokedexInfo_Scene
       #-------------------------------------------------------------------------
       prevo = species_data.get_previous_species
       if prevo == species_data.species || @data_hash[:family].empty?
-        imagepos.push([path + "evolutions", 234, ICONS_POS_Y - 34, 0, 0, 272, 64])
+        imagepos.push([path + "evolutions", 234+78, ICONS_POS_Y - 34, 0, 0, 272, 64])
         @sprites["familyicon0"].pbSetParams(@species, @gender, @form)
         @sprites["familyicon0"].x = ICONS_CENTER
         @sprites["familyicon0"].visible = true
@@ -514,7 +532,7 @@ class PokemonPokedexInfo_Scene
         form = (species_data.default_form >= 0) ? species_data.default_form : @form
         prevo_data = GameData::Species.get_species_form(prevo, form)
         stages = (species_data.get_baby_species == prevo) ? 1 : 2
-        imagepos.push([path + "evolutions", 234, ICONS_POS_Y - 34, 0, 64 * stages, 272, 64])
+        imagepos.push([path + "evolutions", 234+78, ICONS_POS_Y - 34, 0, 64 * stages, 272, 64])
         @sprites["familyicon0"].pbSetParams(@species, @gender, @form)
         @sprites["familyicon0"].x = (stages == 1) ? ICONS_RIGHT_DOUBLE : ICONS_RIGHT_TRIPLE
         @sprites["familyicon0"].visible = true

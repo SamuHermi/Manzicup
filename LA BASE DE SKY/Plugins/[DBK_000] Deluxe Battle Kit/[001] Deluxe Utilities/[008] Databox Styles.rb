@@ -106,7 +106,7 @@ class Battle::Scene::PokemonDataBox
   # Aliases for setting databox style properties if battle rule is enabled.
   #-----------------------------------------------------------------------------
   alias dx_initializeDataBoxGraphic initializeDataBoxGraphic
-  def initializeDataBoxGraphic(sideSize)
+  def initializeDataBoxGraphic(sideSize,trainerFoe = nil)
     rule = @battler.battle.databoxStyle
     if rule.is_a?(Array)
       @style = GameData::DataboxStyle.try_get(rule.first)
@@ -131,7 +131,7 @@ class Battle::Scene::PokemonDataBox
       @databoxBitmap = AnimatedBitmap.new(sprintf("%s/%s/%s", @path, @style.id, box))
       set_style_properties(sideSize)
     else
-      dx_initializeDataBoxGraphic(sideSize)
+      dx_initializeDataBoxGraphic(sideSize,trainerFoe)
     end
   end
   
@@ -221,7 +221,7 @@ class Battle::Scene::PokemonDataBox
   def refresh_style
     old_style = @style
     sideSize = @battler.battle.pbSideSize(@battler.index)
-    initializeDataBoxGraphic(sideSize)
+    initializeDataBoxGraphic(sideSize,@battler.battle.opponent[i].trainer_type.to_s)
     return if @style == old_style
     if @style
       try_exp = sprintf("%s/%s/overlay_exp", @path, @style.id)

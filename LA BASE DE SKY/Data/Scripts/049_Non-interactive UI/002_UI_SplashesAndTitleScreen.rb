@@ -7,7 +7,7 @@ class IntroEventScene < EventScene
   # The main title screen background image.
   TITLE_BG_IMAGE        = "title"
   TITLE_START_IMAGE     = "start"
-  TITLE_START_IMAGE_X   = 0
+  TITLE_START_IMAGE_X   = 320
   TITLE_START_IMAGE_Y   = 322 + 20
   SECONDS_PER_SPLASH    = 2
   TICKS_PER_ENTER_FLASH = 40   # 20 ticks per second

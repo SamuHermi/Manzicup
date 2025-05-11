@@ -73,6 +73,8 @@ class Battle
         pbDisplay(_INTL("{1} perdió el combate!", self.pbPlayer.name))
         @decision = 2
         return 1
+      else
+        return 0
       end
     else
       if trainerBattle?

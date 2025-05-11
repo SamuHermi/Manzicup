@@ -127,6 +127,8 @@ class AdvancedWorldTournament
   end
   
   def continue
+    NameBox.load("Samer") if $player.character_ID != 6
+    NameBox.load("Nerea") if $player.character_ID == 6
     @oldParty = $player.party
     $player.party = @modified_party
     # Continues the tournament branch
@@ -139,23 +141,24 @@ class AdvancedWorldTournament
     case ret
     when "win"
 	  total_points = GameData::PWTTournament.get(@tournament_id).points_won
-	  pbMessage(_INTL("Congratulations on today's win.\\1"))
+	  pbMessage(_INTL("Te la sacaste.\\1")) if $player.character_ID != 6
+	  pbMessage(_INTL("Enhorabuena.\\1")) if $player.character_ID == 6    
 	  if PWTSettings::PWT_STREAK_MULT && $stats.pwt_win_streak[@tournament_id] >= 5
 	    total_points = total_points * streak_multiplier
-		pbMessage(_INTL("Accounting for your current win streak, you have earned {1} BP.\\1",total_points))
-		pbMessage(_INTL("\\pn was awarded {1} Battle Points!\\me[BP Fanfare]\\wtnp[80]",total_points))
+		pbMessage(_INTL("Por la racha que llevas diría que te tocan {1} Manzicoins.\\1",total_points))
+		pbMessage(_INTL("\\pn ha recibido {1} Manzicoins!\\me[BP Fanfare]\\wtnp[80]",total_points))
 	  else
-		pbMessage(_INTL("For your victory you have earned {1} BP.\\1",total_points))
+		pbMessage(_INTL("Por esta victoria te llevas {1} BP.\\1",total_points))
 		pbMessage(_INTL("\\pn was awarded {1} Battle Points!\\me[BP Fanfare]\\wtnp[80]",total_points))
 	  end
-      pbMessage(_INTL("We hope to see you again."))
+      pbMessage(_INTL("Si quieres otro torneo me avisas."))
       $stats.pwt_wins[@tournament_id] += 1
       $player.battle_points += total_points
 	  $stats.pwt_win_streak[@tournament_id] += 1
       self.endTournament
     when "loss"
-      pbMessage(_INTL("I'm sorry that you lost this tournament.\\1"))
-      pbMessage(_INTL("Maybe you'll have better luck next time."))
+      pbMessage(_INTL("¡Ja! que puto tonto.\\1"))if $player.character_ID != 6
+      pbMessage(_INTL("No pasa nada \\pn, mejor suerte la próxima.\\1")) if $player.character_ID == 6   
 	  $stats.pwt_loss[@tournament_id] += 1
 	  $stats.pwt_win_streak[@tournament_id] = 0
       self.cancelEntry
@@ -196,8 +199,8 @@ class AdvancedWorldTournament
     
   # Allows the player to choose which style of battle they would like to do
   def chooseBattle
-    choices = [_INTL("Single"),_INTL("Double"),_INTL("Full"),_INTL("Sudden Death"),_INTL("Cancel")]
-    cmd = pbMessage(_INTL("Which type of Battle would you like to participate in?"),choices,choices.length)
+    choices = [_INTL("Single"),_INTL("Double"),_INTL("Full"),_INTL("Muerte súbita"),_INTL("Cancel")]
+    cmd = pbMessage(_INTL("¿En que tipo de combate quieres participar?"),choices,choices.length)
     return false if cmd == choices.length-1
     return cmd
   end
@@ -206,7 +209,7 @@ class AdvancedWorldTournament
   def choosePokemon
     ret = false
     return "notEligible" if !@challenge_rules.ruleset.hasValidTeam?($player.party)
-    pbMessage(_INTL("Please choose the Pokémon you would like to participate."))
+    pbMessage(_INTL("Elige los Pokémon que quieres que participen."))
     pbFadeOutIn(99999){
        scene = PokemonParty_Scene.new
        screen = PokemonPartyScreen.new(scene,$player.party)
@@ -218,7 +221,7 @@ class AdvancedWorldTournament
   # Cancels the entry into the Tournament
   def cancelEntry
     self.endTournament
-    pbMessage(_INTL("We hope to see you again."))
+    pbMessage(_INTL("Nos vemos."))
     return false
   end
   
@@ -330,8 +333,8 @@ class AdvancedWorldTournament
         trname = trainer.name
         bitmap = RPG::Cache.load_bitmap("Graphics/Characters/",GameData::TrainerType.charset_filename_brief(trainer.id))
       end
-      @board.bitmap.blt(10+(gwidth-44-(bitmap.width/4))*x,18+(gheight/6)*y,bitmap,Rect.new(0,0,bitmap.width/4,bitmap.height/4),opacity)
-      text=[[trname,34+(bitmap.width/4)+(gwidth-64-(bitmap.width/2))*x,38+(gheight/6)*y,x*1,Color.new(255,255,255),Color.new(80,80,80)]]
+      @board.bitmap.blt(10+(gwidth-44-(bitmap.width/4))*x,60+(gheight/6)*y,bitmap,Rect.new(0,0,bitmap.width/4,bitmap.height/4),opacity)
+      text=[[trname,34+(bitmap.width/4)+(gwidth-64-(bitmap.width/2))*x,88+(gheight/6)*y,x*1,Color.new(255,255,255),Color.new(80,80,80)]]
       pbDrawTextPositions(@board.bitmap,text)
       y+=1
       x+=1 if y > 3
@@ -388,9 +391,9 @@ class AdvancedWorldTournament
     
   # Creates a small introductory conversation
   def introduction
-    pbMessage(_INTL("Hello, and welcome to the Pokémon World Tournament!\\1"))
-    pbMessage(_INTL("The place where the strongest gather to compete.\\1"))
-    pbMessage(_INTL("Before we go any further, you will need to save your progress.\\1"))
+    pbMessage(_INTL("Hace un rato se juntaron un grupo de raritos en la sala de atrás pidiendo un torneo\\1"))
+    pbMessage(_INTL("Así que me puse a organizar uno.\\1"))
+    pbMessage(_INTL("Antes de participar, vas a tener que guardar.\\1"))
   end
   
   # Creates a small conversation if no Tournaments are available
@@ -405,14 +408,15 @@ class AdvancedWorldTournament
     doublebattle = false
     doublebattle = true if @battle_type == 1
 
-    pbMessage(_INTL("Announcer: Welcome to the {1} Tournament!\\1",GameData::PWTTournament.get(@tournament_id).name))
-    pbMessage(_INTL("Announcer: Today we have 8 very eager contestants, waiting to compete for the title of \"Champion\".\\1"))
-    pbMessage(_INTL("Announcer: Let us turn our attention to the scoreboard, to see who will be competing today.\\1"))
+    NameBox.load("Comentarista")
+    pbMessage(_INTL("¡Bienvenidos señoras, señores y otros al Torneo {1}!\\1",GameData::PWTTournament.get(@tournament_id).name))
+    pbMessage(_INTL("Hoy tenemos a 8 combatientes ansiosos por competir por el título de \"Campeón\".\\1"))
+    pbMessage(_INTL("Dirijan su atención a la pantalla, en ella se mostrarán los participantes del día de hoy.\\1"))
     trainer = self.generateRound1
     self.displayScoreboard(trainer)
     self.moveSwitch('A')
-    pbMessage(_INTL("Announcer: Without further ado, let the first match begin.\\1"))
-    pbMessage(_INTL("Announcer: This will be a battle between {1} and {2}.",$player.name,trainer.name))
+    pbMessage(_INTL("Sin más dilación, pasemos al combate.\\1"))
+    pbMessage(_INTL("\\sh{1} contra {2}.",$player.name,trainer.name))
     self.visualRound(trainer)
     pbMessage(trainer.beforebattle) if !trainer.beforebattle.nil?
 	$PokemonGlobal.nextBattleVictoryBGM = "B2W2 213 Winning in the PWT!"
@@ -420,31 +424,31 @@ class AdvancedWorldTournament
       @round = 1
       pbMessage(trainer.afterbattle) if !trainer.afterbattle.nil?
       @beat.push(trainer)
-      pbMessage(_INTL("Announcer: Wow! What an exciting first round!\\1"))
-      pbMessage(_INTL("Announcer: The stadium is getting heated up, and the contestants are on fire!\\1"))
+      pbMessage(_INTL("¡Guau! ¡Menuda locura de primera ronda!\\1"))
+      pbMessage(_INTL("Los ánimos se están calentando, y los contendientes lo están dando todo!\\1"))
       self.visualRound(trainer,true)
-      pbMessage(_INTL("Announcer: Let us turn our attention back to the scoreboard for the results.\\1"))
+      pbMessage(_INTL("Vamos a echarle un vistazo a los resultados de la primera ronda.\\1"))
       trainer = self.generateRound2
       self.displayScoreboard(trainer)
-      pbMessage(_INTL("Announcer: It looks like the next match will be between {1} and {2}.\\1",$player.name,trainer.name))
+      pbMessage(_INTL("Parece que el siguiente combate será {1} contra {2}.\\1",$player.name,trainer.name))
       self.visualRound(trainer)
-      pbMessage(_INTL("Announcer: Let the battle begin!"))
+      pbMessage(_INTL("\\sh¡Que comience el combate!"))
       pbMessage(trainer.beforebattle) if !trainer.beforebattle.nil?
 	  $PokemonGlobal.nextBattleVictoryBGM = "B2W2 213 Winning in the PWT!"
       if pbPWTBattle(trainer,@challenge_rules,@outcome)
         @round = 2
         pbMessage(trainer.afterbattle) if !trainer.afterbattle.nil?
         @beat.push(trainer)
-        pbMessage(_INTL("Announcer: What spectacular matches!\\1"))
-        pbMessage(_INTL("Announcer: These trainers are really giving it all.\\1"))
+        pbMessage(_INTL("¡Tremendos combates que estamos teniendo el día de hoy!\\1"))
+        pbMessage(_INTL("Estos entrenadores van con todo, ¡madre mía!.\\1"))
         self.visualRound(trainer,true)
-        pbMessage(_INTL("Announcer: Let's direct our attention at the scoreboard one final time.\\1"))
+        pbMessage(_INTL("Vamos a revisar por última vez los resultados.\\1"))
         trainer = self.generateRound3
         self.displayScoreboard(trainer)
-        pbMessage(_INTL("Announcer: Alright! It's all set!\\1"))
-        pbMessage(_INTL("Announcer: The final match of this tournament will be between {1} and {2}.\\1",$player.name,trainer.name))
+        pbMessage(_INTL("¡Ya están todas las cartas sobre la mesa!\\1"))
+        pbMessage(_INTL("La final será {1} contra {2}.\\1",$player.name,trainer.name))
         self.visualRound(trainer)
-        pbMessage(_INTL("Announcer: May the best trainer win!"))
+        pbMessage(_INTL("¡Que gane el mejor!"))
         pbMessage(trainer.beforebattle) if !trainer.beforebattle.nil?
 		$PokemonGlobal.nextBattleBGM = "B2W2 212 PWT Final Round!"
 		$PokemonGlobal.nextBattleVictoryBGM = "B2W2 213 Winning in the PWT!"
@@ -454,10 +458,10 @@ class AdvancedWorldTournament
           pbMessage(trainer.afterbattle) if !trainer.afterbattle.nil?
           @beat.push(trainer)
 		  pbBGMPlay("B2W2 214 PWT Victor!")
-          pbMessage(_INTL("Announcer: What an amazing battle!\\1"))
-          pbMessage(_INTL("Announcer: Both the trainers put up a great fight, but our very own {1} was the one to come out on top!\\1",$player.name))
-          pbMessage(_INTL("Announcer: Congratulations {1}! You have certainly earned today's title of \"Champion\"!\\1",$player.name))
-          pbMessage(_INTL("Announcer: That's all we have time for. I hope you enjoyed today's contest. And we hope to see you again soon."))
+          pbMessage(_INTL("¡Posiblemente la mejor pelea que haya visto en mi vida!\\1"))
+          pbMessage(_INTL("Los dos entrenadores nos dieron un combate histórico, pero al final {1} se llevó la victoria a casa!\\1",$player.name))
+          pbMessage(_INTL("Enhorabuena {1}! Te has ganado el título de \"Campeón\"! ¿Que vas a hacer ahora?\\1",$player.name))
+          pbMessage(_INTL("Y ese es todo el tiempo que teníamos. Espero volver a veros a todos muy pronto."))
           return "win"
         end
       end
@@ -817,7 +821,7 @@ def pbPWTBattle(pwt_trainer,challenge_rules,outcomeVar=1)
   setBattleRule("canLose")
   setBattleRule("noMoney")
   setBattleRule("noExp")
-  setBattleRule("backdrop", "PWT") if pbResolveBitmap(sprintf("Graphics/Battlebacks/PWT_bg"))
+  setBattleRule("backdrop", "indoor1") if pbResolveBitmap(sprintf("Graphics/Battlebacks/indoor1_bg"))
   # set up challenge rules
   challenge_rules = PokemonChallengeRules.new if !challenge_rules
   oldlevels = challenge_rules.adjustLevels($player.party, npc_trainer.party)

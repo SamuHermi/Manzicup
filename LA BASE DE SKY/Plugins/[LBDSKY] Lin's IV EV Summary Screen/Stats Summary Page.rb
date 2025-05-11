@@ -18,49 +18,49 @@ class PokemonSummary_Scene
     end
     # Write various bits of text
     textpos = [
-      [_INTL("Total"), 381, 94, :center, base, shadow],
-      [_INTL("IV"), 428, 94, :center, base, shadow],
-      [_INTL("EV"), 473, 94, :center, base, shadow],
-      [_INTL("PS"), 240, 126, :left, base, statshadows[:HP]],
-      [@pokemon.totalhp.to_s, 400, 126, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+      [_INTL("Total"), 361, 92, :left, base, shadow],
+      [_INTL("IV"), 466, 92, :left, base, shadow],
+      [_INTL("EV"), 511, 92, :left, base, shadow],
+      [_INTL("PS"), 256, 131, :left, base, statshadows[:HP]],
+      [@pokemon.totalhp.to_s, 381, 131, :left, Color.new(64, 64, 64), Color.new(176, 176, 176)],
       #[sprintf("%d", @pokemon.baseStats[:HP]), 408, 126, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [sprintf("%d", @pokemon.iv[:HP]), 440, 126, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [sprintf("%d", @pokemon.ev[:HP]), 480, 126, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [_INTL("Ataque"), 240, 158, :left, base, statshadows[:ATTACK]],
-      [@pokemon.attack.to_s, 400, 158, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+      [sprintf("%d", @pokemon.iv[:HP]), 466, 131, :left, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+      [sprintf("%d", @pokemon.ev[:HP]), 511, 131, :left, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+      [_INTL("Ataque"), 256, 168, :left, base, statshadows[:ATTACK]],
+      [@pokemon.attack.to_s, 381, 168, :left, Color.new(64, 64, 64), Color.new(176, 176, 176)],
       #[sprintf("%d", @pokemon.baseStats[:ATTACK]), 408, 158, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [sprintf("%d", @pokemon.iv[:ATTACK]), 440, 158, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [sprintf("%d", @pokemon.ev[:ATTACK]), 480, 158, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [_INTL("Defensa"), 240, 190, :left, base, statshadows[:DEFENSE]],
-      [@pokemon.defense.to_s, 400, 190, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+      [sprintf("%d", @pokemon.iv[:ATTACK]), 466, 168, :left, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+      [sprintf("%d", @pokemon.ev[:ATTACK]), 511, 168, :left, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+      [_INTL("Defensa"), 256, 205, :left, base, statshadows[:DEFENSE]],
+      [@pokemon.defense.to_s, 381, 205, :left, Color.new(64, 64, 64), Color.new(176, 176, 176)],
       #[sprintf("%d", @pokemon.baseStats[:DEFENSE]), 408, 190, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [sprintf("%d", @pokemon.iv[:DEFENSE]), 440, 190, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [sprintf("%d", @pokemon.ev[:DEFENSE]), 480, 190, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [_INTL("At. Esp."), 240, 222, :left, base, statshadows[:SPECIAL_ATTACK]],
-      [@pokemon.spatk.to_s, 400, 222, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+      [sprintf("%d", @pokemon.iv[:DEFENSE]), 466, 205, :left, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+      [sprintf("%d", @pokemon.ev[:DEFENSE]), 511, 205, :left, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+      [_INTL("At. Esp."), 256, 242, :left, base, statshadows[:SPECIAL_ATTACK]],
+      [@pokemon.spatk.to_s, 381, 242, :left, Color.new(64, 64, 64), Color.new(176, 176, 176)],
       #[sprintf("%d", @pokemon.baseStats[:SPECIAL_ATTACK]), 408, 222, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [sprintf("%d", @pokemon.iv[:SPECIAL_ATTACK]), 440, 222, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [sprintf("%d", @pokemon.ev[:SPECIAL_ATTACK]), 480, 222, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [_INTL("Def Esp."), 240, 254, :left, base, statshadows[:SPECIAL_DEFENSE]],
-      [@pokemon.spdef.to_s, 400, 254, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+      [sprintf("%d", @pokemon.iv[:SPECIAL_ATTACK]), 466, 242, :left, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+      [sprintf("%d", @pokemon.ev[:SPECIAL_ATTACK]), 511, 242, :left, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+      [_INTL("Def Esp."), 256, 279, :left, base, statshadows[:SPECIAL_DEFENSE]],
+      [@pokemon.spdef.to_s, 381, 279, :left, Color.new(64, 64, 64), Color.new(176, 176, 176)],
       #[sprintf("%d", @pokemon.baseStats[:SPECIAL_DEFENSE]), 408, 254, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [sprintf("%d", @pokemon.iv[:SPECIAL_DEFENSE]), 440, 254, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [sprintf("%d", @pokemon.ev[:SPECIAL_DEFENSE]), 480, 254, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [_INTL("Velocidad"), 240, 286, :left, base, statshadows[:SPEED]],
-      [@pokemon.speed.to_s, 400, 286, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+      [sprintf("%d", @pokemon.iv[:SPECIAL_DEFENSE]), 466, 279, :left, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+      [sprintf("%d", @pokemon.ev[:SPECIAL_DEFENSE]), 511, 279, :left, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+      [_INTL("Velocidad"), 256, 316, :left, base, statshadows[:SPEED]],
+      [@pokemon.speed.to_s, 381, 316, :left, Color.new(64, 64, 64), Color.new(176, 176, 176)],
       #[sprintf("%d", @pokemon.baseStats[:SPEED]), 408, 286, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [sprintf("%d", @pokemon.iv[:SPEED]), 440, 286, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [sprintf("%d", @pokemon.ev[:SPEED]), 480, 286, :right, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [_INTL("EVs Totales"), 224, 324, :left, base, shadow],
-      [sprintf("%d/%d", ev_total, Pokemon::EV_LIMIT), 435, 324, :center, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [_INTL("Poder Oculto"), 220, 356, :left, base, shadow]
+      [sprintf("%d", @pokemon.iv[:SPEED]), 466, 316, :left, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+      [sprintf("%d", @pokemon.ev[:SPEED]), 511, 316, :left, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+      [_INTL("EVs Totales"), 300, 380, :left, base, shadow],
+      [sprintf("%d/%d", ev_total, Pokemon::EV_LIMIT), 465, 380, :center, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+      [_INTL("Poder Oculto"), 300, 410, :left, base, shadow]
     ]
     # Draw all text
     pbDrawTextPositions(overlay, textpos)
-    typebitmap = AnimatedBitmap.new(_INTL("Graphics/UI/types"))
+    
     hiddenpower = pbHiddenPower(@pokemon)
     type_number = GameData::Type.get(hiddenpower[0]).icon_position
     type_rect = Rect.new(0, type_number * 28, 64, 28)
-    overlay.blt(405, 351, @typebitmap.bitmap, type_rect)
+    overlay.blt(440, 406, @typebitmap.bitmap, type_rect)
   end
 end

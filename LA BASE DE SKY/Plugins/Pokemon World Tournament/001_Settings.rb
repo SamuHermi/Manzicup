@@ -1,7 +1,7 @@
 module PWTSettings
 # Information pertining to the start position on the PWT stage
 # Format is as following: [map_id, map_x, map_y]
-PWT_MAP_DATA = [95,21,14]
+PWT_MAP_DATA = [95,23,17]
 # ID for the event used to move the player and opponents on the map
 PWT_MOVE_EVENT = 37
 # ID of the opponent event
@@ -256,7 +256,7 @@ GameData::PWTTournament.register({
                 [:TRIPULANTE, "Azul"     ,"","",1,"","",""], 
                 [:FORTACHON,  "Jonathan" ,"","",1,"","",""],
                 [:FLOR,       "Margarita","","",1,"","",""],
-                [:SUPERNERD,  "Eustaquio","","",1,"","",""],                   
+                [:REPO,       "Morado"   ,"","",1,"","",""],                   
 				#[:ID,"Trainer Name","Player Victory Dialogue.","Player Lose Dialogue.",Variant Number,"Lobby Dialogue.","Pre-Battle Dialogue.","Post-Battle Dialogue"]  # Trainer 2, etc
 			   ],
 										# Trainers follow this exact format. 

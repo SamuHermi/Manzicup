@@ -229,6 +229,9 @@ class PokemonStorage
   end
 
   def pbStoreCaught(pkmn, lvl=100)
+    Console.echo_li("\nAl guardar: \n\t")
+    pkmn.first_moves.each { |m| Console.echo_li(m.to_s) }
+
     if Settings::HEAL_STORED_POKEMON && @currentBox >= 0
       old_ready_evo = pkmn.ready_to_evolve
       pkmn.heal
@@ -236,7 +239,6 @@ class PokemonStorage
     end
     pkmn.level = lvl
     chance = rand(0,100)
-    Console.echo_li(pkmn.name + ": " + chance.to_s)
     move = nil
     if chance>=90
       move = pkmn.species_data.tutor_moves.sample
@@ -245,18 +247,20 @@ class PokemonStorage
     end
     pkmn.add_first_move(move)
     Console.echo_li("Nuevo mov: " + move.name) if move != nil
+
     if chance <= 5
       pkmn.ability_index = 2
       Console.echo_li("Habilidad oculta")
     end
     Console.echo_li("\n")
+    pkmn.calc_stats
     #pkmn.species = pkmn.species_data.get_baby_species
     maxBoxes.times do |j|
       maxPokemon(j).times do |i|
         if self[j, i].nil?
           self[j, i] = pkmn
           return j
-        elsif self[j, i].species == pkmn.species && self[j, i].form == pkmn.form
+        elsif self[j, i].species == pkmn.species && (self[j, i].form == pkmn.form || (MultipleForms.call("getFormOnCreation", self[j, i]) && pkmn.species != :TOXTRICITY))
             upgradePokemon(self[j, i],pkmn)
           return nil
         end
@@ -279,21 +283,26 @@ class PokemonStorage
         oldOne.iv[s.id] = newOne.iv[s.id]
       end
     end
+    Console.echo_li("Al mejorar: \n\t")
     newOne.first_moves.each do |m|
+
+      Console.echo_li(m.to_s)
       if(!oldOne.first_moves.include?(m))
         pbMessage(_INTL("¡{1} ha aprendido {2}!",oldOne.name,GameData::Move.get(m).name))
-          oldOne.add_first_move(m)
-        end
+        oldOne.add_first_move(m)
+      end
     end
     if newOne.shiny?
       oldOne.shiny = true
     end
     newOne.unlocked_abilities.each do |i|
+      Console.echo_li("\n" + i.name)
       if !oldOne.unlocked_abilities.include?(i)
           oldOne.unlocked_abilities.push(i)
           pbMessage(_INTL("¡{1} ha conseguido la habilidad {2}!",oldOne.name,GameData::Ability.get(i.name).real_name))
       end
     end
+    Console.echo_li("\n")
   end
 
   def pbSavePokemon(pkmn)

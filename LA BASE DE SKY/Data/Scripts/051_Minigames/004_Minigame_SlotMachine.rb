@@ -318,10 +318,10 @@ class SlotMachineScene
       @sprites["window1"].bitmap&.clear
       @sprites["window2"].bitmap&.clear
       if @sprites["credit"].score == Settings::MAX_COINS
-        pbMessage(_INTL("Has obtenido {1} Monedas.", Settings::MAX_COINS.to_s_formatted))
+        pbMessage(_INTL("Has obtenido {1} Fichas.", Settings::MAX_COINS.to_s_formatted))
         break
       elsif $player.coins == 0
-        pbMessage(_INTL("Te has quedado sin Monedas.\nGame over!"))
+        pbMessage(_INTL("Te has quedado sin Fichas.\nGame over!"))
         break
       elsif @gameRunning   # Reels are spinning
         @sprites["window1"].setBitmap(_INTL("Graphics/UI/Slot Machine/stop"))
@@ -443,7 +443,7 @@ def pbSlotMachine(difficulty = 1)
   if !$bag.has?(:COINCASE)
     pbMessage(_INTL("Es una Máquina Tragaperras."))
   elsif $player.coins == 0
-    pbMessage(_INTL("¡No tienes Monedas para jugar!"))
+    pbMessage(_INTL("¡No tienes Fichas para jugar!"))
   elsif $player.coins == Settings::MAX_COINS
     pbMessage(_INTL("¡Tu Monedero está lleno!"))
   else

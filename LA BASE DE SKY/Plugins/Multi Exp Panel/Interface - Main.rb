@@ -36,7 +36,7 @@ class Swdfm_Exp_Screen
 	  when 8
 		@exp_color   = MessageConfig::BRA_TEXT_COLOR
 	  when 9
-		@exp_color   =  Color.new(230, 230, 230)
+		@exp_color   = MessageConfig::ANA_TEXT_COLOR 
 	  when 10
 		@exp_color   = MessageConfig::PABLO_TEXT_COLOR
 	  when 11

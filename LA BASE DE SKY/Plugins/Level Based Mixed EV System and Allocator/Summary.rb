@@ -52,19 +52,8 @@ class EVAllocationSprite < Sprite
 	def refresh
 		w=@EVsel.width
 		h=@EVsel.height
-		if PluginManager.installed?("BW Summary Screen") 	
-			self.x=0
-			self.y=76
-			self.y=94+(self.index*32) if self.index>0
-		elsif PluginManager.installed?("EVs and IVs in Summary v20") 	
-			self.x=226
-			self.y=76
-			self.y=88+(self.index*32) if self.index>0
-		else 	
-			self.x=102
-			self.y=76
-			self.y=88+(self.index*32) if self.index>0
-		end	
+		self.x = 254
+		self.y=126+(self.index*37)
 		self.bitmap=@EVsel.bitmap
 		if self.preselected
 			self.src_rect.set(0,h,w,h)
@@ -78,7 +67,7 @@ class EVAllocationSprite < Sprite
 		super
 		@EVsel.update
 		@updating=false
-		refresh
+		#refresh
 	end
 end
 
@@ -128,19 +117,9 @@ class EVAllocationSprite2 < Sprite
 	def refresh
 		w=@EVsel2.width
 		h=@EVsel2.height
-		if PluginManager.installed?("BW Summary Screen") 	
-			self.x=134
-			self.y=76
-			self.y=94+(self.index*32) if self.index>0
-		elsif PluginManager.installed?("EVs and IVs in Summary v20") 	
-			self.x=219
-			self.y=76
-			self.y=88+(self.index*32) if self.index>0
-		else 	
-			self.x=231
-			self.y=76
-			self.y=88+(self.index*32) if self.index>0
-		end	
+		self.x=254
+		self.y=126
+		self.y=126+(self.index*37) if self.index>0
 		self.bitmap=@EVsel2.bitmap
 		if self.preselected
 			self.src_rect.set(0,h,w,h)
@@ -483,7 +462,9 @@ class PokemonSummary_Scene
 			else
 				spatk=:ATTACK
 			end	
+		
 			textpos = [
+=begin	
 				[_INTL("HP"), 64, 82, 0, Color.new(255, 255, 255), statshadows[:HP]],
 				[sprintf("%d/%d", @pokemon.hp, @pokemon.totalhp), 182, 82, 2, base, shadow],
 				[sprintf("%d", @pokemon.ev[:HP]), 252, 82, 2, base, shadow],
@@ -503,8 +484,9 @@ class PokemonSummary_Scene
 				[sprintf("%d", @pokemon.speed), 182, 260, 2, base, shadow],
 				[sprintf("%d", @pokemon.ev[:SPEED]), 252, 260, 2, base, shadow]#, #DemICE edit
 				#[_INTL("Ability"), 38, 294, 0, Color.new(255, 255, 255), Color.new(165, 165, 173)],
+=end	
 			]
-			
+		
 						
 			# Show IV Letters Grades
 			if SHOW_IV_RATINGS && PluginManager.installed?("Enhanced UI")
@@ -705,14 +687,15 @@ class PokemonSummary_Scene
 				else
 					spatk=:ATTACK
 				end	
-				textpos += [
-					[sprintf("%d", @pokemon.ev[:HP]), 374, 82, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-					[sprintf("%d", @pokemon.ev[:ATTACK]), 374, 127, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-					[sprintf("%d", @pokemon.ev[:DEFENSE]), 374, 159, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-					[sprintf("%d", @pokemon.ev[spatk]), 374, 191, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-					[sprintf("%d", @pokemon.ev[:SPECIAL_DEFENSE]), 374, 223, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-					[sprintf("%d", @pokemon.ev[:SPEED]), 374, 255, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)]
-				]
+				
+				#textpos += [
+				#	[sprintf("%d", @pokemon.ev[:HP]), 374, 82, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+				#	[sprintf("%d", @pokemon.ev[:ATTACK]), 374, 127, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+				#	[sprintf("%d", @pokemon.ev[:DEFENSE]), 374, 159, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+				#	[sprintf("%d", @pokemon.ev[spatk]), 374, 191, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+				#	[sprintf("%d", @pokemon.ev[:SPECIAL_DEFENSE]), 374, 223, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+				#	[sprintf("%d", @pokemon.ev[:SPEED]), 374, 255, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)]
+				#]
 				
 				
 				if $evalloc
@@ -775,14 +758,17 @@ class PokemonSummary_Scene
 					spatk=:SPECIAL_ATTACK
 				else
 					spatk=:ATTACK
-				end	
+				end
+				
 				textpos = [
+=begin	
 					[sprintf("%d", @pokemon.ev[:HP]), 374, 82, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
 					[sprintf("%d", @pokemon.ev[:ATTACK]), 374, 127, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
 					[sprintf("%d", @pokemon.ev[:DEFENSE]), 374, 159, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
 					[sprintf("%d", @pokemon.ev[spatk]), 374, 191, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
 					[sprintf("%d", @pokemon.ev[:SPECIAL_DEFENSE]), 374, 223, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
 					[sprintf("%d", @pokemon.ev[:SPEED]), 374, 255, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)]
+=end
 				]
 				
 				#DemICE adding ev allocation instructions

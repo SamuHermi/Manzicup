@@ -677,6 +677,7 @@ class Pokemon
   def add_first_move(move_id)
     move_data = GameData::Move.try_get(move_id)
     @first_moves.push(move_data.id) if move_data && !@first_moves.include?(move_data.id)
+    
   end
 
   # Removes a move from this Pokémon's first moves.
