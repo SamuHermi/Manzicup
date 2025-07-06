@@ -69,7 +69,7 @@ GameData::InstantMessageConversation.register({
                         [1, :Text, _INTL("Vete al puto gimnasio")]
                     ]
 })
-
+=begin
 GameData::InstantMessageConversation.register({
     :id             => :CHATBOT_VARIABLE_TEST,
     :group          => :CHATBOT,
@@ -112,7 +112,7 @@ GameData::InstantMessageConversation.register({
                         [1, :Text, _INTL("That's all for now")],
                     ]
 })
-
+=end
 GameData::InstantMessageConversation.register({
     :id             => :MANZIDADAS_1,
     :group          => :MANZIDADAS,
@@ -150,4 +150,15 @@ GameData::InstantMessageConversation.register({
                         [5,  :Text, _INTL("Buenas noches hasta mañana, los Lunnies y los niños nos vamos para cama")],
                         [8, :Text, _INTL("Que descanséis señores")],
                     ]
+})
+
+GameData::InstantMessageConversation.register({
+    :id             => :UNLOCK_1,
+    :group          => :BRAIS,
+    :important      => true,
+    :messages       => [
+                        [1,  :Text, _INTL("\PN, el PC que está en la sala de la base se ha encendido.")],
+                        [1,  :Text, _INTL("Tú entiendes más de estas cosas que yo, así que seguro que puedes conectarlo a Internet y pedir ayuda")],
+                        [1,  :Text, _INTL("Así que cuando puedas échale un ojo")]
+    ]       
 })

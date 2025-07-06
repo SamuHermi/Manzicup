@@ -180,7 +180,7 @@ end
 
 class GachaScene
   def initialize(banners)
-    $player.coins ||= 0 if !$player.coins
+    $player.battle_points ||= 0 if !$player.battle_points
     @viewport = Viewport.new(0,0,Graphics.width,Graphics.height)
     @viewport.z = 99999
     @sprites = {}
@@ -523,6 +523,7 @@ class GachaScene
             if pbMessage("¿Quieres hacer un single? SE GUARDARÁ LA PARTIDA",["Sí","No"])==0
               gachaponRead(@banner_sel,false,@banners[@banner_sel].type)
               $player.battle_points -= @banners[@banner_sel].cost 
+              Achievements.incrementProgress("GACHA",1)
               Game.save
               refresh
             end
@@ -534,6 +535,7 @@ class GachaScene
             if pbMessage("¿Quieres hacer un multi? SE GUARDARÁ LA PARTIDA",["Sí","No"])==0
               gachaponRead(@banner_sel,true,@banners[@banner_sel].type)
               $player.battle_points -= @banners[@banner_sel].cost * 10
+              Achievements.incrementProgress("GACHA",10)
               Game.save
               refresh
             end

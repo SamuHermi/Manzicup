@@ -175,6 +175,14 @@ ModularMenu.add_entry(:OPTIONS, _INTL("Configuración"), "menuOptions") do |menu
   }
 end
 #-------------------------------------------------------------------------------
+#  Options Screen
+#-------------------------------------------------------------------------------
+ModularMenu.add_entry(:SOCIALLINK, _INTL("Vínculos"), "menuLinks") do |menu|
+  pbFadeOutIn(99999) {
+    pbSocialMedia
+  }
+end
+#-------------------------------------------------------------------------------
 #  Debug Menu
 #-------------------------------------------------------------------------------
 ModularMenu.add_entry(:DEBUG, _INTL("Debug"), "menuDebug") do |menu|

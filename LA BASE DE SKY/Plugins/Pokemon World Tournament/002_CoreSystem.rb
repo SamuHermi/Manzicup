@@ -140,6 +140,14 @@ class AdvancedWorldTournament
     self.transferPlayer(*@current_location)
     case ret
     when "win"
+      if $stats.pwt_wins[@tournament_id] < 1
+        case @tournament_id
+          when :Manzidadas_facil
+            pbGainSocialLinkBond(:MANZIDADAS)
+          when :Manzidadas_dificil
+            pbGainSocialLinkBond(:MANZIDADAS)      
+        end
+      end
 	  total_points = GameData::PWTTournament.get(@tournament_id).points_won
 	  pbMessage(_INTL("Te la sacaste.\\1")) if $player.character_ID != 6
 	  pbMessage(_INTL("Enhorabuena.\\1")) if $player.character_ID == 6    

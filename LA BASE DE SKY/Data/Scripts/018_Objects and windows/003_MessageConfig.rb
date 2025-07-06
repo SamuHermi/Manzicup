@@ -33,8 +33,8 @@ module MessageConfig
   #SABO_TEXT_SHADOW_COLOR   = Color.new(174, 163,  18)
   SABO_TEXT_COLOR          = Color.new(255, 255,  30)
   SABO_TEXT_SHADOW_COLOR   = Color.new(197, 171,  15)
-  ANA_TEXT_COLOR           = Color.new(  0, 232, 217)
-  ANA_TEXT_SHADOW_COLOR    = Color.new( 21, 166, 181)
+  ANA_TEXT_COLOR           = Color.new(196,  73, 114)
+  ANA_TEXT_SHADOW_COLOR    = Color.new( 69,  10,  30)
 
   FONT_NAME                = "Power Green"
   FONT_SIZE                = 27

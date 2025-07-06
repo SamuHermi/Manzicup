@@ -400,6 +400,14 @@ BaseMoney = 100
 BattleBGM = Battle Champion
 VictoryBGM = Battle victory leader
 #-------------------------------
+[IGOR]
+Name = Hombre misterioso
+Gender = Male
+SkillLevel = 100
+BaseMoney = 0
+BattleBGM = Battle Hermi
+VictoryBGM = Battle victory leader
+#-------------------------------
 [HERMI]
 Name = Rival
 Gender = Male
@@ -533,8 +541,20 @@ BaseMoney = 80
 BattleBGM = Battle Pera
 #-------------------------------
 [COLON]
-Name = Colón del Team Pera
+Name = Capitán del Team Pera
+Gender = Male
+BaseMoney = 80
+BattleBGM = Battle Pera
+#-------------------------------
+[PAXAXA]
+Name = Granjera del Team Pera
 Gender = Female
+BaseMoney = 80
+BattleBGM = Battle Pera
+#-------------------------------
+[LIANTE]
+Name = Liante del Team Pera
+Gender = Male
 BaseMoney = 80
 BattleBGM = Battle Pera
 #-------------------------------

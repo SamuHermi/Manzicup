@@ -52,6 +52,12 @@ module Achievements
       "description"=>"Haz tiradas en un gacha.",
       "goals"=>[50,100,250]      
     },
+    "PET"=>{
+      "id"=>25,
+      "name"=>"Puedes acariciar al perro",
+      "description"=>"Acaricia a un Pokémon",
+      "goals"=>[1]
+    },
     "DUNGEON"=>{
       "id"=>8,
       "name"=>"Dungeon Master",
@@ -126,7 +132,7 @@ module Achievements
     },    
     "COLON"=>{
       "id"=>20,
-      "name"=>"Sulivan, suelta a la niña",
+      "name"=>"Mentalidad de tiburón",
       "description"=>"Derrota a Sabo Colón en La Niña.",
       "goals"=>[1]       
     },    
@@ -144,7 +150,7 @@ module Achievements
     }, 
     "PAXAXA"=>{
       "id"=>23,
-      "name"=>"Pluriempleada",
+      "name"=>"Amiga soy vegana",
       "description"=>"Derrota a Paxaxa en la granja.",
       "goals"=>[1]       
     },   
@@ -237,6 +243,7 @@ module Achievements
         }
         if level>$PokemonGlobal.achievements[name]["level"]
           $PokemonGlobal.achievements[name]["level"]=level
+          pbSEPlay("Mining reveal full")
           self.queueMessage(_INTL("¡Logro actualizado!\n{1}",@achievementList[name]["name"]))
           return true
         else

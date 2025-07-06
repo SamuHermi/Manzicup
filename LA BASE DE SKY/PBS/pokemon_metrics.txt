@@ -3985,8 +3985,8 @@ AnimationSpeed = 3
 #-------------------------------
 [LITTEN]
 BackSprite = 3,47
-FrontSprite = 2,5
-ShadowSprite = 1,-19,1
+FrontSprite = 2,29
+ShadowSprite = 1,-19,-9
 AnimationSpeed = 1,2
 #-------------------------------
 [TORRACAT]
@@ -5580,8 +5580,8 @@ ShadowSprite = 0,-17,-8
 AnimationSpeed = 3
 #-------------------------------
 [ABSOL,2]
-BackSprite = 0,10
-FrontSprite = 2,17
+BackSprite = 2,45
+FrontSprite = 13,5
 ShadowSprite = 3,-2,-1
 #-------------------------------
 [ABSOL,3]
@@ -5590,7 +5590,7 @@ FrontSprite = 2,9
 ShadowSprite = 3,-2,10
 #-------------------------------
 [AMPHAROS,3]
-BackSprite = -2,0
+BackSprite = -28,25
 FrontSprite = 3,6
 ShadowSprite = 3,3,5
 #-------------------------------
@@ -5618,11 +5618,11 @@ ShadowSprite = 0,0,3
 [LAPRAS,2]
 BackSprite = 0,0
 FrontSprite = 0,8
-ShadowSprite = 3,-9,9
+ShadowSprite = 3,-9,2
 #-------------------------------
 [LUCHAUREO]
 BackSprite = 0,0
-FrontSprite = 0,0
+FrontSprite = 0,17
 ShadowSprite = 0,0,0
 #-------------------------------
 [MIZUTSUNE]
@@ -5687,7 +5687,7 @@ AnimationSpeed = 4,2
 [PINSEVER]
 BackSprite = 0,0
 FrontSprite = 0,0
-ShadowSprite = 0,0,0
+ShadowSprite = 0,0,15
 #-------------------------------
 [NARGACUGA]
 BackSprite = 0,0
@@ -5717,9 +5717,9 @@ ShadowSprite = 1,12,10
 AnimationSpeed = 2,3
 #-------------------------------
 [BANETTE,2]
-BackSprite = -5,5
+BackSprite = -6,29
 FrontSprite = 6,16
-ShadowSprite = 2,4,-2
+ShadowSprite = 0,4,2
 #-------------------------------
 [WISHIWASHI,2]
 BackSprite = 6,19
@@ -5748,3 +5748,238 @@ BackSprite = 0,8
 FrontSprite = 0,17
 ShadowSprite = 2,25,25
 AnimationSpeed = 1
+#-------------------------------
+[CHILLET]
+BackSprite = 0,0
+FrontSprite = 0,10
+ShadowSprite = 0,0,0
+#-------------------------------
+[QUIVERN]
+BackSprite = 0,0
+FrontSprite = 0,18
+ShadowSprite = 0,0,0
+#-------------------------------
+[ASTEGON]
+BackSprite = 0,0
+FrontSprite = 0,11
+ShadowSprite = 0,0,0
+#-------------------------------
+[EIKTHYRDEER]
+BackSprite = 0,0
+FrontSprite = 0,5
+ShadowSprite = 0,0,0
+#-------------------------------
+[BRISTLA]
+BackSprite = 0,0
+FrontSprite = 3,9
+ShadowSprite = 0,0,0
+#-------------------------------
+[PETALLIA]
+BackSprite = 0,0
+FrontSprite = 0,0
+ShadowSprite = 0,0,13
+#-------------------------------
+[LYLEEN]
+BackSprite = 0,0
+FrontSprite = 0,16
+ShadowSprite = 0,0,0
+#-------------------------------
+[LYLEENNOCT]
+BackSprite = 0,0
+FrontSprite = 0,16
+ShadowSprite = 0,0,0
+#-------------------------------
+[DEPRESSO]
+BackSprite = 0,0
+FrontSprite = 0,17
+ShadowSprite = 0,0,0
+#-------------------------------
+[DEFIESSTO]
+BackSprite = 0,0
+FrontSprite = 0,17
+ShadowSprite = 0,0,0
+#-------------------------------
+[WHAMON]
+BackSprite = 0,0
+FrontSprite = 0,0
+ShadowSprite = 0,0,14
+#-------------------------------
+[MAGNAANGEMON]
+BackSprite = 0,0
+FrontSprite = 0,0
+ShadowSprite = 0,0,15
+#-------------------------------
+[ANGEMON]
+BackSprite = 0,0
+FrontSprite = 0,8
+ShadowSprite = 0,0,0
+#-------------------------------
+[PATAMON]
+BackSprite = 0,0
+FrontSprite = 0,0
+ShadowSprite = 0,0,16
+#-------------------------------
+[ZUDOMON]
+BackSprite = 0,0
+FrontSprite = 0,11
+ShadowSprite = 0,0,0
+#-------------------------------
+[IKKAKUMON]
+BackSprite = 0,0
+FrontSprite = 0,12
+ShadowSprite = 0,0,0
+#-------------------------------
+[GOMAMON]
+BackSprite = 0,0
+FrontSprite = -2,17
+ShadowSprite = 0,0,0
+#-------------------------------
+[LILLYMON]
+BackSprite = 0,0
+FrontSprite = 0,0
+ShadowSprite = 0,0,16
+#-------------------------------
+[TOGEMON]
+BackSprite = 0,0
+FrontSprite = 0,7
+ShadowSprite = 0,0,0
+#-------------------------------
+[PALMON]
+BackSprite = 0,0
+FrontSprite = 0,7
+ShadowSprite = 0,0,0
+#-------------------------------
+[GARUDAMON]
+BackSprite = 0,0
+FrontSprite = 0,9
+ShadowSprite = 0,0,0
+#-------------------------------
+[BIRDRAMON]
+BackSprite = 0,0
+FrontSprite = 0,-10
+ShadowSprite = 0,0,24
+#-------------------------------
+[BIYOMON]
+BackSprite = 0,0
+FrontSprite = 0,9
+ShadowSprite = 0,0,0
+#-------------------------------
+[MEGAKABUTERIMON]
+BackSprite = 0,0
+FrontSprite = 0,13
+ShadowSprite = 0,0,0
+#-------------------------------
+[KABUTERIMON]
+BackSprite = 0,0
+FrontSprite = 0,13
+ShadowSprite = 0,0,6
+#-------------------------------
+[TENTOMON]
+BackSprite = 0,0
+FrontSprite = 0,0
+ShadowSprite = 0,0,0
+#-------------------------------
+[AGUMON]
+BackSprite = 0,0
+FrontSprite = 0,11
+ShadowSprite = 0,0,0
+#-------------------------------
+[CONGALALA]
+BackSprite = 0,0
+FrontSprite = 0,0
+ShadowSprite = 0,0,0
+#-------------------------------
+[DIABLOS]
+BackSprite = 0,0
+FrontSprite = -2,18
+ShadowSprite = 0,0,0
+#-------------------------------
+[GABUMON]
+BackSprite = 0,0
+FrontSprite = 2,7
+ShadowSprite = 0,0,0
+#-------------------------------
+[GARURUMON]
+BackSprite = 0,0
+FrontSprite = 0,12
+ShadowSprite = 0,0,0
+#-------------------------------
+[GREYMON]
+BackSprite = 0,0
+FrontSprite = 0,12
+ShadowSprite = 0,0,0
+#-------------------------------
+[METALGARURUMON]
+BackSprite = 0,0
+FrontSprite = 0,8
+ShadowSprite = 0,0,8
+#-------------------------------
+[RATHALOS]
+BackSprite = 0,0
+FrontSprite = 0,0
+ShadowSprite = 0,0,23
+#-------------------------------
+[WARGREYMON]
+BackSprite = 0,0
+FrontSprite = 0,0
+ShadowSprite = 0,0,0
+#-------------------------------
+[FURIANOCT]
+BackSprite = 0,0
+FrontSprite = 0,17
+ShadowSprite = 0,0,0
+#-------------------------------
+[RELAXAURUS]
+BackSprite = 0,0
+FrontSprite = 0,0
+ShadowSprite = 0,0,0
+#-------------------------------
+[SHABOON]
+BackSprite = 0,0
+FrontSprite = 0,0
+ShadowSprite = 0,0,0
+#-------------------------------
+[CONSTELLAR]
+BackSprite = 0,0
+FrontSprite = 0,0
+ShadowSprite = 0,0,0
+#-------------------------------
+[UNKTENA]
+BackSprite = 0,0
+FrontSprite = 0,0
+ShadowSprite = 0,0,0
+#-------------------------------
+[ZANGHOUL]
+BackSprite = 0,0
+FrontSprite = 3,9
+ShadowSprite = 0,0,0
+#-------------------------------
+[SERDUPLA]
+BackSprite = 0,0
+FrontSprite = 0,8
+ShadowSprite = 0,0,0
+#-------------------------------
+[FREYJYNX]
+BackSprite = 0,16
+FrontSprite = 0,9
+ShadowSprite = 0,0,0
+#-------------------------------
+[HALCOMBATE]
+BackSprite = 0,24
+FrontSprite = 10,11
+ShadowSprite = 0,0,0
+#-------------------------------
+[FOBETO]
+BackSprite = 0,21
+FrontSprite = 0,9
+ShadowSprite = 0,0,0
+#-------------------------------
+[ROYALEON]
+BackSprite = 0,0
+FrontSprite = 0,0
+ShadowSprite = 0,0,0
+#-------------------------------
+[CEFIREON]
+BackSprite = 0,0
+FrontSprite = 0,0
+ShadowSprite = 0,0,0

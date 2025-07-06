@@ -395,7 +395,7 @@ class PokemonSummary_Scene
     textpos = [
       [_INTL("No. Dex"), 352, 88, :center, base, shadow],
       [_INTL("Especie"), 352, 118+7, :center, base, shadow],
-      [@pokemon.speciesName, 480, 118+7, :center, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+      [@pokemon.speciesName, 530, 118+7, :center, Color.new(64, 64, 64), Color.new(176, 176, 176)],
       [_INTL("Tipo"), 352, 150+12, :center, base, shadow],
       [_INTL("EO"), 352, 182+17, :center, base, shadow],
       [_INTL("No. ID"), 352, 214+22, :center, base, shadow]

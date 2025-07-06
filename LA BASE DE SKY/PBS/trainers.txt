@@ -118,6 +118,13 @@ Pokemon = CHARIZARD,63
 Pokemon = BLASTOISE,63
     Item = SITRUSBERRY
 #-------------------------------
+[IGOR,Igor]
+LoseText = Y pareces tan callado, tímido e inocente, y vas y escribes mi nombre en mi Death Note, te enseño mis Pokemón y no empiezas a temblar.
+Pokemon = VAPOREON,100
+	Form = 1
+	AbilityIndex = 2
+    Moves = ACIDARMOR,CHARM,TAILWHIP,MUDDYWATER
+#-------------------------------
 [OTAKA_LIDER,Maryan]
 LoseText = Y pareces tan callado, tímido e inocente, y vas y escribes mi nombre en mi Death Note, te enseño mis Pokemón y no empiezas a temblar.
 Pokemon = JIGGLYPUFF,14
@@ -619,18 +626,32 @@ Pokemon = NINETALES,100
     Item = ICYROCK
 Pokemon = AURORUS,100
 	Moves = METEORBEAM,HYPERVOICE,ENCORE,THUNDERWAVE
-	Item = NEVERMELTICE
 Pokemon = CRYOGONAL,100
 	Moves = RECOVER,RAPIDSPIN,KNOCKOFF,FREEZEDRY
-	Item = HEAVYDUTYBOOTS
 Pokemon = LINOONE,100
-	Item = FIGYBERRY
 	Moves = BELLYDRUM,RETURN,EXTREMESPEED,THROATCHOP
 	AbilityIndex = 1
 Pokemon = CALYREX,100
-	Item = FIGYBERRY
 	Moves = SUBSTITUTE,GLACIALLANCE,SWORDSDANCE,LEECHSEED
 	Form = 1
+#-------------------------------
+[PSICOPATA,Draldvyr]
+LoseText = Lo admito, sí que eres fuerte
+Pokemon = PROBOPASS,100
+    AbilityIndex = 1
+	Moves = BODYPRESS,FLASHCANNON,EARTHPOWER,EXPLOSION
+Pokemon = ARCTOZOLT,100
+	Moves = BOLTBEAK,ICICLECRASH,FREEZEDRY,SUBSTITUTE
+Pokemon = HITMONTOP,100
+	Moves = TRIPLEKICK,TRIPLEAXEL,FAKEOUT,BRUTALSWING
+	AbilityIndex = 1
+Pokemon = MELOETTA,100
+	Moves = HYPERVOICE,PSYCHIC,SHADOWBALL,UTURN
+	AbilityIndex = 1
+Pokemon = HAXORUS,100
+	Item = LUMBERRY
+	Moves = POISONJAB,OUTRAGE,EARTHQUAKE,DRAGONDANCE
+	Shiny = True
 #-------------------------------
 [HERMI,Hermi]
 LoseText = ...
@@ -674,7 +695,7 @@ Pokemon = OBSTAGOON,100
 #-------------------------------
 [ISA,Isa]
 LoseText = ...
-Pokemon = EEVEE,5
+Pokemon = EEVEE,100
     AbilityIndex = 1
 	Form = 1
 Pokemon = VENUSAUR,100
@@ -805,7 +826,75 @@ Pokemon = ZEBSTRIKA,100
 Pokemon = TROPIUS,100
 	AbilityIndex = 2
 	Item = SITRUSBERRY
-	Moves = LEECHSEED,AIRSLASH,SUNNYDAY,TOXIC		
+	Moves = LEECHSEED,AIRSLASH,SUNNYDAY,TOXIC	
+#-------------------------------
+[LAMIA,Isssabel]
+Pokemon = SERPERIOR,100
+	AbilityIndex = 2
+	Moves = LEAFSTORM,DRACOMETEOR
+Pokemon = MILOTIC,100
+	AbilityIndex = 2
+	Moves = MIRRORCOAT,ICEBEAM,SCALD,RECOVER
+Pokemon = HYDRAPPLE,100
+	AbilityIndex = 0
+	Moves = EARTHPOWER,GIGADRAIN,FICKLEBEAM,NASTYPLOT
+Pokemon = ARBOK,100
+	AbilityIndex = 2
+	Moves = CRUNCH,COIL,GUNKSHOT,TRAILBLAZE
+Pokemon = SANDACONDA,100
+	AbilityIndex = 1
+	Moves = GLARE,EARTHQUAKE,STEALTHROCK,COIL	
+#-------------------------------
+[COLON,Sabo Colón]
+Pokemon = SHARANPEDO,100
+	AbilityIndex = 0
+	Moves = FLIPTURN,AQUAJET,CRUNCH,ICEFANG
+Pokemon = CHATOT,100
+	AbilityIndex = 2
+	Moves = ROOST,HYPERVOICE,FEATHERDANCE,CHATTER
+Pokemon = DHELMISE,100
+	Moves = POWERWHIP,POLTERGEIST,ANCHORSHOT,SYNTHESIS
+Pokemon = PROBOPASS,100
+	AbilityIndex = 2
+	Moves = STONEEDGE,IRONHEAD,EARTHQUAKE,ICEPUNCH
+Pokemon = SLOWBRO,100
+	Form = 1
+	AbilityIndex = 0
+	Moves = BELLYDRUM,EARTHQUAKE,DRAINPUNCH,GUNKSHOT	
+#-------------------------------
+[PAXAXA,Paxaxa]
+Pokemon = PRIMARINA,100
+	AbilityIndex = 1
+	Moves = CALMMIND,DRAININGKISS,HYPERVOICE,SUBSTITUTE
+Pokemon = MRMIME,100
+	AbilityIndex = 2
+	Moves = TEETERDANCE,PSYCHIC,DAZZLINGGLEAM,ENCORE
+Pokemon = ELECTRODE,100
+	AbilityIndex = 0
+	Moves = VOLTSWITCH,THUNDERBOLT,EXPLOSION,SIGNALBEAM
+Pokemon = WOBBUFFET,100
+	AbilityIndex = 0
+	Moves = ENCORE,COUNTER,MIRRORCOAT,DESTINYBOND
+Pokemon = BLACEPHALON,100
+	Ability = SLOWSTART
+	Moves = FIREBLAST,SHADOWBALL,MINDBLOWN,CALMMIND		
+#-------------------------------
+[UCHI,Uchi]
+Pokemon = INCINEROAR,100
+	AbilityIndex = 1
+	Moves = WILLOWISP,FLAREBLITZ,PARTINGSHOT,KNOCKOFF
+Pokemon = SALAZZLE,100
+	AbilityIndex = 0
+	Moves = TOXIC,ENDEAVOR,SLUDGEBOMB,KNOCKOFF
+Pokemon = MEOWSCARADA,100
+	AbilityIndex = 2
+	Moves = UTURN,KNOCKOFF,TRIPLEAXEL,FLOWERTRICK
+Pokemon = LUCHAUREO,100
+	AbilityIndex = 1
+	Moves = CLOSECOMBAT,EXTREMESPEED,METEORMASH,SWORDSDANCE
+Pokemon = PHEROMOSA,100
+	Ability = TRUANT
+	Moves = CLOSECOMBAT,TRIPLEAXEL,UTURN,RAPIDSPIN		
 #-------------------------------
 [THIRTREP,Thirtrepp]
 Pokemon = MILTANK,100
@@ -823,6 +912,24 @@ Pokemon = JYNX,100
 Pokemon = FEZANDIPITI,100
 	Ability = SLOWSTART
 	Moves = UTURN,ROOST,SLUDGEBOMB,BEATUP	
+#-------------------------------
+[LIANTE,Liante]
+Pokemon = LUDICOLO,100
+	AbilityIndex = 2
+	Moves = METRONOME
+Pokemon = SPINDA,100
+	AbilityIndex = 0
+	Moves = METRONOME
+Pokemon = TOXTRICITY,100
+	AbilityIndex = 0
+	Moves = METRONOME
+Pokemon = SNORLAX,100
+	AbilityIndex = 0
+	Moves = METRONOME
+Pokemon = MUK,100
+	Form = 1
+	AbilityIndex = 0
+	Moves = METRONOME	
 #-------------------------------
 # Pokemon World Tournament - Manzidadas
 #-------------------------------

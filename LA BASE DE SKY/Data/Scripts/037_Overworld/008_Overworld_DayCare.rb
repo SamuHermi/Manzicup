@@ -242,6 +242,9 @@ class DayCare
         shiny_retries += (Settings::MECHANICS_GENERATION >= 8) ? 6 : 5
       end
       shiny_retries += $bag.quantity(:SHINYCHARM)
+      if bond_rate = $player.active_bond_effect?(:Shiny, genwildpoke)
+        shiny_retries += bond_rate
+      end
       return if shiny_retries == 0
       shiny_retries.times do
         break if egg.shiny?

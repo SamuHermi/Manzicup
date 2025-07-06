@@ -9845,4 +9845,14 @@ FunctionCode = BadPoisonTarget
 Flags = CanProtect,CanMirrorMove
 EffectChance = 50
 Description = Apresa al objetivo con una cadena para minarle las fuerzas. Puede envenenar gravemente.
-
+#-------------------------------
+[ECLIPSE]
+Name = Eclipse
+Type = ROCK
+Category = Physical
+Target = NearOther
+Power = 100
+TotalPP = 10
+Accuracy = 100
+Flags = CanProtect,CanMirrorMove,CategoryDependsOnHigherDamageIgnoreTargetAbility,CannotMetronome
+Description = Cambia a Constellar entre forma solar y lunar. Este mov. es físico o especial en función de la forma.

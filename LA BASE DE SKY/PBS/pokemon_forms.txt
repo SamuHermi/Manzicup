@@ -346,6 +346,7 @@ Weight = 70.5
 Pokedex = La impresión del mordisco del Shellder provocó una reacción química con las especias que había ingerido, tras lo cual adquirió el tipo Veneno.
 Generation = 8
 Flags = InheritFormWithEverStone
+Evolutions = SHELBRO,None,
 #-------------------------------
 [FARFETCHD,1]
 FormName = Forma Galar
@@ -2576,6 +2577,7 @@ Pokedex = Adopta esta forma cuando su energía Teracristal se ve amplificada des
 [EEVEE,1]
 FormName = compañero
 BaseStats = 65,75,70,75,65,85
+Evolutions = VAPOREON,None
 #-------------------------------
 [PIKACHU,1]
 FormName = compañero
@@ -2606,23 +2608,27 @@ FormName = Roquero
 Types = ELECTRIC,STEEL
 Moves = 0,METEORMASH,1,NUZZLE,1,NASTYPLOT,1,CHARM,1,SWEETKISS,1,PLAYNICE,1,QUICKATTACK,1,TAILWHIP,1,THUNDERSHOCK,1,GROWL,4,THUNDERWAVE,8,DOUBLETEAM,12,ELECTROBALL,16,FEINT,20,SPARK,24,AGILITY,28,IRONTAIL,32,DISCHARGE,36,THUNDERBOLT,40,LIGHTSCREEN,44,THUNDER
 #-------------------------------
+[CONSTELLAR,1]
+FormName = Lunar
+BaseStats=110,75,80,60,115,120
+#-------------------------------
 [MAREEP,2]
 #-------------------------------
 [FLAAFFY,2]
 #-------------------------------
 [AMPHAROS,2]
 FormName = Forma Hermi
-Types = ELECTRIC,FLYING
-Abilities = THICKFAT
+Types = FAIRY,DARK
+Abilities = TWISTEDDIM
 BaseStats = 115,60,80,60,120,75
-Moves = 1,ASTONISH,1,THUNDERSHOCK,5,LEER,10,SWAGGER,15,AIRCUTTER,20,SHOCKWAVE,25,AGILITY,30,CHARGE,35,VOLTSWITCH,40,ROOST,45,DISCHARGE,50,BRICKBREAK,55,SUBMISSION,60,RAINDANCE,65,WILDCHARGE,70,DRAGONRUSH
+Moves = 1,HYPNOSIS,1,THUNDERWAVE,1,CONFUSERAY,10,SWAGGER,15,AIRCUTTER,20,WHIRLWIND,30,SHOCKWAVE,30,FROSTBREATH,30,INCINERATE,50,THUNDERBOLT,50,FLAMETHROWER,50,ICEBEAM,65,MOONBLAST,65,DARKPULSE,70,FIREBLAST,70,BLIZZARD,70,THUNDER
 Color = Green
 #-------------------------------
 [AMPHAROS,3]
 FormName = Mega Ampharos
 MegaStone = MEGASTONE
-Types = DRAGON,FAIRY
-Abilities = SUPREMEOVERLORD
+Types = FAIRY,DARK
+Abilities = NEUROFORCE
 BaseStats = 115,75,98,45,165,112
 Color = Green
 UnmegaForm = 2
@@ -2822,6 +2828,9 @@ BaseStats = 74,115,90,141,55,95
 Abilities = PARENTALBOND
 UnmegaForm = 1
 Color = Green
+#-------------------------------
+[VAPOREON,1]
+FormName = Forma Igor
 #-------------------------------
 [BUTTERFREE,1]
 FormName = Butterfree Gigantamax

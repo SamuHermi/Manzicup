@@ -178,3 +178,9 @@ GameData::InstantMessageGroup.register({
     :title		    => _INTL("Dijo que me iba a invitar al Podcast"),
     :members		=> {1 => :JORDIWILD}
 })
+
+GameData::InstantMessageGroup.register({
+    :id             => :BRAIS,
+    :title		    => _INTL("Brais"),
+    :members		=> {1 => :BRAIS}
+})

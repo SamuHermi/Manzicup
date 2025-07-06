@@ -464,15 +464,15 @@ ShadowSize = -1
 ShadowSprite = 2,20,16
 #-------------------------------
 [BANETTE,1]
-BackSprite = 0,36
-FrontSprite = -2,14
+BackSprite = -10,24
+FrontSprite = 0,9
 ShadowSprite = 2,-11,4
 AnimationSpeed = 4
 #-------------------------------
 [ABSOL,1]
-BackSprite = 5,46
-FrontSprite = 0,27
-ShadowSprite = 6,-21,-10
+BackSprite = -14,38
+FrontSprite = 0,15
+ShadowSprite = 0,-21,-2
 #-------------------------------
 [GLALIE,1]
 BackSprite = 4,27

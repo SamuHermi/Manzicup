@@ -151,6 +151,9 @@ class Battle
     end
     # Exp. Charm increases Exp gained
     exp = exp * (1 + $bag.quantity(:EXPCHARM)) / 2
+    if bond_rate = $player.active_bond_effect?(:EXP, pkmn)
+      exp = (exp * bond_rate).floor
+    end
     # Modify Exp gain based on pkmn's held item
     i = Battle::ItemEffects.triggerExpGainModifier(pkmn.item, pkmn, exp)
     if i < 0

@@ -429,9 +429,9 @@ class PokemonBoxSprite < Sprite
       @contents.blt(0, 0, @boxbitmap.bitmap, Rect.new(0, 0, 450, 450))
       pbSetSystemFont(@contents)
       widthval = @contents.text_size(boxname).width
-      xval = 163 - (widthval / 2)
+      xval = 163 - (widthval / 2) + 32
       # Changed color of Box Name
-      pbDrawShadowText(@contents, xval, 14, widthval, 32,
+      pbDrawShadowText(@contents, xval, 20, widthval, 32,
                        boxname, Color.new(41, 41, 41), Color.new(132, 132, 132))
       @refreshBox = false
     end

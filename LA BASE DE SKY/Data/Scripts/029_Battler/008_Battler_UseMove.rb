@@ -213,6 +213,13 @@ class Battle::Battler
         pbChangeForm(0, _INTL("¡{1} cambió a Forma Escudo!", pbThis))
       end
     end
+    if isSpecies?(:CONSTELLAR) && move.id == :ECLIPSE
+      if form == 1
+        pbChangeForm(0, _INTL("¡{1} cambió a Forma Solar!", pbThis))
+      elsif form == 0
+        pbChangeForm(1, _INTL("¡{1} cambió a Forma Lunar!", pbThis))
+      end
+    end    
     # Calculate the move's type during this usage
     move.calcType = move.pbCalcType(self)
     # Start effect of Mold Breaker

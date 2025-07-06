@@ -472,6 +472,7 @@ SnapEdges = true
 [092]   # Desierto
 Name = Desierto
 Weather = Sandstorm,100
+SnapEdges = true
 Dungeon = true
 BattleBack = desert
 #-------------------------------
@@ -501,20 +502,29 @@ WildBattleBGM = Battle labo
 Name = Colonipenal
 SnapEdges = true
 #-------------------------------
+[102]   # Cárcel
+Name = Cárcel
+BattleBack = labo
+#-------------------------------
 [103]   # Babatundra
 Name = Babatundra
 SnapEdges = true
+BattleBack = swamp
 #-------------------------------
 [104]   # Sauna
+Name = Sauna
 SnapEdges = true
+BattleBack = field
 #-------------------------------
 [105]   # Cueva de la sierpe
 Name = Cueva de la sierpe
 SnapEdges = true
+BattleBack = cave1
 #-------------------------------
 [106]   # La niña
 Name = La niña
 SnapEdges = true
+BattleBack = water
 #-------------------------------
 [107]   # Granja
 Name = Granja
@@ -523,3 +533,17 @@ SnapEdges = true
 [108]   # Churruca
 Name = Churruca
 SnapEdges = true
+BattleBack = city
+#-------------------------------
+[109]   # Convención furra
+Name = Convención Furra
+SnapEdges = true
+BattleBack = forest
+#-------------------------------
+[110]   # MAP110
+Name = MAP110
+SnapEdges = true
+#-------------------------------
+[111]   # Velvet Room
+Name = Velvet Room
+BattleBack = velvet

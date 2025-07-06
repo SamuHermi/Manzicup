@@ -316,6 +316,12 @@ module BattleCreationHelperMethods
     end
     if $PokemonGlobal.partner
       #$player.heal_party
+      if(pbHasSocialLink?($PokemonGlobal.partner[0]) && outcome == 1)
+        if(rand(100) < 5)
+          pbGainSocialLinkBond($PokemonGlobal.partner[0])
+        end
+      end
+       
       $PokemonGlobal.partner[3].each do |pkmn|
         #pkmn.heal
         pkmn.makeUnmega

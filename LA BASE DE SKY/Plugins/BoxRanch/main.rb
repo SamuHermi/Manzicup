@@ -368,11 +368,11 @@ class BoxRanch
     Compiler::push_script(event.pages[0].list, "play_pokemon_cry(:#{pkmn.species}, 100)")
     
     # Display of information
-    Compiler::push_script(event.pages[0].list, "pbMessage(\"#{pkmn.name} looks at you friendly!\")")
+    Compiler::push_script(event.pages[0].list, "pbMessage(\"¡#{pkmn.name} te mira con cariño!\")")
     
     # More interactive details
     if pkmn.shiny?
-      Compiler::push_script(event.pages[0].list, "pbMessage(\"#{pkmn.name} shines conspicuously in the sunlight.\")")
+      Compiler::push_script(event.pages[0].list, "pbMessage(\"#{pkmn.name} brilla con el reflejo de la luz solar.\")")
     end
     
     # Character info based on nature
@@ -381,9 +381,9 @@ class BoxRanch
     
     # Special messages based on environment
     if in_water
-      Compiler::push_script(event.pages[0].list, "pbMessage(\"It swims happily in the water!\")")
+      Compiler::push_script(event.pages[0].list, "pbMessage(\"¡Nada tan alegremente!\")")
     elsif levitates
-      Compiler::push_script(event.pages[0].list, "pbMessage(\"It floats elegantly in the air!\")")
+      Compiler::push_script(event.pages[0].list, "pbMessage(\"Flota con elegancia en el aire!\")")
     end
     
     # Optional: Show menu - use symbol notation and pass event_id
@@ -439,21 +439,21 @@ class BoxRanch
     # Descriptions for different natures
     nature_texts = {
       # Jolly natures
-      :JOLLY => "It dances around cheerfully.",
-      :NAIVE => "It is very playful.",
-      :HASTY => "It can't stand still and is constantly running around.",
+      :JOLLY => "Baila por ahí con energía.",
+      :NAIVE => "Es bastante juguetón.",
+      :HASTY => "No puede dejar el culo quieto.",
       # Calm natures
-      :CALM => "It rests peacefully.",
-      :CAREFUL => "It attentively observes its surroundings.",
-      :QUIET => "It enjoys the tranquility of the ranch.",
+      :CALM => "Descansa tranquilamente.",
+      :CAREFUL => "Observa con atención sus alrededores.",
+      :QUIET => "Disfruta de la tranquilidad del rancho.",
       # Aggressive natures
-      :BRAVE => "It bravely shows itself off.",
-      :ADAMANT => "It trains its muscles.",
-      :NAUGHTY => "It seems to be up to something."
+      :BRAVE => "Enseña el pecho con orgullo.",
+      :ADAMANT => "Está entrenando su cuerpo.",
+      :NAUGHTY => "Parece estar tramando algo."
     }
     
     # Standard text if nature is not defined
-    return nature_texts[nature.id] || "It feels very comfortable on the ranch."
+    return nature_texts[nature.id] || "Se le ve contento con el rancho."
   end
 
   def create_pokemon_event_at(pkmn, x, y, in_water = false)
@@ -523,11 +523,11 @@ class BoxRanch
     Compiler::push_script(event.pages[0].list, "play_pokemon_cry(:#{pkmn.species}, 100)")
     
     # Display of information
-    Compiler::push_script(event.pages[0].list, "pbMessage(\"#{pkmn.name} looks at you friendly!\")")
+    Compiler::push_script(event.pages[0].list, "pbMessage(\"¡#{pkmn.name} te mira con cariño!\")")
     
     # More interactive details
     if pkmn.shiny?
-      Compiler::push_script(event.pages[0].list, "pbMessage(\"#{pkmn.name} shines conspicuously in the sunlight.\")")
+      Compiler::push_script(event.pages[0].list, "pbMessage(\"#{pkmn.name} brilla con el reflejo de la luz solar.\")")
     end
     
     # Character info based on nature
@@ -536,13 +536,13 @@ class BoxRanch
     
     # Special messages based on environment
     if in_water
-      Compiler::push_script(event.pages[0].list, "pbMessage(\"It swims happily in the water!\")")
+      Compiler::push_script(event.pages[0].list, "pbMessage(\"¡Nada tan alegremente!\")")
     elsif levitates
-      Compiler::push_script(event.pages[0].list, "pbMessage(\"It floats elegantly in the air!\")")
+      Compiler::push_script(event.pages[0].list, "pbMessage(\"Flota con elegancia en el aire!\")")
     end
     
     # Level and other details
-    Compiler::push_script(event.pages[0].list, "pbMessage(\"Level: #{pkmn.level}\\nAbility: #{pkmn.ability.name}\")")
+    Compiler::push_script(event.pages[0].list, "pbMessage(\"Nivel: #{pkmn.level}\\Habilidad: #{pkmn.ability.name}\")")
     
     # Optional: Show menu - use symbol notation and pass event_id
     Compiler::push_script(event.pages[0].list, "show_pokemon_interaction_menu(:#{pkmn.species}, #{pkmn.level}, #{event.id})")
@@ -596,24 +596,26 @@ def show_pokemon_interaction_menu(species, level, event_id = nil)
   
   # Always show standard options
   commands = [
-    _INTL("Pet"),
-    _INTL("Feed"),
-    _INTL("Play")
+    _INTL("Acariciar"),
+    _INTL("Dar de comer"),
+    _INTL("Jugar")
   ]
   
   # Always add the trade option - we'll check later if it works
   commands.push(_INTL("Back"))
   
-  choice = pbMessage(_INTL("What would you like to do?"), commands, commands.length)
-  
+  choice = pbMessage(_INTL("¿Qué quieres hacer?"), commands, commands.length)
   if choice == 0  # Pet
-    pbMessage(_INTL("You gently pet the Pokémon. It seems to enjoy that!"))
+    pbMessage(_INTL("¡Acaricias con gentilencia al Pokémon, parece que le gusta!"))
     play_pokemon_cry(species, 70)  # Quieter cry
+    Achievements.incrementProgress("PET",1)
   elsif choice == 1  # Feed
-    pbMessage(_INTL("You give the Pokémon some food. It eats happily!"))
+    pbMessage(_INTL("¡Le das algo de comer, parece que le gusta!"))
+    pkmn.happiness += 1
   elsif choice == 2  # Play
-    pbMessage(_INTL("You play with the Pokémon for a while. It has fun!"))
+    pbMessage(_INTL("Pasas un rato con el Pokémon. ¡Parece que se lo pasó muy bien!"))
     play_pokemon_cry(species, 100)
+    pkmn.happiness += 1
   else  # Back or invalid selection
     # Do nothing
   end

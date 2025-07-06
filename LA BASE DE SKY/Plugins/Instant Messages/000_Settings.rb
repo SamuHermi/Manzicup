@@ -120,7 +120,7 @@ module InstantMessagesSettings
     # - 3 => Use both Time and Steps to determine when to trigger sending. The Time
     #        requirements will be checked first, then Step requirements.
     #------------------------------------------------------------------------------------
-    PASSIVE_TRIGGER_TYPE                = 3
+    PASSIVE_TRIGGER_TYPE                = 1
 
     #------------------------------------------------------------------------------------
     # Set the number of minimum steps the player has to take before receiving the next   
@@ -132,19 +132,19 @@ module InstantMessagesSettings
     # Set the variation to add on to PASSIVE_STEP_MIN to allow for some randomness.
     # Formula will be: Steps > PASSIVE_STEP_MIN + rand(PASSIVE_STEP_VARIATION)
     #------------------------------------------------------------------------------------
-    PASSIVE_STEP_VARIATION              = 100
+    PASSIVE_STEP_VARIATION              = 300
 
     #------------------------------------------------------------------------------------
     # Set the minimum amount of in-game minutes that has to pass before receiving the next   
     # passive message.
     #------------------------------------------------------------------------------------
-    PASSIVE_TIME_MIN                    = 60
+    PASSIVE_TIME_MIN                    = 1#5
 
     #------------------------------------------------------------------------------------
     # Set the variation in minutes to add on to PASSIVE_TIME_MIN to allow for some 
     # randomness. Formula will be: Time passed > PASSIVE_TIME_MIN + rand(PASSIVE_TIME_VARIATION)
     #------------------------------------------------------------------------------------
-    PASSIVE_TIME_VARIATION              = 15
+    PASSIVE_TIME_VARIATION              = 0#15
 
     #------------------------------------------------------------------------------------
     # Set which type of passive message pool to pull from will get priority.
