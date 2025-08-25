@@ -403,9 +403,9 @@ VictoryBGM = Battle victory leader
 [IGOR]
 Name = Hombre misterioso
 Gender = Male
-SkillLevel = 100
+SkillLevel = 50
 BaseMoney = 0
-BattleBGM = Battle Hermi
+BattleBGM = Battle Igor
 VictoryBGM = Battle victory leader
 #-------------------------------
 [HERMI]
@@ -645,11 +645,11 @@ Gender = Male
 BaseMoney = 100
 BattleBGM = but nobody came
 #-------------------------------
-[NOCANON]
-Name = No canon
-Gender = Female
+[KNEKRO]
+Name = Viejo sabroso
+Gender = Male
 BaseMoney = 100
-BattleBGM = but nobody came
+BattleBGM = Battle Champion
 #-------------------------------
 [PAPI]
 Name = Daddy

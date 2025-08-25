@@ -1261,7 +1261,7 @@ Name = Espejo encantado
 Description = Al potenciar una carácterística reduce la misma carácterística del rival.
 #-------------------------------
 [STRIKER]
-Name = Striker
+Name = Camorrista
 Description = Potencia movimientos de patada.
 #-------------------------------
 [TWISTEDDIM]
@@ -1307,3 +1307,71 @@ Description = Todos los tipos tienen bonificación de usar movimientos del mismo
 [SEAGUARDIAN]
 Name = Guardián marino
 Description = Cura lluvia y Nado rápido.
+#-----------------------------------------
+[BADCOMPANY]
+Name = Bad Company
+Description = Impide que los movimientos usados bajen las estadísticas y el retroceso.
+#-----------------------------------------
+[FATALPRECISION]
+Name = Precisión fatal
+Description = Los movimientos super eficaces no fallan y se potencian un 20%.
+#-----------------------------------------
+[BULLRUSH]
+Name = Acometida 
+Description = Boosts power by 20% & Speed by 50% in first turn.
+#-----------------------------------------
+[FELINEPROWESS]
+Name = Proeza gatuna
+Description = Doubles Special Attack stat.
+#-----------------------------------------
+[ORAORAORAORA]
+Name = ORAORAORAORA!
+Description = Punch moves hit a second time for 50% damage.
+#-----------------------------------------
+[PARASITICWASTE]
+Name = Residuos parásitos 
+Description = Los ataques que envenan también curan al usuario.
+#-----------------------------------------
+[PHOENIXDOWN]
+Name = Pluma de fénix
+Description = Revive con un 50% de los PS la primera vez en caer derrotado.
+#-----------------------------------------
+[MOUNTAINEER]
+Name = Mountaineer 
+Description = Inmune a los ataques de tipo roca y a Trampa Rocas.
+#-----------------------------------------
+[BONEZONE]
+Name = Bone Zone
+Description = Los movimientos de hueso ignoran resistencias e inmunidades.
+#-----------------------------------------
+[SELFSUFFICIENT]
+Name = Autosuficiente
+Description = Recupera 1/16 de los PS al final del turno.
+#-----------------------------------------
+[FROZENMIST]
+Name = Niebla gélida 
+Description = Niega efectos añadidos y trampas.
+#-----------------------------------------
+[BLAZINGSOUL]
+Name = Alma ardiente
+Description = Otorga +1 de prioridad a los movimientos de Fuego cuando los PS están al máximo.
+#-----------------------------------------
+[SAGEPOWER]
+Name = Poder sabio
+Description = Potencia su Ataque Especial en un 50%, pero solo puede usar el primer movimiento escogido.
+#----------------------------------------
+[PIELMALDITA]
+Name = Piel Tétrica
+Description = Convierte los movimientos de tipo Normal en Fantasma y los potencia.
+#----------------------------------------
+[ESPANTO]
+Name = Espanto
+Description = Espanta al rival y reduce su Atq.Especial.
+#----------------------------------------
+[ALBINISMO]
+Name = Albinismo
+Description = Aumenta el daño de los ataques de tipo Hielo.
+#----------------------------------------
+[TINTINEO]
+Name = Tintineo
+Description = Repica una campana para curar los estados del equipo cuando sale a combatir. Además, los movs. de sonido pasan a ser psíquicos y aumentan un 20% su potencia.

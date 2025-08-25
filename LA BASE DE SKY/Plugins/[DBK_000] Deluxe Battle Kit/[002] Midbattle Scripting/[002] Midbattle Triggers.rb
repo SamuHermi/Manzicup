@@ -658,6 +658,7 @@ MidbattleHandlers.add(:midbattle_triggers, "megaEvolve",
     next if ch[0] != :UseMove
     oldMode = battle.wildBattleMode
     battle.wildBattleMode = :mega if battler.wild? && oldMode != :mega
+    Console.echo_li("Orden\n")
     if battle.pbCanMegaEvolve?(battler.index)
       PBDebug.log("     'megaEvolve': #{battler.name} (#{battler.index}) set to Mega Evolve")
       battle.scene.pbForceEndSpeech

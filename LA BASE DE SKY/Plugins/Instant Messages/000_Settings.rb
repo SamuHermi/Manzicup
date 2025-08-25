@@ -195,7 +195,7 @@ module InstantMessagesSettings
     #------------------------------------------------------------------------------------
     PASSIVE_TRIGGERS_RANDOM_POOL        = [
         [:ADVERTISEMENT_RANDOM_1],
-        [:ADVERTISEMENT_RANDOM_2, :Variable, 1, 5],
+        [:ADVERTISEMENT_RANDOM_2],
         [:ADVERTISEMENT_RANDOM_3]
     ]
     

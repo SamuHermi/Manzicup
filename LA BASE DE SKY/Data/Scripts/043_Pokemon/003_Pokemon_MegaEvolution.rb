@@ -23,6 +23,7 @@ class Pokemon
   end
 
   def hasMegaForm?
+    #Console.echo_li("\nPrueba?")
     megaForm = self.getMegaForm
     return megaForm > 0 && megaForm != form_simple
   end
@@ -77,6 +78,31 @@ class Pokemon
     if !v.nil?
       self.form = v
     elsif primal?
+      self.form = 0
+    end
+  end
+
+    def hasManziForm?
+    v = MultipleForms.call("getManziForm", self)
+    return !v.nil?
+  end
+
+  def manzi?
+    v = MultipleForms.call("getManziForm", self)
+    return !v.nil? && v == @form
+  end
+
+  def makeManzi
+    v = MultipleForms.call("getManziForm", self)
+    self.form = v if !v.nil?
+  end
+
+  def makeUnmanzi
+    return if self.form != MultipleForms.call("getManziForm", self)
+    v = MultipleForms.call("getUnmanziForm", self)
+    if !v.nil?
+      self.form = v
+    elsif manzi?
       self.form = 0
     end
   end

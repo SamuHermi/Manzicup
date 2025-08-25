@@ -4929,7 +4929,7 @@ Description = Golpea con las extremidades.
 #-------------------------------
 [STRENGTH]
 Name = Fuerza
-Type = FIGHTING
+Type = NORMAL
 Category = Physical
 Power = 80
 Accuracy = 100

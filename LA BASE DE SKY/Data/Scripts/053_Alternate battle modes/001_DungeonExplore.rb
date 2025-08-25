@@ -31,7 +31,6 @@ class DungeonState
       @inProgress = true     
       @trainers_on = 0
       @objects_on = 0
-      @timer_start = System.uptime
       $stats.dungeon_count += 1
       @monster_attack = false
       $player.party.each do |pkmn|
@@ -40,14 +39,8 @@ class DungeonState
         pkmn.calc_stats
         pkmn.reset_moves
         next false if pkmn.ev.values.none? { |ev| ev > 0 }
-        GameData::Stat.each_main { |s| pkmn.ev[s.id] = 0 }
+        #GameData::Stat.each_main { |s| pkmn.ev[s.id] = 0 }
       end
-    end
-
-    def expired?
-      return false if !pbInDungeon?
-      return false if TIME_ALLOWED <= 0
-      return System.uptime - timer_start >= TIME_ALLOWED
     end
 
     def loseDungeon
@@ -67,8 +60,9 @@ class DungeonState
         $player.battle_points += coins_obtained
         $player.money = 0
         $bag.remove_non_important()
-      pbMessage("\\w[]\\wm\\c[13]\\l[3]" +
-      _INTL("Has perdido todos los objetos"))  
+        pbMessage("\\w[]\\wm\\c[13]\\l[3]" +
+        _INTL("Has perdido todos los objetos"))  
+      
       pbEnd
     end
     
@@ -131,19 +125,6 @@ class DungeonState
       @timer_start = System.uptime
     end
 end
-
-
-EventHandlers.add(:on_frame_update, :dungeon_contest_counter,
-  proc {
-    next if !pbDungeonState.expired? || pbDungeonState.floorstoboss == 0
-    next if $game_player.move_route_forcing || pbMapInterpreterRunning? ||
-            $game_temp.message_window_showing
-    pbMessage(_INTL("¡Has pasado demasiado tiempo en esta zona!"))
-    pbMessage(_INTL("¡Un monstruo se ha fijado en ti!"))
-    pbDungeonState.monster_attack = true
-    pbDungeonState.restartTimer
-  }
-)
 
 def pbInDungeon?
   return pbDungeonState.pbInDungeon?

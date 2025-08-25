@@ -143,7 +143,7 @@ module NameBox
     "Sabo" =>  [MessageConfig::SABO_TEXT_COLOR,  MessageConfig::SABO_TEXT_SHADOW_COLOR],
     "Nerea" => [MessageConfig::NEREA_TEXT_COLOR, MessageConfig::NEREA_TEXT_SHADOW_COLOR],
 
-    "Otaka" =>   [Color.new(218, 172, 200),Color.new(171, 103, 158)],
+    "Maryan" =>  [Color.new(218, 172, 200),Color.new(171, 103, 158)],
     "Moridon" => [Color.new(100, 100, 100),Color.new(94, 77, 82)],
     "Lumine" =>  [Color.new(255, 205, 141),Color.new(129, 183, 215)],
     "Swolio" =>  [Color.new(150, 150, 150),Color.new(166, 6, 6)],

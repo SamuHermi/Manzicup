@@ -1207,9 +1207,25 @@ Battle::AbilityEffects::ModifyMoveBaseType.add(:GALVANIZE,
   }
 )
 
+Battle::AbilityEffects::ModifyMoveBaseType.add(:PIELMALDITA,
+  proc { |ability, user, move, type|
+    next if type != :NORMAL || !GameData::Type.exists?(:GHOST)
+    move.powerBoost = true
+    next :GHOST
+  }
+)
+
 Battle::AbilityEffects::ModifyMoveBaseType.add(:LIQUIDVOICE,
   proc { |ability, user, move, type|
     next :WATER if GameData::Type.exists?(:WATER) && move.soundMove?
+  }
+)
+
+Battle::AbilityEffects::ModifyMoveBaseType.add(:TINTINEO,
+  proc { |ability, user, move, type|
+    next if !GameData::Type.exists?(:PSYCHIC) || !move.soundMove?
+    move.powerBoost = true
+    next :PSYCHIC 
   }
 )
 
@@ -1658,6 +1674,16 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:STEELWORKER,
   if user.hp <= user.totalhp / 3 && type == :STEEL
     mults[:attack_multiplier] *= 1.8
   elsif type == :STEEL
+    mults[:attack_multiplier] *= 1.5
+  end
+  }
+)
+
+Battle::AbilityEffects::DamageCalcFromUser.add(:ALBINISMO,
+  proc { |ability, user, target, move, mults, power, type|
+  if user.hp <= user.totalhp / 3 && type == :ICE
+    mults[:attack_multiplier] *= 1.8
+  elsif type == :ICE
     mults[:attack_multiplier] *= 1.5
   end
   }
@@ -3063,9 +3089,17 @@ Battle::AbilityEffects::OnSwitchIn.add(:MAGNETPULL,
 Battle::AbilityEffects::OnSwitchIn.add(:WATERVEIL,
   proc { |ability, battler, battle, switch_in|
   battle.pbShowAbilitySplash(battler)
-  battler.pbThis.effects[PBEffects::AquaRing] = true
+  battler.effects[PBEffects::AquaRing] = true
+  battle.pbAnimation(:AQUARING, battler, battler)
   battle.pbDisplay(_INTL("¡{1} se rodeó de un manto de agua!", battler.pbThis))
   battle.pbHideAbilitySplash(battler)
+  }
+)
+
+Battle::AbilityEffects::OnSwitchIn.add(:DIVINEMOTH,
+  proc { |ability, battler, battle, switch_in|
+  battler.pbRaiseStatStageByAbility(:SPECIAL_ATTACK, 1, battler)
+  battler.pbRaiseStatStageByAbility(:SPEED, 1, battler)  
   }
 )
 
@@ -3281,6 +3315,7 @@ Battle::AbilityEffects::OnSwitchIn.add(:TWISTEDDIM,
       battle.field.effects[PBEffects::TrickRoom] = 5
       battle.pbDisplay(_INTL("¡{1} alteró las dimensiones!", battler.pbThis))
     end
+    battle.pbAnimation(:TRICKROOM, battler, battler)
     battle.pbHideAbilitySplash(battler)
   }
 )
@@ -3490,7 +3525,28 @@ Battle::AbilityEffects::OnSwitchIn.add(:INTIMIDATE,
       elsif b.statStageAtMin?(:ATTACK)
         check_item = false
       end
-      check_ability = b.pbLowerAttackStatStageIntimidate(battler)
+      check_ability = b.pbLowerAttackStatStageIntimidate(battler,:ATTACK)
+      b.pbAbilitiesOnIntimidated if check_ability
+      b.pbItemOnIntimidatedCheck if check_item
+    end
+    battle.pbHideAbilitySplash(battler)
+    battler.effects[PBEffects::OneUseAbility] = ability
+  }
+)
+
+Battle::AbilityEffects::OnSwitchIn.add(:ESPANTO,
+  proc { |ability, battler, battle, switch_in|
+    next if battler.effects[PBEffects::OneUseAbility] == ability
+    battle.pbShowAbilitySplash(battler)
+    battle.allOtherSideBattlers(battler.index).each do |b|
+      next if !b.near?(battler)
+      check_item = true
+      if b.hasActiveAbility?([:CONTRARY, :GUARDDOG])
+        check_item = false if b.statStageAtMax?(:SPECIAL_ATTACK)
+      elsif b.statStageAtMin?(:SPECIAL_ATTACK)
+        check_item = false
+      end
+      check_ability = b.pbLowerAttackStatStageIntimidate(battler,:SPECIAL_ATTACK)
       b.pbAbilitiesOnIntimidated if check_ability
       b.pbItemOnIntimidatedCheck if check_item
     end
@@ -3964,6 +4020,36 @@ Battle::AbilityEffects::OnSwitchIn.add(:CRYPTIC,
       battler.pbRaiseStatStageByAbility(:SPEED, 1, battler)
       battle.pbHideAbilitySplash(battler)
     }
+  }
+)
+
+Battle::AbilityEffects::OnSwitchIn.add(:TINTINEO,
+  proc { |ability, battler, battle, switch_in|
+    battle.pbShowAbilitySplash(battler)
+    battle.pbDisplay(_INTL("¡{1} tintinea una campana!", battler.pbThis))
+    battle.pbAnimation(:HEALBELL, battler, battler)
+    battle.allSameSideBattlers(battler.index).each do |b|
+      next if b.status == :NONE
+      oldStatus = b.status
+      b.pbCureStatus(Battle::Scene::USE_ABILITY_SPLASH)
+      if !Battle::Scene::USE_ABILITY_SPLASH
+        case oldStatus
+        when :SLEEP
+          battle.pbDisplay(_INTL("¡La habilidad {2} de {1} despertó a su compañero!", battler.pbThis, battler.abilityName))
+        when :POISON
+          battle.pbDisplay(_INTL("¡La habilidad {2} de {1} curó el envenamiento de su compañero!", battler.pbThis, battler.abilityName))
+        when :BURN
+          battle.pbDisplay(_INTL("¡La habilidad {2} de {1} curó la quemadura de su compañero!", battler.pbThis, battler.abilityName))
+        when :PARALYSIS
+          battle.pbDisplay(_INTL("¡La habilidad {2} de {1} curó la parálisis de su compañero!", battler.pbThis, battler.abilityName))
+        when :FROZEN
+          battle.pbDisplay(_INTL("¡La habilidad {2} de {1} descongelo a su compañero!", battler.pbThis, battler.abilityName))
+        when :FROSTBITE
+          battle.pbDisplay(_INTL("¡La habilidad {2} de {1} descongelo a su compañero!", battler.pbThis, battler.abilityName))
+        end
+      end
+    end
+    battle.pbHideAbilitySplash(battler)
   }
 )
 

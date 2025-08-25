@@ -9,13 +9,17 @@ class PokemonSummary_Scene
     ev_total = 0
     # Determine which stats are boosted and lowered by the Pokémon's nature
     statshadows = {}
-    GameData::Stat.each_main { |s| statshadows[s.id] = shadow; ev_total += @pokemon.ev[s.id] }
+    GameData::Stat.each_main { |s| statshadows[s.id] = shadow; ev_total += @pokemon.ev[s.id] } if Settings::PURIST_MODE
+    ev_total= @pokemon.ev[:HP] + @pokemon.ev[:ATTACK] + @pokemon.ev[:DEFENSE] + @pokemon.ev[:SPECIAL_DEFENSE] + @pokemon.ev[:SPEED] if !Settings::PURIST_MODE
     if !@pokemon.shadowPokemon? || @pokemon.heartStage <= 3
       @pokemon.nature_for_stats.stat_changes.each do |change|
         statshadows[change[0]] = Color.new(136, 96, 72) if change[1] > 0
         statshadows[change[0]] = Color.new(64, 120, 152) if change[1] < 0
       end
     end
+    evpool=80+@pokemon.level*8
+    evpool=(evpool.div(4))*4      
+    evpool=512 if evpool>512 
     # Write various bits of text
     textpos = [
       [_INTL("Total"), 361, 92, :left, base, shadow],
@@ -52,7 +56,8 @@ class PokemonSummary_Scene
       [sprintf("%d", @pokemon.iv[:SPEED]), 466, 316, :left, Color.new(64, 64, 64), Color.new(176, 176, 176)],
       [sprintf("%d", @pokemon.ev[:SPEED]), 511, 316, :left, Color.new(64, 64, 64), Color.new(176, 176, 176)],
       [_INTL("EVs Totales"), 300, 380, :left, base, shadow],
-      [sprintf("%d/%d", ev_total, Pokemon::EV_LIMIT), 465, 380, :center, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+
+      [sprintf("%d/%d", ev_total, evpool), 465, 380, :center, Color.new(64, 64, 64), Color.new(176, 176, 176)],
       [_INTL("Poder Oculto"), 300, 410, :left, base, shadow]
     ]
     # Draw all text

@@ -9,6 +9,7 @@ module MultipleForms
   end
 
   def self.register(sym, hash)
+    #Console.echo_li(sym.to_s + ": " + hash.to_s + "\n")
     @@formSpecies.add(sym, hash)
   end
 
@@ -30,6 +31,7 @@ module MultipleForms
 
   def self.call(func, pkmn, *args)
     sp = @@formSpecies[pkmn.species]
+    #sp.each {|a| Console.echo_li(a.to_s)}
     return nil if !sp || !sp[func]
     return sp[func].call(pkmn, *args)
   end
@@ -172,6 +174,119 @@ MultipleForms.register(:KYOGRE, {
   "getPrimalForm" => proc { |pkmn|
     next 1 if pkmn.hasItem?(:BLUEORB)
     next
+  }
+})
+
+MultipleForms.register(:AMPHAROS, {
+  "getManziForm" => proc { |pkmn|
+    next 2
+  },
+  "getUnmanziForm" => proc { |pkmn|
+    next 4
+  },
+  "getMegaForm" => proc { |pkmn|
+    next 3 if pkmn.form == 2
+    next 1 if pkmn.form == 0
+    next nil
+  }
+})
+
+
+MultipleForms.register(:LAPRAS, {
+  "getManziForm" => proc { |pkmn|
+    next 2
+  },
+  "getUnmanziForm" => proc { |pkmn|
+    next 4
+  }
+})
+
+
+MultipleForms.register(:GLIGAR, {
+  "getManziForm" => proc { |pkmn|
+    next 1
+  },
+  "getUnmanziForm" => proc { |pkmn|
+    next 3
+  }
+})
+
+
+MultipleForms.register(:TAUROS, {
+  "getManziForm" => proc { |pkmn|
+    next 4
+  },
+  "getUnmanziForm" => proc { |pkmn|
+    next 6
+  }
+})
+
+
+MultipleForms.register(:ABSOL, {
+  "getManziForm" => proc { |pkmn|
+    next 1
+  },
+  "getUnmanziForm" => proc { |pkmn|
+    next 3
+  }
+})
+
+
+MultipleForms.register(:TOGEKISS, {
+  "getManziForm" => proc { |pkmn|
+    next 1
+  },
+  "getUnmanziForm" => proc { |pkmn|
+    next 3
+  }
+})
+
+
+MultipleForms.register(:GYARADOS, {
+  "getManziForm" => proc { |pkmn|
+    next 1
+  },
+  "getUnmanziForm" => proc { |pkmn|
+    next 3
+  }
+})
+
+
+MultipleForms.register(:ACCELGOR, {
+  "getManziForm" => proc { |pkmn|
+    next 1
+  },
+  "getUnmanziForm" => proc { |pkmn|
+    next 3
+  }
+})
+
+
+MultipleForms.register(:BANETTE, {
+  "getManziForm" => proc { |pkmn|
+    next 1
+  },
+  "getUnmanziForm" => proc { |pkmn|
+    next 3
+  }
+})
+
+
+MultipleForms.register(:TANDEMAUS, {
+  "getManziForm" => proc { |pkmn|
+    next 1
+  },
+  "getUnmanziForm" => proc { |pkmn|
+    next 3
+  }
+})
+
+MultipleForms.register(:VAPOREON, {
+  "getManziForm" => proc { |pkmn|
+    next 2
+  },
+  "getUnmanziForm" => proc { |pkmn|
+    next 1
   }
 })
 
@@ -502,7 +617,13 @@ MultipleForms.register(:LYCANROC, {
 
 MultipleForms.register(:WISHIWASHI, {
   "getFormOnLeavingBattle" => proc { |pkmn, battle, usedInBattle, endBattle|
-    next 0
+    next 0 if pkmn.form == 1
+  },
+    "getManziForm" => proc { |pkmn|
+    next 2
+  },
+  "getUnmanziForm" => proc { |pkmn|
+    next 4
   }
 })
 

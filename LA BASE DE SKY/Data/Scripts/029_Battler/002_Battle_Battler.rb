@@ -146,6 +146,7 @@ class Battle::Battler
   # Mega Evolution, Primal Reversion, Shadow Pokémon
   #=============================================================================
   def hasMega?
+    #Console.echo_li("hasMega? Battle_Battler\n")
     return false if @effects[PBEffects::Transform]
     return @pokemon&.hasMegaForm?
   end
@@ -157,7 +158,14 @@ class Battle::Battler
     return @pokemon&.hasPrimalForm?
   end
 
+  def hasManzi?
+    return false if @effects[PBEffects::Transform]
+    return @pokemon&.hasManziForm?
+  end
+
   def primal?; return @pokemon&.primal?; end
+
+  def manzi?; return @pokemon&.manzi?; end 
 
   def shadowPokemon?; return false; end
 

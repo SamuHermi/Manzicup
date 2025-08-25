@@ -39,6 +39,7 @@ module Battle::CatchAndStoreMixin
           send_pkmn.statusCount = 0 if send_pkmn.status == :POISON   # Bad poison becomes regular
           send_pkmn.makeUnmega
           send_pkmn.makeUnprimal
+          send_pkmn.makeUnmanzi
           # Send chosen Pokémon to storage
           send_pkmn = pbPlayer.party[party_index]
           stored_box = @peer.pbStorePokemon(pbPlayer, send_pkmn)
@@ -186,6 +187,7 @@ module Battle::CatchAndStoreMixin
       pkmn.poke_ball = ball
       pkmn.makeUnmega if pkmn.mega?
       pkmn.makeUnprimal
+      pkmn.makeUnmanzi
       pkmn.update_shadow_moves if pkmn.shadowPokemon?
       pkmn.record_first_moves
       # Reset form

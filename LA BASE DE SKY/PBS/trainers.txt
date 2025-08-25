@@ -119,7 +119,7 @@ Pokemon = BLASTOISE,63
     Item = SITRUSBERRY
 #-------------------------------
 [IGOR,Igor]
-LoseText = Y pareces tan callado, tímido e inocente, y vas y escribes mi nombre en mi Death Note, te enseño mis Pokemón y no empiezas a temblar.
+LoseText = Una ejecución verdaderamente destacable, este es el poder de las infinitas posibilidades.
 Pokemon = VAPOREON,100
 	Form = 1
 	AbilityIndex = 2
@@ -134,60 +134,60 @@ Pokemon = STUFFUL,14
     Moves = PROTECT,LOWSWEEP,DOUBLEEDGE,PAYBACK
     AbilityIndex = 0
     Item = SILKSCARF
-Pokemon = MIMIKYU,16
-    Moves = SHADOWSNEAK,SCRATCH,DRAININGKISS
+Pokemon = PIKACHU,16
+	Form = 6
+    Moves = ELECTROBALL,QUICKATTACK,DRAININGKISS
 #-------------------------------
 [BBEG,Moridon]
 LoseText = ¿He vuelto a perder?
-Pokemon = SLOWKING,23
-    Form = 1
-    Moves = ACID,EERIESPELL,TOXIC,CHILLYRECEPTION
-    AbilityIndex = 2
-    Item = BLACKSLUDGE
-Pokemon = YAMASK,22
-    Form = 1
-    Moves = DISABLE,NIGHTSHADE,THIEF,WILLOWISP
-Pokemon = HOUNDOUR,22
+Pokemon = RUNERIGUS,28
+    Moves = DISABLE,NIGHTSHADE,HEX,WILLOWISP
+Pokemon = HOUNDOOM,28
     Moves = TAUNT,INCINERATE,BITE,PSYCHICFANGS
     Nature = ADAMANT
-#-------------------------------
-[NOCANON,Lumine]
-Items = MEGARING
-LoseText = ...
-Pokemon = KECLEON,28
-    Moves = SHADOWSNEAK,SLASH,BRICKBREAK,AERIALACE
-    AbilityIndex = 2
-    Item = WEAKNESSPOLICY
-Pokemon = LUNATONE,28
-    Moves = COSMICPOWER,STOREDPOWER,TOXIC,MOONLIGHT
+	AbilityIndex = 1
+Pokemon = SLOWKING,30
+    Form = 1
+    Moves = VENOSHOCK,EERIESPELL,TOXIC,PROTECT
     AbilityIndex = 0
-    Item = LEFTOVERS
-Pokemon = SHIINOTIC,29
-    Moves = STRENGTHSAP,MEGADRAIN,DRAININGKISS
+    Item = BLACKSLUDGE	
+#-------------------------------
+[KNEKRO,Knekro]
+LoseText = ...
+Pokemon = STOUTLAND,42
+    Moves = PLAYROUGH,CRUNCH,STRENGTH,SUPERPOWER
     AbilityIndex = 1
-    Item = BIGROOT
-Pokemon = AERODACTYL,30
-    Moves = STEALTHROCK,ROAR,ROCKSLIDE,WINGATTACK
+    Item = SILKSCARF
+	Name = Mondongo
+Pokemon = STARMIE,42
+    Moves = SURF,ICEBEAM,PSYCHIC,RECOVER
+    AbilityIndex = 0
     Item = FOCUSSASH
-    AbilityIndex = 1
-	Name = Paimon
+Pokemon = PERSIAN,42
+    Moves = PAYDAY,SLASH,FAKEOUT,HYPNOSIS
+    AbilityIndex = 0
+    Item = BIGROOT
+Pokemon = MEWTWO,44
+    Moves = AURASPHERE,PSYBEAM,SHADOWBALL,CONFUSERAY
+    Item = TWISTEDSPOON
+	Shiny = true
 #-------------------------------
 [IMPOSTOR,Rojo]
 LoseText = ...
-Pokemon = ORBEETLE,38
+Pokemon = ORBEETLE,56
     Moves = STICKYWEB,INFESTATION,REFLECT,LIGHTSCREEN
     Item = LIGHTCLAY
 	EV = 4,0,252,0,0,252
-Pokemon = STUNFISK,37
+Pokemon = STUNFISK,56
     Form = 1
     Moves = BULLDOZE,ROCKSLIDE,YAWN,PAINSPLIT
     Item = LEFTOVERS
 	EV = 0,128,252,0,0,128
-Pokemon = DITTO,38
+Pokemon = DITTO,56
     AbilityIndex = 2
     Item = CHOICESCARF
 	EV = 252,0,4,252,0,0
-Pokemon = AMOONGUSS,39
+Pokemon = AMOONGUSS,58
     Moves = TOXIC,GIGADRAIN,SLUDGEBOMB,CLEARSMOG
     Item = ROCKYHELMET
 	EV = 252,0,4,252,0,0
@@ -195,43 +195,25 @@ Pokemon = AMOONGUSS,39
 [PAPI,Swolio]
 Items = MEGARING
 LoseText = ...
-Pokemon = SLAKING,48
+Pokemon = SLAKING,70
     Moves = GIGAIMPACT,EARTHQUAKE,PLAYROUGH,OUTRAGE
     Item = CHOICEBAND
 	EV = 0,252,128,0,0,128
-Pokemon = PERRSERKER,48
+Pokemon = PERRSERKER,70
     Moves = IRONHEAD,UTURN,CLOSECOMBAT,RAINDANCE
     AbilityIndex = 2
     Item = ASSAULTVEST
 	EV = 252,252,0,0,0,4
-Pokemon = MACHAMP,49
+Pokemon = MACHAMP,70
     Moves = CLOSECOMBAT,FACADE,KNOCKOFF,BULLETPUNCH
     AbilityIndex = 0
 	EV = 0,252,0,252,0,4
     Item = FLAMEORB
-Pokemon = SWAMPERT,49
+Pokemon = SWAMPERT,72
     Moves = WATERFALL,EARTHQUAKE,ICEPUNCH,SUPERPOWER
     AbilityIndex = 2
     Item = MEGASTONE
 	EV = 0,252,4,252,0,0
-#-------------------------------
-[PROFETA,Zawezo]
-LoseText = ...
-Pokemon = BRONZONG,57
-    Moves = STEALTHROCK,GYROBALL,EARTHQUAKE,TOXIC
-    Item = LEFTOVERS
-Pokemon = NIDORINO,56
-    Moves = SLUDGEWAVE,EARTHPOWER,FIREBLAST,THUNDERBOLT
-    Item = EVIOLITE
-Pokemon = XATU,58
-    Moves = PSYCHIC,FOULPLAY,ROOST,UTURN
-    AbilityIndex = 2
-    Item = ROCKYHELMET
-Pokemon = VOLCARONA,59
-    Moves = QUIVERDANCE,ROOST,FIERYDANCE,BUGBUZZ
-    Item = HEAVYDUTYBOOTS
-Pokemon = MIRAIDON,59
-    Moves = ELECTRODRIFT,DRAGONPULSE,VOLTSWITCH
 #-------------------------------
 [TRIPULANTE,Azul]
 LoseText = ...
@@ -244,7 +226,7 @@ Pokemon = SILICOBRA,33
 Pokemon = SNEASEL,32
 Pokemon = CYCLIZAR,33
 #-------------------------------
-[TRIPULANTE,Rojo]
+[TRIPULANTE,Rosa]
 LoseText = ...
 Pokemon = GLOOM,36
 #-------------------------------
@@ -257,10 +239,14 @@ Pokemon = SKIPLOOM,36
 LoseText = ...
 Pokemon = WEEPINBELL,36
 #-------------------------------
-[TRIPULANTE,Verde]
+[TRIPULANTE,Lima]
 LoseText = ...
 Pokemon = SERVINE,36
 Pokemon = BAYLEEF,36
+#-------------------------------
+[TRIPULANTE,Verde]
+LoseText = ...
+Pokemon = WEEPINBELL,36
 #-------------------------------
 [TRIPULANTE,Cian]
 LoseText = ...
@@ -931,6 +917,57 @@ Pokemon = MUK,100
 	AbilityIndex = 0
 	Moves = METRONOME	
 #-------------------------------
+# Evento megas	
+#-------------------------------
+[BRA,Brayan,5]	
+Items = MEGARING
+Pokemon = GYARADOS,100
+	Item = MEGASTONE
+	Moves = PYROBALL,WATERFALL,DRAGONDANCE,FLIPTURN
+	IV = 31,31,31,31,31,31	
+	Nature = ADAMANT
+#-------------------------------
+[SABO,Sabo,5]	
+Items = MEGARING
+Pokemon = BANETTE,100
+	Moves = DRAININGKISS,POWERGEM,SHADOWSNEAK,SHADOWBALL
+	IV = 31,31,31,31,31,31
+	Form = 3
+	Item = MEGASTONE
+	Nature = CALM
+#-------------------------------
+[ANA,Ana,5]	
+Items = MEGARING
+Pokemon = WISHIWASHI,100
+	Moves = PSYCHIC,SURF,YAWN,AMNESIA
+	IV = 31,31,31,31,31,31
+	Item = MEGASTONE
+	Form = 4
+#-------------------------------
+[PABLO,Pablo,5]	
+Items = MEGARING
+Pokemon = ACCELGOR,100
+	Item = MEGASTONE
+	Moves = PROTECT,DOUBLESHOCK,CLOSECOMBAT,POWERWHIP
+	IV = 31,31,31,31,31,31
+	Form = 3
+#-------------------------------
+[NEREA,Nerea,5]	
+Items = MEGARING
+Pokemon = TANDEMAUS,100
+	Item = MEGASTONE
+	Moves = POPULATIONBOMB,POWERUPPUNCH,EXTREMESPEED,UTURN
+	IV = 31,31,31,31,31,31
+	Form = 3
+#-------------------------------
+[RODRI,Rodri,5]	
+Items = MEGARING
+Pokemon = TOGEKISS,100
+	Item = MEGASTONE
+	Moves = INGRAIN,PAINSPLIT,TOXIC,EARTHPOWER
+	IV = 31,31,31,31,31,31
+	Form = 3
+#-------------------------------
 # Pokemon World Tournament - Manzidadas
 #-------------------------------
 [SABO,Sabo,10]
@@ -1325,7 +1362,7 @@ Pokemon = TYRANTRUM,100
 	Item = CHOICEBAND
 	Moves = HEADSMASH,OUTRAGE,CLOSECOMBAT,CRUNCH
 	IV = 31,31,31,31,31,31
-	AbilityIndex = 2
+	AbilityIndex = 2	
 #-------------------
 # Pokemon World Tournament - NPCs Dungeon
 #-------------------
@@ -1381,3 +1418,9 @@ Pokemon = POLITOED,100
 Pokemon = MIMIKYU,100
 Pokemon = ROTOM,100
 	Form = 4
+#-------------------------------
+[BOTANICA,Claudette,1]
+Pokemon = ARIADOS,100
+Pokemon = MEGANIUM,100
+Pokemon = LYLEENNOCT,100
+Pokemon = DRAPION,100

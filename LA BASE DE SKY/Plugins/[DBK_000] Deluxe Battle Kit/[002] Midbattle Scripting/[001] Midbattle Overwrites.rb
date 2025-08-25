@@ -386,7 +386,7 @@ class Battle
     return if @field.effects[effect] <= 0
     @field.effects[effect] -= 1
     return if @field.effects[effect] > 0
-    @scene.pbDeleteTRbg() if effect == PBEffects::TrickRoom
+    #@scene.pbDeleteTRbg() if effect == PBEffects::TrickRoom
     pbDisplay(msg)
     if effect == PBEffects::MagicRoom
       pbPriority(true).each { |battler| battler.pbItemTerrainStatBoostCheck }

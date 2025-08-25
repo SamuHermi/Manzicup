@@ -23,19 +23,25 @@ class Pokemon
     evpool=80+self.level*8
     evpool=(evpool.div(4))*4      
     evpool=512 if evpool>512 
+    evcap=40+@level*4
+    evcap=(evcap.div(4))*4
+    evcap=252 if evcap>252
     evsum=@ev[:HP]+@ev[:ATTACK]+@ev[:DEFENSE]+@ev[:SPECIAL_DEFENSE]+@ev[:SPEED]
 		evsum+=@ev[:SPECIAL_ATTACK] if Settings::PURIST_MODE
-    GameData::Stat.each_main do |s|
-      if evsum>evpool
-        @ev[s.id]=0  
+    #EV_LIMIT = evpool
+    if evsum>evpool
+      GameData::Stat.each_main do |s|
+        coef_reduc = evpool.to_f/evsum
+        #Console.echo_li(evsum.to_s + "/" + evpool.to_s + " = " + coef_reduc.to_s)
+        #Console.echo_li("EV: " + @ev[s.id].to_s + "Máximo: " + evcap.to_s + "\n")
+        @ev[s.id] = ((@ev[s.id] * coef_reduc) / 4).floor * 4
       end  
-    end 
+    end
     if !Settings::PURIST_MODE 
       @ev[:SPECIAL_ATTACK]=@ev[:ATTACK]
     end  
     mixed_ev_alloc_calc_stats
   end
-
 end  
 
  

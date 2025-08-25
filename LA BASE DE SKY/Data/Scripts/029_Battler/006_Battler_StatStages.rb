@@ -329,7 +329,7 @@ class Battle::Battler
 
   def pbLowerStatStageByAbility(stat, increment, user, splashAnim = true, checkContact = false)
     # Paldea - Gen 9
-    if hasActiveAbility?(:GUARDDOG) && user.ability == :INTIMIDATE
+    if hasActiveAbility?(:GUARDDOG) && (user.ability == :INTIMIDATE || user.ability == :ESPANTO)
       return pbRaiseStatStageByAbility(stat, increment, self, true)
     end
     ret = false
@@ -346,12 +346,12 @@ class Battle::Battler
     return ret
   end
 
-  def pbLowerAttackStatStageIntimidate(user)
+  def pbLowerAttackStatStageIntimidate(user,stat)
     return false if fainted?
     
     # Paldea - Gen 9
     if !hasActiveAbility?(:CONTRARY) && @effects[PBEffects::Substitute] == 0
-      if itemActive? && Battle::ItemEffects.triggerStatLossImmunity(self.item, self, :ATTACK, @battle, true)
+      if itemActive? && Battle::ItemEffects.triggerStatLossImmunity(self.item, self, stat, @battle, true)
         return false
       end
     end
@@ -368,16 +368,16 @@ class Battle::Battler
     if Settings::MECHANICS_GENERATION >= 8 && hasActiveAbility?([:OBLIVIOUS, :OWNTEMPO, :INNERFOCUS, :SCRAPPY])
       @battle.pbShowAbilitySplash(self)
       if Battle::Scene::USE_ABILITY_SPLASH
-        @battle.pbDisplay(_INTL("¡{2} de {1} no puede bajar más!", pbThis(true), GameData::Stat.get(:ATTACK).name))
+        @battle.pbDisplay(_INTL("¡{2} de {1} no puede bajar más!", pbThis(true), GameData::Stat.get(stat).name))
       else
         @battle.pbDisplay(_INTL("¡{2} de {1} evitó que bajara su {3}!", pbThis(true), abilityName,
-                                GameData::Stat.get(:ATTACK).name))
+                                GameData::Stat.get(stat).name))
       end
       @battle.pbHideAbilitySplash(self)
       return false
     end
     if Battle::Scene::USE_ABILITY_SPLASH
-      return pbLowerStatStageByAbility(:ATTACK, 1, user, false)
+      return pbLowerStatStageByAbility(stat, 1, user, false)
     end
     # NOTE: These checks exist to ensure appropriate messages are shown if
     #       Intimidate is blocked somehow (i.e. the messages should mention the
@@ -389,23 +389,23 @@ class Battle::Battler
         return false
       end
       if abilityActive? &&
-         (Battle::AbilityEffects.triggerStatLossImmunity(self.ability, self, :ATTACK, @battle, false) ||
-          Battle::AbilityEffects.triggerStatLossImmunityNonIgnorable(self.ability, self, :ATTACK, @battle, false))
+         (Battle::AbilityEffects.triggerStatLossImmunity(self.ability, self, stat, @battle, false) ||
+          Battle::AbilityEffects.triggerStatLossImmunityNonIgnorable(self.ability, self, stat, @battle, false))
         @battle.pbDisplay(_INTL("¡Los efectos de {2} han protegido a {1} de {4} de {3}",
                                 pbThis(true), abilityName, user.pbThis(true), user.abilityName))
         return false
       end
       allAllies.each do |b|
         next if !b.abilityActive?
-        if Battle::AbilityEffects.triggerStatLossImmunityFromAlly(b.ability, b, self, :ATTACK, @battle, false)
+        if Battle::AbilityEffects.triggerStatLossImmunityFromAlly(b.ability, b, self, stat, @battle, false)
           @battle.pbDisplay(_INTL("¡Los efectos de {3} de {2} han protegido a {1} de {5} de {4}",
                                   pbThis(true), user.pbThis(true), user.abilityName, b.pbThis(true), b.abilityName))
           return false
         end
       end
     end
-    return false if !pbCanLowerStatStage?(:ATTACK, user)
-    return pbLowerStatStageByCause(:ATTACK, 1, user, user.abilityName)
+    return false if !pbCanLowerStatStage?(stat, user)
+    return pbLowerStatStageByCause(stat, 1, user, user.abilityName)
   end
 
   #=============================================================================

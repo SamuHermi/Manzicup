@@ -66,8 +66,10 @@ class Battle
   end
 
   def pbCanMegaEvolve?(idxBattler)
+    #Console.echo_li("Guau")    
     battler = @battlers[idxBattler]
     return false if $game_switches[Settings::NO_MEGA_EVOLUTION]
+    
     return false if !battler.hasMega?
     return true if $DEBUG && Input.press?(Input::CTRL) && !battler.wild?
     return false if battler.effects[PBEffects::SkyDrop] >= 0
@@ -131,6 +133,7 @@ class Battle
     else 
       if Settings::SHOW_MEGA_ANIM && $PokemonSystem.battlescene == 0
         @scene.pbShowMegaEvolution(battler.index)
+
         battler.pokemon.makeMega
         battler.form_update(true)
       else
@@ -148,11 +151,14 @@ end
 #-------------------------------------------------------------------------------
 class Battle::Battler
   def hasMega?
+    #Console.echo_li("hasMega? Mega Evolution\n")
     return false if shadowPokemon? || @effects[PBEffects::Transform]
     return false if wild? && @battle.wildBattleMode != :mega
     return false if @battle.raidBattle? && @battle.raidRules[:style] != :Basic
     return false if !getActiveState.nil?
+    #Console.echo_li("Holi")
     return false if hasEligibleAction?(:primal, :zmove, :ultra, :zodiac)
+
     return @pokemon&.hasMegaForm?
   end
   
@@ -263,7 +269,7 @@ class Battle::Scene::Animation::BattlerMegaEvolve < Battle::Scene::Animation
     #---------------------------------------------------------------------------
     # Sets up trainer & Mega Ring                                          
     if !@battler.wild?
-      trData = dxSetTrainerWithItem(@trainer_file, @item_file, delay, !@opposes, base_width)
+      trData = dxSetTrainerWithItem(@trainer_file, @item_file, delay, !@opposes, 0)
       picTRAINER, arrITEM = trData[0], trData[1]
     end
     #---------------------------------------------------------------------------

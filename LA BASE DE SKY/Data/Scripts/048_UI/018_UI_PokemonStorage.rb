@@ -1741,10 +1741,11 @@ class PokemonStorageScreen
   def pbStore(selected, heldpoke)
     box = selected[0]
     index = selected[1]
-    if pbAbleCount <= 1 && pbAble?(@storage[box, index]) && !heldpoke
-      pbPlayBuzzerSE
-      pbDisplay(_INTL("¡Es tu último Pokémon!"))
-    elsif heldpoke&.cannot_store
+    #if pbAbleCount <= 1 && pbAble?(@storage[box, index]) && !heldpoke
+    #  pbPlayBuzzerSE
+    #  pbDisplay(_INTL("¡Es tu último Pokémon!"))
+    #els
+    if heldpoke&.cannot_store
       pbDisplay(_INTL("¡{1} no quiere quedarse en el PC!", heldpoke.name))
     elsif !heldpoke && @storage[box, index].cannot_store
       pbDisplay(_INTL("¡{1} no quiere quedarse en el PC!", @storage[box, index].name))
@@ -1762,11 +1763,11 @@ class PokemonStorageScreen
   def pbHold(selected)
     box = selected[0]
     index = selected[1]
-    if box == -1 && pbAble?(@storage[box, index]) && pbAbleCount <= 1
-      pbPlayBuzzerSE
-      pbDisplay(_INTL("¡Es tu último Pokémon!"))
-      return
-    end
+    #if box == -1 && pbAble?(@storage[box, index]) && pbAbleCount <= 1
+    #  pbPlayBuzzerSE
+    #  pbDisplay(_INTL("¡Es tu último Pokémon!"))
+    #  return
+    #end
     @scene.pbHold(selected)
     @heldpkmn = @storage[box, index]
     @storage.pbDelete(box, index)
@@ -1839,11 +1840,11 @@ class PokemonStorageScreen
       pbDisplay(_INTL("¡{1} no quiere separarse de ti!", pokemon.name))
       return false
     end
-    if box == -1 && pbAbleCount <= 1 && pbAble?(pokemon) && !heldpoke
-      pbPlayBuzzerSE
-      pbDisplay(_INTL("¡Es tu último Pokémon!"))
-      return
-    end
+    #if box == -1 && pbAbleCount <= 1 && pbAble?(pokemon) && !heldpoke
+    #  pbPlayBuzzerSE
+    #  pbDisplay(_INTL("¡Es tu último Pokémon!"))
+    #  return
+    #end
     command = pbShowCommands(_INTL("¿Liberar este Pokémon?"), [_INTL("No"), _INTL("Sí")])
     if command == 1
       pkmnname = pokemon.name

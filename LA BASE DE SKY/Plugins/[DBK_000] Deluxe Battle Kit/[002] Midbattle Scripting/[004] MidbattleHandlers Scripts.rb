@@ -228,6 +228,96 @@ MidbattleHandlers.add(:midbattle_global, :wild_mega_battle,
   }
 )
 
+MidbattleHandlers.add(:midbattle_scripts, :combate_otaka_male,
+  proc { |battle, idxBattler, idxTarget, trigger|
+    scene = battle.scene
+    battler = battle.battlers[idxBattler]
+    case trigger
+    #---------------------------------------------------------------------------
+    # Introduction text explaining the event.
+    when "RoundStartCommand_1_player"
+      scene.pbStartSpeech(1)
+      battle.pbDisplayPaused(_INTL("Daring~ No me subestimes, que soy toda una maestra Pokémon"))
+      scene.pbForceEndSpeech
+    when "BattlerAttractStart"
+      scene.pbStartSpeech(1)
+      battle.pbDisplayPaused(_INTL("Hasta nuestros Pokémon están enamorados, somos el shippeo de la temporada"))
+    when "AfterLastSwitchIn_foe" # Antes de que saque a su último Pokémon.
+      scene.pbStartSpeech(1)
+      battle.pbDisplayPaused(_INTL("No has visto ni un 1% de mi pode, ¡¡¡Kyaaaaaaaa!!!"))
+      scene.pbForceEndSpeech
+    end
+  }
+)
+
+MidbattleHandlers.add(:midbattle_scripts, :combate_otaka_female,
+  proc { |battle, idxBattler, idxTarget, trigger|
+    scene = battle.scene
+    battler = battle.battlers[idxBattler]
+    case trigger
+    when "RoundStartCommand_1_player"
+      scene.pbStartSpeech(1)
+      battle.pbDisplayPaused(_INTL("Preparate zorra, te enseñaré a solo juntarte con hombres a tu altura."))
+      scene.pbForceEndSpeech
+      scene.pbStartSpeech(1)
+      battle.pbDisplayPaused(_INTL("Quiero decir, unos mierdas sin futuro."))
+      scene.pbForceEndSpeech      
+    when "UserDealtCriticalHit_foe"
+      scene.pbStartSpeech(1)
+      battle.pbDisplayPaused(_INTL("Kishishi, hasta los dioses están de mi parte."))
+      scene.pbForceEndSpeech
+    when "AfterLastSwitchIn_foe" # Antes de que saque a su último Pokémon.
+      scene.pbStartSpeech(1)
+      battle.pbDisplayPaused(_INTL("No has visto ni un 1% de mi pode, ¡¡¡Kyaaaaaaaa!!!"))
+      scene.pbForceEndSpeech
+    end
+  }
+)
+
+MidbattleHandlers.add(:midbattle_scripts, :combate_moridon,
+  proc { |battle, idxBattler, idxTarget, trigger|
+    scene = battle.scene
+    battler = battle.battlers[idxBattler]
+    case trigger
+    #---------------------------------------------------------------------------
+    # Introduction text explaining the event.
+    when "BattlerStatusChange_POISON_player"
+      scene.pbStartSpeech(1)
+      battle.pbDisplayPaused(_INTL("Lo siento por utilizar tácticas que puedas considerar rastreras, espero que entiendas la gravedad de la situación"))
+      scene.pbForceEndSpeech
+    when "AfterLastSwitchIn_foe" # Antes de que saque a su último Pokémon.
+      scene.pbStartSpeech(1)
+      battle.pbDisplayPaused(_INTL("Así que has logrado ponerme contra las cuerdas, te aconsejo no bajar la guardia ahora."))
+      scene.pbForceEndSpeech
+    end
+  }
+)
+
+MidbattleHandlers.add(:midbattle_scripts, :combate_knekro,
+  proc { |battle, idxBattler, idxTarget, trigger|
+    scene = battle.scene
+    battler = battle.battlers[idxBattler]
+    case trigger
+    #---------------------------------------------------------------------------
+    # Introduction text explaining the event.
+    when "RoundStartCommand_1_player"
+      scene.pbStartSpeech(1)
+      battle.pbDisplayPaused(_INTL("No te enteras que soy el tercero del mundo, que soy mucho mejor que tú."))
+      scene.pbForceEndSpeech
+    when "UserDealtCriticalHit_foe"
+      scene.pbStartSpeech(1)
+      battle.pbDisplayPaused(_INTL("Jeje, goz."))
+      scene.pbForceEndSpeech
+    when "AfterSendOut_MEWTWO" # Antes de que saque a su último Pokémon.
+      scene.pbStartSpeech(1)
+      battle.pbDisplayPaused(_INTL("Me estoy empezando a calentar, prepárate que se viene."))
+      battle.pbDisplayPaused(_INTL("¡MEWTWO SHINY! lokete"))
+      scene.pbForceEndSpeech    
+      battle.pbDisplayPaused(_INTL("Mewtwo está demasiado viejo, le cuesta centrarse en la pelea."))      
+      battler.ability = :TRUANT
+    end
+  }
+)
 
 ################################################################################
 # Plays low HP music when the player's Pokemon reach critical health.

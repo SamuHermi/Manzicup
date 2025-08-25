@@ -1,4 +1,4 @@
-﻿# See the documentation on the wiki to learn how to edit this file.
+﻿# Consulta la documentación en la wiki para aprender cómo editar este archivo.
 #-------------------------------
 [0]
 StartMoney = 0
@@ -16,70 +16,118 @@ BicycleBGM = Bicycle
 TrainerType = HERMI
 WalkCharset = trainer_HERMI.png
 RunCharset = trainer_HERMI.png
+CycleCharset = trainer_HERMI.png
 SurfCharset = Surf_HERMI.png
+DiveCharset = Surf_HERMI.png
+FishCharset = trainer_HERMI.png
+SurfFishCharset = trainer_HERMI.png
 #-------------------------------
 [2]
 TrainerType = IRIA
 WalkCharset = trainer_IRIA.png
 RunCharset = trainer_IRIA.png
+CycleCharset = trainer_IRIA.png
 SurfCharset = Surf_IRIA.png
+DiveCharset = Surf_IRIA.png
+FishCharset = trainer_IRIA.png
+SurfFishCharset = trainer_IRIA.png
 #-------------------------------
 [3]
 TrainerType = JESS
 WalkCharset = trainer_JESS.png
 RunCharset = trainer_JESS.png
+CycleCharset = trainer_JESS.png
 SurfCharset = Surf.png
+DiveCharset = Surf.png
+FishCharset = trainer_JESS.png
+SurfFishCharset = trainer_JESS.png
 #-------------------------------
 [4]
 TrainerType = BRAIS
 WalkCharset = trainer_BRAIS.png
 RunCharset = trainer_BRAIS.png
+CycleCharset = trainer_BRAIS.png
 SurfCharset = Surf_BRAIS.png
+DiveCharset = Surf_BRAIS.png
+FishCharset = trainer_BRAIS.png
+SurfFishCharset = trainer_BRAIS.png
 #-------------------------------
 [5]
 TrainerType = ISA
 WalkCharset = trainer_ISA.png
 RunCharset = trainer_ISA.png
+CycleCharset = trainer_ISA.png
 SurfCharset = Surf_ISA.png
+DiveCharset = Surf_ISA.png
+FishCharset = trainer_ISA.png
+SurfFishCharset = trainer_ISA.png
 #-------------------------------
 [6]
 TrainerType = SAMER
 WalkCharset = trainer_SAMER.png
 RunCharset = trainer_SAMER.png
+CycleCharset = trainer_SAMER.png
 SurfCharset = Surf_SAMER.png
+DiveCharset = Surf_SAMER.png
+FishCharset = trainer_SAMER.png
+SurfFishCharset = trainer_SAMER.png
 #-------------------------------
 [7]
 TrainerType = RODRI
 WalkCharset = trainer_RODRI.png
 RunCharset = trainer_RODRI.png
+CycleCharset = trainer_RODRI.png
 SurfCharset = Surf_RODRI.png
+DiveCharset = Surf_RODRI.png
+FishCharset = trainer_RODRI.png
+SurfFishCharset = trainer_RODRI.png
 #-------------------------------
 [8]
 TrainerType = BRA
 WalkCharset = trainer_BRA.png
 RunCharset = trainer_BRA.png
+CycleCharset = trainer_BRA.png
 SurfCharset = Surf_BRA.png
+DiveCharset = Surf_BRA.png
+FishCharset = trainer_BRA.png
+SurfFishCharset = trainer_BRA.png
 #-------------------------------
 [9]
 TrainerType = ANA
 WalkCharset = trainer_ANA.png
 RunCharset = trainer_ANA.png
+CycleCharset = trainer_ANA.png
 SurfCharset = Surf_ANA.png
+DiveCharset = Surf_ANA.png
+FishCharset = trainer_ANA.png
+SurfFishCharset = trainer_ANA.png
 #-------------------------------
 [10]
 TrainerType = PABLO
 WalkCharset = trainer_PABLO.png
 RunCharset = trainer_PABLO.png
+CycleCharset = trainer_PABLO.png
 SurfCharset = Surf_PABLO.png
+DiveCharset = Surf_PABLO.png
+FishCharset = trainer_PABLO.png
+SurfFishCharset = trainer_PABLO.png
 #-------------------------------
 [11]
 TrainerType = SABO
 WalkCharset = trainer_SABO.png
 RunCharset = trainer_SABO.png
+CycleCharset = trainer_SABO.png
 SurfCharset = Surf_SABO.png
+DiveCharset = Surf_SABO.png
+FishCharset = trainer_SABO.png
+SurfFishCharset = trainer_SABO.png
 #-------------------------------
 [12]
 TrainerType = NEREA
 WalkCharset = trainer_NEREA.png
 RunCharset = trainer_NEREA.png
+CycleCharset = trainer_NEREA.png
 SurfCharset = Surf_NEREA.png
+DiveCharset = Surf_NEREA.png
+FishCharset = trainer_NEREA.png
+SurfFishCharset = trainer_NEREA.png

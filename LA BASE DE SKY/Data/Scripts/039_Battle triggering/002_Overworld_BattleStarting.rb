@@ -313,6 +313,7 @@ module BattleCreationHelperMethods
       pkmn.statusCount = 0 if pkmn.status == :POISON   # Bad poison becomes regular
       pkmn.makeUnmega
       pkmn.makeUnprimal
+      pkmn.makeUnmanzi
     end
     if $PokemonGlobal.partner
       #$player.heal_party
@@ -326,6 +327,7 @@ module BattleCreationHelperMethods
         #pkmn.heal
         pkmn.makeUnmega
         pkmn.makeUnprimal
+        pkmn.makeUnmanzi
       end
     end
     if [2, 5].include?(outcome) && can_lose   # if loss or draw

@@ -73,12 +73,14 @@ def pbOrganizedBattleEx(opponent, challengedata)
     pkmn.heal
     pkmn.makeUnmega
     pkmn.makeUnprimal
+    pkmn.makeUnmanzi
     pkmn.item = olditems[i]
   end
   opponent.party.each_with_index do |pkmn, i|
     pkmn.heal
     pkmn.makeUnmega
     pkmn.makeUnprimal
+    pkmn.makeUnmanzi
     pkmn.item = olditems2[i]
   end
   # Save the record of the battle

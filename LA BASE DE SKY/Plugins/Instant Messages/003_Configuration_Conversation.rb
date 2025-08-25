@@ -62,6 +62,15 @@ GameData::InstantMessageConversation.register({
 })
 
 GameData::InstantMessageConversation.register({
+    :id             => :ADVERTISEMENT_RANDOM_2,
+    :group          => :JORDIWILD,
+    :instant        => true,
+    :messages       => [
+                        [1, :Text, _INTL("¿Ni dos besos ni nada?")]
+                    ]
+})
+
+GameData::InstantMessageConversation.register({
     :id             => :ADVERTISEMENT_RANDOM_3,
     :group          => :PAPISWOLIO,
     :instant        => true,
@@ -153,7 +162,56 @@ GameData::InstantMessageConversation.register({
 })
 
 GameData::InstantMessageConversation.register({
-    :id             => :UNLOCK_1,
+    :id             => :UNLOCK_2,
+    :group          => :BRAIS,
+    :important      => true,
+    :messages       => [
+                        [1,  :Text, _INTL("Una pregunta, ¿Te suena el nombre de Eldar?.")],
+                        [0, :Text,  _INTL("Era el personaje de Iria en la partida de rol")],
+                        [1,  :Text, _INTL("Ah, el pijo, pues se acaba de pasar la base y dijo que te estaba buscando")],
+                        [1,  :Text, _INTL("Se metió en la sala de abajo a la izquierda, no le hagas esperar demasiado que igual se altera")]
+    ]       
+})
+
+GameData::InstantMessageConversation.register({
+    :id             => :UNLOCK_2_NO_ROL,
+    :group          => :BRAIS,
+    :important      => true,
+    :messages       => [
+                        [1,  :Text, _INTL("Una pregunta, ¿Te suena el nombre de Eldar?.")],
+                        [0,  :Text, _INTL("Para nada")],
+                        [1,  :Text, _INTL("Coño, ya sé quien es, el personaje de Iria en la partida de rol de Hermi")],
+                        [1,  :Text, _INTL("Pues se acaba de pasar la base y dijo que te estaba buscando, no sé porqué a tí en concreto")],
+                        [1,  :Text, _INTL("Se metió en la sala de abajo a la izquierda, no le hagas esperar demasiado que igual se altera")]
+    ]       
+})
+
+GameData::InstantMessageConversation.register({
+    :id             => :UNLOCK_2_IRIA,
+    :group          => :BRAIS,
+    :important      => true,
+    :messages       => [
+                        [1,  :Text, _INTL("Una pregunta, ¿Te suena el nombre de Eldar?.")],
+                        [0, :Text,  _INTL("Era uno de mis personajes en la partida de rol de Samu")],
+                        [1,  :Text, _INTL("Ah, el pijo, pues se acaba de pasar la base y dijo que te estaba buscando")],
+                        [1,  :Text, _INTL("Se metió en la sala de abajo a la izquierda, si no me crees vete a ver")]
+    ]       
+})
+
+GameData::InstantMessageConversation.register({
+    :id             => :UNLOCK_2_BRAIS,
+    :group          => :NEREA,
+    :important      => true,
+    :messages       => [
+                        [1,  :Text, _INTL("Acaba de pasar por aquí un chico que iba vestido un poco raro")],
+                        [1, :Text,  _INTL("Decía que se llamaba Eldar, y estaba buscándote a ti")],
+                        [1, :Text,  _INTL("¿Te suena de algo? Si no, mándalo a tomar por culo, jajaja.")],
+                        [1,  :Text, _INTL("Se metió en la sala de abajo a la izquierda, si no me crees vete a ver")]
+    ]       
+})
+
+GameData::InstantMessageConversation.register({
+    :id             => :UNLOCK_3,
     :group          => :BRAIS,
     :important      => true,
     :messages       => [
@@ -162,3 +220,4 @@ GameData::InstantMessageConversation.register({
                         [1,  :Text, _INTL("Así que cuando puedas échale un ojo")]
     ]       
 })
+

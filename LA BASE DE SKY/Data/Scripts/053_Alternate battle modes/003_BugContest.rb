@@ -303,6 +303,7 @@ def pbBugContestStartOver
     pkmn.heal
     pkmn.makeUnmega
     pkmn.makeUnprimal
+    pkmn.makeUnmanzi
   end
   pbBugContestState.pbStartJudging
 end

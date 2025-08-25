@@ -88,6 +88,7 @@ class Battle
   end
 
   def pbCanMegaEvolve?(idxBattler)
+    #Console.echo_li("Cuack")
     return false if $game_switches[Settings::NO_MEGA_EVOLUTION]
     return false if !@battlers[idxBattler].hasMega?
     #return false if @battlers[idxBattler].wild?
@@ -179,21 +180,21 @@ class Battle
     battler = @battlers[idxBattler]
     return if !battler || !battler.pokemon || battler.fainted?
     return if !battler.hasPrimal? || battler.primal?
-    if battler.isSpecies?(:KYOGRE)
-      pbCommonAnimation("PrimalKyogre", battler)
-    elsif battler.isSpecies?(:GROUDON)
-      pbCommonAnimation("PrimalGroudon", battler)
-    end
+    #if battler.isSpecies?(:KYOGRE)
+    #  pbCommonAnimation("PrimalKyogre", battler)
+    #elsif battler.isSpecies?(:GROUDON)
+    #  pbCommonAnimation("PrimalGroudon", battler)
+    #end
     battler.pokemon.makePrimal
     battler.form = battler.pokemon.form
     battler.pbUpdate(true)
     @scene.pbChangePokemon(battler, battler.pokemon)
     @scene.pbRefreshOne(idxBattler)
-    if battler.isSpecies?(:KYOGRE)
-      pbCommonAnimation("PrimalKyogre2", battler)
-    elsif battler.isSpecies?(:GROUDON)
-      pbCommonAnimation("PrimalGroudon2", battler)
-    end
+    #if battler.isSpecies?(:KYOGRE)
+    #  pbCommonAnimation("PrimalKyogre2", battler)
+    #elsif battler.isSpecies?(:GROUDON)
+    #  pbCommonAnimation("PrimalGroudon2", battler)
+    #end
     pbDisplay(_INTL("¡{1} ha experimentado una Regresión Primigenea y ha recobrado su apariencia primitiva!", battler.pbThis))
   end
 end

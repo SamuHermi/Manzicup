@@ -414,6 +414,7 @@ BattleBack = city
 #-------------------------------
 [076]   # Cueva
 Name = Cueva
+SnapEdges = true
 Dungeon = true
 BattleBack = cave1
 #-------------------------------
@@ -430,6 +431,7 @@ Environment = MovingWater
 Name = Volcán
 Outdoor = true
 Weather = Sun,100
+SnapEdges = true
 Dungeon = true
 BattleBack = rocky
 WildBattleBGM = Battle Hell
@@ -465,6 +467,9 @@ SnapEdges = true
 Name = Criadero
 SnapEdges = true
 #-------------------------------
+[088]   # Gimnasio Genshin
+SnapEdges = true
+#-------------------------------
 [089]   # Gimnasio AmongUs
 Name = Gimnasio AmongUs
 SnapEdges = true
@@ -488,6 +493,7 @@ BattleBack = indoor1
 #-------------------------------
 [096]   # Campo
 Name = Campo
+SnapEdges = true
 Dungeon = true
 BattleBack = field
 #-------------------------------
@@ -501,15 +507,20 @@ WildBattleBGM = Battle labo
 [099]   # Colonipenal
 Name = Colonipenal
 SnapEdges = true
+BattleBack = elite6
+#-------------------------------
+[100]   # Estudio de Kinzo
+Name = Estudio de Kinzo
+BattleBack = elite7
 #-------------------------------
 [102]   # Cárcel
 Name = Cárcel
-BattleBack = labo
+BattleBack = elite3
 #-------------------------------
 [103]   # Babatundra
 Name = Babatundra
 SnapEdges = true
-BattleBack = swamp
+BattleBack = elite5
 #-------------------------------
 [104]   # Sauna
 Name = Sauna
@@ -519,7 +530,7 @@ BattleBack = field
 [105]   # Cueva de la sierpe
 Name = Cueva de la sierpe
 SnapEdges = true
-BattleBack = cave1
+BattleBack = elite2
 #-------------------------------
 [106]   # La niña
 Name = La niña
@@ -529,6 +540,7 @@ BattleBack = water
 [107]   # Granja
 Name = Granja
 SnapEdges = true
+BattleBack = elite4
 #-------------------------------
 [108]   # Churruca
 Name = Churruca
@@ -547,3 +559,8 @@ SnapEdges = true
 [111]   # Velvet Room
 Name = Velvet Room
 BattleBack = velvet
+#-------------------------------
+[112]   # Gimnasio Coliseo
+Name = Gimnasio Coliseo
+SnapEdges = true
+WildBattleBGM = Roar_Rathalos

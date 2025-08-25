@@ -213,6 +213,7 @@ module Battle::CatchAndStoreMixin
   def pbStorePokemon(pkmn)
     pkmn.makeUnmega
     pkmn.makeUnprimal
+    pkmn.makeUnmanzi
     pkmn.makeUnUltra if pkmn.ultra?
     pkmn.dynamax       = false if pkmn.dynamax?
     pkmn.terastallized = false if pkmn.tera?

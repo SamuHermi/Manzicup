@@ -105,6 +105,12 @@ class Battle
       #       from Gen 1, i.e. Exp isn't split between all Pokémon gaining it.
       exp = a / 2
     end
+    exp *= (1 + $bag.quantity(:EXPCHARM)) / 2
+    exp = exp.floor
+    Console.echo_li("EXP")
+    if bond_rate = $player.active_bond_effect?(:EXP, pkmn)
+      exp *= bond_rate
+    end
     return 0 if exp <= 0
     # Pokémon gain more Exp from trainer battles
     exp = (exp * 1.5).floor if trainerBattle?
@@ -166,6 +172,32 @@ class Battle
     end
     # Actual adding of exp
     pkmn.exp = pkmn.exp + expGained
+    #Console.echo_li("Cuack")
+    evpool=80+pkmn.level*8
+    
+    evpool=(evpool.div(4))*4      
+    evpool=512 if evpool>512 
+    evcap=40+pkmn.level*4
+    evcap=(evcap.div(4))*4
+    evcap=252 if evcap>252
+    evsum=pkmn.ev[:HP]+pkmn.ev[:ATTACK]+pkmn.ev[:DEFENSE]+pkmn.ev[:SPECIAL_DEFENSE]+pkmn.ev[:SPEED]
+    evsum+=pkmn.ev[:SPECIAL_ATTACK] if Settings::PURIST_MODE
+    Console.echo_li(pkmn.name + ": " + pkmn.level.to_s + " - " + evpool.to_s + "/" + evcap.to_s)
+    #EV_LIMIT = evpool
+    evarray=[]
+    GameData::Stat.each_main do |s|
+      evarray.push(pkmn.ev[s.id])
+    end
+    GameData::Stat.each_main do |s|
+      #if pkmn.ev[s.id]==evarray.max
+      Console.echo_li(s.id.to_s + ": " + pkmn.ev[s.id].to_s + "*" + (1+pkmn.ev[s.id].to_f/evcap).to_s)
+      pkmn.ev[s.id] = ((pkmn.ev[s.id] * (1+pkmn.ev[s.id].to_f/evcap)) / 4).floor * 4#while pkmn.ev[s.id]<evcap && 
+      #end
+      pkmn.ev[s.id] = evcap if pkmn.ev[s.id]>evcap
+      evsum=pkmn.ev[:HP]+pkmn.ev[:ATTACK]+pkmn.ev[:DEFENSE]+pkmn.ev[:SPECIAL_DEFENSE]+pkmn.ev[:SPEED]
+      Console.echo_li(evpool.to_s + " " + evsum.to_s)
+      break if evpool<evsum+4
+    end	
     pkmn.calc_stats
     battler&.pbUpdate(false)
     @scene.pbRefreshOne(battler.index) if battler

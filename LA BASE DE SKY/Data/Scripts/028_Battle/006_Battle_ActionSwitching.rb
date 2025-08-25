@@ -56,7 +56,7 @@ class Battle
     allOtherSideBattlers(idxBattler).each do |b|
       next if !b.abilityActive?
       if Battle::AbilityEffects.triggerTrappingByTarget(b.ability, battler, b, self)
-        partyScene&.pbDisplay(_INTL("¡{1} de {2} previene el cambio!", b.pbThis, b.abilityName))
+        partyScene&.pbDisplay(_INTL("¡{1} de {2} previene el cambio!",b.abilityName , b.pbThis))
         return false
       end
     end
@@ -360,6 +360,7 @@ class Battle
       b.pbCheckForm
       # Primal Revert upon entering battle
       pbPrimalReversion(b.index)
+      pbManziform(b.index)
       # Ending primordial weather, checking Trace
       b.pbContinualAbilityChecks(true)
       # Abilities that trigger upon switching in

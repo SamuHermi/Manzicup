@@ -3,6 +3,7 @@ class Battle
   # Gaining Experience
   #=============================================================================
   def pbGainExp
+    mixed_ev_alloc_pbGainExpOne
     # Play wild victory music if it's the end of the battle (has to be here)
     @scene.pbWildBattleSuccess if wildBattle? && pbAllFainted?(1) && !pbAllFainted?(0)
     return if !@internalBattle || !@expGain
@@ -150,10 +151,6 @@ class Battle
       end
     end
     # Exp. Charm increases Exp gained
-    exp = exp * (1 + $bag.quantity(:EXPCHARM)) / 2
-    if bond_rate = $player.active_bond_effect?(:EXP, pkmn)
-      exp = (exp * bond_rate).floor
-    end
     # Modify Exp gain based on pkmn's held item
     i = Battle::ItemEffects.triggerExpGainModifier(pkmn.item, pkmn, exp)
     if i < 0

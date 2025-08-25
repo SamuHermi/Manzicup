@@ -13,7 +13,7 @@ module GameData
     def has_special_form?
       return true if @mega_stone || @mega_move
       return true if defined?(@gmax_move) && @gmax_move
-      ["getPrimalForm", "getUltraForm", "getEternamaxForm", "getTerastalForm"].each do |function|
+      ["getPrimalForm", "getUltraForm", "getEternamaxForm", "getTerastalForm", "getManziForm"].each do |function|
         return true if MultipleForms.hasFunction?(@species, function)
       end
       return false
@@ -183,6 +183,7 @@ class Battle::Battler
   def getActiveState
     return :mega      if mega?
     return :primal    if primal?
+    #return :manzi     if manzi?
     return :ultra     if ultra?
     return :dynamax   if dynamax?
     return :style     if style?
@@ -196,6 +197,7 @@ class Battle::Battler
       case arg
       when :mega    then return true if hasMega?    && @battle.pbHasMegaRing?(@index)
       when :primal  then return true if hasPrimal?
+      when :manzi  then return true if hasManzi?
       when :zmove   then return true if hasZMove?   && @battle.pbHasZRing?(@index)
       when :ultra   then return true if hasUltra?   && @battle.pbHasZRing?(@index)
       when :dynamax then return true if hasDynamax? && @battle.pbHasDynamaxBand?(@index)

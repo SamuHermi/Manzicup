@@ -1,0 +1,4 @@
+Name = Radical Red Ability Pack
+Version = 1.2.0
+Essentials = 21.1
+Credits = soupercell, komeiji514

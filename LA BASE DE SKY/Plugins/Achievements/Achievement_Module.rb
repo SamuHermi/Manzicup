@@ -142,7 +142,7 @@ module Achievements
       "description"=>"Derrota a Mermi en Colonipenal.",
       "goals"=>[1]       
     },    
-    "BABATUNDRA"=>{
+    "BABATUNDE"=>{
       "id"=>22,
       "name"=>"Larga vida al rey",
       "description"=>"Derrota a Babatunde en Babatundra.",

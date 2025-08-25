@@ -548,20 +548,21 @@ class Battle::Scene::Animation
     spriteTRAINER = @pictureEx.length - 1
     @pictureSprites[spriteTRAINER].y = 270
     offsetX = @pictureSprites[spriteTRAINER].bitmap.width / 2
-    offsetX += ((base_width - @pictureSprites[spriteTRAINER].bitmap.width) / 2).floor
+    offsetX += ((base_width - @pictureSprites[spriteTRAINER].bitmap.width) ).floor
     delta = (base_width.to_f * 0.75).to_i
     if mirror
       @pictureSprites[spriteTRAINER].mirror = true
-      @pictureSprites[spriteTRAINER].x = -offsetX
+      @pictureSprites[spriteTRAINER].x = -offsetX*2
       trainer_end_x = @pictureSprites[spriteTRAINER].x + delta
     else
-      @pictureSprites[spriteTRAINER].x = Graphics.width + offsetX
+      @pictureSprites[spriteTRAINER].x = Graphics.width + 2*offsetX
       trainer_end_x = @pictureSprites[spriteTRAINER].x - delta
     end
     @pictureSprites[spriteTRAINER].z = 999
     trainer_x, trainer_y = @pictureSprites[spriteTRAINER].x, @pictureSprites[spriteTRAINER].y
     pictureTRAINER.setXY(delay, trainer_x, trainer_y)
     pictureTRAINER.setZ(delay, @pictureSprites[spriteTRAINER].z)
+    return pictureTRAINER if item == nil
     pictureITEM = []
     for i in [ [2, 0], [-2, 0], [0, 2], [0, -2], [2, 2], [-2, -2], [2, -2], [-2, 2], [0, 0] ]
       outline = addNewSprite(0, 0, item, PictureOrigin::BOTTOM)
