@@ -277,6 +277,7 @@ class Battle
   end
 
   def pbStartBattleCore
+    setBattleRule("databoxStyle", :Basic)
     # Set up the battlers on each side
     sendOuts = pbSetUpSides
     @battleAI.create_ai_objects
@@ -286,7 +287,7 @@ class Battle
     pbStartBattleSendOut(sendOuts)
     # Weather announcement
     weather_data = GameData::BattleWeather.try_get(@field.weather)
-    pbCommonAnimation(weather_data.animation) if weather_data
+    #pbCommonAnimation(weather_data.animation) if weather_data
     case @field.weather
     when :Sun         then pbDisplay(_INTL("¡El sol pega fuerte!"))
     when :Rain        then pbDisplay(_INTL("¡Ha empezado a llover!"))

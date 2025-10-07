@@ -454,6 +454,8 @@ module Settings
   SCREEN_WIDTH  = 640#512
   # El ALTO de la pantalla en píxelex (en escala 1.0).
   SCREEN_HEIGHT = 440#384
+  DELTAX = 128
+  DELTAY = 54
   # El tamaño de la pantalla por defecto. 
   #   * Posibles valores: 0.5, 1.0, 1.5 y 2.0.
   SCREEN_SCALE  = 1.0

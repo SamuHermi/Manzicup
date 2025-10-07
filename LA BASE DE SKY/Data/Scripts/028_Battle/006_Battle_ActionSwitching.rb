@@ -463,6 +463,7 @@ class Battle
       if battler.pbHasType?(:POISON)
         battler_side.effects[PBEffects::ToxicSpikes] = 0
         pbDisplay(_INTL("¡Las púas tóxicas lanzadas a {1} han desaparecido!", battler.pbThis))
+        @scene.pbUpdateHazardSprites if @scene.respond_to?(:pbUpdateHazardSprites)
       elsif battler.pbCanPoison?(nil, false) && !battler.hasActiveItem?(:HEAVYDUTYBOOTS)
         if battler_side.effects[PBEffects::ToxicSpikes] == 2
           battler.pbPoison(nil, _INTL("¡{1} ha sido envenenado por las púas tóxicas!", battler.pbThis), true)

@@ -55,14 +55,15 @@ class DungeonState
           coins_obtained = 0
         end
         $game_switches[RandomizedChallenge::Switch] = false
+        if($game_variables[101] < 2)
         pbMessage("\\w[]\\wm\\c[13]\\l[3]" +
-        _INTL("Todo tu dinero se ha convertido en monedas.\nHas conseguido {1} monedas",coins_obtained))  
-        $player.battle_points += coins_obtained
-        $player.money = 0
-        $bag.remove_non_important()
-        pbMessage("\\w[]\\wm\\c[13]\\l[3]" +
-        _INTL("Has perdido todos los objetos"))  
-      
+          _INTL("Todo tu dinero se ha convertido en monedas.\nHas conseguido {1} monedas",coins_obtained))  
+          $player.battle_points += coins_obtained
+          $player.money = 0
+          $bag.remove_non_important()
+          pbMessage("\\w[]\\wm\\c[13]\\l[3]" +
+          _INTL("Has perdido todos los objetos"))  
+        end
       pbEnd
     end
     
@@ -108,7 +109,13 @@ class DungeonState
               $game_self_switches[[$game_map.map_id, event.id, "A"]] = false    
               @objects_on += 1       
             end
-          end          
+          end
+          if event.name[/Den/i]       
+            $game_self_switches[[$game_map.map_id, event.id, "A"]] = true   
+            if prob >= 1
+              $game_self_switches[[$game_map.map_id, event.id, "A"]] = false       
+            end
+          end   
         end
         $game_map.need_refresh = true
         

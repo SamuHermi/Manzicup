@@ -88,6 +88,7 @@ class Battle
     level = defeatedBattler.level
     # Main Exp calculation
     exp = 0
+    #Console.echo_li("Calculando exp " + defeatedBattler.pokemon.base_exp.to_s + " - " + level.to_s + " - " + pkmn.level.to_s)
     a   = level * defeatedBattler.pokemon.base_exp
     if expShare.length > 0 && (isPartic || hasExpShare)
       if numPartic == 0   # No participants, all Exp goes to Exp Share holders
@@ -105,9 +106,9 @@ class Battle
       #       from Gen 1, i.e. Exp isn't split between all Pokémon gaining it.
       exp = a / 2
     end
-    exp *= (1 + $bag.quantity(:EXPCHARM)) / 2
-    exp = exp.floor
-    Console.echo_li("EXP")
+
+    exp *= (1 + ($bag.quantity(:EXPCHARM) / 6)).ceil
+
     if bond_rate = $player.active_bond_effect?(:EXP, pkmn)
       exp *= bond_rate
     end
@@ -126,6 +127,7 @@ class Battle
     else
       exp /= 7
     end
+    
     # Foreign Pokémon gain more Exp
     isOutsider = (pkmn.owner.id != pbPlayer.id ||
                   (pkmn.owner.language != 0 && pkmn.owner.language != pbPlayer.language))
@@ -137,10 +139,6 @@ class Battle
       end
     end
     # Exp. Charm increases Exp gained
-    exp = exp * (1 + $bag.quantity(:EXPCHARM)) / 2
-    if bond_rate = $player.active_bond_effect?(:EXP, pkmn)
-      exp = (exp * bond_rate).floor
-    end
     # Modify Exp gain based on pkmn's held item
     i = Battle::ItemEffects.triggerExpGainModifier(pkmn.item, pkmn, exp)
     if i < 0
@@ -155,6 +153,7 @@ class Battle
     # Make sure Exp doesn't exceed the maximum
     expFinal = growth_rate.add_exp(pkmn.exp, exp)
     expGained = expFinal - pkmn.exp
+    Console.echo_li("Experiencia ganada_ " + expGained.to_s )
     return 0 if expGained <= 0
     return expGained
   end

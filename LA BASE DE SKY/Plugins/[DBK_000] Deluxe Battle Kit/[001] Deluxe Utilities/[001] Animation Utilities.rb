@@ -112,16 +112,15 @@ class Battle::Scene
   #-----------------------------------------------------------------------------
   # Used for refreshing the entire battle scene with a white flash effect.
   #-----------------------------------------------------------------------------
-  def pbFlashRefresh(flash = true)
+  def pbFlashRefresh
     pbForceEndSpeech
     timer_start = System.uptime
     loop do
       Graphics.update
       pbUpdate
       tone = lerp(0, 255, 0.7, timer_start, System.uptime)
-      @viewport.tone.set(tone, tone, tone, 0) if flash
+      @viewport.tone.set(tone, tone, tone, 0)
       break if tone >= 255
-      break if !flash
     end
     pbRefreshEverything
     timer_start = System.uptime
@@ -129,51 +128,16 @@ class Battle::Scene
       Graphics.update
       pbUpdate
       break if System.uptime - timer_start >= 0.25
-      break if !flash
     end
     timer_start = System.uptime
     loop do
       Graphics.update
       pbUpdate
       tone = lerp(255, 0, 0.4, timer_start, System.uptime)
-      @viewport.tone.set(tone, tone, tone, 0) if flash
+      @viewport.tone.set(tone, tone, tone, 0)
       break if tone <= 0
-      break if !flash
     end
   end
-
-
-  def pbFlashBlackRefresh(flash = true)
-    pbForceEndSpeech
-    timer_start = System.uptime
-    loop do
-      Graphics.update
-      pbUpdate
-      tone = lerp(0, -255, 0.3, timer_start, System.uptime)
-      @viewport.tone.set(tone, tone, tone, 0) if flash
-      break if tone <= -255
-      break if !flash
-    end
-    pbRefreshEverything
-    timer_start = System.uptime
-    loop do
-      Graphics.update
-      pbUpdate
-      break if System.uptime - timer_start >= 0.25
-      break if !flash
-    end
-    timer_start = System.uptime
-    loop do
-      Graphics.update
-      pbUpdate
-      tone = lerp(-255, 0, 0.3, timer_start, System.uptime)
-      @viewport.tone.set(tone, tone, tone, 0) if flash
-      break if tone >= 0
-      break if !flash
-    end
-  end
-
-
   
   #-----------------------------------------------------------------------------
   # Utility for pausing further scene processing for a given number of seconds.
@@ -444,19 +408,23 @@ class Battle::Scene::Animation
     battleBG = addSprite(@sprites["battle_bg"])
     battleBG.moveTone(delay, 4, tone)
     battle.allBattlers.each do |b|
-      battler = addSprite(@sprites["pokemon_#{b.index}"], PictureOrigin::BOTTOM)
-      box = addSprite(@sprites["dataBox_#{b.index}"])
-      if !PluginManager.installed?("[DBK] Animated Pokémon System")
-        shadow = addSprite(@sprites["shadow_#{b.index}"], PictureOrigin::CENTER)
-        shadow.moveTone(delay, 4, tone)
+      if @sprites["pokemon_#{b.index}"].visible
+        battler = addSprite(@sprites["pokemon_#{b.index}"], PictureOrigin::BOTTOM)
+        if !PluginManager.installed?("[DBK] Animated Pokémon System")
+          shadow = addSprite(@sprites["shadow_#{b.index}"], PictureOrigin::CENTER)
+          shadow.moveTone(delay, 4, tone)
+        end
+        if b.index == idxBattler
+          battler.setSE(delay, sound) if sound
+          battler.moveTone(delay, 4, Tone.new(255, 255, 255, 255))
+        else
+          battler.moveTone(delay, 4, tone)
+        end
       end
-      if b.index == idxBattler
-        battler.setSE(delay, sound) if sound
-        battler.moveTone(delay, 4, Tone.new(255, 255, 255, 255))
-      else
-        battler.moveTone(delay, 4, tone)
+      if @sprites["dataBox_#{b.index}"].visible
+        box = addSprite(@sprites["dataBox_#{b.index}"])
+        box.moveTone(delay, 4, tone)
       end
-      box.moveTone(delay, 4, tone)
     end
   end
   
@@ -468,16 +436,20 @@ class Battle::Scene::Animation
     battleBG = addSprite(@sprites["battle_bg"])
     battleBG.moveTone(delay, 6, tone)
     battle.allBattlers.each do |b|
-      battler = addSprite(@sprites["pokemon_#{b.index}"], PictureOrigin::BOTTOM)
-      box = addSprite(@sprites["dataBox_#{b.index}"])
-      if !PluginManager.installed?("[DBK] Animated Pokémon System")
-        shadow = addSprite(@sprites["shadow_#{b.index}"], PictureOrigin::CENTER)
-        shadow.moveOpacity(delay, 6, 255)
-        shadow.moveTone(delay, 6, tone)
+      if @sprites["pokemon_#{b.index}"].visible
+        battler = addSprite(@sprites["pokemon_#{b.index}"], PictureOrigin::BOTTOM)
+        battler.moveOpacity(delay, 6, 255)
+        battler.moveTone(delay, 6, tone) 
+        if !PluginManager.installed?("[DBK] Animated Pokémon System")
+          shadow = addSprite(@sprites["shadow_#{b.index}"], PictureOrigin::CENTER)
+          shadow.moveOpacity(delay, 6, 255)
+          shadow.moveTone(delay, 6, tone)
+        end
       end
-      battler.moveOpacity(delay, 6, 255)
-      battler.moveTone(delay, 6, tone)
-      box.moveTone(delay, 6, tone)
+      if @sprites["dataBox_#{b.index}"].visible
+        box = addSprite(@sprites["dataBox_#{b.index}"])
+        box.moveTone(delay, 6, tone)
+      end
     end
   end
   
@@ -537,8 +509,7 @@ class Battle::Scene::Animation
     pictureBASES.push(base)
     return [pictureBASES, @pictureSprites[sprite].bitmap.width]
   end
-
-
+  
   #-----------------------------------------------------------------------------
   # Sets up a trainer sprite along with an item sprite to be 'used'.
   #-----------------------------------------------------------------------------
@@ -563,6 +534,9 @@ class Battle::Scene::Animation
     pictureTRAINER.setXY(delay, trainer_x, trainer_y)
     pictureTRAINER.setZ(delay, @pictureSprites[spriteTRAINER].z)
     return pictureTRAINER if item == nil
+    if defined?(@pictureSprites[spriteTRAINER].to_last_frame)
+      @pictureSprites[spriteTRAINER].to_last_frame
+    end
     pictureITEM = []
     for i in [ [2, 0], [-2, 0], [0, 2], [0, -2], [2, 2], [-2, -2], [2, -2], [-2, 2], [0, 0] ]
       outline = addNewSprite(0, 0, item, PictureOrigin::BOTTOM)
@@ -580,7 +554,6 @@ class Battle::Scene::Animation
     end
     return [pictureTRAINER, pictureITEM]
   end
-
   
   #-----------------------------------------------------------------------------
   # Sets a Pokemon sprite.
@@ -651,7 +624,6 @@ class Battle::Scene::Animation
     return if !alter_bitmap_function
     sprite.setPokemonBitmap(pkmn)
   end
-  
   
   #-----------------------------------------------------------------------------
   # Sets a sprite.

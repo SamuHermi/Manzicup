@@ -56,13 +56,19 @@ end
 #-------------------------------------------------------------------------------
 MidbattleHandlers.add(:midbattle_triggers, "setBattler",
   proc { |battle, idxBattler, idxTarget, params|
-    idxBattler = 0 if idxBattler.nil?
-    idxTarget  = 1 if idxTarget.nil?
+    idxBattler = 0 if idxBattler.nil? || !battle.battlers[idxBattler]
     default_battler = battle.battlers[idxBattler]
-    default_battler = battle.allSameSideBattlers(idxBattler).first if !default_battler || default_battler.fainted?
-    default_target  = battle.battlers[idxTarget]
-    default_target  = battle.allSameSideBattlers(idxTarget).first if !default_target || default_target.fainted?
-    default_target  = default_battler.pbDirectOpposing(true) if default_target.index == default_battler.index
+    if default_battler.fainted?
+      side = battle.allSameSideBattlers(idxBattler)
+      default_battler = side.first if !side.empty?
+    end
+    idxTarget = 1 if idxTarget.nil? || !battle.battlers[idxTarget]
+    default_target = battle.battlers[idxTarget]
+    if default_target.fainted?
+      side = battle.allSameSideBattlers(idxTarget)
+      default_target = side.first if !side.empty?
+    end
+    default_target = default_battler.pbDirectOpposing(true) if default_target.index == default_battler.index
     case params
     when Integer        then targ = battle.battlers[params] || default_battler
     when :Self          then targ = default_battler
@@ -337,11 +343,9 @@ MidbattleHandlers.add(:midbattle_triggers, "playCry",
       next if !battle.battlers[idx]
       battle.battlers[idx].displayPokemon.play_cry
       PBDebug.log("     'playCry': playing #{battle.battlers[idx].name}'s cry")
-      
     else
       GameData::Species.play_cry(params)
       PBDebug.log("     'playCry': playing cry for species #{GameData::Species.get(params).name}")
-      
     end
   }
 )
@@ -780,13 +784,14 @@ MidbattleHandlers.add(:midbattle_triggers, "battlerHP",
     else
       amt, msg = params, nil
     end
+    amt = (battler.totalhp * (amt / 100.0)).round
     lowercase = (msg && msg[0] == "{" && msg[1] == "1") ? false : true
     trainerName = (battler.wild?) ? "" : battle.pbGetOwnerName(battler.index)
     msg = _INTL("#{msg}", battler.pbThis(lowercase), trainerName) if msg
     old_hp = battler.hp
     if amt > 0
       PBDebug.log("     'battlerHP': restoring #{battler.name} (#{battler.index})'s HP by #{amt}%")
-	    battler.stopBoostedHPScaling = true
+      battler.stopBoostedHPScaling = true
       battler.pbRecoverHP(amt)
     elsif amt <= 0
       if amt == 0
@@ -995,7 +1000,7 @@ MidbattleHandlers.add(:midbattle_triggers, "battlerSpecies",
     battler.pbUpdate(true)
     battler.name = speciesName if !battler.pokemon.nicknamed?
     battle.scene.pbRefreshOne(idxBattler)
-    battler.mosaicChange = true if defined?(battler.mosaicChange)
+    battler.battlerSprite.prepare_mosaic = true if defined?(battler.battlerSprite)
     battle.scene.pbChangePokemon(battler, battler.pokemon)
     battle.pbDisplay(msg.gsub(/\\PN/i, battle.pbPlayer.name)) if msg.is_a?(String)
     battler.pbOnLosingAbility(old_ability)
@@ -1282,6 +1287,10 @@ MidbattleHandlers.add(:midbattle_triggers, "battlerEffects",
         battler.effects[effect] = value
         PBDebug.log("     'battlerEffects': #{battler.name} (#{battler.index})'s #{id} effect set to #{value}")
         battle.pbDisplay(_INTL(msg, battler_name)) if msg
+        if id == :SmackDown && value && defined?(battler.battlerSprite)
+          next if battler.battlerSprite.vanishMode != 2
+          battle.scene.pbChangePokemon(battler, battler.visiblePokemon, 0)
+        end
       elsif $DELUXE_PBEFFECTS[:battler][:counter].include?(id)
         next if battler.effects[effect] == 0 && value == 0
         case id
@@ -1351,6 +1360,31 @@ MidbattleHandlers.add(:midbattle_triggers, "battlerEffects",
         battle.pbDisplay(_INTL(msg, battler_name)) if msg
       end
     end
+  }
+)
+
+#-------------------------------------------------------------------------------
+# Sets the Wish effect on a battler's position.
+#-------------------------------------------------------------------------------
+MidbattleHandlers.add(:midbattle_triggers, "battlerWish",
+  proc { |battle, idxBattler, idxTarget, params|
+    battler = battle.battlers[idxBattler]
+    next if !battler || battle.decision > 0
+    next if battle.positions[idxBattler].effects[PBEffects::Wish] > 0
+    if params.is_a?(Array)
+      count, amount = *params
+    elsif params.is_a?(Integer)
+      count = params
+      amount = (battler.totalhp / 2.0).round
+    else
+      count = 2
+      amount = (battler.totalhp / 2.0).round
+    end
+    battle.positions[idxBattler].effects[PBEffects::Wish]       = count
+    battle.positions[idxBattler].effects[PBEffects::WishAmount] = amount
+    battle.positions[idxBattler].effects[PBEffects::WishMaker]  = battler.pokemonIndex
+    PBDebug.log("     'battlerWish': Wish effect to trigger in #{count} turns on #{battler.name} (#{battler.index})'s position")
+    battle.pbDisplay(_INTL("{1} made a wish!", battler.pbThis))
   }
 )
 
@@ -1483,6 +1517,10 @@ MidbattleHandlers.add(:midbattle_triggers, "fieldEffects",
                 showMessage = true
               end
               battle.pbDisplay(_INTL("{1} couldn't stay airborne because of gravity!", b.pbThis)) if showMessage
+              if defined?(b.battlerSprite)
+                next if b.battlerSprite.vanishMode != 2
+                battle.scene.pbChangePokemon(b, b.visiblePokemon, 0)
+              end
             end
           end
         else
@@ -1658,13 +1696,15 @@ MidbattleHandlers.add(:midbattle_triggers, "changeBackdrop",
 #-------------------------------------------------------------------------------
 MidbattleHandlers.add(:midbattle_triggers, "changeDataboxes",
   proc { |battle, idxBattler, idxTarget, params|
-    next if battle.decision > 0
-    old_style = battle.databoxStyle || :None
+    next if battle.decision > 0 || battle.raidBattle?
+    old_style = battle.databoxStyle
     old_style = old_style.first if old_style.is_a?(Array)
     style = (params.is_a?(Array)) ? params.first : params
-    next if battle.raidBattle? && !GameData::DataboxStyle.exists?(style)
+    next if style == old_style
+    next if !style.nil? && !GameData::DataboxStyle.exists?(style)
+    next if style.nil? && battle.battlers.any? { |b| b.hasRaidShield? }
     battle.scene.pbRefreshStyle(*params)
-    PBDebug.log("     'changeDataboxes': changed databox style (#{old_style}=>#{style})") if style != old_style
+    PBDebug.log("     'changeDataboxes': changed databox style (#{old_style}=>#{style})")
   }
 )
 

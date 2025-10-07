@@ -207,6 +207,7 @@ class PokemonEvolutionScene
     # Success jingle/message
     pbMEPlay("Evolution success")
     newspeciesname = GameData::Species.get(@newspecies).name
+    Achievements.incrementProgress("EVOLUTION",1)
     pbMessageDisplay(@sprites["msgwindow"],
                      "\\se[]" + _INTL("¡Enhorabuena! ¡Tu {1} evolucionó en {2}!",
                                       @pokemon.name, newspeciesname) + "\\wt[80]") { pbUpdate }

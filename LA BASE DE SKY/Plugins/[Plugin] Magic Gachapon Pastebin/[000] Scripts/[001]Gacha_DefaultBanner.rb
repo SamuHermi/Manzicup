@@ -60,7 +60,7 @@ def defaultBannerConfig
                 "descr" =>  "Banner que contiene bayas",
                 "cost" => 1
                 },                   
-      "banner_13" => {
+      "banner_14" => {
                 "type" => "mons",
                 "name" => "Lujo\nlegendario",
                 "bg" => "Graphics/UI/Gacha/Banners/legendario",
@@ -69,13 +69,23 @@ def defaultBannerConfig
                 "url" => "https://pastebin.com/raw/47j3sQ8n",
                 "descr" =>  "Banner que contiene Pokémon legendarios",
                 "cost" => 100
-              },
-      "banner_12" => {
+              },                
+      "banner_13" => {
                 "type" => "mons",
                 "name" => "Aspira a \nla gloria",
                 "bg" => "Graphics/UI/Gacha/Banners/pseudolegendario",
                 "rewards" => ["Graphics/Pokemon/Front/DRAGONITE","Graphics/Pokemon/Front/TYRANITAR_1","Graphics/Pokemon/Front/HYDREIGON"],
                 "stars" => [4, 5, 4],
+                "url" => "https://pastebin.com/raw/MUJL20xL",
+                "descr" =>  "Banner que contiene Pokémon pseudolegendarios",
+                "cost" => 10
+              },
+      "banner_12" => {
+                "type" => "mons",
+                "name" => "Inspiración o\nplagio",
+                "bg" => "Graphics/UI/Gacha/Banners/fakemon",
+                "rewards" => ["Graphics/Pokemon/Front/WARGREYMON","Graphics/Pokemon/Front/FURIANOCT","Graphics/Pokemon/Front/DEPRESSO"],
+                "stars" => [4, 5, 3],
                 "url" => "https://pastebin.com/raw/MUJL20xL",
                 "descr" =>  "Banner que contiene Pokémon pseudolegendarios",
                 "cost" => 80
@@ -3075,110 +3085,253 @@ def defaultBanner(id,type)
             end
             poke.calc_stats
             pokeReward(poke,stars)
-            when(12) #Pseudos
+            when(12)  #Fake
             case prob
-            when (0...81) 
-                result = rand(6)
-                prob_move = rand(100)
-                case result
-                when (0)
-                    poke = Pokemon.new(:KOMMOO)
-                    if prob_move >= 80
-                    case (rand(3))
-                    when (0)
-                        poke.add_first_move(:BODYPRESS)
-                    when (1)
-                        poke.add_first_move(:SHELLSIDEARM)
-                    when (2)
-                        poke.add_first_move(:SECRETSWORD)
-                    when (3)
-                        poke.add_first_move(:GLAIVERUSH)
-                    end
-                    end
-                    poke.level = 50
-                    stars = 4
-                when (1)
-                    poke = Pokemon.new(:GOODRA)
-                    if prob_move >= 80
-                    case (rand(3))
-                    when (0)
-                        poke.add_first_move(:DRAGONHAMMER)
-                    when (1)
-                        poke.add_first_move(:RECOVER)
-                    when (2)
-                        poke.add_first_move(:CALMMIND)
-                    when (3)
-                        poke.add_first_move(:MAKEITRAIN)
-                    end
-                    end
-                    poke.level = 50
-                    stars = 4
-                when (2)
-                    poke = Pokemon.new(:DRAGONITE)
-                    poke.ability_index = 2
-                    if prob_move >= 80
-                    case (rand(3))
-                    when (0)
-                        poke.add_first_move(:DRAGONHAMMER)
-                    when (1)
-                        poke.add_first_move(:CRUSHGRIP)
-                    when (2)
-                        poke.add_first_move(:FIRELASH)
-                    when (3)
-                        poke.add_first_move(:GIGATONHAMMER)
-                    end
-                    end
-                    stars = 4
-                when (3)
-                    poke = Pokemon.new(:BAXCALIBUR)
-                    if prob_move >= 80
-                    case (rand(3))
-                    when (0)
-                        poke.add_first_move(:BEHEMOTHBLADE)
-                    when (1)
-                        poke.add_first_move(:DRAGONDANCE)
-                    when (2)
-                        poke.add_first_move(:MOUNTAINGALE)
-                    when (3)
-                        poke.add_first_move(:PRECIPICEBLADES)
-                    end
-                    end
-                    stars = 4 
-                when (4)
-                    poke = Pokemon.new(:DRAGAPULT)
-                    if prob_move >= 80
-                    case (rand(3))
+                when (0...81)
+                    result = rand(16)
+                    case result
                         when (0)
-                        poke.add_first_move(:SHADOWBONE)
+                            poke = Pokemon.new(:DEFIESSTO)
                         when (1)
-                        poke.add_first_move(:POWERUPPUNCH)
+                            poke = Pokemon.new(:EIKTHYRDEER)
                         when (2)
-                        poke.add_first_move(:FIRELASH)
+                            poke = Pokemon.new(:CHILLET)
                         when (3)
-                        poke.add_first_move(:DIRECLAW)
+                            poke = Pokemon.new(:RELAXAURUS)
+                        when (4)
+                            poke = Pokemon.new(:WKURIBOH10)
+                        when (5)
+                            poke = Pokemon.new(:KURIBABYLON)
+                        when (6)
+                            poke = Pokemon.new(:LINKURIBOH)
+                        when (7)
+                            poke = Pokemon.new(:SKURIBOH)
+                        when (8)
+                            poke = Pokemon.new(:ANKURIBOH)
+                        when (9)
+                            poke = Pokemon.new(:MEGAKABUTERIMON)
+                        when (10)
+                            poke = Pokemon.new(:GARUDAMON)
+                        when (11)
+                            poke = Pokemon.new(:LILLYMON)
+                        when (12)
+                            poke = Pokemon.new(:ZUDOMON)
+                        when (13)
+                            poke = Pokemon.new(:MAGNAANGEMON)
+                        when (14)
+                            poke = Pokemon.new(:JCACTUAR)
+                        when (15)
+                            poke = Pokemon.new(:TONBRERRY)                    
                     end
-                    end		
-                    stars = 4
-                when (5)
-                    poke = Pokemon.new(:HYDREIGON)
-                    if prob_move >= 80
-                    case (rand(3))
+                stars = 3
+                when (81...96)
+                result = rand(5)
+                    case result
+                        when (0)
+                            poke = Pokemon.new(:VOLCAMERUPT)
+                            if prob_move >= 80
+                                case (rand(3))
+                                when (0)
+                                    poke.add_first_move(:TRICKROOM)
+                                when (1)
+                                    poke.add_first_move(:ENERGYBALL)
+                                when (2)
+                                    poke.add_first_move(:SLACKOFF)
+                                when (3)
+                                    poke.add_first_move(:BLUEFLARE)
+                                end
+                            end             
+                        when (1)
+                            poke = Pokemon.new(:ABSERAPH)
+                            if prob_move >= 80
+                                case (rand(3))
+                                when (0)
+                                    poke.add_first_move(:KOWTOWCLEAVE)
+                                when (1)
+                                    poke.add_first_move(:SACREDSWORD)
+                                when (2)
+                                    poke.add_first_move(:PSYBLADE)
+                                when (3)
+                                    poke.add_first_move(:BITTERBLADE)
+                                end
+                            end             
+                        when (2)
+                            poke = Pokemon.new(:GLISCOR)
+                            if prob_move >= 80
+                                case (rand(3))
+                                when (0)
+                                    poke.add_first_move(:FLOATYFALL)
+                                when (1)
+                                    poke.add_first_move(:THOUSANDWAVES)
+                                when (2)
+                                    poke.add_first_move(:SPIKYSHIELD)
+                                when (3)
+                                    poke.add_first_move(:MIGHTYCLEAVE)
+                                end
+                            end             
+                        when (3)
+                            poke = Pokemon.new(:AGGRON)
+                            if prob_move >= 80
+                                case (rand(3))
+                                when (0)
+                                    poke.add_first_move(:HEADSMASH)
+                                when (1)
+                                    poke.add_first_move(:BODYPRESS)
+                                when (2)
+                                    poke.add_first_move(:SHOREUP)
+                                when (3)
+                                    poke.add_first_move(:SALTCURE)
+                                end
+                            end             
+                        when (4)
+                            poke = Pokemon.new(:SNORLAX)
+                            if prob_move >= 80
+                                case (rand(3))
+                                when (0)
+                                    poke.add_first_move(:STUFFCHEEKS)
+                                when (1)
+                                    poke.add_first_move(:GRAVAPPLE)
+                                when (2)
+                                    poke.add_first_move(:SLACKOFF)
+                                when (3)
+                                    poke.add_first_move(:EXTREMESPEED)
+                                end
+                            end             
+                    end
+                stars = 4
+                when (96...100)
+                result = rand(3)
+                    case result
+                        when (0)
+                            poke = Pokemon.new(:ZENICHAM)
+                            poke.add_first_move(:THUNDEROUSKICK)
+                            poke.add_first_move(:SUCKERPUNCH)
+                            poke.add_first_move(:BULLETPUNCH)
+                            poke.add_first_move(:PHOTONGEYSER)              
+                        when (1)
+                            poke = Pokemon.new(:LUCHAUREO)
+                            poke.add_first_move(:THUNDEROUSKICK)
+                            poke.add_first_move(:TACHYONCUTTER)
+                            poke.add_first_move(:TRIPLEAXEL)
+                            poke.add_first_move(:SUNSTEELSTRIKE)                
+                        when (2)
+                            poke = Pokemon.new(:ARCHALUDON)
+                            poke.add_first_move(:COREENFORCER)
+                            poke.add_first_move(:BODYPRESS)
+                            poke.add_first_move(:RECOVER)
+                            poke.add_first_move(:TACHYONCUTTER)             
+                    end
+                stars = 5
+                when (100)
+                poke = Pokemon.new(:VOLCANION)
+                stars = 6
+            end
+            poke.calc_stats
+            pokeReward(poke,stars)
+            when(13) #Pseudos
+            case prob
+                when (0...81) 
+                    result = rand(6)
+                    prob_move = rand(100)
+                    case result
                     when (0)
-                        poke.add_first_move(:FIERYWRATH)
+                        poke = Pokemon.new(:KOMMOO)
+                        if prob_move >= 80
+                        case (rand(3))
+                        when (0)
+                            poke.add_first_move(:BODYPRESS)
+                        when (1)
+                            poke.add_first_move(:SHELLSIDEARM)
+                        when (2)
+                            poke.add_first_move(:SECRETSWORD)
+                        when (3)
+                            poke.add_first_move(:GLAIVERUSH)
+                        end
+                        end
+                        poke.level = 50
+                        stars = 4
                     when (1)
-                        poke.add_first_move(:ESPERWING)
+                        poke = Pokemon.new(:GOODRA)
+                        if prob_move >= 80
+                        case (rand(3))
+                        when (0)
+                            poke.add_first_move(:DRAGONHAMMER)
+                        when (1)
+                            poke.add_first_move(:RECOVER)
+                        when (2)
+                            poke.add_first_move(:CALMMIND)
+                        when (3)
+                            poke.add_first_move(:MAKEITRAIN)
+                        end
+                        end
+                        poke.level = 50
+                        stars = 4
                     when (2)
-                        poke.add_first_move(:SLUDGEBOMB)
+                        poke = Pokemon.new(:DRAGONITE)
+                        poke.ability_index = 2
+                        if prob_move >= 80
+                        case (rand(3))
+                        when (0)
+                            poke.add_first_move(:DRAGONHAMMER)
+                        when (1)
+                            poke.add_first_move(:CRUSHGRIP)
+                        when (2)
+                            poke.add_first_move(:FIRELASH)
+                        when (3)
+                            poke.add_first_move(:GIGATONHAMMER)
+                        end
+                        end
+                        stars = 4
                     when (3)
-                        poke.add_first_move(:FICKLEBEAM)
-                    end
-                    end		
-                    stars = 4
-                end	
-                #############################################
-                # Tier 5 con un 3%
-                #############################################
-            when (81...101) 
+                        poke = Pokemon.new(:BAXCALIBUR)
+                        if prob_move >= 80
+                        case (rand(3))
+                        when (0)
+                            poke.add_first_move(:BEHEMOTHBLADE)
+                        when (1)
+                            poke.add_first_move(:DRAGONDANCE)
+                        when (2)
+                            poke.add_first_move(:MOUNTAINGALE)
+                        when (3)
+                            poke.add_first_move(:PRECIPICEBLADES)
+                        end
+                        end
+                        stars = 4 
+                    when (4)
+                        poke = Pokemon.new(:DRAGAPULT)
+                        if prob_move >= 80
+                        case (rand(3))
+                            when (0)
+                            poke.add_first_move(:SHADOWBONE)
+                            when (1)
+                            poke.add_first_move(:POWERUPPUNCH)
+                            when (2)
+                            poke.add_first_move(:FIRELASH)
+                            when (3)
+                            poke.add_first_move(:DIRECLAW)
+                        end
+                        end		
+                        stars = 4
+                    when (5)
+                        poke = Pokemon.new(:HYDREIGON)
+                        if prob_move >= 80
+                        case (rand(3))
+                        when (0)
+                            poke.add_first_move(:FIERYWRATH)
+                        when (1)
+                            poke.add_first_move(:ESPERWING)
+                        when (2)
+                            poke.add_first_move(:SLUDGEBOMB)
+                        when (3)
+                            poke.add_first_move(:FICKLEBEAM)
+                        end
+                        end		
+                        stars = 4
+                    end	
+                    #############################################
+                    # Tier 5 con un 3%
+                    #############################################
+                when (81...101) 
                 result = rand(4)
                 case result
                 when (0)
@@ -3217,18 +3370,18 @@ def defaultBanner(id,type)
             end
             poke.calc_stats
             pokeReward(poke,stars)
-            when(13) #Legendarios
+            when(14) #Legendarios
             case prob
 
-            when (0...50) 
-                poke = Pokemon.new(:FEAROW)	
-                pokeReward(poke,5)
-            #############################################
-            # Tier 4 con un 7%
-            #############################################
-            when (51...100) 
-                poke = Pokemon.new(:PAWMI)
-                pokeReward(poke,6)	
+                when (0...50) 
+                    poke = Pokemon.new(:FEAROW)	
+                    pokeReward(poke,5)
+                #############################################
+                # Tier 4 con un 7%
+                #############################################
+                when (51...100) 
+                    poke = Pokemon.new(:PAWMI)
+                    pokeReward(poke,6)	
             end
         end
     else

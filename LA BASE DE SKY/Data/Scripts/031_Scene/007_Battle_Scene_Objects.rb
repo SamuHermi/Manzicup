@@ -35,6 +35,7 @@ class Battle::Scene::PokemonDataBox < Sprite
     @selected        = 0
     @show_hp_numbers = false
     @show_exp_bar    = false
+    
     initializeDataBoxGraphic(sideSize, trainerFoe)
     initializeOtherGraphics(viewport)
     refresh
@@ -43,7 +44,7 @@ class Battle::Scene::PokemonDataBox < Sprite
   def initializeDataBoxGraphic(sideSize, battle)
     onPlayerSide = @battler.index.even?
     # Get the data box graphic and set whether the HP numbers/Exp bar are shown
-    if(battle.opponent != nil)
+    if(battle.opponent != nil && !battle.wildBattle?)
       if(battle.opponent[@battler.index / 2] == nil)
         foeName = ""
       elsif(!(["ANA","BRA","BRAIS","HERMI","IRIA","ISA","NEREA","RODRI","PABLO","SABO","SAMER"].include?(
@@ -56,6 +57,7 @@ class Battle::Scene::PokemonDataBox < Sprite
     else
       foeName = ""
     end      
+    
     playerName = battle.player[@battler.index / 2].trainer_type.to_s + "_"
 
 

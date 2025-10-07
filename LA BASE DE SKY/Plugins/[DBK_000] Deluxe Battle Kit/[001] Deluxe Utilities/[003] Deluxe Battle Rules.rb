@@ -12,7 +12,7 @@ class Game_Temp
     when "nevercapture"      then rules["captureSuccess"]    = false
     when "tutorialcapture"   then rules["captureTutorial"]   = true
     when "autobattle"        then rules["autoBattle"]        = true
-    when "towerbattle"       then rules["internalBattle"]       = false
+    when "towerbattle"       then rules["internalBattle"]    = false
     when "inversebattle"     then rules["inverseBattle"]     = true
     when "nobag"             then rules["noBag"]             = true
     when "wildmegaevolution" then rules["wildBattleMode"]    = :mega
@@ -222,7 +222,6 @@ module Battle::CatchAndStoreMixin
       pkmn.calc_stats
       pkmn.hp = pkmn.hp.clamp(1, pkmn.totalhp)
     end
-    pbResetRaidProperties(pkmn) if pkmn.immunities.include?(:RAIDBOSS)
     pkmn.immunities = nil
     pkmn.name = nil if pkmn.nicknamed?
     if @raidStyleCapture && !@caughtPokemon.empty?
@@ -253,21 +252,30 @@ class Battle::Battler
       fainted_count += 1
     end
     return if fainted_count >= @battle.pbSideSize(0)
+    if @battle.pbAbleCount(target.index) <= 1
+      @battle.raidCaptureMode = true
+      @battle.field.initialize
+      2.times { |i| @battle.sides[i].initialize }
+      @battle.eachSameSideBattler do |b|
+        b.pbInitEffects(false)
+        @battle.positions[b.index].initialize
+      end
+    end
     @battle.pbPauseAndPlayBGM(bgm)
     @battle.scene.pbHideDatabox(target.index)
     @battle.scene.pbToggleDataboxes if @battle.raidBattle?
-    @battle.pbDisplayPaused(_INTL("{1} is weak!\nThrow a Poké Ball now!", target.pbThis))
+    @battle.pbDisplayPaused(_INTL("{1} está débil!\nLánzale una Pokéball!", target.pbThis))
     @battle.scene.pbRevertBattlerStart
     @battle.scene.pbPauseScene(0.5)
     cmd = @battle.pbShowCommands(
-      _INTL("Capture {1}?", target.pbThis(true)), ["Catch", "Don't Catch"], 1)
+      _INTL("Capture {1}?", target.pbThis(true)), ["Atrapar", "No Atrapar"], 1)
     pbPlayDecisionSE
     @battle.scene.pbRevertBattlerEnd
     case cmd
     when 0
       @battle.sendToBoxes = 1
       if $PokemonStorage.full?
-        @battle.pbDisplay(_INTL("But there is no room left in the PC!"))
+        @battle.pbDisplay(_INTL("¡No hay hueco en el PC!"))
         target.wild_flee(fleeMsg)
       else
         ball = nil
@@ -325,6 +333,10 @@ class Battle::Battler
   def pbFaint(showMessage = true)
     if self.canRaidCapture?
       self.hp = 1
+      if defined?(self.battlerSprite)
+        @battle.scene.pbAnimateSubstitute(@index, :hide)
+        @battle.scene.pbChangePokemon(self, self.visiblePokemon, 0)
+      end
       raid = @battle.raidStyleCapture
       if raid.is_a?(Hash)
         pbRaidStyleCapture(self, raid[:capture_chance], raid[:flee_msg], raid[:capture_bgm])
@@ -333,7 +345,22 @@ class Battle::Battler
       end
     else
       dx_pbFaint(showMessage)
+      if @battle.pbAllFainted? && @battle.raidStyleCapture && !@battle.canLose
+        @battle.caughtPokemon.clear
+      end
     end
+  end
+  
+  alias dx_itemActive? itemActive?
+  def itemActive?(ignoreFainted = false)
+    return false if @battle.raidCaptureMode
+    return dx_itemActive?(ignoreFainted)
+  end
+  
+  alias dx_abilityActive? abilityActive?
+  def abilityActive?(ignore_fainted = false, check_ability = nil)
+    return false if @battle.raidCaptureMode
+    return dx_abilityActive?(ignore_fainted, check_ability)
   end
 end
 
@@ -363,7 +390,7 @@ end
 # Adds new Battle Rules to the Battle class.
 #===============================================================================
 class Battle
-  attr_accessor :captureSuccess, :tutorialCapture, :raidStyleCapture
+  attr_accessor :caughtPokemon, :captureSuccess, :tutorialCapture, :raidStyleCapture, :raidCaptureMode
   attr_accessor :wildBattleMode, :noBag
   attr_accessor :introText, :slideSpriteStyle, :databoxStyle
   attr_accessor :default_bgm, :playing_bgm, :bgm_paused, :bgm_position, :low_hp_bgm
@@ -374,6 +401,7 @@ class Battle
     @captureSuccess   = nil
     @tutorialCapture  = false
     @raidStyleCapture = false
+    @raidCaptureMode  = false
     @wildBattleMode   = nil
     @noBag            = false
     @introText        = nil
@@ -437,10 +465,20 @@ class Battle
   end
   
   #-----------------------------------------------------------------------------
+  # Aliased for battle_rules["raidStyleCapture"]
+  #-----------------------------------------------------------------------------
+  alias dx_pbEORStatusProblemDamage pbEORStatusProblemDamage
+  def pbEORStatusProblemDamage(priority)
+    return if @raidCaptureMode
+    dx_pbEORStatusProblemDamage(priority)
+  end
+  
+  #-----------------------------------------------------------------------------
   # Aliased for battle_rules["battleIntroText"]
   #-----------------------------------------------------------------------------
   alias dx_pbStartBattleSendOut pbStartBattleSendOut
   def pbStartBattleSendOut(sendOuts)
+    @scene.pbAnimateTrainerIntros if defined?(@scene.pbAnimateTrainerIntros)
     if @introText
       foes = @opponent || pbParty(1)
       foe_names = []

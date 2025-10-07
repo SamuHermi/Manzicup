@@ -32,7 +32,7 @@ ItemHandlers::CanUseInBattle.addIf(:poke_balls,
       scene.pbDisplay(_INTL("¡No queda espacio en el PC!")) if showMessages
       next false
     end
-    if battle.disablePokeBalls
+    if battle.disablePokeBalls || $game_variables[101] == 1
       scene.pbDisplay(_INTL("¡No puedes lanzar una Poké Ball!")) if showMessages
       next false
     end

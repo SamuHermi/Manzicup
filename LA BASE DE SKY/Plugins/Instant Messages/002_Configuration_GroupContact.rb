@@ -90,10 +90,10 @@ GameData::InstantMessageContact.register({
 })
 
 GameData::InstantMessageContact.register({
-    :id             => :JESS,
-    :name		    => _INTL("Jess"),
-    :image		    => "Jess",
-    :bubble         => "Dark"
+    :id             => :DISCORD,
+    :name		    => _INTL("Discord"),
+    :image		    => "DISCORD",
+    :bubble         => "Blue"
 })
 
 GameData::InstantMessageContact.register({
@@ -151,7 +151,7 @@ GameData::InstantMessageGroup.register({
     :title		    => _INTL("Manzidadas"),
     :members		=> {1 => :IRIA, 2 => :PABLO, 3 => :BRA, 4 => :ISA, 5 => :SAMER,
                         6 => :RODRI, 7 => :ANA, 8 => :SABO, 9 => :BRAIS, 10 => :HERMI,
-                        11 => :JESS, 12 => :NEREA}
+                        12 => :NEREA, 13 => :DISCORD}
 })
 
 GameData::InstantMessageGroup.register({

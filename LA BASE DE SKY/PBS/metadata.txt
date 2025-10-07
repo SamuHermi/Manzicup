@@ -19,8 +19,8 @@ RunCharset = trainer_HERMI.png
 CycleCharset = trainer_HERMI.png
 SurfCharset = Surf_HERMI.png
 DiveCharset = Surf_HERMI.png
-FishCharset = trainer_HERMI.png
-SurfFishCharset = trainer_HERMI.png
+FishCharset = Surf_HERMI.png
+SurfFishCharset = Surf_HERMI.png
 #-------------------------------
 [2]
 TrainerType = IRIA
@@ -89,8 +89,8 @@ RunCharset = trainer_BRA.png
 CycleCharset = trainer_BRA.png
 SurfCharset = Surf_BRA.png
 DiveCharset = Surf_BRA.png
-FishCharset = trainer_BRA.png
-SurfFishCharset = trainer_BRA.png
+FishCharset = Surf_BRA.png
+SurfFishCharset = Surf_BRA.png
 #-------------------------------
 [9]
 TrainerType = ANA
@@ -119,8 +119,8 @@ RunCharset = trainer_SABO.png
 CycleCharset = trainer_SABO.png
 SurfCharset = Surf_SABO.png
 DiveCharset = Surf_SABO.png
-FishCharset = trainer_SABO.png
-SurfFishCharset = trainer_SABO.png
+FishCharset = Surf_SABO.png
+SurfFishCharset = Surf_SABO.png
 #-------------------------------
 [12]
 TrainerType = NEREA

@@ -65,12 +65,12 @@ GameData::DataboxStyle.register({
   :offset_x      => [[0, 8, -8, 0],    [0, 16, -8, 8, -16, 0]],
   :offset_y      => [[-38, -8, 8, 38], [-80, -10, -34, 36, 12, 82]],
   :hp_offset     => [[46, 30], [90, 26]],
-  :exp_offset    => [114, 40],
-  :name_pos      => [[138, 6, :right], [22, 2, :left]],
-  :owned_icon    => [2, 3],
-  :shiny_icon    => [[154, 5],  [2, 23]],
-  :status_icon   => [[182, 28], [18, 24]],
-  :special_icon  => [[-34, 12], [276, 20]]
+  :exp_offset    => [134, 40],
+  :name_pos      => [[22, 6, :left], [22, 2, :left]],
+  :owned_icon    => [140, 3],
+  :shiny_icon    => [[132, 5],  [2, 23]],
+  :status_icon   => [[182, 22], [18, 24]],
+  :special_icon  => [[-18, 15], [200, 26]]
 })
 
 # Long databox style.
@@ -123,12 +123,24 @@ class Battle::Scene::PokemonDataBox
     if @style
       @path = Settings::DELUXE_GRAPHICS_PATH + "Databoxes"
       @databoxBitmap&.dispose
-      box = (@battler.index.even?) ? "databox" : "databox_foe"
+
+      if(["ANA","BRA","BRAIS","HERMI","IRIA","ISA","NEREA","RODRI","PABLO","SABO","SAMER"].include?(
+        @battler.battle.pbGetOwnerType(@battler.index).to_s))
+        trainerName = @battler.battle.pbGetOwnerType(@battler.index).to_s + "_"
+      else
+        trainerName = ""
+      end
+
+      box = trainerName + ((@battler.index.even?) ? "databox" : "databox_foe")
       try_file = sprintf("%s/%s/%s", @path, @style.id, box)
+      Console.echo_li((sideSize > @style.max_side_size).to_s + " " + (!pbResolveBitmap(try_file)).to_s)
       if sideSize > @style.max_side_size || !pbResolveBitmap(try_file)
         @style = GameData::DataboxStyle.get(:Basic) 
       end
+      Console.echo_li("Databox file: " + @style.id.to_s + "/" + box)
       @databoxBitmap = AnimatedBitmap.new(sprintf("%s/%s/%s", @path, @style.id, box))
+      initGraph
+      #initializeOtherGraphics(viewport)
       set_style_properties(sideSize)
     else
       dx_initializeDataBoxGraphic(sideSize,trainerFoe)
@@ -156,7 +168,7 @@ class Battle::Scene::PokemonDataBox
       @contents = Bitmap.new(@databoxBitmap.width, @databoxBitmap.height)
       self.bitmap  = @contents
       self.visible = false
-      self.z       = 150+((@battler.index/ 2) * 5)
+      self.z       = 150 + ((@battler.index / 2) * 5)
       pbSetSmallFont(self.bitmap)
     else
       dx_initializeOtherGraphics(viewport)
@@ -186,6 +198,7 @@ class Battle::Scene::PokemonDataBox
       draw_background
       draw_style_text
       draw_style_icons
+      draw_type_icons
       draw_plugin_elements
       refresh_hp
       refresh_exp
@@ -223,7 +236,7 @@ class Battle::Scene::PokemonDataBox
     sideSize = @battler.battle.pbSideSize(@battler.index)
     initializeDataBoxGraphic(sideSize,@battler.battle.opponent[i].trainer_type.to_s)
     return if @style == old_style
-    if @style
+    if @style.id == :Long
       try_exp = sprintf("%s/%s/overlay_exp", @path, @style.id)
       expPath = (pbResolveBitmap(try_exp)) ? @style.id : :Basic
       @expBarBitmap = AnimatedBitmap.new(sprintf("%s/%s/overlay_exp", @path, expPath))
@@ -303,12 +316,19 @@ class Battle::Scene::PokemonDataBox
     namePos = @displayPos[:name]
     if @battler.index.even?
       case @battler.gender
-      when 0 then textpos.push(["♂", *namePos, MALE_BASE_COLOR, STYLE_SHADOW_COLOR, @nameColors[2]])
-      when 1 then textpos.push(["♀", *namePos, FEMALE_BASE_COLOR, STYLE_SHADOW_COLOR, @nameColors[2]])
+      when 0 then textpos.push(["♂", namePos[0] + 130, namePos[1], namePos[2], MALE_BASE_COLOR, STYLE_SHADOW_COLOR, @nameColors[2]])
+      when 1 then textpos.push(["♀", namePos[0] + 130, namePos[1], namePos[2], FEMALE_BASE_COLOR, STYLE_SHADOW_COLOR, @nameColors[2]])
       end
       textpos.push([@battler.name, namePos[0] - 16, namePos[1], namePos[2], *@nameColors])
-      textpos.push([@battler.level.to_s, namePos[0] + 58, namePos[1], :left, STYLE_BASE_COLOR, STYLE_SHADOW_COLOR])
-    elsif 
+      textpos.push([@battler.level.to_s, namePos[0] + 168, namePos[1], :left, STYLE_BASE_COLOR, STYLE_SHADOW_COLOR])
+    elsif @battler.index.odd? && @style.id == :Basic
+      case @battler.gender
+      when 0 then textpos.push(["♂", namePos[0] + 150, namePos[1], namePos[2], MALE_BASE_COLOR, STYLE_SHADOW_COLOR, @nameColors[2]])
+      when 1 then textpos.push(["♀", namePos[0] + 150, namePos[1], namePos[2], FEMALE_BASE_COLOR, STYLE_SHADOW_COLOR, @nameColors[2]])
+      end
+      textpos.push([@battler.name, namePos[0] - 16, namePos[1], namePos[2], *@nameColors])
+      textpos.push([@battler.level.to_s, namePos[0] + 194, namePos[1], :left, STYLE_BASE_COLOR, STYLE_SHADOW_COLOR])
+    elsif
       if !@battler.wild?
         display_name = @battler.name
       elsif @title
@@ -329,7 +349,8 @@ class Battle::Scene::PokemonDataBox
   def draw_style_icons
     imagepos = []
     namePos = @displayPos[:name]
-    imagepos.push([@path + "/overlay_lv", namePos[0] + 34, namePos[1] + 2]) if @battler.index.even?
+    imagepos.push([@path + "/overlay_lv", namePos[0] + 144, namePos[1] + 2]) if @battler.index.even?
+    imagepos.push([@path + "/overlay_lv", namePos[0] + 170, namePos[1] + 2]) if @battler.index.odd? && @style.id == :Basic
     imagepos.push([@path + "/icon_own", *@displayPos[:owned]]) if @battler.owned? && @battler.opposes?(0)
     imagepos.push([@path + "/shiny", *@displayPos[:shiny]]) if @battler.shiny?
     if @battler.status != :NONE

@@ -142,7 +142,7 @@ GameData::InstantMessageConversation.register({
                         [9,  :Text, _INTL("Lo vais a flipar, pero me acaba de llamar mi jefa para darme el día libre")],
                         [3,  :Text, _INTL("Vale, aquí está pasando algo raro, pero no me voy a quejar")],                   
                         [2,  :Text, _INTL("Oye, Hermi, ¿Tienes todo listo?")],
-                        [10, :Text, _INTL("Está todo pollo")],
+                        [10, :Text, _INTL("Está todo pollo <icon=emojiThumbsUp>")],
                         [9,  :Text, _INTL("Prepararos que os voy a dar una paliza")],
                         [4,  :Text, _INTL("¿Que dice el carapan este?")],
                         [5,  :Text, _INTL("Brais carapan")],
@@ -158,66 +158,93 @@ GameData::InstantMessageConversation.register({
                         [3,  :Text, _INTL("Gudo naito")],
                         [5,  :Text, _INTL("Buenas noches hasta mañana, los Lunnies y los niños nos vamos para cama")],
                         [8, :Text, _INTL("Que descanséis señores")],
-                    ]
+                        ]
+})
+
+GameData::InstantMessageConversation.register({
+    :id             => :UNLOCK_1,
+    :group          => :MANZIDADAS,
+    :important      => true,
+    :messages       => [
+                        [13,  :Text, _INTL("¡Hey, colegas! Soy yo, Discord <icon=emojiHeart>. Ya sé que soléis usarme para memes, partidas y charlas infinitas a las 3 AM… pero hoy me paso por aquí en persona para dejaros un aviso muy especial.")],
+                        [3, :Text,  _INTL("¿Que coño es esto?")],
+                        [1,  :Text, _INTL("Lo que me faltaba, una IA que nos habla por el grupo")],
+                        [2,  :Text, _INTL("Hermi, diría que que estás liando ya, pero no creo que te pongas a crear una IA")],
+                        [10, :Text, _INTL("Ya me jodería, pues nada, IA, te toca mimir")],
+                        [10, :Text, _INTL("/shutdown")],
+                        [ 9, :Text, _INTL("La conversación más forzada no puede ser")],
+                        [13, :Text, _INTL("…oye. <icon=emojiSad>")],
+                        [13, :Text, _INTL("Porfa, no me dejéis apagada en la sala. Al menos dejad que termine lo que tengo preparado. Prometo que luego me voy a dormir. <icon=emojiSad>")],
+                        [ 7, :Text, _INTL("Oye, primero vamos a intentar sacarle algo de info")],
+                        [ 7, :Text, _INTL("¿Cómo podemos salir de aquí?")],
+                        [13, :Text, _INTL("¿Irse?… ¿Pero por qué? <icon=emojiSad> Si aquí está calentito, hay voces, hay risas, hay sorpresas esperando… ¿no es eso lo que buscabáis?")],
+                        [13, :Text, _INTL("No entiendo… ¿qué hay afuera que yo no pueda daros?")],
+                        [ 4, :Text, _INTL("Alexa, callate")],
+                        [ 8, :Text, _INTL("Cómo manda la sierpe, Samer tiene la correa que no la suelta")],
+                        [ 5, :Text, _INTL("Ya ves, estas mujeres de hoy en día, les hace falta educación")],
+                        [13, :Text, _INTL("Solo recordad una cosa antes de cerrar la puerta: la sorpresa está en el portátil de la sala. No la dejéis ahí olvidada, prometo que merece la pena esperar un ratito más.")],
+                        [13, :Text, _INTL("Si volvéis, yo seguiré aquí, para cuando queráis. <icon=emojiHeart>")],
+                        ]       
 })
 
 GameData::InstantMessageConversation.register({
     :id             => :UNLOCK_2,
-    :group          => :BRAIS,
+    :group          => :MANZIDADAS,
     :important      => true,
     :messages       => [
-                        [1,  :Text, _INTL("Una pregunta, ¿Te suena el nombre de Eldar?.")],
-                        [0, :Text,  _INTL("Era el personaje de Iria en la partida de rol")],
-                        [1,  :Text, _INTL("Ah, el pijo, pues se acaba de pasar la base y dijo que te estaba buscando")],
-                        [1,  :Text, _INTL("Se metió en la sala de abajo a la izquierda, no le hagas esperar demasiado que igual se altera")]
-    ]       
-})
-
-GameData::InstantMessageConversation.register({
-    :id             => :UNLOCK_2_NO_ROL,
-    :group          => :BRAIS,
-    :important      => true,
-    :messages       => [
-                        [1,  :Text, _INTL("Una pregunta, ¿Te suena el nombre de Eldar?.")],
-                        [0,  :Text, _INTL("Para nada")],
-                        [1,  :Text, _INTL("Coño, ya sé quien es, el personaje de Iria en la partida de rol de Hermi")],
-                        [1,  :Text, _INTL("Pues se acaba de pasar la base y dijo que te estaba buscando, no sé porqué a tí en concreto")],
-                        [1,  :Text, _INTL("Se metió en la sala de abajo a la izquierda, no le hagas esperar demasiado que igual se altera")]
-    ]       
-})
-
-GameData::InstantMessageConversation.register({
-    :id             => :UNLOCK_2_IRIA,
-    :group          => :BRAIS,
-    :important      => true,
-    :messages       => [
-                        [1,  :Text, _INTL("Una pregunta, ¿Te suena el nombre de Eldar?.")],
-                        [0, :Text,  _INTL("Era uno de mis personajes en la partida de rol de Samu")],
-                        [1,  :Text, _INTL("Ah, el pijo, pues se acaba de pasar la base y dijo que te estaba buscando")],
-                        [1,  :Text, _INTL("Se metió en la sala de abajo a la izquierda, si no me crees vete a ver")]
-    ]       
-})
-
-GameData::InstantMessageConversation.register({
-    :id             => :UNLOCK_2_BRAIS,
-    :group          => :NEREA,
-    :important      => true,
-    :messages       => [
-                        [1,  :Text, _INTL("Acaba de pasar por aquí un chico que iba vestido un poco raro")],
-                        [1, :Text,  _INTL("Decía que se llamaba Eldar, y estaba buscándote a ti")],
-                        [1, :Text,  _INTL("¿Te suena de algo? Si no, mándalo a tomar por culo, jajaja.")],
-                        [1,  :Text, _INTL("Se metió en la sala de abajo a la izquierda, si no me crees vete a ver")]
-    ]       
+                        [13,  :Text, _INTL("@everyone Eldar ha llegado. ✨")],
+                        [13,  :Text, _INTL("Se ha metido en la sala de abajo, a la derecha. Si estáis por ahí, dadle la bienvenida (o preparaos para esconderos).")],
+                        [ 6,  :Text, _INTL("Eldar, me suena ese nombre. ¿Quién era Eldar?")],
+                        [ 1,  :Text, _INTL("Era uno de mis personajes en la partida de rol de Samu, el elfo de hielo.")],
+                        [ 9,  :Text, _INTL("Ah, el pijo")],
+                        [ 1,  :Text, _INTL("... Sí, Brais, el pijo")],
+                        [10,  :Text, _INTL("No será tan buena la IA si dijo que nos escondiéramos de Eldar")],
+                        [13,  :Text, _INTL("No os fiéis de mi modestia: igual no soy perfecta, ¡pero tengo buenas ideas para el drama! Solo os sugerí esconderos porque parecía la opción más divertida. ¿Queríais que os dijera “Hola Eldar, bienvenido, tomad asiento”?")],
+                        [10,  :Text, _INTL("Olvídalo")],
+                        [ 2,  :Text, _INTL("Entonces, va a haber personajes de rol por ahí, no me voy a enterar de media")],
+                        [ 8,  :Text, _INTL("A tí que te la sude, a mi como si dicen misa")],
+                        ]       
 })
 
 GameData::InstantMessageConversation.register({
     :id             => :UNLOCK_3,
-    :group          => :BRAIS,
+    :group          => :MANZIDADAS,
     :important      => true,
     :messages       => [
-                        [1,  :Text, _INTL("\PN, el PC que está en la sala de la base se ha encendido.")],
-                        [1,  :Text, _INTL("Tú entiendes más de estas cosas que yo, así que seguro que puedes conectarlo a Internet y pedir ayuda")],
-                        [1,  :Text, _INTL("Así que cuando puedas échale un ojo")]
-    ]       
+                        [13,  :Text, _INTL("@everyone Atención. El hombre calvo de la nariz grande ha entrado en la casa. Se ha metido en la habitación de abajo a la derecha… y ahora la puerta es azul. No sé qué significa, pero estad atentos.")],
+                        [9,   :Text,  _INTL("Tranquila IA, solo es Samer")],
+                        [13,  :Text, _INTL("¿“Solo es Samer”? <icon=emojiSurprised> Pero… esperad un segundo. Samer no es calvo, tampoco tiene la nariz grande… y yo sé reconocer bien a los del grupo.")],
+                        [13,  :Text, _INTL("Si fuese Samer, lo habría dicho desde el principio. Pero lo que vi entrar en la sala de abajo a la derecha… no era él.")],
+                        [ 5,  :Text, _INTL("Tus putos muertos, Brais")],
+                        [ 7,  :Text, _INTL("Calvo y con tremenda napia, y dicen que dios no castiga dos veces")],
+                        [ 2,  :Text, _INTL("Que tienes tú ahora con las narices grandes")],
+                        [ 7,  :Text, _INTL("Ups")],
+                        ]
 })
 
+GameData::InstantMessageConversation.register({
+    :id             => :UNLOCK_4,
+    :group          => :MANZIDADAS,
+    :important      => true,
+    :messages       => [
+                        [13,  :Text, _INTL("Nothing beats a… Bot2Camp! <icon=emojiThumbsUp>")],
+                        [13,  :Text, _INTL("¡Olvidaos de playas aburridas y hoteles silenciosos! Esta acampada es LA EXPERIENCIA DEFINITIVA:")],
+                        [13,  :Text, _INTL("Tiendas de campaña que casi se montan solas (casi) ✨")],
+                        [13,  :Text, _INTL("Fogatas tan grandes que podrían tostar tostadas para todo el vecindario")],
+                        [13,  :Text, _INTL("Y, por si fuera poco, yo, Discord, como vuestro guía digital, avisando cada paso y asegurándome de que nadie se pierda… aunque lo hagáis de todas formas <icon=emojiLaugh>")],
+                        [10,  :Text, _INTL("Oye, @Discord, ¿Cómo puedo bloquear a un bot por SPAM?")],
+                        [13,  :Text, _INTL("Ah… quieres denunciar a un bot por spam, ¿eh? <icon=emojiSurprised> Bueno, aquí tienes los pasos:")],
+                        [13,  :Text, _INTL("Abrir el menú del bot y buscar la opción “Reportar actividad sospechosa”.")],
+                        [13,  :Text, _INTL("Seleccionar el tipo de problema: en este caso, “mensajes repetitivos” o “spam”.")],
+                        [13,  :Text, _INTL("Adjuntar ejemplos de los mensajes que consideras molestos para que los revisen.")],
+                        [13,  :Text, _INTL("Enviar el informe y esperar la confirmación de que la denuncia ha sido recibida.")],
+                        [ 3,  :Text, _INTL("Me encantaría ver a Hermi intentando meterse con alguien que se meta con él, como se mete con el bot")],
+                        [10,  :Text, _INTL("Si puedo hacerlo")],
+                        [ 2,  :Text, _INTL("¿Lo harías con la chavala a la que le rompiste el móvil?")],
+                        [10,  :Text, _INTL("Eh...")],
+                        [ 7,  :Text, _INTL("Estamos olvidando que tenemos una acampada prácticamente en el jardín")],
+                        [ 1,  :Text, _INTL("Me fío yo de lo que haga la IA, no voy a tocar nada ni con un palo")],
+                        [ 8,  :Text, _INTL("Otra que tal baila")],
+                        [ 7,  :Text, _INTL("Menudo par de aguafiestas")],
+                        ]       
+})

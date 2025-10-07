@@ -2371,92 +2371,6 @@ FieldUse = OnPokemon
 Flags = Fling_30
 Description = Aumenta al máximo los PP del ataque que elijas de un Pokémon.
 #-------------------------------
-[HPUP]
-Name = Más PS
-NamePlural = Más PS
-Pocket = 2
-Price = 10000
-FieldUse = OnPokemon
-Flags = Fling_30
-Description = Nutritiva bebida que aumenta los PS de un Pokémon.
-#-------------------------------
-[PROTEIN]
-Name = Proteína
-NamePlural = Proteínas
-Pocket = 2
-Price = 10000
-FieldUse = OnPokemon
-Flags = Fling_30
-Description = Nutritiva bebida que aumenta el Ataque de un Pokémon.
-#-------------------------------
-[IRON]
-Name = Hierro
-NamePlural = Hierros
-Pocket = 2
-Price = 10000
-FieldUse = OnPokemon
-Flags = Fling_30
-Description = Nutritiva bebida que aumenta la Defensa de un Pokémon.
-#-------------------------------
-[CALCIUM]
-Name = Calcio
-NamePlural = Calcios
-Pocket = 2
-Price = 10000
-FieldUse = OnPokemon
-Flags = Fling_30
-Description = Nutritiva bebida que sube el At. Esp. de un Pokémon.
-#-------------------------------
-[ZINC]
-Name = Zinc
-NamePlural = Zincs
-Pocket = 2
-Price = 10000
-FieldUse = OnPokemon
-Flags = Fling_30
-Description = Nutritiva bebida que aumenta la Defensa Especial de un Pokémon.
-#-------------------------------
-[CARBOS]
-Name = Carburante
-NamePlural = Carburantes
-Pocket = 2
-Price = 10000
-FieldUse = OnPokemon
-Flags = Fling_30
-Description = Nutritiva bebida que sube la Velocidad de un Pokémon.
-#-------------------------------
-[HEALTHFEATHER]
-Name = Pluma Vigor
-Pocket = 2
-Price = 300
-FieldUse = OnPokemon
-Flags = Fling_20
-Description = Objeto que aumenta los PS base de un Pokémon.
-#-------------------------------
-[MUSCLEFEATHER]
-Name = Pluma Músculo
-Pocket = 2
-Price = 300
-FieldUse = OnPokemon
-Flags = Fling_20
-Description = Objeto que aumenta el Ataque base de un Pokémon.
-#-------------------------------
-[RESISTFEATHER]
-Name = Pluma Aguante
-Pocket = 2
-Price = 300
-FieldUse = OnPokemon
-Flags = Fling_20
-Description = Objeto que aumenta la Defensa base de un Pokémon.
-#-------------------------------
-[GENIUSFEATHER]
-Name = Pluma Intelecto
-Pocket = 2
-Price = 300
-FieldUse = OnPokemon
-Flags = Fling_20
-Description = Objeto que aumenta el Ataque Especial base de un Pokémon.
-#-------------------------------
 [CLEVERFEATHER]
 Name = Pluma Mente
 Pocket = 2
@@ -6099,6 +6013,24 @@ BPPrice = 1000
 Flags = Charm
 Description = Misterioso amuleto brillante que aumenta la probabilidad de encontrar Pokémon variocolores.
 #-------------------------------
+[INSIGNIABETO]
+Name = Insignia de abeto
+NamePlural = Insignias de abeto
+Pocket = 6
+Price = 0
+BPPrice = 1000
+Flags = Charm
+Description = Insignia de madera de roble que potencia el Ataque, Ataque especial y Velocidad de los Pokémon de tu equipo.
+#-------------------------------
+[INSIGNIAROBLE]
+Name = Insignia de roble
+NamePlural = Insignias de roble
+Pocket = 6
+Price = 0
+BPPrice = 1000
+Flags = Charm
+Description = Insignia de madera de roble que potencia el Ataque, Ataque especial y Velocidad de los Pokémon de tu equipo.
+#-------------------------------
 [CATCHINGCHARM]
 Name = Amuleto Captura
 NamePlural = Amuletos Captura
@@ -6323,69 +6255,6 @@ Flags = KeyItem
 FieldUse = OnPokemon
 Description = Antiguo libro de la región de Paldea que habla sobre especies de ensueño del futuro.
 #-------------------------------
-[HEALTHMOCHI]
-Name = Mochi Vigor
-NamePlural = Mochis Vigor
-Pocket = 2
-Price = 250
-FieldUse = OnPokemon
-Flags = Fling_20
-Description = Mochi preparado con bayas que aumenta en 10 EVs los PS de un Pokémon.
-#-------------------------------
-[MUSCLEMOCHI]
-Name = Mochi Músculo
-NamePlural = Mochis Músculo
-Pocket = 2
-Price = 250
-FieldUse = OnPokemon
-Flags = Fling_20
-Description = Mochi preparado con bayas que aumenta en 10 EVs el Ataque de un Pokémon.
-#-------------------------------
-[RESISTMOCHI]
-Name = Mochi Aguante
-NamePlural = Mochis Aguante
-Pocket = 2
-Price = 250
-FieldUse = OnPokemon
-Flags = Fling_20
-Description = Mochi preparado con bayas que aumenta en 10 EVs la Defensa de un Pokémon.
-#-------------------------------
-[GENIUSMOCHI]
-Name = Mochi Intelecto
-NamePlural = Mochis Intelecto
-Pocket = 2
-Price = 250
-FieldUse = OnPokemon
-Flags = Fling_20
-Description = Mochi preparado con bayas que aumenta en 10 EVs el At. Esp. de un Pokémon.
-#-------------------------------
-[CLEVERMOCHI]
-Name = Mochi Mente
-NamePlural = Mochis Mente
-Pocket = 2
-Price = 250
-FieldUse = OnPokemon
-Flags = Fling_20
-Description = Mochi preparado con bayas que aumenta en 10 EVs la Def. Esp. de un Pokémon.
-#-------------------------------
-[SWIFTMOCHI]
-Name = Mochi Ímpetu
-NamePlural = Mochis Ímpetu
-Pocket = 2
-Price = 250
-FieldUse = OnPokemon
-Flags = Fling_20
-Description = Mochi preparado con bayas que aumenta en 10 EVs la Velocidad de un Pokémon.
-#-------------------------------
-[FRESHSTARTMOCHI]
-Name = Mochi Reinicio
-NamePlural = Mochis Vigor
-Pocket = 2
-Price = 250
-FieldUse = OnPokemon
-Flags = Fling_20
-Description = Mochi preparado con bayas que reinicia todos los EVs un Pokémon.
-#-------------------------------
 [FAIRYFEATHER]
 Name = Pluma Feérica
 NamePlural = Plumas Feéricas
@@ -6533,3 +6402,229 @@ FieldUse = OnPokemon
 BattleUse = Direct
 Flags = KeyItem
 Description = Una flauta que permite despertar a un Pokémon dormido, es el único instrumento que sabes tocar.
+#-------------------------------
+[TERAORB]
+Name = Tera Orb
+NamePlural = Tera Orbs
+Pocket = 8
+Price = 0
+Flags = KeyItem,TeraOrb
+Description = An orb that holds the power to crystallize. When charged, it allows Pokémon to Terastallize.
+#-------------------------------
+[NORMALTERASHARD]
+Name = Teralito Normal
+NamePlural = Teralitos Normal
+Pocket = 1
+Price = 2000
+FieldUse = OnPokemon
+Flags = Fling_30,TeraShard_NORMAL
+Description = Esquirla que se forma muy raramente cuando la joya Teracristal de un Pokémon teracristalizado se quiebra tras derrotarlo.
+#-------------------------------
+[FIRETERASHARD]
+Name = Teralito Fuego
+NamePlural = Teralitos Fuego
+Pocket = 1
+Price = 2000
+FieldUse = OnPokemon
+Flags = Fling_30,TeraShard_FIRE
+Description = Esquirla que se forma muy raramente cuando la joya Teracristal de un Pokémon teracristalizado se quiebra tras derrotarlo.
+#-------------------------------
+[WATERTERASHARD]
+Name = Teralito Agua
+NamePlural = Teralitos Agua
+Pocket = 1
+Price = 2000
+FieldUse = OnPokemon
+Flags = Fling_30,TeraShard_WATER
+Description = Esquirla que se forma muy raramente cuando la joya Teracristal de un Pokémon teracristalizado se quiebra tras derrotarlo.
+#-------------------------------
+[ELECTRICTERASHARD]
+Name = Teralito Eléctrico
+NamePlural = Teralitos Eléctrico 
+Pocket = 1
+Price = 2000
+FieldUse = OnPokemon
+Flags = Fling_30,TeraShard_ELECTRIC
+Description = Esquirla que se forma muy raramente cuando la joya Teracristal de un Pokémon teracristalizado se quiebra tras derrotarlo.
+#-------------------------------
+[GRASSTERASHARD]
+Name = Teralito Planta
+NamePlural = Teralitos Planta
+Pocket = 1
+Price = 2000
+FieldUse = OnPokemon
+Flags = Fling_30,TeraShard_GRASS
+Description = Esquirla que se forma muy raramente cuando la joya Teracristal de un Pokémon teracristalizado se quiebra tras derrotarlo.
+#-------------------------------
+[ICETERASHARD]
+Name = Teralito Hielo
+NamePlural = Teralitos Hielo
+Pocket = 1
+Price = 2000
+FieldUse = OnPokemon
+Flags = Fling_30,TeraShard_ICE
+Description = Esquirla que se forma muy raramente cuando la joya Teracristal de un Pokémon teracristalizado se quiebra tras derrotarlo.
+#-------------------------------
+[FIGHTINGTERASHARD]
+Name = Teralito Lucha
+NamePlural = Teralitos Lucha
+Pocket = 1
+Price = 2000
+FieldUse = OnPokemon
+Flags = Fling_30,TeraShard_FIGHTING
+Description = On rare occasions, these shasrds form when a Tera Pokémon falls in battle and its Tera Jewel shatters.
+#-------------------------------
+[POISONTERASHARD]
+Name = Teralito Veneno
+NamePlural = Teralitos Veneno
+Pocket = 1
+Price = 2000
+FieldUse = OnPokemon
+Flags = Fling_30,TeraShard_POISON
+Description = Esquirla que se forma muy raramente cuando la joya Teracristal de un Pokémon teracristalizado se quiebra tras derrotarlo.
+#-------------------------------
+[GROUNDTERASHARD]
+Name = Teralito Tierra
+NamePlural = Teralitos Tierra
+Pocket = 1
+Price = 2000
+FieldUse = OnPokemon
+Flags = Fling_30,TeraShard_GROUND
+Description = Esquirla que se forma muy raramente cuando la joya Teracristal de un Pokémon teracristalizado se quiebra tras derrotarlo.
+#-------------------------------
+[FLYINGTERASHARD]
+Name = Teralito Volador
+NamePlural = Teralitos Volador
+Pocket = 1
+Price = 2000
+FieldUse = OnPokemon
+Flags = Fling_30,TeraShard_FLYING
+Description = Esquirla que se forma muy raramente cuando la joya Teracristal de un Pokémon teracristalizado se quiebra tras derrotarlo.
+#-------------------------------
+[PSYCHICTERASHARD]
+Name = Teralito Psíquico
+NamePlural = Teralitos Psíquico
+Pocket = 1
+Price = 2000
+FieldUse = OnPokemon
+Flags = Fling_30,TeraShard_PSYCHIC
+Description = Esquirla que se forma muy raramente cuando la joya Teracristal de un Pokémon teracristalizado se quiebra tras derrotarlo.
+#-------------------------------
+[BUGTERASHARD]
+Name = Teralito Bicho
+NamePlural = Teralitos Bicho
+Pocket = 1
+Price = 2000
+FieldUse = OnPokemon
+Flags = Fling_30,TeraShard_BUG
+Description = Esquirla que se forma muy raramente cuando la joya Teracristal de un Pokémon teracristalizado se quiebra tras derrotarlo.
+#-------------------------------
+[ROCKTERASHARD]
+Name = Teralito Roca
+NamePlural = Teralitos Roca
+Pocket = 1
+Price = 2000
+FieldUse = OnPokemon
+Flags = Fling_30,TeraShard_ROCK
+Description = Esquirla que se forma muy raramente cuando la joya Teracristal de un Pokémon teracristalizado se quiebra tras derrotarlo.
+#-------------------------------
+[GHOSTTERASHARD]
+Name = Teralito Fantasma
+NamePlural = Teralitos Fantasma
+Pocket = 1
+Price = 2000
+FieldUse = OnPokemon
+Flags = Fling_30,TeraShard_GHOST
+Description = Esquirla que se forma muy raramente cuando la joya Teracristal de un Pokémon teracristalizado se quiebra tras derrotarlo.
+#-------------------------------
+[DRAGONTERASHARD]
+Name = Teralito Dragón 
+NamePlural = Teralitos Dragón
+Pocket = 1
+Price = 2000
+FieldUse = OnPokemon
+Flags = Fling_30,TeraShard_DRAGON
+Description = Esquirla que se forma muy raramente cuando la joya Teracristal de un Pokémon teracristalizado se quiebra tras derrotarlo.
+#-------------------------------
+[DARKTERASHARD]
+Name = Teralito Siniestro
+NamePlural = Teralitos Siniestro
+Pocket = 1
+Price = 2000
+FieldUse = OnPokemon
+Flags = Fling_30,TeraShard_DARK
+Description = Esquirla que se forma muy raramente cuando la joya Teracristal de un Pokémon teracristalizado se quiebra tras derrotarlo.
+#-------------------------------
+[STEELTERASHARD]
+Name = Teralito Acero
+NamePlural = Teralitos Acero
+Pocket = 1
+Price = 2000
+FieldUse = OnPokemon
+Flags = Fling_30,TeraShard_STEEL
+Description = Esquirla que se forma muy raramente cuando la joya Teracristal de un Pokémon teracristalizado se quiebra tras derrotarlo.
+#-------------------------------
+[FAIRYTERASHARD]
+Name = Teralito Hada 
+NamePlural = Teralitos Hada
+Pocket = 1
+Price = 2000
+FieldUse = OnPokemon
+Flags = Fling_30,TeraShard_FAIRY
+Description = Esquirla que se forma muy raramente cuando la joya Teracristal de un Pokémon teracristalizado se quiebra tras derrotarlo.
+#-------------------------------
+[STELLARTERASHARD]
+Name = Teralito Astral
+NamePlural = Teralitos Astral
+Pocket = 1
+Price = 2000
+FieldUse = OnPokemon
+Flags = Fling_30,TeraShard_STELLAR
+Description = Esquirla que se forma muy raramente cuando la joya Teracristal de un Pokémon teracristalizado se quiebra tras derrotarlo.
+#-------------------------------
+[MYSTERYTERAJEWEL]
+Name = Joya Teracristal mistierosa
+NamePlural = Joyas Teracristal mistierosas
+Pocket = 1
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_60,TeraShard_Random
+Description = Una joya Teracristal mistierosa. Su forma extraña hace dificil averiguar el teratipo al que va a cambiar el Pokémon.
+#-------------------------------
+[MASTERTERAJEWEL]
+Name = Master Tera Jewel
+NamePlural = Master Tera Jewels
+Pocket = 1
+Price = 100000
+FieldUse = OnPokemon
+Flags = Fling_60,TeraShard_Choose
+Description = Una joya teracristal perfecta. Puede desbloquear cualquier teratipo.
+# See the documentation on the wiki to learn how to edit this file.
+#-------------------------------
+[RAIDBAIT]
+Name = Pokécebo
+NamePlural = Pokécebo
+PortionName = un poco de Pokécebo
+PortionNamePlural = un poco de Pokécebo
+Pocket = 1
+Price = 100
+Flags = Fling_10
+Description = Una caja que contiene un tipo especial de cebo. Puede usarse para sacar Pokémon de un nido.
+#-------------------------------
+[PELUCAREGIA]
+Name = Peluca Regia
+NamePlural = Pelucas Regias
+Pocket = 1
+Price = 3000
+FieldUse = OnPokemon
+Flags = EvolutionStone,Fling_30
+Description = Perteneció a un importante noble, pero le sentaría mejor a un Pokémon.
+#-------------------------------
+[PLUMAEOLICA]
+Name = Pluma Eólica
+NamePlural = Plumas Eólicas
+Pocket = 1
+Price = 3000
+FieldUse = OnPokemon
+Flags = EvolutionStone,Fling_30
+Description = La pluma parece moverse siempre como si hubiera una ligera brisa.

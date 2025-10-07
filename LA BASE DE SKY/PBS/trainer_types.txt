@@ -656,10 +656,11 @@ Name = Daddy
 Gender = Male
 BaseMoney = 100
 #-------------------------------
-[PROFETA]
-Name = Profeta
+[MUSTIO]
+Name = Momia
 Gender = Male
 BaseMoney = 100
+BattleBGM = Battle Mustio
 #-------------------------------
 [PSICOPATA]
 Name = Aventurero

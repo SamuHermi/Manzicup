@@ -4,6 +4,11 @@ module Battle::CatchAndStoreMixin
   #=============================================================================
   def pbStorePokemon(pkmn)
     # Nickname the Pokémon (unless it's a Shadow Pokémon)
+    pkmn.get_evolutions(true).each do |evo|
+      if evo.get_evolutions(true).length == 0
+        Console.echo_li("Evolución posible: #{evo}")
+      end
+    end
     if !pkmn.shadowPokemon?
       if $PokemonSystem.givenicknames == 0 &&
          pbDisplayConfirm(_INTL("¿Quieres ponerle un mote a {1}?", pkmn.name))
@@ -11,6 +16,7 @@ module Battle::CatchAndStoreMixin
         pkmn.name = nickname
       end
     end
+    
     # Store the Pokémon
     if pbPlayer.party_full? && (@sendToBoxes == 0 || @sendToBoxes == 2)   # Ask/must add to party
       cmds = [_INTL("Añadir al equipo"),

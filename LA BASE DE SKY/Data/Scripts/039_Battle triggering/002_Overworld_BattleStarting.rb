@@ -365,8 +365,10 @@ end
 # Wild battles
 #===============================================================================
 class WildBattle
+  
   # Used when walking in tall grass, hence the additional code.
   def self.start(*args, can_override: false)
+    setBattleRule("databoxStyle", :Basic)
     foe_party = WildBattle.generate_foes(*args)
     # Potentially call a different WildBattle.start-type method instead (for
     # roaming Pokémon, Safari battles, Bug Contest battles)
@@ -468,6 +470,7 @@ class TrainerBattle
     # $game_temp.waiting_trainer and end this method. That second NPC event will
     # then trigger and cause the battle to happen against this first trainer and
     # themselves.
+    setBattleRule("databoxStyle", :Basic)
     if !$game_temp.waiting_trainer && pbMapInterpreterRunning? && pbCanDoubleBattle?
       thisEvent = pbMapInterpreter.get_self
       # Find all other triggered trainer events

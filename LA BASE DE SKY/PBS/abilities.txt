@@ -1375,3 +1375,11 @@ Description = Aumenta el daño de los ataques de tipo Hielo.
 [TINTINEO]
 Name = Tintineo
 Description = Repica una campana para curar los estados del equipo cuando sale a combatir. Además, los movs. de sonido pasan a ser psíquicos y aumentan un 20% su potencia.
+#-------------------------------
+[STURDYROOT]
+Name = Raíz robusta
+Description = Los ataques que drenan PS recuperan más PS.
+#-------------------------------
+[SILVANO]
+Name = Silvano
+Description = Aumenta el daño de cualquier tipo un 30% en Campo de Hierba.

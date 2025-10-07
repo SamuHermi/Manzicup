@@ -468,6 +468,7 @@ Name = Criadero
 SnapEdges = true
 #-------------------------------
 [088]   # Gimnasio Genshin
+Name = Gimnasio Genshin
 SnapEdges = true
 #-------------------------------
 [089]   # Gimnasio AmongUs
@@ -564,3 +565,8 @@ BattleBack = velvet
 Name = Gimnasio Coliseo
 SnapEdges = true
 WildBattleBGM = Roar_Rathalos
+#-------------------------------
+[113]   # Gimnasio Peak
+Name = Gimnasio Peak
+SnapEdges = true
+BattleBack = PraderaFlores

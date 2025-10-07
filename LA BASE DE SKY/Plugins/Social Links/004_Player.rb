@@ -24,9 +24,8 @@ class Player < Trainer
     def bond_effects
         if !@bond_effects
             @bond_effects = {
-                :EXP    => [],
-                :Shiny  => [],
-                :MOVE  => []
+                :EXP    => [1],
+                :Shiny  => [1]
             }
         end
         return @bond_effects
@@ -48,12 +47,6 @@ class Player < Trainer
                 rolls = bond[1] if pkmn.hasType?(bond[0]) && (rolls.nil? || bond[1] > rolls)
             end
             return rolls
-        when :MOVE
-            power = nil
-            array.each do |bond|
-                rate = bond[1] if pkmn.pbHasType?(bond[0]) && (power.nil? || bond[1] > power)
-            end
-            return rate
         end
 
     end

@@ -293,6 +293,28 @@ MidbattleHandlers.add(:midbattle_scripts, :combate_moridon,
   }
 )
 
+MidbattleHandlers.add(:midbattle_scripts, :combate_mustio,
+  proc { |battle, idxBattler, idxTarget, trigger|
+    scene = battle.scene
+    battler = battle.battlers[idxBattler]
+    case trigger
+    #---------------------------------------------------------------------------
+    # Introduction text explaining the event.
+    when "UserDealtCriticalHit_user"
+      scene.pbStartSpeech(1)
+      battle.pbDisplayPaused(_INTL("Buen golpe."))
+      scene.pbForceEndSpeech
+    when "AfterLastSendOut"
+      scene.pbStartSpeech(1)
+      battle.pbDisplayPaused(_INTL("¿Has considerado la posibilidad de que esto sea un malgasto de energía mortal?"))
+    when "UserNegatedMove_SHEDINJA" # Antes de que saque a su último Pokémon.
+      scene.pbStartSpeech(1)
+      battle.pbDisplayPaused(_INTL("Desgasta tus armas si así lo deseas."))
+      scene.pbForceEndSpeech    
+    end
+  }
+)
+
 MidbattleHandlers.add(:midbattle_scripts, :combate_knekro,
   proc { |battle, idxBattler, idxTarget, trigger|
     scene = battle.scene
@@ -300,10 +322,6 @@ MidbattleHandlers.add(:midbattle_scripts, :combate_knekro,
     case trigger
     #---------------------------------------------------------------------------
     # Introduction text explaining the event.
-    when "RoundStartCommand_1_player"
-      scene.pbStartSpeech(1)
-      battle.pbDisplayPaused(_INTL("No te enteras que soy el tercero del mundo, que soy mucho mejor que tú."))
-      scene.pbForceEndSpeech
     when "UserDealtCriticalHit_foe"
       scene.pbStartSpeech(1)
       battle.pbDisplayPaused(_INTL("Jeje, goz."))

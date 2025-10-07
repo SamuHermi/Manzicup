@@ -515,6 +515,7 @@ class Battle::Move::SwapSideEffects < Battle::Move
     @boolean_effects.each do |e|
       side0.effects[e], side1.effects[e] = side1.effects[e], side0.effects[e]
     end
+        @battle.scene.pbUpdateHazardSprites if @battle.scene.respond_to?(:pbUpdateHazardSprites)
     @battle.pbDisplay(_INTL("¡{1} ha intercambiado los efectos del campo de combate!", user.pbThis))
   end
 end

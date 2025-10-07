@@ -94,7 +94,6 @@ class Battle::Scene::Animation::BattlerManziForm < Battle::Scene::Animation
     }
     @cry_file = GameData::Species.cry_filename(@primal[:species], @primal[:form])
     trainer = @battle.pbGetOwnerFromBattlerIndex(@idxBattler)
-    Console.echo_li(trainer.trainer_type.to_s)
     @trainer_file = GameData::TrainerType.front_sprite_filename(trainer.trainer_type)
     case trainer.trainer_type
     when :ANA then @bg_color = MessageConfig::ANA_TEXT_COLOR

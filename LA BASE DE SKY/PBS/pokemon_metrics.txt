@@ -5621,7 +5621,7 @@ FrontSprite = 0,8
 ShadowSprite = 3,-9,2
 #-------------------------------
 [LUCHAUREO]
-BackSprite = 0,0
+BackSprite = 0,36
 FrontSprite = 0,17
 ShadowSprite = 0,0,0
 #-------------------------------
@@ -6028,3 +6028,8 @@ ShadowSprite = 0,0,0
 BackSprite = 0,0
 FrontSprite = 0,16
 ShadowSprite = 0,0,7
+#-------------------------------
+[DISCORD]
+BackSprite = 0,0
+FrontSprite = -14,46
+ShadowSprite = 0,0,-15

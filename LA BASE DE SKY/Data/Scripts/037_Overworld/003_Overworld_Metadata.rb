@@ -34,6 +34,7 @@ class PokemonGlobalMetadata
   attr_accessor :lastbattle      # Saved recording of a battle
   # Events
   attr_accessor :eventvars
+  attr_accessor :coinGenerator
   # Affecting the map
   attr_accessor :bridge
   attr_accessor :repel
@@ -88,6 +89,7 @@ class PokemonGlobalMetadata
     @challenge            = nil
     @lastbattle           = nil
     # Events
+    @coinGenerator        = nil
     @eventvars            = {}
     # Affecting the map
     @bridge               = 0
@@ -109,6 +111,7 @@ class PokemonGlobalMetadata
     @pokerusTime          = nil
     # Save file
     @safesave             = false
+    @total_level          = 0
   end
 
   def encounter_version=(value)

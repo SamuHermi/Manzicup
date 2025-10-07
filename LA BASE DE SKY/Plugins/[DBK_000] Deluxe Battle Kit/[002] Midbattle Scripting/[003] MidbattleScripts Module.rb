@@ -20,16 +20,26 @@ module MidbattleScripts
   # Demo for displaying each of the main triggers and when they activate.
   #-----------------------------------------------------------------------------
   DEMO_SPEECH = {
+    #---------------------------------------------------------------------------
+    # Round phases
     "RoundStartCommand_foe" => "Trigger: 'RoundStartCommand'\n({2}, {1})",
     "RoundStartAttack_foe"  => "Trigger: 'RoundStartAttack'\n({2}, {1})",
     "RoundEnd_foe"          => "Trigger: 'RoundEnd'\n({2}, {1})",
+    #---------------------------------------------------------------------------
+    # Battler turns
     "TurnStart_foe"         => "Trigger: 'TurnStart'\n({2}, {1})",
     "TurnEnd_foe"           => "Trigger: 'TurnEnd'\n({2}, {1})",
+    #---------------------------------------------------------------------------
+    # Item usage
     "BeforeItemUse"         => "Trigger: 'BeforeItemUse'\n({2}, {1})",
     "AfterItemUse"          => "Trigger: 'AfterItemUse'\n({2}, {1})",
+    #---------------------------------------------------------------------------
+    # Wild capture
     "BeforeCapture"         => "Trigger: 'BeforeCapture'\n({2}, {1})",
     "AfterCapture"          => "Trigger: 'AfterCapture'\n({2}, {1})",
     "FailedCapture"         => "Trigger: 'FailedCapture'\n({2}, {1})",
+    #---------------------------------------------------------------------------
+    # Switching
     "BeforeSwitchOut"       => "Trigger: 'BeforeSwitchOut'\n({2}, {1})",
     "BeforeSwitchIn"        => "Trigger: 'BeforeSwitchIn'\n({2}, {1})",
     "BeforeLastSwitchIn"    => "Trigger: 'BeforeLastSwitchIn'\n({2}, {1})",
@@ -37,10 +47,14 @@ module MidbattleScripts
     "AfterLastSwitchIn"     => "Trigger: 'AfterLastSwitchIn'\n({2}, {1})",
     "AfterSendOut"          => "Trigger: 'AfterSendOut'\n({2}, {1})",
     "AfterLastSendOut"      => "Trigger: 'AfterLastSendOut'\n({2}, {1})",
+    #---------------------------------------------------------------------------
+    # Megas & Primals
     "BeforeMegaEvolution"   => "Trigger: 'BeforeMegaEvolution'\n({2}, {1})",
     "AfterMegaEvolution"    => "Trigger: 'AfterMegaEvolution'\n({2}, {1})",
     "BeforePrimalReversion" => "Trigger: 'BeforePrimalReversion'\n({2}, {1})",
     "AfterPrimalReversion"  => "Trigger: 'AfterPrimalReversion'\n({2}, {1})",
+    #---------------------------------------------------------------------------
+    # Move usage
     "BeforeMove"            => "Trigger: 'BeforeMove'\n({2}, {1})",
     "BeforeDamagingMove"    => "Trigger: 'BeforeDamagingMove'\n({2}, {1})",
     "BeforePhysicalMove"    => "Trigger: 'BeforePhysicalMove'\n({2}, {1})",
@@ -51,6 +65,8 @@ module MidbattleScripts
     "AfterPhysicalMove"     => "Trigger: 'AfterPhysicalMove'\n({2}, {1})",
     "AfterSpecialMove"      => "Trigger: 'AfterSpecialMove'\n({2}, {1})",
     "AfterStatusMove"       => "Trigger: 'AfterStatusMove'\n({2}, {1})",
+    #---------------------------------------------------------------------------
+    # Damage results
     "UserDealtDamage"       => "Trigger: 'UserDealtDamage'\n({2}, {1})",
     "UserDamagedSub"        => "Trigger: 'UserDamagedSub'\n({2}, {1})",
     "UserBrokeSub"          => "Trigger: 'UserBrokeSub'\n({2}, {1})",
@@ -75,13 +91,15 @@ module MidbattleScripts
     "TargetHPLow"           => "Trigger: 'TargetHPLow'\n({2}, {1})",
     "LastTargetHPHalf"      => "Trigger: 'LastTargetHPHalf'\n({2}, {1})",
     "LastTargetHPLow"       => "Trigger: 'LastTargetHPLow'\n({2}, {1})",
-    "BattlerFainted"        => "Trigger: 'BattlerFainted'\n({2}, {1})",
-    "LastBattlerFainted"    => "Trigger: 'LastBattlerFainted'\n({2}, {1})",
-    "BattlerReachedHPCap"   => "Trigger: 'BattlerReachedHPCap'\n({2}, {1})",
+    #---------------------------------------------------------------------------
+    # Battler condition
     "BattlerHPRecovered"    => "Trigger: 'BattlerHPRecovered'\n({2}, {1})",
     "BattlerHPFull"         => "Trigger: 'BattlerHPFull'\n({2}, {1})",
     "BattlerHPReduced"      => "Trigger: 'BattlerHPReduced'\n({2}, {1})",
     "BattlerHPCritical"     => "Trigger: 'BattlerHPCritical'\n({2}, {1})",
+    "BattlerFainted"        => "Trigger: 'BattlerFainted'\n({2}, {1})",
+    "LastBattlerFainted"    => "Trigger: 'LastBattlerFainted'\n({2}, {1})",
+    "BattlerReachedHPCap"   => "Trigger: 'BattlerReachedHPCap'\n({2}, {1})",
     "BattlerStatusChange"   => "Trigger: 'BattlerStatusChange'\n({2}, {1})",
     "BattlerStatusCured"    => "Trigger: 'BattlerStatusCured'\n({2}, {1})",
     "BattlerConfusionStart" => "Trigger: 'BattlerConfusionStart'\n({2}, {1})",
@@ -91,11 +109,15 @@ module MidbattleScripts
     "BattlerStatRaised"     => "Trigger: 'BattlerStatRaised'\n({2}, {1})",
     "BattlerStatLowered"    => "Trigger: 'BattlerStatLowered'\n({2}, {1})",
     "BattlerMoveZeroPP"     => "Trigger: 'BattlerMoveZeroPP'\n({2}, {1})",
+    #---------------------------------------------------------------------------
+    # End of effects
     "WeatherEnded"          => "Trigger: 'WeatherEnded'\n({2}, {1})",
     "TerrainEnded"          => "Trigger: 'TerrainEnded'\n({2}, {1})",
     "FieldEffectEnded"      => "Trigger: 'FieldEffectEnded'\n({2}, {1})",
     "TeamEffectEnded"       => "Trigger: 'TeamEffectEnded'\n({2}, {1})",
     "BattlerEffectEnded"    => "Trigger: 'BattlerEffectEnded'\n({2}, {1})",
+    #---------------------------------------------------------------------------
+    # End of battle
     "BattleEnd"             => "Trigger: 'BattleEnd'\n({2}, {1})",
     "BattleEndWin"          => "Trigger: 'BattleEndWin'\n({2}, {1})",
     "BattleEndLoss"         => "Trigger: 'BattleEndLoss'\n({2}, {1})",
@@ -105,7 +127,7 @@ module MidbattleScripts
     "BattleEndFled"         => "Trigger: 'BattleEndFled'\n({2}, {1})",
     "BattleEndCapture"      => "Trigger: 'BattleEndCapture'\n({2}, {1})"
   } 
-  
+
   #-----------------------------------------------------------------------------
   # Demo trainer speech when triggering Mega Evolution.
   #-----------------------------------------------------------------------------
@@ -206,7 +228,6 @@ module MidbattleScripts
       "battlerStatus"  => :NONE,
       "battlerAbility" => [:MOTORDRIVE, true],
       "battlerItem"    => [:CELLBATTERY, "¡{1} equipó una Batería Celular que encontró en el electrodoméstico!"]
-      
     },
     #---------------------------------------------------------------------------
     # When Rotom's HP drops to 50% or lower, applies Charge, Magnet Rise, and Electric Terrain.
@@ -215,7 +236,7 @@ module MidbattleScripts
 	  "playAnim"       => [:CHARGE, :Self, :Self],
       "battlerEffects" => [
         [:Charge,     5, "¡{1} comenzó a cargar poder!"],
-        [:MagnetRise, 5, "¡{1} se elevó con electromagnetismo!"],        
+        [:MagnetRise, 5, "¡{1} se elevó con electromagnetismo!"],
       ],
       "changeTerrain"  => :Electric
     },
@@ -227,7 +248,6 @@ module MidbattleScripts
       "battlerStatus" => [:PARALYSIS, true]
     }
   }
-  
 
 ################################################################################
 # Demo scenario vs. Rocket Grunt in a collapsing cave.

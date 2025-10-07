@@ -138,7 +138,7 @@ Battle::AbilityEffects::OnSwitchIn.add(:IMPOSTER,
     battle.scene.pbAnimateSubstitute(battler, :hide)
     battler.effects[PBEffects::TransformPokemon] = choice.pokemon
     battle.pbAnimation(:TRANSFORM, battler, choice)
-    battler.mosaicChange = true if defined?(battler.mosaicChange)
+    battler.battlerSprite.prepare_mosaic = true if defined?(battler.battlerSprite)
     battle.scene.pbChangePokemon(battler, choice.pokemon)
     battler.pbTransform(choice)
     battle.scene.pbAnimateSubstitute(battler, :show)
@@ -280,12 +280,55 @@ Battle::AbilityEffects::OnTerrainChange.add(:MIMICRY,
   }
 )
 
+#===============================================================================
+# Perish Body
+#===============================================================================
+# Fails when used in a Raid battle, or on targets with boss immunity.
+#-------------------------------------------------------------------------------
+Battle::AbilityEffects::OnBeingHit.add(:PERISHBODY,
+  proc { |ability, user, target, move, battle|
+    next if !move.pbContactMove?(user)
+    next if user.fainted?
+    next if battle.raidBattle?
+    next if target.hasBossImmunity?(:OHKO)
+    next if user.effects[PBEffects::PerishSong] > 0 || target.effects[PBEffects::PerishSong] > 0
+    battle.pbShowAbilitySplash(target)
+    if user.affectedByContactEffect?(Battle::Scene::USE_ABILITY_SPLASH)
+      user.effects[PBEffects::PerishSong] = 4
+      user.effects[PBEffects::PerishSongUser] = target.index
+      target.effects[PBEffects::PerishSong] = 4
+      target.effects[PBEffects::PerishSongUser] = target.index
+      if Battle::Scene::USE_ABILITY_SPLASH
+        battle.pbDisplay(_INTL("Both Pokémon will faint in three turns!"))
+      else
+        battle.pbDisplay(_INTL("Both Pokémon will faint in three turns because of {1}'s {2}!",
+           target.pbThis(true), target.abilityName))
+      end
+    end
+    battle.pbHideAbilitySplash(target)
+  }
+)
 
 ################################################################################
 #
 # Moves
 #
 ################################################################################
+
+#===============================================================================
+# Fixed damage moves (Sonic Boom, Night Shade, etc.)
+#===============================================================================
+# Damage dealt is reduced on targets behind a Raid shield.
+#-------------------------------------------------------------------------------
+class Battle::Move::FixedDamageMove < Battle::Move
+  def pbCalcDamage(user, target, numTargets = 1)
+    target.damageState.critical   = false
+    calc_dmg = pbFixedDamage(user, target)
+    calc_dmg /= 5 if target.hasRaidShield?
+    target.damageState.calcDamage = calc_dmg
+    target.damageState.calcDamage = 1 if target.damageState.calcDamage < 1
+  end
+end
 
 #===============================================================================
 # Endeavor
@@ -301,18 +344,9 @@ end
 #===============================================================================
 # Super Fang, Nature's Madness, etc.
 #===============================================================================
-# Fails when used on a Raid boss.
 # Damage dealt is based on the target's non-boosted HP.
 #-------------------------------------------------------------------------------
 class Battle::Move::FixedDamageHalfTargetHP < Battle::Move::FixedDamageMove
-  def pbFailsAgainstTarget?(user, target, show_message)
-    if target.isRaidBoss?
-      @battle.pbDisplay(_INTL("¡Pero falló!")) if show_message
-      return true
-    end
-    return false
-  end
-  
   def pbFixedDamage(user, target)
     return (target.real_hp / 2.0).round
   end
@@ -526,8 +560,8 @@ end
 #-------------------------------------------------------------------------------
 class Battle::Move::LowerPPOfTargetLastMoveBy3 < Battle::Move
   def pbAdditionalEffect(user, target)
-    return if target.pokemon.immunities.include?(:PPLOSS)
     return if target.fainted? || target.damageState.substitute
+    return if target.pokemon.immunities.include?(:PPLOSS)
     return if !target.lastRegularMoveUsed
     showMsg = false
     if target.powerMoveIndex >= 0
@@ -563,7 +597,7 @@ end
 class Battle::Move::DisableTargetSoundMoves < Battle::Move
   alias dx_pbAdditionalEffect pbAdditionalEffect
   def pbAdditionalEffect(user, target)
-    return if target.pokemon.immunities.include?(:DISABLE)
+    return if !target.fainted? && target.pokemon.immunities.include?(:DISABLE)
     dx_pbAdditionalEffect(user, target)
   end
 end
@@ -616,7 +650,7 @@ class Battle::Move::TransformUserIntoTarget < Battle::Move
   def pbShowAnimation(id, user, targets, hitNum = 0, showAnimation = true)
     super
     user.effects[PBEffects::TransformPokemon] = targets[0].pokemon
-    user.mosaicChange = true if defined?(user.mosaicChange)
+    user.battlerSprite.prepare_mosaic = true if defined?(user.battlerSprite)
     @battle.scene.pbChangePokemon(user, targets[0].pokemon)
     @battle.scene.pbAnimateSubstitute(user, :show)
   end
@@ -625,16 +659,12 @@ end
 #===============================================================================
 # Horn Drill, Guillotine
 #===============================================================================
-# Fails on targets with boss immunity or Dynamax.
+# Fails on targets with boss immunity or under the effects of Dynamax.
 #-------------------------------------------------------------------------------
 class Battle::Move::OHKO < Battle::Move::FixedDamageMove
   alias dx_pbFailsAgainstTarget? pbFailsAgainstTarget?
   def pbFailsAgainstTarget?(user, target, show_message)
-    if target.pokemon.immunities.include?(:OHKO)
-      @battle.pbDisplay(_INTL("¡{1} es inmune a ataques de KO directo!", target.pbThis)) if show_message
-      return true
-    end
-    if target.dynamax?
+    if target.hasBossImmunity?(:OHKO) || target.dynamax?
       @battle.pbDisplay(_INTL("¡No afecta a {1}!", target.pbThis)) if show_message
       return true
     end
@@ -722,12 +752,13 @@ end
 #===============================================================================
 # Self-Destruct, Explosion, Misty Explosion
 #===============================================================================
-# Fails when used by those with boss immunity. Ensures fainting even with boosted HP.
+# Fails when used by those with boss immunity. 
+# Ensures fainting even with boosted HP.
 #-------------------------------------------------------------------------------
 class Battle::Move::UserFaintsExplosive < Battle::Move
   alias dx_pbMoveFailed? pbMoveFailed?
   def pbMoveFailed?(user, targets)
-    if user.pokemon.immunities.include?(:SELFKO)
+    if user.hasBossImmunity?(:SELFKO)
       @battle.pbDisplay(_INTL("¡Pero falló!"))
       return true
     end
@@ -745,11 +776,12 @@ end
 #===============================================================================
 # Final Gambit
 #===============================================================================
-# Fails when used by those with boss immunity. Ensures fainting even with boosted HP.
+# Fails when used by those with boss immunity. 
+# Ensures fainting even with boosted HP.
 #-------------------------------------------------------------------------------
 class Battle::Move::UserFaintsFixedDamageUserHP < Battle::Move::FixedDamageMove
   def pbMoveFailed?(user, targets)
-    if user.pokemon.immunities.include?(:SELFKO)
+    if user.hasBossImmunity?(:SELFKO)
       @battle.pbDisplay(_INTL("¡Pero falló!"))
       return true
     end
@@ -767,11 +799,12 @@ end
 #===============================================================================
 # Memento
 #===============================================================================
-# Fails when used by those with boss immunity. Ensures fainting even with boosted HP.
+# Fails when used by those with boss immunity. 
+# Ensures fainting even with boosted HP.
 #-------------------------------------------------------------------------------
 class Battle::Move::UserFaintsLowerTargetAtkSpAtk2 < Battle::Move::TargetMultiStatDownMove
   def pbMoveFailed?(user, targets)
-    if user.pokemon.immunities.include?(:SELFKO)
+    if user.hasBossImmunity?(:SELFKO)
       @battle.pbDisplay(_INTL("¡Pero falló!"))
       return true
     end
@@ -789,12 +822,13 @@ end
 #===============================================================================
 # Healing Wish
 #===============================================================================
-# Fails when used by those with boss immunity. Ensures fainting even with boosted HP.
+# Fails when used by those with boss immunity. 
+# Ensures fainting even with boosted HP.
 #-------------------------------------------------------------------------------
 class Battle::Move::UserFaintsHealAndCureReplacement < Battle::Move
   alias dx_pbMoveFailed? pbMoveFailed?
   def pbMoveFailed?(user, targets)
-    if user.pokemon.immunities.include?(:SELFKO)
+    if user.hasBossImmunity?(:SELFKO)
       @battle.pbDisplay(_INTL("¡Pero falló!"))
       return true
     end
@@ -813,12 +847,13 @@ end
 #===============================================================================
 # Lunar Dance
 #===============================================================================
-# Fails when used by those with boss immunity. Ensures fainting even with boosted HP.
+# Fails when used by those with boss immunity. 
+# Ensures fainting even with boosted HP.
 #-------------------------------------------------------------------------------
 class Battle::Move::UserFaintsHealAndCureReplacementRestorePP < Battle::Move
   alias dx_pbMoveFailed? pbMoveFailed?
   def pbMoveFailed?(user, targets)
-    if user.pokemon.immunities.include?(:SELFKO)
+    if user.hasBossImmunity?(:SELFKO)
       @battle.pbDisplay(_INTL("¡Pero falló!"))
       return true
     end
@@ -837,18 +872,18 @@ end
 #===============================================================================
 # Perish Song
 #===============================================================================
-# Fails on targets with boss immunity, or if used while a Raid boss is on the field.
+# Fails when used in a Raid battle, or on targets with boss immunity.
 #-------------------------------------------------------------------------------
 class Battle::Move::StartPerishCountsForAllBattlers < Battle::Move
   def pbMoveFailed?(user, targets)
-    if user.isRaidBoss? || user.pbDirectOpposing.isRaidBoss?
+    if @battle.raidBattle?
       @battle.pbDisplay(_INTL("¡Pero falló!"))
       return true
     end
     failed = true
     targets.each do |b|
       next if b.effects[PBEffects::PerishSong] > 0
-      next if b.pokemon.immunities.include?(:OHKO)
+      next if b.hasBossImmunity?(:OHKO)
       failed = false
       break
     end
@@ -861,7 +896,7 @@ class Battle::Move::StartPerishCountsForAllBattlers < Battle::Move
 
   def pbFailsAgainstTarget?(user, target, show_message)
     return true if target.effects[PBEffects::PerishSong] > 0
-    return true if target.pokemon.immunities.include?(:OHKO)
+    return true if target.hasBossImmunity?(:OHKO)
     return false
   end
 end
@@ -869,12 +904,12 @@ end
 #===============================================================================
 # Destiny Bond
 #===============================================================================
-# Fails when used by a Raid boss.
+# Fails when used in a Raid battle, or on targets with boss immunity.
 #-------------------------------------------------------------------------------
 class Battle::Move::AttackerFaintsIfUserFaints < Battle::Move
   alias dx_pbMoveFailed? pbMoveFailed?
   def pbMoveFailed?(user, targets)
-    if user.isRaidBoss?
+    if @battle.raidBattle? || targets.any? { |b| b.hasBossImmunity?(:OHKO) }
       @battle.pbDisplay(_INTL("¡Pero falló!"))
       return true
     end
@@ -885,12 +920,13 @@ end
 #===============================================================================
 # Substitute
 #===============================================================================
-# Fails when used by a Raid boss. Sacrificed HP isn't scaled down for boosted HP. 
+# Fails when used by a Raid boss or by users behind a Raid shield.
+# Sacrificed HP isn't scaled down for boosted HP. 
 #-------------------------------------------------------------------------------
 class Battle::Move::UserMakeSubstitute < Battle::Move
   alias dx_pbMoveFailed? pbMoveFailed?
   def pbMoveFailed?(user, targets)
-    if user.isRaidBoss?
+    if user.hasBossImmunity?
       @battle.pbDisplay(_INTL("¡Pero falló!"))
       return true
     end
@@ -919,6 +955,9 @@ class Battle::Move::UserConsumeTargetBerry < Battle::Move
     itemName = target.itemName
     user.setBelched
     target.pbRemoveItem
+    if defined?(target.stolenItemData) && target.initialItem == item
+      @battle.initialItems[target.index & 1][target.pokemonIndex] = nil
+    end
     @battle.pbDisplay(_INTL("¡{1} robó y se comió la {2}!", user.pbThis, itemName))
     user.pbHeldItemTriggerCheck(item.id, false)
     user.pbSymbiosis
@@ -951,7 +990,7 @@ end
 class Battle::Move::SwitchOutTargetStatusMove < Battle::Move
   alias dx_pbFailsAgainstTarget? pbFailsAgainstTarget?
   def pbFailsAgainstTarget?(user, target, show_message)
-    if target.dynamax? || target.isRaidBoss? || target.pokemon.immunities.include?(:ESCAPE)
+    if target.dynamax? || target.hasBossImmunity?(:ESCAPE)
       @battle.pbDisplay(_INTL("¡Pero falló!")) if show_message
       return true
     end
@@ -967,7 +1006,7 @@ end
 class Battle::Move::SwitchOutTargetDamagingMove < Battle::Move
   alias dx_pbEffectAgainstTarget pbEffectAgainstTarget
   def pbEffectAgainstTarget(user, target)
-    return if target.dynamax? || target.isRaidBoss? || target.pokemon.immunities.include?(:ESCAPE)
+    return if target.dynamax? || target.hasBossImmunity?(:ESCAPE)
     dx_pbEffectAgainstTarget(user, target)
   end
 end
@@ -1004,12 +1043,13 @@ end
 #===============================================================================
 # Sky Drop
 #===============================================================================
-# Fails to work on Dynamax targets or if a Raid Boss is on the field.
+# Fails to work during Raid battles.
+# Fails on targets who are Dynamaxed or behind a Raid shield.
 #-------------------------------------------------------------------------------
 class Battle::Move::TwoTurnAttackInvulnerableInSkyTargetCannotAct < Battle::Move::TwoTurnMove
   alias dx_pbFailsAgainstTarget? pbFailsAgainstTarget?
   def pbFailsAgainstTarget?(user, target, show_message)
-    if target.dynamax? || target.isRaidBoss?
+    if @battle.raidBattle? || target.hasRaidShield? || target.dynamax?
       @battle.pbDisplay(_INTL("¡Pero falló!")) if show_message
       return true
     end

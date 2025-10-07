@@ -177,17 +177,12 @@ MultipleForms.register(:KYOGRE, {
   }
 })
 
-MultipleForms.register(:AMPHAROS, {
+MultipleForms.register(:VOLCARONA, {
   "getManziForm" => proc { |pkmn|
-    next 2
+    next 1
   },
   "getUnmanziForm" => proc { |pkmn|
-    next 4
-  },
-  "getMegaForm" => proc { |pkmn|
-    next 3 if pkmn.form == 2
-    next 1 if pkmn.form == 0
-    next nil
+    next 3
   }
 })
 

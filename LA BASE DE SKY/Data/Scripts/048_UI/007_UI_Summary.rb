@@ -474,7 +474,7 @@ class PokemonSummary_Scene
       w = @pokemon.exp_fraction * 128
       w = ((w / 2).round) * 2
       pbDrawImagePositions(overlay,
-                           [["Graphics/UI/Summary/overlay_exp", 380+16, 372+47-2-37, 0, 0, w, 6]])
+                           [["Graphics/UI/Summary/overlay_exp", 295, 426, 0, 0, w, 6]])
     end
   end
 

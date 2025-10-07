@@ -164,7 +164,7 @@ module BagScreenWiInParty
  # 0 para solo naranja (estilo de generaciones más recientes);
  # 1 para un color diferente según el género del jugador (estilo BW);
  # 2 para un color diferente para cada bolsillo (estilo HGSS).
-  BGSTYLE = 0
+  BGSTYLE = 2
 
 # Si deseas que aparezca un icono de Pokérus y/o un icono brillante, respectivamente
 # (true o false):

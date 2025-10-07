@@ -301,6 +301,16 @@ class Battle
     return @player[idxTrainer].name   # Player
   end
 
+  def pbGetOwnerType(idxBattler)
+    idxTrainer = pbGetOwnerIndexFromBattlerIndex(idxBattler)
+    #Console.echo_li("idxTrainer: #{idxTrainer}")
+    
+    
+    return @opponent[idxTrainer].trainer_type if opposes?(idxBattler) && !wildBattle?  # Opponent
+    return @player[idxTrainer].trainer_type if !opposes?(idxBattler)  # Player
+    return ""
+  end
+
   def pbGetOwnerItems(idxBattler)
     if opposes?(idxBattler)
       return [] if !@items

@@ -4,7 +4,6 @@
 # included with other battle mechanics added by supported plugins.
 #===============================================================================
 
-
 #-------------------------------------------------------------------------------
 # Game stat tracking for wild Mega battles.
 #-------------------------------------------------------------------------------
@@ -50,6 +49,8 @@ end
 # Updates to Mega Evolution battle scripts.
 #-------------------------------------------------------------------------------
 class Battle
+  attr_reader :mega_rings
+
   def pbAttackPhaseMegaEvolution
     pbPriority.each do |b|
       next unless @choices[b.index][0] == :UseMove && !b.fainted?
@@ -66,10 +67,8 @@ class Battle
   end
 
   def pbCanMegaEvolve?(idxBattler)
-    #Console.echo_li("Guau")    
     battler = @battlers[idxBattler]
     return false if $game_switches[Settings::NO_MEGA_EVOLUTION]
-    
     return false if !battler.hasMega?
     return true if $DEBUG && Input.press?(Input::CTRL) && !battler.wild?
     return false if battler.effects[PBEffects::SkyDrop] >= 0
@@ -133,7 +132,6 @@ class Battle
     else 
       if Settings::SHOW_MEGA_ANIM && $PokemonSystem.battlescene == 0
         @scene.pbShowMegaEvolution(battler.index)
-
         battler.pokemon.makeMega
         battler.form_update(true)
       else
@@ -151,14 +149,11 @@ end
 #-------------------------------------------------------------------------------
 class Battle::Battler
   def hasMega?
-    #Console.echo_li("hasMega? Mega Evolution\n")
     return false if shadowPokemon? || @effects[PBEffects::Transform]
     return false if wild? && @battle.wildBattleMode != :mega
     return false if @battle.raidBattle? && @battle.raidRules[:style] != :Basic
     return false if !getActiveState.nil?
-    #Console.echo_li("Holi")
     return false if hasEligibleAction?(:primal, :zmove, :ultra, :zodiac)
-
     return @pokemon&.hasMegaForm?
   end
   
@@ -224,19 +219,18 @@ class Battle::Scene::Animation::BattlerMegaEvolve < Battle::Scene::Animation
     #---------------------------------------------------------------------------
     # Gets trainer data from battler index (non-wild only).
     if !@battler.wild?
-      items = []
       trainer_item = :MEGARING
       trainer = @battle.pbGetOwnerFromBattlerIndex(idxBattler)
-      @trainer_file = GameData::TrainerType.front_sprite_filename(trainer.trainer_type)
-      GameData::Item.each { |item| items.push(item.id) if item.has_flag?("MegaRing") }
       if @battle.pbOwnedByPlayer?(idxBattler)
-        items.each do |item|
+        @trainer_file = GameData::TrainerType.player_front_sprite_filename(trainer.trainer_type)
+        @battle.mega_rings.each do |item|
           next if !$bag.has?(item)
           trainer_item = item
         end
       else
+	    @trainer_file = GameData::TrainerType.front_sprite_filename(trainer.trainer_type)
         trainer_items = @battle.pbGetOwnerItems(idxBattler)
-        items.each do |item|
+        @battle.mega_rings.each do |item|
           next if !trainer_items&.include?(item)
           trainer_item = item
         end

@@ -218,6 +218,7 @@ class Battle::Battler
   def dynamax?;        return false; end
   def style?;          return false; end
   def tera?;           return false; end
+  def hasZCrystal?;    return false; end
   def tera_form?;      return false; end
   def celestial?;      return false; end
   
@@ -228,6 +229,7 @@ class Battle::Battler
   def hasTera?;        return false; end
   def hasZodiacPower?; return false; end
   def isRivalSpecies?(arg); return false; end
+  def hasRaidShield?;  return false; end
 end
 
 class Battle::FakeBattler

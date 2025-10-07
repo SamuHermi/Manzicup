@@ -2,6 +2,12 @@ class Battle::Scene::PokemonDataBox
 
   alias __types__initializeOtherGraphics initializeOtherGraphics unless method_defined?(:__types__initializeOtherGraphics)  
   def initializeOtherGraphics(*args)
+    initGraph
+    # Llama al método original para continuar la inicialización
+    __types__initializeOtherGraphics(*args)
+  end
+  
+  def initGraph
     @types_x = (@battler.opposes?(0)) ? 210 : 0 # 1era variable oponente 2da variable jugador
     @types_bitmap = AnimatedBitmap.new("Graphics/UI/Battle/types_ico")
     @types_sprite = Sprite.new(viewport)
@@ -21,11 +27,8 @@ class Battle::Scene::PokemonDataBox
     @types_sprite.y = @types_y
   
     @sprites["types_sprite"] = @types_sprite
-  
-    # Llama al método original para continuar la inicialización
-    __types__initializeOtherGraphics(*args)
   end
-  
+
   alias __types__dispose dispose unless method_defined?(:__types__dispose)  
   def dispose(*args)
     __types__dispose(*args)
@@ -35,7 +38,9 @@ class Battle::Scene::PokemonDataBox
   alias __types__set_x x= unless method_defined?(:__types__set_x)
   def x=(value)
     __types__set_x(value)
-    extra = (@battler.opposes?(0)) ? 0 : -21
+    extra = (@battler.opposes?(0)) ? 70 : -21
+    #Console.echo_li("Style?: " + @style.nil?.to_s)
+    extra = @databoxBitmap.width/2 if (@battler.opposes?(0) && @style.id == :Long)
     @types_sprite.x = value + @types_x + 10 + extra
   end
 
@@ -55,12 +60,6 @@ class Battle::Scene::PokemonDataBox
     @types_sprite.y = value + @types_y + extra
   end
 
-  alias __types__set_z z= unless method_defined?(:__types__set_z)
-  def z=(value)
-    __types__set_z(value)
-    @types_sprite.z = value + 1
-  end
-
   alias __databox__refresh refresh unless method_defined?(:__databox__refresh)
   def refresh
     # self.bitmap.clear
@@ -70,6 +69,10 @@ class Battle::Scene::PokemonDataBox
   end
 
   def draw_type_icons
+    Console.echo_li("Dibujando tipos" + @types_sprite.nil?.to_s)
+    if @types_sprite.nil?
+      initGraph
+    end
     # Dibuja los tipos del Pokémon
     @types_sprite.bitmap.clear
     

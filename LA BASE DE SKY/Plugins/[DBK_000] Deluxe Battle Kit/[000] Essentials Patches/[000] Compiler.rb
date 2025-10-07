@@ -251,7 +251,7 @@ module PluginManager
   #-----------------------------------------------------------------------------
   # Used to ensure all plugins that rely on Deluxe Battle Kit are up to date.
   #-----------------------------------------------------------------------------
-  def self.plugin_check_DBK(version = "1.2.4")
+  def self.plugin_check_DBK(version = "1.2.9")
     if self.installed?("Deluxe Battle Kit", version, true)
       {"[DBK] Enhanced Battle UI"      => "2.0.6",
        "[DBK] SOS Battles"             => "1.0.9",
