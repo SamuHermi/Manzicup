@@ -42,6 +42,7 @@ module LevelScalingSettings
   INCLUDE_NON_NATURAL_EVOLUTIONS = true # Evolve all pokemon, even if it only evolves by a non natural method
   # If INCLUDE_NON_NATURAL_EVOLUTIONS is false, the script will only consider evolutions that use the methods in the NATURAL_EVOLUTION_METHODS array
   # (All conditions other than level for these evolutions are ignored)
+
   NATURAL_EVOLUTION_METHODS = [
     :Level,
     :LevelMale, :LevelFemale,
@@ -55,6 +56,6 @@ module LevelScalingSettings
   ]
 
   # The default evolution levels are used for all evolution methods that are not in the NATURAL_EVOLUTION_METHODS array
-  DEFAULT_FIRST_EVOLUTION_LEVEL = 20
-  DEFAULT_SECOND_EVOLUTION_LEVEL = 40
+  DEFAULT_FIRST_EVOLUTION_LEVEL = 40
+  DEFAULT_SECOND_EVOLUTION_LEVEL = 70
 end

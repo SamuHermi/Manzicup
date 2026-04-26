@@ -3,8 +3,7 @@
 #===============================================================================
 class PokemonBox
   attr_reader   :pokemon
-  attr_accessor :name
-  attr_accessor :background
+  attr_accessor :name, :background
 
   BOX_WIDTH  = 6
   BOX_HEIGHT = 5
@@ -18,33 +17,33 @@ class PokemonBox
   end
 
   def length
-    return @pokemon.length
+    @pokemon.length
   end
 
   def nitems
     ret = 0
-    @pokemon.each { |pkmn| ret += 1 if !pkmn.nil? }
-    return ret
+    @pokemon.each { |pkmn| ret += 1 unless pkmn.nil? }
+    ret
   end
 
   def full?
-    return nitems == self.length
+    nitems == length
   end
 
   def empty?
-    return nitems == 0
+    nitems == 0
   end
 
   def [](i)
-    return @pokemon[i]
+    @pokemon[i]
   end
 
   def []=(i, value)
     @pokemon[i] = value
   end
 
-  def each
-    @pokemon.each { |item| yield item }
+  def each(&block)
+    @pokemon.each(&block)
   end
 
   def clear
@@ -65,7 +64,7 @@ class PokemonStorage
   def initialize(maxBoxes = Settings::NUM_STORAGE_BOXES, maxPokemon = PokemonBox::BOX_SIZE)
     @boxes = []
     maxBoxes.times do |i|
-      @boxes[i] = PokemonBox.new(_INTL("Caja {1}", i + 1), maxPokemon)
+      @boxes[i] = PokemonBox.new(_INTL('Caja {1}', i + 1), maxPokemon)
       @boxes[i].background = i % BASICWALLPAPERQTY
     end
     @currentBox = 0
@@ -77,44 +76,46 @@ class PokemonStorage
   end
 
   def allWallpapers
-    return [
+    [
       # Basic wallpapers
-      _INTL("Bosque"),_INTL("Ciudad"),_INTL("Desierto"),_INTL("Sabana"),
-      _INTL("Risco"),_INTL("Volcán"),_INTL("Nieve"),_INTL("Cueva"),
-      _INTL("Playa"),_INTL("Mar"),_INTL("Río"),_INTL("Cielo"),
-      _INTL("Centro Pokémon"),_INTL("Máquina"),_INTL("Rosado"),_INTL("Simple"),
+      _INTL('Bosque'), _INTL('Ciudad'), _INTL('Desierto'), _INTL('Sabana'),
+      _INTL('Risco'), _INTL('Volcán'), _INTL('Nieve'), _INTL('Cueva'),
+      _INTL('Playa'), _INTL('Mar'), _INTL('Río'), _INTL('Cielo'),
+      _INTL('Centro Pokémon'), _INTL('Máquina'), _INTL('Rosado'), _INTL('Simple'),
       # Special wallpapers
-      _INTL("Espacio"),_INTL("Patio"),_INTL("Nostalgia 1"),_INTL("Torchic"),
-      _INTL("Trío 1"),_INTL("PikaPika 1"),_INTL("Legendario 1"),_INTL("Equipo Galaxia 1"),
-      _INTL("Distorsión"),_INTL("Concurso"),_INTL("Nostalgia 2"),_INTL("Croagunk"),
-      _INTL("Trío 2"),_INTL("PikaPika 2"),_INTL("Legendario 2"),_INTL("Equipo Galaxia 2"),
-      _INTL("Heartgold"),_INTL("Soulsilver"),_INTL("Hermano mayor"),_INTL("Pokéathlon"),
-      _INTL("Trío 3"),_INTL("Picoreja"),_INTL("Chica Kimono"),_INTL("Revival")
+      _INTL('Espacio'), _INTL('Patio'), _INTL('Nostalgia 1'), _INTL('Torchic'),
+      _INTL('Trío 1'), _INTL('PikaPika 1'), _INTL('Legendario 1'), _INTL('Equipo Galaxia 1'),
+      _INTL('Distorsión'), _INTL('Concurso'), _INTL('Nostalgia 2'), _INTL('Croagunk'),
+      _INTL('Trío 2'), _INTL('PikaPika 2'), _INTL('Legendario 2'), _INTL('Equipo Galaxia 2'),
+      _INTL('Heartgold'), _INTL('Soulsilver'), _INTL('Hermano mayor'), _INTL('Pokéathlon'),
+      _INTL('Trío 3'), _INTL('Picoreja'), _INTL('Chica Kimono'), _INTL('Revival')
     ]
   end
 
   def unlockedWallpapers
-    @unlockedWallpapers = [] if !@unlockedWallpapers
-    return @unlockedWallpapers
+    @unlockedWallpapers ||= []
+    @unlockedWallpapers
   end
 
   def isAvailableWallpaper?(i)
-    @unlockedWallpapers = [] if !@unlockedWallpapers
+    @unlockedWallpapers ||= []
     return true if i < BASICWALLPAPERQTY
     return true if @unlockedWallpapers[i]
-    return false
+
+    false
   end
 
   def availableWallpapers
-    ret = [[], []]   # Names, IDs
+    ret = [[], []] # Names, IDs
     papers = allWallpapers
-    @unlockedWallpapers = [] if !@unlockedWallpapers
+    @unlockedWallpapers ||= []
     papers.length.times do |i|
-      next if !isAvailableWallpaper?(i)
+      next unless isAvailableWallpaper?(i)
+
       ret[0].push(papers[i])
       ret[1].push(i)
     end
-    return ret
+    ret
   end
 
   def party
@@ -122,77 +123,79 @@ class PokemonStorage
   end
 
   def party=(_value)
-    raise ArgumentError.new("Not supported")
+    raise ArgumentError.new('Not supported')
   end
 
   def party_full?
-    return $player.party_full?
+    $player.party_full?
   end
 
   def maxBoxes
-    return @boxes.length
+    @boxes.length
   end
 
   def maxPokemon(box)
-    return 0 if box >= self.maxBoxes
-    return (box < 0) ? Settings::MAX_PARTY_SIZE : self[box].length
+    return 0 if box >= maxBoxes
+
+    box < 0 ? Settings::MAX_PARTY_SIZE : self[box].length
   end
 
   def full?
-    self.maxBoxes.times do |i|
-      return false if !@boxes[i].full?
+    maxBoxes.times do |i|
+      return false unless @boxes[i].full?
     end
-    return true
+    true
   end
 
   def pbFirstFreePos(box)
     if box == -1
-      ret = self.party.length
-      return (ret >= Settings::MAX_PARTY_SIZE) ? -1 : ret
+      ret = party.length
+      return ret >= Settings::MAX_PARTY_SIZE ? -1 : ret
     end
     maxPokemon(box).times do |i|
-      return i if !self[box, i]
+      return i unless self[box, i]
     end
-    return -1
+    -1
   end
 
   def [](x, y = nil)
-    if y.nil?
-      return (x == -1) ? self.party : @boxes[x]
-    else
-      @boxes.each do |i|
-        raise "Box is a Pokémon, not a box" if i.is_a?(Pokemon)
-      end
-      return (x == -1) ? self.party[y] : @boxes[x][y]
+    return x == -1 ? party : @boxes[x] if y.nil?
+
+    @boxes.each do |i|
+      raise 'Box is a Pokémon, not a box' if i.is_a?(Pokemon)
     end
+    x == -1 ? party[y] : @boxes[x][y]
   end
 
   def []=(x, y, value)
     if x == -1
-      self.party[y] = value
+      party[y] = value
     else
       @boxes[x][y] = value
     end
   end
 
   def pbCopy(boxDst, indexDst, boxSrc, indexSrc)
-    if indexDst < 0 && boxDst < self.maxBoxes
+    if indexDst < 0 && boxDst < maxBoxes
       found = false
       maxPokemon(boxDst).times do |i|
         next if self[boxDst, i]
+
         found = true
         indexDst = i
         break
       end
-      return false if !found
+      return false unless found
     end
-    if boxDst == -1   # Copying into party
+    if boxDst == -1 # Copying into party
       return false if party_full?
-      self.party[self.party.length] = self[boxSrc, indexSrc]
-      self.party.compact!
-    else   # Copying into box
+
+      party[party.length] = self[boxSrc, indexSrc]
+      party.compact!
+    else # Copying into box
       pkmn = self[boxSrc, indexSrc]
-      raise "Trying to copy nil to storage" if !pkmn
+      raise 'Trying to copy nil to storage' unless pkmn
+
       if Settings::HEAL_STORED_POKEMON
         old_ready_evo = pkmn.ready_to_evolve
         pkmn.heal
@@ -200,23 +203,26 @@ class PokemonStorage
       end
       self[boxDst, indexDst] = pkmn
     end
-    return true
+    true
   end
 
   def pbMove(boxDst, indexDst, boxSrc, indexSrc)
-    return false if !pbCopy(boxDst, indexDst, boxSrc, indexSrc)
+    return false unless pbCopy(boxDst, indexDst, boxSrc, indexSrc)
+
     pbDelete(boxSrc, indexSrc)
-    return true
+    true
   end
 
   def pbMoveCaughtToParty(pkmn)
     return false if party_full?
-    self.party[self.party.length] = pkmn
+
+    party[party.length] = pkmn
   end
 
   def pbMoveCaughtToBox(pkmn, box)
     maxPokemon(box).times do |i|
       next unless self[box, i].nil?
+
       if Settings::HEAL_STORED_POKEMON && box >= 0
         old_ready_evo = pkmn.ready_to_evolve
         pkmn.heal
@@ -225,83 +231,116 @@ class PokemonStorage
       self[box, i] = pkmn
       return true
     end
-    return false
+    false
   end
 
-  def pbStoreCaught(pkmn, lvl=100)
-    Console.echo_li("\nAl guardar: \n\t")
-    pkmn.first_moves.each { |m| Console.echo_li(m.to_s) }
-
+  def pbStoreCaught(pkmn, lvl = 5)
     if Settings::HEAL_STORED_POKEMON && @currentBox >= 0
       old_ready_evo = pkmn.ready_to_evolve
       pkmn.heal
       pkmn.ready_to_evolve = old_ready_evo
     end
     pkmn.level = lvl
-    chance = rand(0,100)
+    chance = rand(0, 100)
     move = nil
-    if chance>=90
+    if chance >= 90
       move = pkmn.species_data.tutor_moves.sample
-    elsif chance >=80
+    elsif chance >= 80
       move = pkmn.species_data.egg_moves.sample
     end
     pkmn.add_first_move(move)
-    Console.echo_li("Nuevo mov: " + move.name) if move != nil
+    Console.echo_li('Nuevo mov: ' + move.name) unless move.nil?
 
     if chance <= 5
       pkmn.ability_index = 2
-      Console.echo_li("Habilidad oculta")
+      Console.echo_li('Habilidad oculta')
     end
+    pkmn.unlocked_abilities.push(pkmn.ability_id)
     Console.echo_li("\n")
     pkmn.calc_stats
-    #pkmn.species = pkmn.species_data.get_baby_species
+    # pkmn.species = pkmn.species_data.get_baby_species
+    #     maxBoxes.times do |j|
+    #       maxPokemon(j).times do |i|
+    #         if self[j, i].nil?
+    #           self[j, i] = pkmn
+    #           return j
+    #         elsif self[j, i].species == pkmn.species && (self[j, i].form == pkmn.form || (MultipleForms.call("getFormOnCreation", self[j, i]) && pkmn.species != :TOXTRICITY))
+    #             upgradePokemon(self[j, i],pkmn)
+    #           return nil
+    #         end
+    #       end
+    #     end
     maxBoxes.times do |j|
       maxPokemon(j).times do |i|
-        if self[j, i].nil?
-          self[j, i] = pkmn
-          return j
-        elsif self[j, i].species == pkmn.species && (self[j, i].form == pkmn.form || (MultipleForms.call("getFormOnCreation", self[j, i]) && pkmn.species != :TOXTRICITY))
-            upgradePokemon(self[j, i],pkmn)
-          return nil
-        end
-      end
-    end
-    self.maxBoxes.times do |j|
-      maxPokemon(j).times do |i|
         next unless self[j, i].nil?
+
         self[j, i] = pkmn
         @currentBox = j
         return @currentBox
       end
     end
-    return nil
+    nil
   end
 
-  def upgradePokemon (oldOne,newOne)
-    GameData::Stat.each_main do |s|
-      if(newOne.iv[s.id] > oldOne.iv[s.id])
-        oldOne.iv[s.id] = newOne.iv[s.id]
-      end
-    end
-    Console.echo_li("Al mejorar: \n\t")
-    newOne.first_moves.each do |m|
+  def upgradePokemon(newOne, oldOne, scene = nil)
+    Console.echo_li("\nHabilidades\n")
+    Console.echo_li('oldOne' + oldOne.unlocked_abilities.to_s)
+    Console.echo_li('newOne' + newOne.unlocked_abilities.to_s)
 
+    GameData::Stat.each_main do |s|
+      newOne.iv[s.id] = oldOne.iv[s.id] if oldOne.iv[s.id] > newOne.iv[s.id]
+    end
+    Console.echo_li("\nMovimientos\n")
+    Console.echo_li("oldOne #{oldOne.first_moves}")
+    Console.echo_li("newOne #{newOne.first_moves}")
+
+    oldOne.first_moves.each do |m|
       Console.echo_li(m.to_s)
-      if(!oldOne.first_moves.include?(m))
-        pbMessage(_INTL("¡{1} ha aprendido {2}!",oldOne.name,GameData::Move.get(m).name))
-        oldOne.add_first_move(m)
+      unless newOne.first_moves.include?(m)
+        pbMessage(_INTL('¡{1} ha aprendido {2}!', newOne.name, GameData::Move.get(m).name))
+        newOne.add_first_move(m)
       end
     end
-    if newOne.shiny?
-      oldOne.shiny = true
+    newOne.shiny = true if oldOne.shiny?
+    if oldOne.unlocked_abilities.include?(newOne.ability)
+      pbMessage(_INTL('¡{1} ha obtenido la habilidad {2}!', oldOne.name, GameData::Ability.get(newOne.ability).real_name))
+      newOne.unlocked_abilities.push(newOne.abilities[oldOne.ability_index])
     end
-    newOne.unlocked_abilities.each do |i|
+
+    oldOne.unlocked_abilities.each do |i|
       Console.echo_li("\n" + i.name)
-      if !oldOne.unlocked_abilities.include?(i)
-          oldOne.unlocked_abilities.push(i)
-          pbMessage(_INTL("¡{1} ha conseguido la habilidad {2}!",oldOne.name,GameData::Ability.get(i.name).real_name))
+      unless newOne.unlocked_abilities.include?(i)
+        newOne.unlocked_abilities.push(i)
+        pbMessage(_INTL('¡{1} ha conseguido la habilidad {2}!', oldOne.name, GameData::Ability.get(i.name).real_name))
       end
     end
+
+    Console.echo_li("\nObjetos\n")
+    Console.echo_li('oldOne' + oldOne.item.to_s)
+    Console.echo_li('newOne' + newOne.item.to_s)
+    if oldOne.item && !newOne.item
+      newOne.item = oldOne.item
+    elsif oldOne.item && newOne.item
+
+      newitem = newOne.item
+      newitemname = newitem.portion_name
+      if newitemname.starts_with_vowel?
+        pbMessage(_INTL('{1} ya tiene equipado {2}.', newOne.name, newitemname) + "\1")
+      else
+        pbMessage(_INTL('{1} ya tiene equipado {2}.', newOne.name, newitemname) + "\1")
+      end
+      if pbConfirmMessage(_INTL('¿Quieres equipar {1} a {2} y guardar {3} en la bolsa?', oldOne.item.portion_name,
+                                newOne.name, newitemname))
+        $bag.add(newitem)
+        newOne.item = oldOne.item
+        pbMessage(_INTL('Se ha equipado {1} a {2}.', oldOne.item.portion_name, newOne.name) + "\1")
+        pbMessage(_INTL('Se ha guardado {1} en la bolsa.', newitemname) + "\1")
+      else
+        $bag.add(oldOne.item)
+        pbMessage(_INTL('Se ha guardado {1} en la bolsa.', oldOne.item.portion_name) + "\1")
+      end
+    end
+    pbChangeExp(newOne, newOne.exp + (oldOne.exp - newOne.exp), scene) if oldOne.exp > newOne.exp
     Console.echo_li("\n")
   end
 
@@ -309,26 +348,26 @@ class PokemonStorage
     # Store as normal (add to party if there's space, or send to a Box if not)
     stored_box = pbStorePokemon(pbPlayer, pkmn)
     if stored_box.nil?
-      pbMessage(_INTL("¡El {1} que tenías se ha potenciado!", pkmn.name))      
+      pbMessage(_INTL('¡El {1} que tenías se ha potenciado!', pkmn.name))
     elsif stored_box < 0
-      pbDisplayPaused(_INTL("Se agregó a {1} al equipo.", pkmn.name))
+      pbDisplayPaused(_INTL('Se agregó a {1} al equipo.', pkmn.name))
       @initialItems[0][pbPlayer.party.length - 1] = pkmn.item_id if @initialItems
       return
     end
     # Messages saying the Pokémon was stored in a PC box
     box_name = pbBoxName(stored_box)
-    pbDisplayPaused(_INTL("Se envió {1} a la caja \"{2}\"!", pkmn.name, box_name))
+    pbDisplayPaused(_INTL('Se envió {1} a la caja "{2}"!', pkmn.name, box_name))
   end
 
   def pbDelete(box, index)
-    if self[box, index]
-      self[box, index] = nil
-      self.party.compact! if box == -1
-    end
+    return unless self[box, index]
+
+    self[box, index] = nil
+    party.compact! if box == -1
   end
 
   def clear
-    self.maxBoxes.times { |i| @boxes[i].clear }
+    maxBoxes.times { |i| @boxes[i].clear }
   end
 end
 
@@ -343,26 +382,26 @@ class RegionalStorage
   end
 
   def getCurrentStorage
-    if !$game_map
-      raise _INTL("El jugador no está en un mapa, por lo que no se puede determinar la región.")
-    end
+    raise _INTL('El jugador no está en un mapa, por lo que no se puede determinar la región.') unless $game_map
+
     if @lastmap != $game_map.map_id
-      @rgnmap = pbGetCurrentRegion   # may access file IO, so caching result
+      @rgnmap = pbGetCurrentRegion # may access file IO, so caching result
       @lastmap = $game_map.map_id
     end
     if @rgnmap < 0
-      raise _INTL("El mapa actual no está definido en ninguna región. Por favor, edita los ajustes de metadatos de MapPosition para este mapa.")
+      raise _INTL('El mapa actual no está definido en ninguna región. Por favor, edita los ajustes de metadatos de MapPosition para este mapa.')
     end
-    @storages[@rgnmap] = PokemonStorage.new if !@storages[@rgnmap]
-    return @storages[@rgnmap]
+
+    @storages[@rgnmap] = PokemonStorage.new unless @storages[@rgnmap]
+    @storages[@rgnmap]
   end
 
   def allWallpapers
-    return getCurrentStorage.allWallpapers
+    getCurrentStorage.allWallpapers
   end
 
   def availableWallpapers
-    return getCurrentStorage.availableWallpapers
+    getCurrentStorage.availableWallpapers
   end
 
   def unlockWallpaper(index)
@@ -370,23 +409,23 @@ class RegionalStorage
   end
 
   def boxes
-    return getCurrentStorage.boxes
+    getCurrentStorage.boxes
   end
 
   def party
-    return getCurrentStorage.party
+    getCurrentStorage.party
   end
 
   def party_full?
-    return getCurrentStorage.party_full?
+    getCurrentStorage.party_full?
   end
 
   def maxBoxes
-    return getCurrentStorage.maxBoxes
+    getCurrentStorage.maxBoxes
   end
 
   def maxPokemon(box)
-    return getCurrentStorage.maxPokemon(box)
+    getCurrentStorage.maxPokemon(box)
   end
 
   def full?
@@ -394,7 +433,7 @@ class RegionalStorage
   end
 
   def currentBox
-    return getCurrentStorage.currentBox
+    getCurrentStorage.currentBox
   end
 
   def currentBox=(value)
@@ -465,5 +504,5 @@ end
 
 # Yields every Pokémon in storage in turn.
 def pbEachNonEggPokemon
-  pbEachPokemon { |pkmn, box| yield(pkmn, box) if !pkmn.egg? }
+  pbEachPokemon { |pkmn, box| yield(pkmn, box) unless pkmn.egg? }
 end

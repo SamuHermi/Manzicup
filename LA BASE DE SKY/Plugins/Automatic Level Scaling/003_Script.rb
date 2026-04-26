@@ -18,7 +18,7 @@ class AutomaticLevelScaling
     only_scale_if_lower: LevelScalingSettings::ONLY_SCALE_IF_LOWER,
     save_trainer_parties: LevelScalingSettings::SAVE_TRAINER_PARTIES,
     use_map_level_for_wild_pokemon: LevelScalingSettings::USE_MAP_LEVEL_FOR_WILD_POKEMON,
-    update_moves: false
+    update_moves: true
   }
 
   def self.difficulty=(id)

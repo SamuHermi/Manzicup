@@ -1383,3 +1383,7 @@ Description = Los ataques que drenan PS recuperan más PS.
 [SILVANO]
 Name = Silvano
 Description = Aumenta el daño de cualquier tipo un 30% en Campo de Hierba.
+#-------------------------------
+[AURADORADA]
+Name = Aura Dorada
+Description = "Aumenta el daño de tipo Eléctrico un 30%."

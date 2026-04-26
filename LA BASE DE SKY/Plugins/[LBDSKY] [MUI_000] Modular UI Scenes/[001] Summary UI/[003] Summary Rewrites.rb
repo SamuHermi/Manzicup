@@ -49,7 +49,12 @@ class PokemonSummary_Scene
         imagepos.push(["Graphics/UI/Summary/icon_pokerus", 176, 100])
       end
       imagepos.push(["Graphics/UI/shiny", 2, 134]) if @pokemon.shiny?
-      textpos.push([@pokemon.level.to_s, 46, 98, :left, Color.new(64, 64, 64), Color.new(176, 176, 176)])
+      if @pokemon.level < LevelCapsEX.level_cap
+        textpos.push([@pokemon.level.to_s, 46, 98, :left, Color.new(64, 64, 64), Color.new(176, 176, 176)])
+      else
+        textpos.push([@pokemon.level.to_s, 46, 98, :left, Color.new(248, 192, 0), Color.new(144, 104, 0)])
+      end
+         
       if @pokemon.male?
         textpos.push([_INTL("♂"), 178, 68, :left, Color.new(24, 146, 240), Color.new(13, 73, 119)])
       elsif @pokemon.female?

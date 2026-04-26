@@ -149,16 +149,18 @@ class Pokemon
 
   def initialize(species,level = 5, owner = $player,withMoves=true, recheck_form = true)
     if $game_switches && $game_switches[RandomizedChallenge::Switch]
-      species = RandomizedChallenge::WhiteListedPokemon.shuffle[0]
-      if RandomizedChallenge::WhiteListedPokemon.length == 0
-        species = getRandomSpecies()
-        bst = species.base_stats.values.sum 
-        previous_species = GameData::Species.get(species.get_previous_species)
-        $PokemonGlobal.randomGens = [] if !$PokemonGlobal.randomGens
-        while !species || RandomizedChallenge::BlackListedPokemon.include?(species.species) || compare_bst(bst) || ( $PokemonGlobal.randomGens.length > 0 && !$PokemonGlobal.randomGens.include?(species.generation) &&  !$PokemonGlobal.randomGens.include?(previous_species.generation) )
+      if owner.is_a?(Trainer) && !RandomizedChallenge::BLACKLISTED_TRAINERS.include?(owner.trainer_type)
+        species = RandomizedChallenge::WhiteListedPokemon.shuffle[0]
+        if RandomizedChallenge::WhiteListedPokemon.length == 0
           species = getRandomSpecies()
-          bst = species.base_stats.values.sum
+          bst = species.base_stats.values.sum 
           previous_species = GameData::Species.get(species.get_previous_species)
+          $PokemonGlobal.randomGens = [] if !$PokemonGlobal.randomGens
+          while !species || RandomizedChallenge::BlackListedPokemon.include?(species.species) || compare_bst(bst) || ( $PokemonGlobal.randomGens.length > 0 && !$PokemonGlobal.randomGens.include?(species.generation) &&  !$PokemonGlobal.randomGens.include?(previous_species.generation) )
+            species = getRandomSpecies()
+            bst = species.base_stats.values.sum
+            previous_species = GameData::Species.get(species.get_previous_species)
+          end
         end
       end
     end

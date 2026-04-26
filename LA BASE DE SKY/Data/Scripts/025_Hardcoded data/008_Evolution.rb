@@ -652,9 +652,21 @@ GameData::Evolution.register({
   }
 })
 
+
 #===============================================================================
 # Evolution methods that are triggered after any battle
 #===============================================================================
+GameData::Evolution.register({
+  :id                => :AfterBattleCounter,
+  :parameter         => Integer,
+  :any_level_up      => true,   # Needs any level up
+  :after_battle_proc => proc { |pkmn, party_index, parameter|
+    ret = pkmn.evolution_counter >= parameter
+    pkmn.evolution_counter = 0   # Always resets after battle
+    next ret
+  }
+})
+
 GameData::Evolution.register({
   :id                => :BattleDealCriticalHit,
   :parameter         => Integer,

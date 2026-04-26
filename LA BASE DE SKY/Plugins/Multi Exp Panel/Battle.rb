@@ -3,7 +3,6 @@
 # Swdfm
 #===============================================================================
 
-
 class Battle
   def pbGainExp
     values = []
@@ -11,26 +10,32 @@ class Battle
     # Play wild victory music if it's the end of the battle (has to be here)
     @scene.pbWildBattleSuccess if wildBattle? && pbAllFainted?(1) && !pbAllFainted?(0)
     return if !@internalBattle || !@expGain
+
     # Go through each battler in turn to find the Pokémon that participated in
     # battle against it, and award those Pokémon Exp/EVs
     expAll = true
     p1 = pbParty(0)
     @battlers.each do |b|
-      next unless b&.opposes?   # Can only gain Exp from fainted foes
+      next unless b&.opposes? # Can only gain Exp from fainted foes
       next if b.participants.length == 0
       next unless b.fainted? || b.captured
+
       # Count the number of participants
       numPartic = 0
       b.participants.each do |partic|
         next unless p1[partic]&.able? && pbIsOwner?(0, partic)
+
         numPartic += 1
       end
       # Find which Pokémon have an Exp Share
       expShare = []
-      if !expAll
+      unless expAll
         eachInTeam(0, 0) do |pkmn, i|
-          next if !pkmn.able?
-          next if !pkmn.hasItem?(:EXPSHARE) && GameData::Item.try_get(@initialItems[0][i]) != :EXPSHARE && !pkmn.expshare
+          next unless pkmn.able?
+          if !pkmn.hasItem?(:EXPSHARE) && GameData::Item.try_get(@initialItems[0][i]) != :EXPSHARE && !pkmn.expshare
+            next
+          end
+
           expShare.push(i)
         end
       end
@@ -38,7 +43,8 @@ class Battle
       if numPartic > 0 || expShare.length > 0 || expAll
         # Gain EVs and Exp for participants
         eachInTeam(0, 0) do |pkmn, i|
-          next if !pkmn.able?
+          next unless pkmn.able?
+
           unless b.participants.include?(i) || expShare.include?(i)
             values[i] = 0
             next
@@ -50,9 +56,10 @@ class Battle
         if expAll
           showMessage = true
           eachInTeam(0, 0) do |pkmn, i|
-            next if !pkmn.able?
+            next unless pkmn.able?
             next if b.participants.include?(i) || expShare.include?(i)
-            #pbDisplayPaused(_INTL("Your other Pokémon also gained Exp. Points!")) if showMessage
+
+            # pbDisplayPaused(_INTL("Your other Pokémon also gained Exp. Points!")) if showMessage
             showMessage = false
             pbGainEVsOne(i, b)
             values[i] = pbGainExpOne_Panel(i, b, numPartic, expShare, expAll, false)
@@ -60,8 +67,8 @@ class Battle
         end
       end
       vr = []
-      for v in values
-        t_v = v ? v : 0
+      values.each do |v|
+        t_v = v || 0
         vr.push(t_v)
       end
       values = vr
@@ -69,18 +76,19 @@ class Battle
       # Clear the participants array
       for i in 0...$player.party.size
         next if values[i] == 0 or !values[i]
+
         pbActualLevelUpAndGatherMoves(i, values[i])
       end
       b.participants = []
     end
   end
-  
+
   def pbGainExpOne_Panel(idxParty, defeatedBattler, numPartic, expShare, expAll, showMessages = true)
-    pkmn = pbParty(0)[idxParty]   # The Pokémon gaining Exp from defeatedBattler
+    pkmn = pbParty(0)[idxParty] # The Pokémon gaining Exp from defeatedBattler
     growth_rate = pkmn.growth_rate
     # Don't bother calculating if gainer is already at max Exp
     if pkmn.exp >= growth_rate.maximum_exp
-      pkmn.calc_stats   # To ensure new EVs still have an effect
+      pkmn.calc_stats # To ensure new EVs still have an effect
       return 0
     end
     isPartic    = defeatedBattler.participants.include?(idxParty)
@@ -88,20 +96,19 @@ class Battle
     level = defeatedBattler.level
     # Main Exp calculation
     exp = 0
-    #Console.echo_li("Calculando exp " + defeatedBattler.pokemon.base_exp.to_s + " - " + level.to_s + " - " + pkmn.level.to_s)
     a   = level * defeatedBattler.pokemon.base_exp
     if expShare.length > 0 && (isPartic || hasExpShare)
-      if numPartic == 0   # No participants, all Exp goes to Exp Share holders
+      if numPartic == 0 # No participants, all Exp goes to Exp Share holders
         exp = a / (Settings::SPLIT_EXP_BETWEEN_GAINERS ? expShare.length : 1)
-      elsif Settings::SPLIT_EXP_BETWEEN_GAINERS   # Gain from participating and/or Exp Share
+      elsif Settings::SPLIT_EXP_BETWEEN_GAINERS # Gain from participating and/or Exp Share
         exp = a / (2 * numPartic) if isPartic
         exp += a / (2 * expShare.length) if hasExpShare
-      else   # Gain from participating and/or Exp Share (Exp not split)
-        exp = (isPartic) ? a : a / 2
+      else # Gain from participating and/or Exp Share (Exp not split)
+        exp = isPartic ? a : a / 2
       end
-    elsif isPartic   # Participated in battle, no Exp Shares held by anyone
+    elsif isPartic # Participated in battle, no Exp Shares held by anyone
       exp = a / (Settings::SPLIT_EXP_BETWEEN_GAINERS ? numPartic : 1)
-    elsif expAll   # Didn't participate in battle, gaining Exp due to Exp All
+    elsif expAll # Didn't participate in battle, gaining Exp due to Exp All
       # NOTE: Exp All works like the Exp Share from Gen 6+, not like the Exp All
       #       from Gen 1, i.e. Exp isn't split between all Pokémon gaining it.
       exp = a / 2
@@ -109,17 +116,15 @@ class Battle
 
     exp *= (1 + ($bag.quantity(:EXPCHARM) / 6)).ceil
 
-    if bond_rate = $player.active_bond_effect?(:EXP, pkmn)
-      exp *= bond_rate
-    end
     return 0 if exp <= 0
+
     # Pokémon gain more Exp from trainer battles
     exp = (exp * 1.5).floor if trainerBattle?
     # Scale the gained Exp based on the gainer's level (or not)
     if Settings::SCALED_EXP_FORMULA
       exp /= 5
       levelAdjust = ((2 * level) + 10.0) / (pkmn.level + level + 10.0)
-      levelAdjust = levelAdjust**5
+      levelAdjust **= 5
       levelAdjust = Math.sqrt(levelAdjust)
       exp *= levelAdjust
       exp = exp.floor
@@ -127,37 +132,36 @@ class Battle
     else
       exp /= 7
     end
-    
+
     # Foreign Pokémon gain more Exp
-    isOutsider = (pkmn.owner.id != pbPlayer.id ||
-                  (pkmn.owner.language != 0 && pkmn.owner.language != pbPlayer.language))
+    isOutsider = pkmn.owner.id != pbPlayer.id ||
+                 (pkmn.owner.language != 0 && pkmn.owner.language != pbPlayer.language)
     if isOutsider
-      if pkmn.owner.language != 0 && pkmn.owner.language != pbPlayer.language
-        exp = (exp * 1.7).floor
-      else
-        exp = (exp * 1.5).floor
-      end
+      exp = if pkmn.owner.language != 0 && pkmn.owner.language != pbPlayer.language
+              (exp * 1.7).floor
+            else
+              (exp * 1.5).floor
+            end
     end
     # Exp. Charm increases Exp gained
     # Modify Exp gain based on pkmn's held item
     i = Battle::ItemEffects.triggerExpGainModifier(pkmn.item, pkmn, exp)
-    if i < 0
-      i = Battle::ItemEffects.triggerExpGainModifier(@initialItems[0][idxParty], pkmn, exp)
-    end
+    i = Battle::ItemEffects.triggerExpGainModifier(@initialItems[0][idxParty], pkmn, exp) if i < 0
     exp = i if i >= 0
     # Boost Exp gained with high affection
     if Settings::AFFECTION_EFFECTS && @internalBattle && pkmn.affection_level >= 4 && !pkmn.mega?
       exp = exp * 6 / 5
-      isOutsider = true   # To show the "boosted Exp" message
+      isOutsider = true # To show the "boosted Exp" message
     end
     # Make sure Exp doesn't exceed the maximum
     expFinal = growth_rate.add_exp(pkmn.exp, exp)
     expGained = expFinal - pkmn.exp
-    Console.echo_li("Experiencia ganada_ " + expGained.to_s )
+    Console.echo_li('Experiencia ganada_ ' + expGained.to_s)
     return 0 if expGained <= 0
-    return expGained
+
+    expGained
   end
-  
+
   def pbActualLevelUpAndGatherMoves(idxParty, expGained)
     pkmn = pbParty(0)[idxParty]
     $stats.total_exp_gained += expGained if expGained
@@ -165,44 +169,41 @@ class Battle
     new_lvl  = pkmn.growth_rate.level_from_exp(pkmn.exp + expGained)
     moves    = []
     moveList = pkmn.getMoveList
-    for level in (pkmn.level + 1)..new_lvl
-      pkmn.changeHappiness("levelup")
+    ((pkmn.level + 1)..new_lvl).each do |level|
+      pkmn.changeHappiness('levelup')
       moveList.each { |m| moves.push(m[1]) if m[0] == level }
     end
     # Actual adding of exp
     pkmn.exp = pkmn.exp + expGained
-    #Console.echo_li("Cuack")
-    evpool=80+pkmn.level*8
-    
-    evpool=(evpool.div(4))*4      
-    evpool=512 if evpool>512 
-    evcap=40+pkmn.level*4
-    evcap=(evcap.div(4))*4
-    evcap=252 if evcap>252
-    evsum=pkmn.ev[:HP]+pkmn.ev[:ATTACK]+pkmn.ev[:DEFENSE]+pkmn.ev[:SPECIAL_DEFENSE]+pkmn.ev[:SPEED]
-    evsum+=pkmn.ev[:SPECIAL_ATTACK] if Settings::PURIST_MODE
-    Console.echo_li(pkmn.name + ": " + pkmn.level.to_s + " - " + evpool.to_s + "/" + evcap.to_s)
-    #EV_LIMIT = evpool
-    evarray=[]
+    # Console.echo_li("Cuack")
+    evpool = 80 + pkmn.level * 8
+
+    evpool = evpool.div(4) * 4
+    evpool = 512 if evpool > 512
+    evcap = 40 + pkmn.level * 4
+    evcap = evcap.div(4) * 4
+    evcap = 252 if evcap > 252
+    evsum = pkmn.ev[:HP] + pkmn.ev[:ATTACK] + pkmn.ev[:DEFENSE] + pkmn.ev[:SPECIAL_DEFENSE] + pkmn.ev[:SPEED]
+    evsum += pkmn.ev[:SPECIAL_ATTACK] if Settings::PURIST_MODE
+    # EV_LIMIT = evpool
+    evarray = []
     GameData::Stat.each_main do |s|
       evarray.push(pkmn.ev[s.id])
+      Console.echo_li("#{s.id}: #{pkmn.ev[s.id]}*#{1 + pkmn.ev[s.id].to_f / evcap}")
+      pkmn.ev[s.id] = ((pkmn.ev[s.id] * (1 + pkmn.ev[s.id].to_f / evcap)) / 4).floor * 4 # while pkmn.ev[s.id]<evcap &&
+      # end
+      pkmn.ev[s.id] = evcap if pkmn.ev[s.id] > evcap
+      evsum = pkmn.ev[:HP] + pkmn.ev[:ATTACK] + pkmn.ev[:DEFENSE] + pkmn.ev[:SPECIAL_DEFENSE] + pkmn.ev[:SPEED]
+      Console.echo_li("#{evpool} #{evsum}")
+      break if evpool < evsum + 4
     end
-    GameData::Stat.each_main do |s|
-      #if pkmn.ev[s.id]==evarray.max
-      Console.echo_li(s.id.to_s + ": " + pkmn.ev[s.id].to_s + "*" + (1+pkmn.ev[s.id].to_f/evcap).to_s)
-      pkmn.ev[s.id] = ((pkmn.ev[s.id] * (1+pkmn.ev[s.id].to_f/evcap)) / 4).floor * 4#while pkmn.ev[s.id]<evcap && 
-      #end
-      pkmn.ev[s.id] = evcap if pkmn.ev[s.id]>evcap
-      evsum=pkmn.ev[:HP]+pkmn.ev[:ATTACK]+pkmn.ev[:DEFENSE]+pkmn.ev[:SPECIAL_DEFENSE]+pkmn.ev[:SPEED]
-      Console.echo_li(evpool.to_s + " " + evsum.to_s)
-      break if evpool<evsum+4
-    end	
     pkmn.calc_stats
     battler&.pbUpdate(false)
     @scene.pbRefreshOne(battler.index) if battler
     return if moves.empty?
-  moves.each { |m|
+
+    moves.each do |m|
       pbLearnMove(idxParty, m)
-  }
+    end
   end
 end

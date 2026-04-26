@@ -117,6 +117,11 @@ module RandomizedChallenge
     :STANCECHANGE, :ZENMODE,:COMMANDER, :MULTITYPE, :GULPMISSILE, :ICEFACE, :ZEROTOHERO, :DISGUISE
   ]
 
+  BLACKLISTED_TRAINERS = [:HERMI, :IRIA, :BRAIS, :ISA, :SAMER, :RODRI, :BRA, :ANA, :PABLO, :SABO, :NEREA,
+                          :MAYORDOMO, :PRINCE, :PICARO, :ENANO, :GUARDIANA, :EXPLORADOR, :CLERIGO,
+                          :OTAKA_LIDER, :BBEG, :CR7, :KNEKRO, :PAPI, :MUSTIO,
+                          :IGOR] # Trainer types that are not affected by randomization (ex: ["Leader", "Champion", "Boss"])
+
   # Interruptores que se usan para el modo Random.
   # Ten en cuenta que los NPCs de ejemplo usan estos switches, si cambias el número deberás modificarlos también a ellos.
   ABILITY_RANDOMIZER_SWITCH      = 61

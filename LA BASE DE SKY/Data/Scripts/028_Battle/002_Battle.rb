@@ -1028,7 +1028,8 @@ class Battle
   #-----------------------------------------------------------------------------
   def pbCalcTypeMultsJudgment(user, target, move, type, target_types, multipliers)
     if (pbCheckGlobalAbility(:DARKAURA)  && type == :DARK) ||
-       (pbCheckGlobalAbility(:FAIRYAURA) && type == :FAIRY)
+       (pbCheckGlobalAbility(:FAIRYAURA) && type == :FAIRY) ||
+       (pbCheckGlobalAbility(:AURADORADA) && type == :ELECTRIC)
       if pbCheckGlobalAbility(:AURABREAK)
         multipliers[:power_multiplier] *= 2 / 3.0
       else

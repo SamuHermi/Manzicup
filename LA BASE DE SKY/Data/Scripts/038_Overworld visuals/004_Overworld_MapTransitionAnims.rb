@@ -92,7 +92,10 @@ def pbStartOver(gameover = false)
       pbMessage("\\w[]\\wm\\c[13]\\l[3]" +
                 _INTL("Has salido corriendo hacia la base para no sufrir más daño..."))
     end
-    pbLoseDungeon if pbInDungeon?
+    if pbInDungeon?
+      Console.echo_li("Player lost in dungeon, returning to pokecenter")
+      pbLoseDungeon 
+    end
     pbCancelVehicles
     Followers.clear
     $game_switches[Settings::STARTING_OVER_SWITCH] = true

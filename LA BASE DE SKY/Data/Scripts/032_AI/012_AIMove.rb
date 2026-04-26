@@ -130,7 +130,8 @@ class Battle::AI::AIMove
     # Global abilities
     if @ai.trainer.medium_skill? &&
        ((@ai.battle.pbCheckGlobalAbility(:DARKAURA) && calc_type == :DARK) ||
-        (@ai.battle.pbCheckGlobalAbility(:FAIRYAURA) && calc_type == :FAIRY))
+        (@ai.battle.pbCheckGlobalAbility(:FAIRYAURA) && calc_type == :FAIRY)) ||
+       (@ai.battle.pbCheckGlobalAbility(:AURADORADA) && type == :ELECTRIC)
       if @ai.battle.pbCheckGlobalAbility(:AURABREAK)
         multipliers[:power_multiplier] *= 3 / 4.0
       else

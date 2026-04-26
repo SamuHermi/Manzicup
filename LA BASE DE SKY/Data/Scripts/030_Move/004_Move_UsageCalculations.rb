@@ -331,7 +331,8 @@ class Battle::Move
     
     # Global abilities
     if (@battle.pbCheckGlobalAbility(:DARKAURA) && type == :DARK) ||
-       (@battle.pbCheckGlobalAbility(:FAIRYAURA) && type == :FAIRY)
+       (@battle.pbCheckGlobalAbility(:FAIRYAURA) && type == :FAIRY) ||
+       (@battle.pbCheckGlobalAbility(:AURADORADA) && type == :ELECTRIC)
       if @battle.pbCheckGlobalAbility(:AURABREAK)
         multipliers[:power_multiplier] *= 3 / 4.0
       else

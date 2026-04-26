@@ -180,7 +180,7 @@ end
 
 class GachaScene
   def initialize(banners)
-    $player.battle_points ||= 0 if !$player.battle_points
+    $player.money ||= 0 if !$player.money
     @viewport = Viewport.new(0,0,Graphics.width,Graphics.height)
     @viewport.z = 99999
     @sprites = {}
@@ -214,7 +214,7 @@ class GachaScene
     @sprites["bannerSel"].visible = false
     
     @sprites["text"] = Sprite.new(@viewport)
-    @sprites["text"].bitmap = Bitmap.new(300,180)
+    @sprites["text"].bitmap = Bitmap.new(900,360)
     pbSetSystemFont(@sprites["text"].bitmap)
     @sprites["text"].bitmap.font.size = 40
     @sprites["text"].x = -70
@@ -321,10 +321,10 @@ class GachaScene
     end
     
     @sprites["text"].bitmap.clear
-    drawTextEx(@sprites["text"].bitmap,100,70,300,2,@banners[@banner_sel].name,Color.new(88, 88, 88),Color.new(255, 255, 255))
+    drawTextEx(@sprites["text"].bitmap,100,70,900,2,@banners[@banner_sel].name,Color.new(88, 88, 88),Color.new(255, 255, 255))
     
     @sprites["coins"].bitmap.clear
-    pbDrawShadowText(@sprites["coins"].bitmap,0,0,Graphics.width,25,"x"+$player.battle_points.to_s,base,shadow)
+    pbDrawShadowText(@sprites["coins"].bitmap,0,0,Graphics.width,25,"x"+$player.money.to_s,base,shadow)
 
     @sprites["costsing"].bitmap.clear
     pbDrawShadowText(@sprites["costsing"].bitmap,9,12,75,48,"x"+(@banners[@banner_sel].cost).to_s,base,shadow,1)
@@ -519,10 +519,10 @@ class GachaScene
         when 0 #Información
           summaryWindow(439,5)
         when 2 #Single
-          if $player.battle_points >= @banners[@banner_sel].cost 
+          if $player.money >= @banners[@banner_sel].cost 
             if pbMessage("¿Quieres hacer un single? SE GUARDARÁ LA PARTIDA",["Sí","No"])==0
               gachaponRead(@banner_sel,false,@banners[@banner_sel].type)
-              $player.battle_points -= @banners[@banner_sel].cost 
+              $player.money -= @banners[@banner_sel].cost 
               Achievements.incrementProgress("GACHA",1)
               Game.save
               refresh
@@ -531,10 +531,10 @@ class GachaScene
              pbMessage(FRASES[rand(FRASES.length)])
           end
         when 3 #Multi
-          if $player.battle_points >= @banners[@banner_sel].cost * 10
+          if $player.money >= @banners[@banner_sel].cost * 10
             if pbMessage("¿Quieres hacer un multi? SE GUARDARÁ LA PARTIDA",["Sí","No"])==0
               gachaponRead(@banner_sel,true,@banners[@banner_sel].type)
-              $player.battle_points -= @banners[@banner_sel].cost * 10
+              $player.money -= @banners[@banner_sel].cost * 10
               Achievements.incrementProgress("GACHA",10)
               Game.save
               refresh

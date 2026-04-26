@@ -1548,7 +1548,7 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:STRIKER,
 
 Battle::AbilityEffects::DamageCalcFromUser.add(:SPEEDFORCE,
   proc { |ability, user, target, move, mults, power, type|
-    mults[:attack_multiplier] += 0.1*user.speed 
+    mults[:attack_multiplier] += 0.01*user.speed 
   }
 )
 
@@ -3368,6 +3368,14 @@ Battle::AbilityEffects::OnSwitchIn.add(:FAIRYAURA,
   proc { |ability, battler, battle, switch_in|
     battle.pbShowAbilitySplash(battler)
     battle.pbDisplay(_INTL("¡{1} irradia un aura feérica!", battler.pbThis))
+    battle.pbHideAbilitySplash(battler)
+  }
+)
+
+Battle::AbilityEffects::OnSwitchIn.add(:AURADORADA,
+  proc { |ability, battler, battle, switch_in|
+    battle.pbShowAbilitySplash(battler)
+    battle.pbDisplay(_INTL("¡{1} irradia un aura dorada!", battler.pbThis))
     battle.pbHideAbilitySplash(battler)
   }
 )

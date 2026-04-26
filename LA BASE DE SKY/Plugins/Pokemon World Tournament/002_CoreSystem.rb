@@ -161,7 +161,7 @@ class AdvancedWorldTournament
 	  end
       pbMessage(_INTL("Si quieres otro torneo me avisas."))
       $stats.pwt_wins[@tournament_id] += 1
-      $player.battle_points += total_points
+      $player.money += total_points
 	  $stats.pwt_win_streak[@tournament_id] += 1
       self.endTournament
     when "loss"

@@ -546,13 +546,9 @@ class PokemonStorageScene
         pbUpdateOverlay(selection)
         pbSetMosaic(selection)
       elsif Input.trigger?(Input::SPECIAL) && !t   # Jump to box name
-        if selection != -1
-          pbPlayCursorSE
-          selection = -1
-          pbSetArrow(@sprites["arrow"], selection)
-          pbUpdateOverlay(selection)
-          pbSetMosaic(selection)
-        end
+        pbSortByPokedex
+        pbUpdateOverlay(selection)
+        pbSetMosaic(selection)
       elsif Input.trigger?(Input::ACTION) && @command == 0   # Organize only
         if !t && !@grabber.carrying
           pbPlayDecisionSE
@@ -578,6 +574,46 @@ class PokemonStorageScene
     end
   end
   
+  def pbSortByPokedex
+    storage = $PokemonStorage
+    all_pokemon = []
+
+    # Recoger todos los Pokémon
+    storage.maxBoxes.times do |box|
+      storage.maxPokemon(box).times do |i|
+        pkmn = storage[box, i]
+        all_pokemon << pkmn if pkmn
+      end
+    end
+
+    # Crear orden de Pokédex real
+    dex_list = GameData::Species::DATA.keys
+
+    all_pokemon.sort_by! do |p|
+      dex_list.index(p.species) || 9999
+    end
+    Console.echo_li("Orden de Pokédex generado: #{dex_list}")
+
+    # Vaciar storage
+    storage.maxBoxes.times do |box|
+      storage.maxPokemon(box).times do |i|
+        storage[box, i] = nil
+      end
+    end
+
+    # Reinsertar
+    index = 0
+    storage.maxBoxes.times do |box|
+      storage.maxPokemon(box).times do |i|
+        break if index >= all_pokemon.length
+        storage[box, i] = all_pokemon[index]
+        index += 1
+      end
+    end
+    pbHardRefresh
+    pbMessage(_INTL("Pokémon ordenados por Pokédex correctamente."))
+  end
+
   #===============================================================================
   # pbSelectPartyInternal Override
   #===============================================================================

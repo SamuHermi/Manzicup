@@ -5934,17 +5934,7 @@ BackSprite = 0,0
 FrontSprite = 0,0
 ShadowSprite = 0,0,0
 #-------------------------------
-[SHABOON]
-BackSprite = 0,0
-FrontSprite = 0,0
-ShadowSprite = 0,0,0
-#-------------------------------
 [CONSTELLAR]
-BackSprite = 0,0
-FrontSprite = 0,0
-ShadowSprite = 0,0,0
-#-------------------------------
-[UNKTENA]
 BackSprite = 0,0
 FrontSprite = 0,0
 ShadowSprite = 0,0,0
@@ -5993,41 +5983,6 @@ ShadowSprite = 0,0,0
 BackSprite = -6,6
 FrontSprite = 5,9
 ShadowSprite = 0,6,-1
-#-------------------------------
-[ANKURIBOH]
-BackSprite = 0,0
-FrontSprite = 0,16
-ShadowSprite = 0,0,0
-#-------------------------------
-[KURIBABYLON]
-BackSprite = 0,0
-FrontSprite = 0,23
-ShadowSprite = 0,0,-3
-#-------------------------------
-[KURIBOH]
-BackSprite = 0,0
-FrontSprite = 0,16
-ShadowSprite = 0,0,5
-#-------------------------------
-[WKURIBOH10]
-BackSprite = 0,0
-FrontSprite = 0,0
-ShadowSprite = 0,0,26
-#-------------------------------
-[WKURIBOH]
-BackSprite = 0,0
-FrontSprite = 0,16
-ShadowSprite = 0,0,10
-#-------------------------------
-[LINKURIBOH]
-BackSprite = 0,0
-FrontSprite = 0,16
-ShadowSprite = 0,0,0
-#-------------------------------
-[SKURIBOH]
-BackSprite = 0,0
-FrontSprite = 0,16
-ShadowSprite = 0,0,7
 #-------------------------------
 [DISCORD]
 BackSprite = 0,0

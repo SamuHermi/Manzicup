@@ -383,8 +383,14 @@ class PokemonPartyPanel < Sprite
                          [[_INTL("Graphics/UI/Party/overlay_lv"), 20, 70, 0, 0, 22, 14]])
     # Level number
     pbSetSmallFont(@overlaysprite.bitmap)
+
+    if @pokemon.level < LevelCapsEX.level_cap
     pbDrawTextPositions(@overlaysprite.bitmap,
-                        [[@pokemon.level.to_s, 42, 68, :left, TEXT_BASE_COLOR, TEXT_SHADOW_COLOR]])
+                        [[@pokemon.level.to_s, 42, 68, :left, TEXT_BASE_COLOR, TEXT_SHADOW_COLOR]]) 
+    else
+    pbDrawTextPositions(@overlaysprite.bitmap,
+                        [[@pokemon.level.to_s, 42, 68, :left, Color.new(248, 192, 0), Color.new(144, 104, 0)]]) 
+    end                                     
     pbSetSystemFont(@overlaysprite.bitmap)
   end
 

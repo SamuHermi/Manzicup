@@ -113,6 +113,7 @@ MenuHandlers.add(:pc_menu, :pokemon_storage, {
   "order"     => 10,
   "effect"    => proc { |menu|
     pbMessage("\\se[PC access]" + _INTL("Abriendo el Sistema de Almacenamiento de Pokémon."))
+
     command = 0
     loop do
       command = pbShowCommandsWithHelp(nil,

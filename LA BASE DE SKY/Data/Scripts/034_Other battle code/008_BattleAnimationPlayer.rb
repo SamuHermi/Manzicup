@@ -403,6 +403,7 @@ class PBAnimation < Array
   attr_writer   :speed
   attr_reader   :array
   attr_reader   :timing
+  attr_accessor :volume
 
   MAX_SPRITES = 60
 
@@ -425,6 +426,14 @@ class PBAnimation < Array
 
   def length
     @array.length
+  end
+
+  def volume=(value)
+    @volume = value.clamp(0, 100) if value
+  end
+
+  def volume
+    return @volume
   end
 
   def each
@@ -521,11 +530,12 @@ class PBAnimation < Array
 
       case i.timingType
       when 0 # Play SE
+        volume_aux = self.volume || i.volume 
         if i.name && i.name != ''
-          pbSEPlay("Anim/#{i.name}", i.volume, i.pitch)
+          pbSEPlay("Anim/#{i.name}", volume_aux, i.pitch)
         elsif user&.pokemon
           name = GameData::Species.cry_filename_from_pokemon(user.pokemon)
-          pbSEPlay(name, i.volume, i.pitch) if name
+          pbSEPlay(name, volume_aux, i.pitch) if name
         end
 #        if sprite
 #          sprite.flash(i.flashColor, i.flashDuration * 2) if i.flashScope == 1
@@ -772,7 +782,7 @@ class PBAnimationPlayerX
     # Loop or end the animation if the animation has reached the end
     if @frame >= @animation.length
       if @looping
-        @frame %= @animation.length
+        @frame %= @animation.length 
         @timer_start += @animation.length / 20.0
       else
         @frame = -1

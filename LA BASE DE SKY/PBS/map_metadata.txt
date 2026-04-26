@@ -570,3 +570,13 @@ WildBattleBGM = Roar_Rathalos
 Name = Gimnasio Peak
 SnapEdges = true
 BattleBack = PraderaFlores
+#-------------------------------
+[116]   # Paseo Pósito
+Name = Paseo Pósito
+Outdoor = true
+SnapEdges = true
+#-------------------------------
+[117]   # Zona Otaka
+Name = Puraza de Abasatosu
+Outdoor = true
+SnapEdges = true

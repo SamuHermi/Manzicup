@@ -32,16 +32,6 @@ DiveCharset = Surf_IRIA.png
 FishCharset = trainer_IRIA.png
 SurfFishCharset = trainer_IRIA.png
 #-------------------------------
-[3]
-TrainerType = JESS
-WalkCharset = trainer_JESS.png
-RunCharset = trainer_JESS.png
-CycleCharset = trainer_JESS.png
-SurfCharset = Surf.png
-DiveCharset = Surf.png
-FishCharset = trainer_JESS.png
-SurfFishCharset = trainer_JESS.png
-#-------------------------------
 [4]
 TrainerType = BRAIS
 WalkCharset = trainer_BRAIS.png

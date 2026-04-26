@@ -126,7 +126,7 @@ module InstantMessagesSettings
     # Set the number of minimum steps the player has to take before receiving the next   
     # passive message.
     #------------------------------------------------------------------------------------
-    PASSIVE_STEP_MIN                    = 250
+    PASSIVE_STEP_MIN                    = 10000
 
     #------------------------------------------------------------------------------------
     # Set the variation to add on to PASSIVE_STEP_MIN to allow for some randomness.
@@ -138,13 +138,13 @@ module InstantMessagesSettings
     # Set the minimum amount of in-game minutes that has to pass before receiving the next   
     # passive message.
     #------------------------------------------------------------------------------------
-    PASSIVE_TIME_MIN                    = 1#5
+    PASSIVE_TIME_MIN                    = 90
 
     #------------------------------------------------------------------------------------
     # Set the variation in minutes to add on to PASSIVE_TIME_MIN to allow for some 
     # randomness. Formula will be: Time passed > PASSIVE_TIME_MIN + rand(PASSIVE_TIME_VARIATION)
     #------------------------------------------------------------------------------------
-    PASSIVE_TIME_VARIATION              = 0#15
+    PASSIVE_TIME_VARIATION              = 90#
 
     #------------------------------------------------------------------------------------
     # Set which type of passive message pool to pull from will get priority.

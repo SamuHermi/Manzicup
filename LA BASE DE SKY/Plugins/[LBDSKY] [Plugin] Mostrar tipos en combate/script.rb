@@ -38,7 +38,7 @@ class Battle::Scene::PokemonDataBox
   alias __types__set_x x= unless method_defined?(:__types__set_x)
   def x=(value)
     __types__set_x(value)
-    extra = (@battler.opposes?(0)) ? 70 : -21
+    extra = (@battler.opposes?(0)) ? 80 : -12
     #Console.echo_li("Style?: " + @style.nil?.to_s)
     extra = @databoxBitmap.width/2 if (@battler.opposes?(0) && @style.id == :Long)
     @types_sprite.x = value + @types_x + 10 + extra
@@ -50,7 +50,7 @@ class Battle::Scene::PokemonDataBox
     if @battler.opposes?(0)
       extra = 4
     else
-      extra = 8
+      extra = -6
     end
     # extra = -5
     # if @battler&.types.length == 1
@@ -69,7 +69,6 @@ class Battle::Scene::PokemonDataBox
   end
 
   def draw_type_icons
-    Console.echo_li("Dibujando tipos" + @types_sprite.nil?.to_s)
     if @types_sprite.nil?
       initGraph
     end

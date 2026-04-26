@@ -77,9 +77,10 @@ Gender = Male
 BaseMoney = 48
 #-------------------------------
 [FISHERMAN]
-Name = Pescador
+Name = Marinero
 Gender = Male
 BaseMoney = 32
+Rarity = 1
 #-------------------------------
 [GAMBLER]
 Name = Jugón
@@ -149,9 +150,11 @@ Gender = Male
 BaseMoney = 48
 #-------------------------------
 [SUPERNERD]
-Name = Cerebrito
+Name = Otaku
 Gender = Male
 BaseMoney = 48
+Maps = 117
+Rarity = 1
 #-------------------------------
 [TAMER]
 Name = Domador
@@ -189,9 +192,10 @@ Gender = Female
 BaseMoney = 60
 #-------------------------------
 [YOUNGSTER]
-Name = Joven
+Name = Niño rata
 Gender = Male
 BaseMoney = 16
+Maps = 117
 #-------------------------------
 [LASS]
 Name = Chica
@@ -407,6 +411,8 @@ SkillLevel = 50
 BaseMoney = 0
 BattleBGM = Battle Igor
 VictoryBGM = Battle victory leader
+Rarity = 0
+Maps = 117
 #-------------------------------
 [HERMI]
 Name = Rival
@@ -415,6 +421,8 @@ SkillLevel = 100
 BaseMoney = 0
 BattleBGM = Battle Hermi
 VictoryBGM = Battle victory leader
+Rarity = 3
+Maps = 117
 #-------------------------------
 [IRIA]
 Name = Rival
@@ -423,14 +431,8 @@ SkillLevel = 100
 BaseMoney = 0
 BattleBGM = Battle Iria
 VictoryBGM = Battle victory leader
-#-------------------------------
-[JESS]
-Name = Rival
-Gender = Female
-SkillLevel = 100
-BaseMoney = 0
-BattleBGM = Battle Jess
-VictoryBGM = Battle victory leader
+Rarity = 3
+Maps = 117
 #-------------------------------
 [BRAIS]
 Name = Rival
@@ -439,6 +441,8 @@ SkillLevel = 100
 BaseMoney = 0
 BattleBGM = Battle Brais
 VictoryBGM = Battle victory leader
+Rarity = 3
+Maps = 117
 #-------------------------------
 [SAMER]
 Name = Rival
@@ -447,6 +451,8 @@ SkillLevel = 100
 BaseMoney = 0
 BattleBGM = Battle Samer
 VictoryBGM = Battle victory leader
+Rarity = 3
+Maps = 117
 #-------------------------------
 [ISA]
 Name = Rival
@@ -455,6 +461,8 @@ SkillLevel = 100
 BaseMoney = 0
 BattleBGM = Battle Isa
 VictoryBGM = Battle victory leader
+Rarity = 3
+Maps = 117
 #-------------------------------
 [RODRI]
 Name = Rival
@@ -463,6 +471,8 @@ SkillLevel = 100
 BaseMoney = 0
 BattleBGM = Battle Rodri
 VictoryBGM = Battle victory leader
+Rarity = 3
+Maps = 117
 #-------------------------------
 [BRA]
 Name = Rival
@@ -471,6 +481,8 @@ SkillLevel = 100
 BaseMoney = 0
 BattleBGM = Battle Bra
 VictoryBGM = Battle victory leader
+Rarity = 3
+Maps = 117
 #-------------------------------
 [ANA]
 Name = Rival
@@ -479,6 +491,8 @@ SkillLevel = 100
 BaseMoney = 0
 BattleBGM = Battle Ana
 VictoryBGM = Battle victory leader
+Rarity = 3
+Maps = 117
 #-------------------------------
 [PABLO]
 Name = Rival
@@ -487,6 +501,8 @@ SkillLevel = 100
 BaseMoney = 0
 BattleBGM = Battle Pablo
 VictoryBGM = Battle victory leader
+Rarity = 3
+Maps = 117
 #-------------------------------
 [SABO]
 Name = Rival
@@ -495,6 +511,8 @@ SkillLevel = 100
 BaseMoney = 0
 BattleBGM = Battle Eliel
 VictoryBGM = Battle victory leader
+Rarity = 3
+Maps = 117
 #-------------------------------
 [NEREA]
 Name = Rival
@@ -503,215 +521,278 @@ SkillLevel = 100
 BaseMoney = 0
 BattleBGM = Battle Eliel
 VictoryBGM = Battle victory leader
+Rarity = 3
+Maps = 117
 #-------------------------------
 [UCHI]
 Name = Furro del Team Pera
 Gender = Male
 BaseMoney = 80
 BattleBGM = Battle Pera
+Rarity = 2
+Switch = 101
+Maps = 117
 #-------------------------------
 [MERMI]
 Name = Trapito del Team Pera
 Gender = Male
 BaseMoney = 80
 BattleBGM = Battle Pera
+Rarity = 2
+Switch = 101
+Maps = 117
 #-------------------------------
 [SAKU]
 Name = Loli del Team Pera
 Gender = Female
 BaseMoney = 80
 BattleBGM = Battle Pera
+Rarity = 2
+Switch = 101
+Maps = 117
 #-------------------------------
 [THIRTREP]
 Name = Pechugona del Team Pera
 Gender = Female
 BaseMoney = 80
 BattleBGM = Battle Pera
+Rarity = 2
+Switch = 101
+Maps = 117
 #-------------------------------
 [BEATO]
 Name = Bruja del Team Pera
 Gender = Female
 BaseMoney = 80
 BattleBGM = Battle Pera
+Rarity = 2
+Switch = 101
+Maps = 117
 #-------------------------------
 [LAMIA]
 Name = Sierpe del Team Pera
 Gender = Female
 BaseMoney = 80
 BattleBGM = Battle Pera
+Rarity = 2
+Switch = 101
+Maps = 117
 #-------------------------------
 [COLON]
 Name = Capitán del Team Pera
 Gender = Male
 BaseMoney = 80
 BattleBGM = Battle Pera
+Rarity = 2
+Switch = 101
+Maps = 117
 #-------------------------------
 [PAXAXA]
 Name = Granjera del Team Pera
 Gender = Female
 BaseMoney = 80
 BattleBGM = Battle Pera
+Rarity = 2
+Switch = 101
+Maps = 117
 #-------------------------------
 [LIANTE]
 Name = Liante del Team Pera
 Gender = Male
 BaseMoney = 80
 BattleBGM = Battle Pera
+Rarity = 2
+Switch = 101
+Maps = 117
 #-------------------------------
 [BABATUNDE]
 Name = Conquistador del Team Pera
 Gender = Female
 BaseMoney = 80
 BattleBGM = Battle Pera
+Rarity = 2
+Switch = 101
+Maps = 117
 #-------------------------------
 [TRIPULANTE]
 Name = Tripulante
 Gender = Unknown
-BaseMoney = 8
-SkillLevel = 10
+BaseMoney = 40
 BattleBGM = Battle Amongus
+Rarity = 1
+Switch = 101
+Maps = 117
 #-------------------------------
 [ESTRATEGA]
 Name = Estratega
 Gender = Unknown
-BaseMoney = 8
-SkillLevel = 10
+BaseMoney = 48
 BattleBGM = Battle TFT
+Rarity = 1
+Maps = 117
 #-------------------------------
 [PLANKTON]
 Name = Plankton
 Gender = Male
-BaseMoney = 8
-SkillLevel = 10
+BaseMoney = 33
 BattleBGM = Battle TFT
+Rarity = 1
+Maps = 117
 #-------------------------------
 [MINER]
 Name = Minero
 Gender = Male
-BaseMoney = 8
-SkillLevel = 10
-BattleBGM = Battle TFT
-#-------------------------------
-[ANGEL]
-Name = Bíblicamente Preciso
-Gender = Unknown
-BaseMoney = 8
-SkillLevel = 10
-BattleBGM = Battle TFT
+BaseMoney = 40
+BattleBGM = Battle Steve
+Rarity = 1
+Maps = 117
 #-------------------------------
 [FORTACHON]
 Name = Fortachón
 Gender = Male
-BaseMoney = 8
-SkillLevel = 10
-BattleBGM = Battle TFT
+BaseMoney = 49
+BattleBGM = Battle Jojofan
+Rarity = 1
+Maps = 117
 #-------------------------------
 [FLOR]
 Name = Flor
 Gender = Male
-BaseMoney = 8
-SkillLevel = 10
+BaseMoney = 32
 BattleBGM = Battle Flower
+Rarity = 1
+Maps = 117
 #-------------------------------
 [REPO]
 Name = Semibot
 Gender = Unknown
-BaseMoney = 8
-SkillLevel = 10
+SkillLevel = 32
 BattleBGM = Battle Repo
+Rarity = 1
+Maps = 117
 #-------------------------------
 [BOTANICA]
 Name = Bótanica
 Gender = Female
-BaseMoney = 8
-SkillLevel = 10
+BaseMoney = 49
 BattleBGM = Battle Claudette
+Rarity = 2
+Maps = 117
 #-------------------------------
 [OTAKA_LIDER]
 Name = Otaka culiada
 Gender = Female
-BaseMoney = 100
+BaseMoney = 55
 BattleBGM = Battle OtakaLider
+Rarity = 0
+Maps = 117
 #-------------------------------
 [BBEG]
 Name = Malo maloso
 Gender = Male
 BaseMoney = 100
 BattleBGM = Battle Moridon
+Rarity = 0
+Maps = 117
 #-------------------------------
-[IMPOSTOR]
-Name = Sus
+[CR7] #CAMBIAR
+Name = El bicho
 Gender = Male
 BaseMoney = 100
 BattleBGM = but nobody came
+Rarity = 0
+Maps = 117
 #-------------------------------
 [KNEKRO]
 Name = Viejo sabroso
 Gender = Male
 BaseMoney = 100
 BattleBGM = Battle Champion
+Rarity = 0
+Maps = 117
 #-------------------------------
 [PAPI]
 Name = Daddy
 Gender = Male
 BaseMoney = 100
+Rarity = 0
+Maps = 117
 #-------------------------------
 [MUSTIO]
 Name = Momia
 Gender = Male
 BaseMoney = 100
 BattleBGM = Battle Mustio
+Rarity = 0
+Maps = 117
 #-------------------------------
 [PSICOPATA]
 Name = Aventurero
 Gender = Male
 BaseMoney = 100
 BattleBGM = Battle Draldvyr
+Rarity = 2
+Switch = 102
+Maps = 117
 #-------------------------------
 [MAYORDOMO]
 Name = Aventurero
 Gender = Male
 BaseMoney = 100
 BattleBGM = Battle Devere
+Rarity = 2
+Switch = 102
+Maps = 117
 #-------------------------------
 [PRINCE]
 Name = Aventurero
 Gender = Male
 BaseMoney = 100
 BattleBGM = Battle Eldar
-#-------------------------------
-[REYMALDICIONES]
-Name = Rey de las maldiciones
-Gender = Male
-BaseMoney = 100
-BattleBGM = Battle Sukuna
+Rarity = 2
+Switch = 102
+Maps = 117
 #-------------------------------
 [PICARO]
 Name = Picarón
 Gender = Male
 BaseMoney = 100
 BattleBGM = Battle Devere
+Rarity = 2
+Switch = 102
+Maps = 117
 #-------------------------------
 [ENANO]
 Name = Enano
 Gender = Male
 BaseMoney = 100
 BattleBGM = Battle Devere
+Rarity = 2
+Switch = 102
+Maps = 117
 #-------------------------------
 [GUARDIANA]
 Name = Guardiana
 Gender = Female
 BaseMoney = 100
 BattleBGM = Battle Devere
+Rarity = 2
+Switch = 102
+Maps = 117
 #-------------------------------
 [EXPLORADOR]
 Name = Explorador
 Gender = Male
 BaseMoney = 100
 BattleBGM = Battle Devere
+Rarity = 2
+Switch = 102
+Maps = 117
 #-------------------------------
 [CLERIGO]
 Name = Clérigo
 Gender = Male
 BaseMoney = 100
 BattleBGM = Battle Lylgivunt
+Rarity = 2
+Switch = 102

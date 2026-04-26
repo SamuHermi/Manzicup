@@ -13,3 +13,4 @@ Scripts.code-workspace
 **/*.dat
 LA BASE DE SKY\Data\*.dat
 LA BASE DE SKY/Data/PluginScripts.rxdata
+*.rb

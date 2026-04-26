@@ -448,7 +448,7 @@ class BoxRanch
       :QUIET => "Disfruta de la tranquilidad del rancho.",
       # Aggressive natures
       :BRAVE => "Enseña el pecho con orgullo.",
-      :ADAMANT => "Está entrenando su cuerpo.",
+      :ADAMANT => "Está entrenandose.",
       :NAUGHTY => "Parece estar tramando algo."
     }
     
@@ -611,11 +611,9 @@ def show_pokemon_interaction_menu(species, level, event_id = nil)
     Achievements.incrementProgress("PET",1)
   elsif choice == 1  # Feed
     pbMessage(_INTL("¡Le das algo de comer, parece que le gusta!"))
-    pkmn.happiness += 1
   elsif choice == 2  # Play
     pbMessage(_INTL("Pasas un rato con el Pokémon. ¡Parece que se lo pasó muy bien!"))
     play_pokemon_cry(species, 100)
-    pkmn.happiness += 1
   else  # Back or invalid selection
     # Do nothing
   end
