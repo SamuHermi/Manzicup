@@ -64,14 +64,21 @@ class PokemonStorage
   def initialize(maxBoxes = Settings::NUM_STORAGE_BOXES, maxPokemon = PokemonBox::BOX_SIZE)
     @boxes = []
     maxBoxes.times do |i|
-      @boxes[i] = PokemonBox.new(_INTL('Caja {1}', i + 1), maxPokemon)
-      @boxes[i].background = i % BASICWALLPAPERQTY
+      create_new_box(i, maxPokemon)
     end
     @currentBox = 0
     @boxmode = -1
     @unlockedWallpapers = []
     allWallpapers.length.times do |i|
       @unlockedWallpapers[i] = false
+    end
+  end
+
+  def check_max_boxes_changed
+    return unless @boxes.length < Settings::NUM_STORAGE_BOXES
+
+    (Settings::NUM_STORAGE_BOXES - @boxes.length).times do |i|
+      create_new_box(@boxes.length)
     end
   end
 
@@ -90,6 +97,11 @@ class PokemonStorage
       _INTL('Heartgold'), _INTL('Soulsilver'), _INTL('Hermano mayor'), _INTL('Pokéathlon'),
       _INTL('Trío 3'), _INTL('Picoreja'), _INTL('Chica Kimono'), _INTL('Revival')
     ]
+  end
+
+  def create_new_box(number, maxPokemon = PokemonBox::BOX_SIZE)
+    @boxes[number] = PokemonBox.new(_INTL('Caja {1}', number + 1), maxPokemon)
+    @boxes[number].background = number % BASICWALLPAPERQTY
   end
 
   def unlockedWallpapers
@@ -364,6 +376,50 @@ class PokemonStorage
 
     self[box, index] = nil
     party.compact! if box == -1
+
+    ret = -1
+
+    maxPokemon(@currentBox).times do |i|
+      next unless self[@currentBox, i].nil?
+
+      self[@currentBox, i] = pkmn
+      ret = @currentBox
+      break
+    end
+
+    if ret < 0
+      should_break = false
+      maxBoxes.times do |j|
+        maxPokemon(j).times do |i|
+          next unless self[j, i].nil?
+
+          self[j, i] = pkmn
+          @currentBox = j
+          ret = @currentBox
+          should_break = true
+          break
+        end
+        break if should_break
+      end
+    end
+
+    # If this completely filled the storage, create a new box if the setting is enabled
+    if full? && Settings::STORAGE_EXTEND_ON_FULL && maxBoxes < Settings::MAX_STORAGE_BOXES_EXTEND
+      create_new_box(maxBoxes)
+    end
+
+    ret
+  end
+
+  def pbDelete(box, indices)
+    if indices.is_a?(Range) || indices.is_a?(Array)
+      indices.each do |index|
+        self[box, index] = nil if self[box, index]
+      end
+    elsif self[box, indices]
+      self[box, indices] = nil
+    end
+    party.compact! if box == -1
   end
 
   def clear
@@ -474,6 +530,10 @@ class RegionalStorage
 
   def pbDelete(box, index)
     getCurrentStorage.pbDelete(pkmn)
+  end
+
+  def create_new_box(number, maxPokemon = PokemonBox::BOX_SIZE)
+    getCurrentStorage.create_new_box(number, maxPokemon)
   end
 end
 

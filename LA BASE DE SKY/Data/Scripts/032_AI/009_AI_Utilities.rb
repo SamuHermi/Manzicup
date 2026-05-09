@@ -8,33 +8,33 @@ class Battle::AI
 
   #-----------------------------------------------------------------------------
 
-  def each_battler
+  def each_battler(with_commanders = false)
     @battlers.each_with_index do |battler, i|
-      next if !battler || battler.fainted?
+      next if !battler || battler.fainted? || (!with_commanders && battler.effects[PBEffects::Commanding] >= 0)
 
       yield battler, i
     end
   end
 
-  def each_foe_battler(side)
+  def each_foe_battler(side, with_commanders = false)
     @battlers.each_with_index do |battler, i|
-      next if !battler || battler.fainted?
+      next if !battler || battler.fainted? || (!with_commanders && battler.effects[PBEffects::Commanding] >= 0)
 
       yield battler, i if i.even? != side.even?
     end
   end
 
-  def each_same_side_battler(side)
+  def each_same_side_battler(side, with_commanders = false)
     @battlers.each_with_index do |battler, i|
-      next if !battler || battler.fainted?
+      next if !battler || battler.fainted? || (!with_commanders && battler.effects[PBEffects::Commanding] >= 0)
 
       yield battler, i if i.even? == side.even?
     end
   end
 
-  def each_ally(index)
+  def each_ally(index, with_commanders = false)
     @battlers.each_with_index do |battler, i|
-      next if !battler || battler.fainted?
+      next if !battler || battler.fainted? || (!with_commanders && battler.effects[PBEffects::Commanding] >= 0)
 
       yield battler, i if i != index && i.even? == index.even?
     end
@@ -52,18 +52,15 @@ class Battle::AI
     # Check pkmn's ability
     # Anything with a Battle::AbilityEffects::MoveImmunity handler
     case pkmn.ability_id
-    when :EARTHEATER
-      return move_type == :GROUND
-    when :WELLBAKEDBODY
-      return move_type == :FIRE
-    when :WINDRIDER
-      move_data = GameData::Move.get(move.id)
-      return move_data.has_flag?('Wind')
     when :BULLETPROOF
       move_data = GameData::Move.get(move.id)
       return move_data.has_flag?('Bomb')
-    when :FLASHFIRE
+    when :EARTHEATER
+      return move_type == :GROUND
+    when :FLASHFIRE, :WELLBAKEDBODY
       return move_type == :FIRE
+    when :GOODASGOLD
+      return move.is_a?(Pokemon::Move) ? move.status_move? : move.statusMove?
     when :LIGHTNINGROD, :MOTORDRIVE, :VOLTABSORB
       return move_type == :ELECTRIC
     when :SAPSIPPER
@@ -96,6 +93,7 @@ class Battle::AI
     return false if pkmn.hasAbility?(:LEAFGUARD) && %i[Sun HarshSun].include?(@battle.pbWeather)
     return false if pkmn.hasAbility?(:COMATOSE) && pkmn.isSpecies?(:KOMALA)
     return false if pkmn.hasAbility?(:SHIELDSDOWN) && pkmn.isSpecies?(:MINIOR) && pkmn.form < 7
+    return false if pkmn.hasAbility?(:PURIFYINGSALT)
 
     true
   end
@@ -108,6 +106,18 @@ class Battle::AI
     return true if pkmn.hasItem?(:AIRBALLOON)
 
     false
+  end
+
+  #-----------------------------------------------------------------------------
+
+  # Used by Revival Blessing.
+  def choose_pokemon_to_revive(user)
+    targets = get_usability_of_item_on_pkmn(:REVIVE,
+                                            @battle.pbGetOwnerIndexFromBattlerIndex(user.index), user.idxOwnSide)
+    targets = targets[:revive]
+    targets.sort! { |a, b| a[1] <=> b[1] }
+    idxParty = targets.last[1] # Latest fainted Pokémon in party
+    @battle.pbParty(user.idxOwnSide)[idxParty]
   end
 
   #-----------------------------------------------------------------------------
@@ -176,6 +186,8 @@ class Battle::AI
 
   #-----------------------------------------------------------------------------
 
+  # TODO: Ensure all items are listed here and have an AbilityRanking if
+  #       appropriate.
   BASE_ITEM_RATINGS = {
     10 => %i[EVIOLITE FOCUSSASH LIFEORB THICKCLUB],
     9 => %i[ASSAULTVEST BLACKSLUDGE CHOICEBAND CHOICESCARF CHOICESPECS
@@ -255,6 +267,27 @@ Battle::AI::Handlers::AbilityRanking.add(:BLAZE,
                                            next 0
                                          })
 
+Battle::AI::Handlers::AbilityRanking.add(:COMMANDER,
+                                         proc { |ability, score, battler, ai|
+                                           next 0 unless battler.battler.isSpecies?(:TATSUGIRI)
+                                           next 0 if battler.battler.allAllies.none? do |b|
+                                             b.isSpecies?(:DONDOZO) && !b.effects[PBEffects::Transform] &&
+                                             ai.battle.pbGetOwnerIndexFromBattlerIndex(battler.index) == ai.battle.pbGetOwnerIndexFromBattlerIndex(b.index) &&
+                                             b.effects[PBEffects::CommandedBy] < 0
+                                           end
+
+                                           next score
+                                         })
+
+Battle::AI::Handlers::AbilityRanking.add(:CUDCHEW,
+                                         proc { |ability, score, battler, ai|
+                                           if battler.item.is_berry? || battler.effects[PBEffects::CudChewBerry]
+                                             next score
+                                           end
+
+                                           next 0
+                                         })
+
 Battle::AI::Handlers::AbilityRanking.add(:CUTECHARM,
                                          proc { |ability, score, battler, ai|
                                            next 0 if battler.gender == 2
@@ -263,6 +296,22 @@ Battle::AI::Handlers::AbilityRanking.add(:CUTECHARM,
                                          })
 
 Battle::AI::Handlers::AbilityRanking.copy(:CUTECHARM, :RIVALRY)
+
+Battle::AI::Handlers::AbilityRanking.add(:DRAGONSMAW,
+                                         proc { |ability, score, battler, ai|
+                                           next score if battler.has_damaging_move_of_type?(:DRAGON)
+
+                                           next 0
+                                         })
+
+Battle::AI::Handlers::AbilityRanking.add(:ELECTROMORPHOSIS,
+                                         proc { |ability, score, battler, ai|
+                                           next score if battler.has_damaging_move_of_type?(:ELECTRIC)
+
+                                           next 0
+                                         })
+
+Battle::AI::Handlers::AbilityRanking.copy(:ELECTROMORPHOSIS, :WINDPOWER)
 
 Battle::AI::Handlers::AbilityRanking.add(:FRIENDGUARD,
                                          proc { |ability, score, battler, ai|
@@ -291,6 +340,13 @@ Battle::AI::Handlers::AbilityRanking.add(:HUGEPOWER,
 
 Battle::AI::Handlers::AbilityRanking.copy(:HUGEPOWER, :PUREPOWER)
 
+Battle::AI::Handlers::AbilityRanking.add(:ILLUMINATE,
+                                         proc { |ability, score, battler, ai|
+                                           next 0 if Settings::MECHANICS_GENERATION <= 8
+
+                                           next score
+                                         })
+
 Battle::AI::Handlers::AbilityRanking.add(:IRONFIST,
                                          proc { |ability, score, battler, ai|
                                            next score if battler.check_for_move { |m| m.punchingMove? }
@@ -312,9 +368,28 @@ Battle::AI::Handlers::AbilityRanking.add(:MEGALAUNCHER,
                                            next 0
                                          })
 
+Battle::AI::Handlers::AbilityRanking.add(:MYCELIUMMIGHT,
+                                         proc { |ability, score, battler, ai|
+                                           next score if battler.check_for_move do |m|
+                                             m.statusMove? && m.pbTarget(battler.battler).can_target_one_foe?
+                                           end
+
+                                           next 0
+                                         })
+
 Battle::AI::Handlers::AbilityRanking.add(:OVERGROW,
                                          proc { |ability, score, battler, ai|
                                            next score if battler.has_damaging_move_of_type?(:GRASS)
+
+                                           next 0
+                                         })
+
+Battle::AI::Handlers::AbilityRanking.add(:POISONPUPPETEER,
+                                         proc { |ability, score, battler, ai|
+                                           next score if battler.battler.isSpecies?(:PECHARUNT) &&
+                                                         battler.has_move_with_function?('PoisonTarget',
+                                                                                         'PoisonTargetLowerTargetSpeed1',
+                                                                                         'PoisonParalyzeOrSleepTarget')
 
                                            next 0
                                          })
@@ -325,6 +400,15 @@ Battle::AI::Handlers::AbilityRanking.add(:PRANKSTER,
 
                                            next 0
                                          })
+
+Battle::AI::Handlers::AbilityRanking.add(:PROTOSYNTHESIS,
+                                         proc { |ability, score, battler, ai|
+                                           next score if battler.effects[PBEffects::ProtosynthesisStat]
+
+                                           next 0
+                                         })
+
+Battle::AI::Handlers::AbilityRanking.copy(:PROTOSYNTHESIS, :QUARKDRIVE)
 
 Battle::AI::Handlers::AbilityRanking.add(:PUNKROCK,
                                          proc { |ability, score, battler, ai|
@@ -342,9 +426,18 @@ Battle::AI::Handlers::AbilityRanking.add(:RECKLESS,
 
 Battle::AI::Handlers::AbilityRanking.add(:ROCKHEAD,
                                          proc { |ability, score, battler, ai|
-                                           if battler.check_for_move { |m| m.recoilMove? && !m.is_a?(Battle::Move::CrashDamageIfFailsUnusableInGravity) }
-                                             next score
+                                           next score if battler.check_for_move do |m|
+                                             m.recoilMove? &&
+                                                                                                               !m.is_a?(Battle::Move::CrashDamageIfFails) &&
+                                                                                                               !m.is_a?(Battle::Move::CrashDamageIfFailsUnusableInGravity)
                                            end
+
+                                           next 0
+                                         })
+
+Battle::AI::Handlers::AbilityRanking.add(:ROCKYPAYLOAD,
+                                         proc { |ability, score, battler, ai|
+                                           next score if battler.has_damaging_move_of_type?(:ROCK)
 
                                            next 0
                                          })
@@ -363,10 +456,19 @@ Battle::AI::Handlers::AbilityRanking.add(:SANDFORCE,
                                            next 2
                                          })
 
+Battle::AI::Handlers::AbilityRanking.add(:SHARPNESS,
+                                         proc { |ability, score, battler, ai|
+                                           next score if battler.check_for_move { |m| m.slicingMove? }
+
+                                           next 0
+                                         })
+
 Battle::AI::Handlers::AbilityRanking.add(:SKILLLINK,
                                          proc { |ability, score, battler, ai|
-                                           if battler.check_for_move { |m| m.is_a?(Battle::Move::HitTwoToFiveTimes) }
-                                             next score
+                                           next score if battler.check_for_move do |m|
+                                             m.is_a?(Battle::Move::HitTwoToFiveTimes) ||
+                                                                                                               m.is_a?(Battle::Move::HitThreeTimesPowersUpWithEachHit) ||
+                                                                                                               m.is_a?(Battle::Move::HitTenTimes)
                                            end
 
                                            next 0
@@ -377,6 +479,18 @@ Battle::AI::Handlers::AbilityRanking.add(:STEELWORKER,
                                            next score if battler.has_damaging_move_of_type?(:STEEL)
 
                                            next 0
+                                         })
+
+Battle::AI::Handlers::AbilityRanking.add(:STRONGJAW,
+                                         proc { |ability, score, battler, ai|
+                                           next score if battler.check_for_move { |m| m.bitingMove? }
+
+                                           next 0
+                                         })
+
+Battle::AI::Handlers::AbilityRanking.add(:SUPREMEOVERLORD,
+                                         proc { |ability, score, battler, ai|
+                                           next (score * battler.effects[PBEffects::SupremeOverlord] / 5.0).ceil
                                          })
 
 Battle::AI::Handlers::AbilityRanking.add(:SWARM,
@@ -393,83 +507,41 @@ Battle::AI::Handlers::AbilityRanking.add(:TORRENT,
                                            next 0
                                          })
 
+Battle::AI::Handlers::AbilityRanking.add(:TOXICDEBRIS,
+                                         proc { |ability, score, battler, ai|
+                                           next 0 if battler.pbOpposingSide.effects[PBEffects::ToxicSpikes] >= 2
+
+                                           inBattleIndices = ai.battle.allSameSideBattlers(battler.idxOpposingSide,
+                                                                                           true).map do |b|
+                                             b.pokemonIndex
+                                           end
+                                           foe_reserves = []
+                                           ai.battle.pbParty(battler.idxOpposingSide).each_with_index do |pkmn, idxParty|
+                                             next if !pkmn || !pkmn.able? || inBattleIndices.include?(idxParty)
+
+                                             if ai.trainer.medium_skill?
+                                               next if pkmn.hasItem?(:HEAVYDUTYBOOTS)
+                                               next if ai.pokemon_airborne?(pkmn)
+                                               next unless ai.pokemon_can_be_poisoned?(pkmn)
+                                             end
+                                             foe_reserves.push(pkmn) # pkmn will be affected by Toxic Spikes
+                                           end
+                                           next score unless foe_reserves.empty?
+
+                                           next 0
+                                         })
+
+Battle::AI::Handlers::AbilityRanking.add(:TRANSISTOR,
+                                         proc { |ability, score, battler, ai|
+                                           next score if battler.has_damaging_move_of_type?(:ELECTRIC)
+
+                                           next 0
+                                         })
+
 Battle::AI::Handlers::AbilityRanking.add(:TRIAGE,
                                          proc { |ability, score, battler, ai|
                                            next score if battler.check_for_move { |m| m.healingMove? }
-
-                                           next 0
                                          })
-
-Battle::AI::Handlers::AbilityRanking.add(:ROCKYPAYLOAD,
-                                         proc { |ability, score, battler, ai|
-                                           next score if battler.has_damaging_move_of_type?(:ROCK)
-
-                                           next 0
-                                         })
-
-Battle::AI::Handlers::AbilityRanking.add(:SHARPNESS,
-                                         proc { |ability, score, battler, ai|
-                                           next score if battler.check_for_move { |m| m.slicingMove? }
-
-                                           next 0
-                                         })
-
-Battle::AI::Handlers::AbilityRanking.add(:SUPREMEOVERLORD,
-                                         proc { |ability, score, battler, ai|
-                                           next battler.effects[PBEffects::SupremeOverlord]
-                                         })
-
-Battle::AI::Handlers::AbilityRanking.add(:ANGERSHELL,
-                                         proc { |ability, score, battler, ai|
-                                           next score if battler.hp > battler.totalhp / 2
-
-                                           next 0
-                                         })
-
-Battle::AI::Handlers::AbilityRanking.add(:CUDCHEW,
-                                         proc { |ability, score, battler, ai|
-                                           next score if battler.item && battler.item.is_berry?
-
-                                           next 0
-                                         })
-
-Battle::AI::Handlers::AbilityRanking.add(:ORICHALCUMPULSE,
-                                         proc { |ability, score, battler, ai|
-                                           next score if battler.check_for_move do |m|
-                                             m.physicalMove? && %i[Sun
-                                                                   HarshSun].include?(battler.battler.effectiveWeather)
-                                           end
-
-                                           next score - 1
-                                         })
-
-Battle::AI::Handlers::AbilityRanking.add(:HADRONENGINE,
-                                         proc { |ability, score, battler, ai|
-                                           next score if battler.check_for_move do |m|
-                                             m.specialMove? && battler.battler.battle.field.terrain == :Electric
-                                           end
-
-                                           next score - 1
-                                         })
-
-Battle::AI::Handlers::AbilityRanking.add(:POISONPUPPETEER,
-                                         proc { |ability, score, battler, ai|
-                                           next score if battler.check_for_move do |m|
-                                             m.is_a?(Battle::Move::PoisonTarget) ||
-                                             m.is_a?(Battle::Move::BadPoisonTarget) ||
-                                             m.is_a?(Battle::Move::PoisonTargetLowerTargetSpeed1) ||                # Toxic Thread
-                                             m.is_a?(Battle::Move::CategoryDependsOnHigherDamagePoisonTarget) ||    # Shell Side Arm
-                                             m.is_a?(Battle::Move::HitTwoTimesPoisonTarget) ||                      # Twin Needle
-                                             m.is_a?(Battle::Move::DoublePowerIfTargetPoisonedPoisonTarget) ||      # Barb Barrage
-                                             m.is_a?(Battle::Move::RemoveUserBindingAndEntryHazardsPoisonTarget) || # Mortal Spin
-                                             m.is_a?(Battle::Move::StarmobilePoisonTarget) ||                       # Noxious Torque
-                                             m.is_a?(Battle::Move::ProtectUserBanefulBunker) ||                     # Baneful Bunker
-                                             m.is_a?(Battle::Move::PoisonParalyzeOrSleepTarget)                     # Dire Claw
-                                           end
-
-                                           next 0
-                                         })
-
 #===============================================================================
 #
 #===============================================================================
@@ -481,6 +553,8 @@ Battle::AI::Handlers::ItemRanking.add(:ADAMANTORB,
 
                                         next 0
                                       })
+
+Battle::AI::Handlers::ItemRanking.copy(:ADAMANTORB, :ADAMANTCRYSTAL)
 
 Battle::AI::Handlers::ItemRanking.add(:AGUAVBERRY,
                                       proc { |item, score, battler, ai|
@@ -539,6 +613,14 @@ Battle::AI::Handlers::ItemRanking.add(:BLACKSLUDGE,
                                         next score if battler.has_type?(:POISON)
 
                                         next -9
+                                      })
+
+Battle::AI::Handlers::ItemRanking.add(:BOOSTERENERGY,
+                                      proc { |item, score, battler, ai|
+                                        next score if battler.has_active_ability?(:PROTOSYNTHESIS) ||
+                                                      battler.has_active_ability?(:QUARKDRIVE)
+
+                                        next 0
                                       })
 
 Battle::AI::Handlers::ItemRanking.add(:CHESTOBERRY,
@@ -657,6 +739,8 @@ Battle::AI::Handlers::ItemRanking.add(:GRISEOUSORB,
                                         next 0
                                       })
 
+Battle::AI::Handlers::ItemRanking.copy(:GRISEOUSORB, :GRISEOUSCORE)
+
 Battle::AI::Handlers::ItemRanking.add(:HEATROCK,
                                       proc { |item, score, battler, ai|
                                         if battler.check_for_move { |m| m.is_a?(Battle::Move::StartSunWeather) }
@@ -683,8 +767,9 @@ Battle::AI::Handlers::ItemRanking.add(:IAPAPABERRY,
 
 Battle::AI::Handlers::ItemRanking.add(:ICYROCK,
                                       proc { |item, score, battler, ai|
-                                        if battler.check_for_move { |m| m.is_a?(Battle::Move::StartHailWeather) }
-                                          next score
+                                        next score if battler.check_for_move do |m|
+                                          m.is_a?(Battle::Move::StartHailWeather) ||
+                                                                                                         m.is_a?(Battle::Move::StartSnowstormWeather)
                                         end
 
                                         next 0
@@ -736,6 +821,17 @@ Battle::AI::Handlers::ItemRanking.add(:LIGHTCLAY,
                                         next 0
                                       })
 
+Battle::AI::Handlers::ItemRanking.add(:LOADEDDICE,
+                                      proc { |ability, score, battler, ai|
+                                        next score if battler.check_for_move do |m|
+                                          m.is_a?(Battle::Move::HitTwoToFiveTimes) ||
+                                                                                                         m.is_a?(Battle::Move::HitThreeTimesPowersUpWithEachHit) ||
+                                                                                                         m.is_a?(Battle::Move::HitTenTimes)
+                                        end
+
+                                        next 0
+                                      })
+
 Battle::AI::Handlers::ItemRanking.add(:LUCKYPUNCH,
                                       proc { |item, score, battler, ai|
                                         next score if battler.battler.isSpecies?(:CHANSEY)
@@ -750,6 +846,8 @@ Battle::AI::Handlers::ItemRanking.add(:LUSTROUSORB,
 
                                         next 0
                                       })
+
+Battle::AI::Handlers::ItemRanking.copy(:LUSTROUSORB, :LUSTROUSGLOBE)
 
 Battle::AI::Handlers::ItemRanking.add(:MAGOBERRY,
                                       proc { |item, score, battler, ai|
@@ -806,6 +904,13 @@ Battle::AI::Handlers::ItemRanking.add(:PSYCHICSEED,
                                         if battler.check_for_move { |m| m.is_a?(Battle::Move::StartPsychicTerrain) }
                                           next score
                                         end
+
+                                        next 0
+                                      })
+
+Battle::AI::Handlers::ItemRanking.add(:PUNCHINGGLOVE,
+                                      proc { |ability, score, battler, ai|
+                                        next score if battler.check_for_move { |m| m.punchingMove? && m.contactMove? }
 
                                         next 0
                                       })
@@ -922,10 +1027,10 @@ Battle::AI::Handlers::ItemRanking.add(:ZOOMLENS,
 
 Battle::AI::Handlers::ItemRanking.addIf(:type_boosting_items,
                                         proc { |item|
-                                          next %i[BLACKBELT BLACKGLASSES CHARCOAL DRAGONFANG HARDSTONE
-                                                  MAGNET METALCOAT MIRACLESEED MYSTICWATER NEVERMELTICE
-                                                  POISONBARB SHARPBEAK SILKSCARF SILVERPOWDER SOFTSAND
-                                                  SPELLTAG TWISTEDSPOON
+                                          next %i[BLACKBELT BLACKGLASSES CHARCOAL DRAGONFANG FAIRYFEATHER
+                                                  HARDSTONE MAGNET METALCOAT MIRACLESEED MYSTICWATER
+                                                  NEVERMELTICE POISONBARB SHARPBEAK SILKSCARF SILVERPOWDER
+                                                  SOFTSAND SPELLTAG TWISTEDSPOON
                                                   DRACOPLATE DREADPLATE EARTHPLATE FISTPLATE FLAMEPLATE
                                                   ICICLEPLATE INSECTPLATE IRONPLATE MEADOWPLATE MINDPLATE
                                                   PIXIEPLATE SKYPLATE SPLASHPLATE SPOOKYPLATE STONEPLATE
@@ -938,7 +1043,7 @@ Battle::AI::Handlers::ItemRanking.addIf(:type_boosting_items,
                                             DARK: %i[BLACKGLASSES DREADPLATE],
                                             DRAGON: %i[DRAGONFANG DRACOPLATE],
                                             ELECTRIC: %i[MAGNET ZAPPLATE],
-                                            FAIRY: [:PIXIEPLATE],
+                                            FAIRY: %i[FAIRYFEATHER PIXIEPLATE],
                                             FIGHTING: %i[BLACKBELT FISTPLATE],
                                             FIRE: %i[CHARCOAL FLAMEPLATE],
                                             FLYING: %i[SHARPBEAK SKYPLATE],
@@ -999,41 +1104,10 @@ Battle::AI::Handlers::ItemRanking.addIf(:gems,
                                           next 0
                                         })
 
-Battle::AI::Handlers::ItemRanking.add(:ADAMANTCRYSTAL,
-                                      proc { |item, score, battler, ai|
-                                        next score if battler.battler.isSpecies?(:DIALGA) &&
-                                                      battler.has_damaging_move_of_type?(:DRAGON, :STEEL)
-
-                                        next 0
-                                      })
-
-Battle::AI::Handlers::ItemRanking.add(:LUSTROUSGLOBE,
-                                      proc { |item, score, battler, ai|
-                                        next score if battler.battler.isSpecies?(:PALKIA) &&
-                                                      battler.has_damaging_move_of_type?(:DRAGON, :WATER)
-
-                                        next 0
-                                      })
-
-Battle::AI::Handlers::ItemRanking.add(:GRISEOUSCORE,
-                                      proc { |item, score, battler, ai|
-                                        next score if battler.battler.isSpecies?(:GIRATINA) &&
-                                                      battler.has_damaging_move_of_type?(:DRAGON, :GHOST)
-
-                                        next 0
-                                      })
-
 Battle::AI::Handlers::ItemRanking.add(:LEGENDPLATE,
                                       proc { |item, score, battler, ai|
                                         next score if battler.battler.isSpecies?(:ARCEUS) &&
                                                       battler.target.has_move_with_function?('TypeDependsOnUserPlate')
-
-                                        next 0
-                                      })
-
-Battle::AI::Handlers::ItemRanking.add(:BOOSTERENERGY,
-                                      proc { |item, score, battler, ai|
-                                        next score if %i[PROTOSYNTHESIS QUARKDRIVE].include?(battler.ability_id)
 
                                         next 0
                                       })
@@ -1044,40 +1118,3 @@ Battle::AI::Handlers::ItemRanking.add(:BLANKPLATE,
 
                                         next 0
                                       })
-
-Battle::AI::Handlers::ItemRanking.add(:PUNCHINGGLOVE,
-                                      proc { |item, score, battler, ai|
-                                        next score if battler.check_for_move { |m| m.punchingMove? }
-
-                                        next 0
-                                      })
-
-Battle::AI::Handlers::ItemRanking.add(:LOADEDDICE,
-                                      proc { |item, score, battler, ai|
-                                        score = 0
-                                        if ai.trainer.high_skill? && battler.check_for_move { |m| m.multiHitMove? }
-                                          score += 1
-                                        end
-                                        next score
-                                      })
-
-#===============================================================================
-# Teal Mask DLC
-#===============================================================================
-Battle::AI::Handlers::ItemRanking.add(:FAIRYFEATHER,
-                                      proc { |item, score, battler, ai|
-                                        next score if battler.has_damaging_move_of_type?(:FAIRY)
-
-                                        next 0
-                                      })
-
-Battle::AI::Handlers::ItemRanking.add(:WELLSPRINGMASK,
-                                      proc { |item, score, battler, ai|
-                                        next score if battler.battler.isSpecies?(:OGERPON) &&
-                                                      battler.has_damaging_move_of_type?(battler.types[0],
-                                                                                         battler.types[1])
-
-                                        next 0
-                                      })
-
-Battle::AI::Handlers::ItemRanking.copy(:WELLSPRINGMASK, :HEARTHFLAMEMASK, :CORNERSTONEMASK)

@@ -15,6 +15,11 @@ class IntroEventScene < EventScene
 
   def initialize(viewport = nil)
     super(viewport)
+    wd = Dir.getwd
+    if !File.directory?(wd) && [".zip", ".rar", ".7z", ".tar", ".gz"].include?(File.extname(wd).downcase)
+      pbMessage(_INTL("Parece que no has descomprimido el juego.\nPor favor, descomprímelo antes de jugar."))
+      exit
+    end
     @pic = addImage(0, 0, "")
     @pic.setOpacity(0, 0)        # set opacity to 0 after waiting 0 frames
     @pic2 = addImage(0, 0, "")   # flashing "Press Enter" picture
@@ -90,17 +95,18 @@ class IntroEventScene < EventScene
 
   def close_title_screen(scene, *args)
     fade_out_title_screen(scene)
-    sscene = PokemonLoad_Scene.new
-    sscreen = PokemonLoadScreen.new(sscene)
-    sscreen.pbStartLoadScreen
+    # sscene = PokemonLoad_Scene.new
+    # sscreen = PokemonLoadScreen.new(sscene)
+    # sscreen.pbStartLoadScreen
+    UI::Load.new.main
   end
 
-  def close_title_screen_delete(scene, *args)
-    fade_out_title_screen(scene)
-    sscene = PokemonLoad_Scene.new
-    sscreen = PokemonLoadScreen.new(sscene)
-    sscreen.pbStartDeleteScreen
-  end
+  # def close_title_screen_delete(scene, *args)
+  #   fade_out_title_screen(scene)
+  #   sscene = PokemonLoad_Scene.new
+  #   sscreen = PokemonLoadScreen.new(sscene)
+  #   sscreen.pbStartDeleteScreen
+  # end
 
   def title_screen_update(scene, args)
     # Flashing of "Press Enter" picture
@@ -108,11 +114,11 @@ class IntroEventScene < EventScene
       @pic2.moveOpacity(TICKS_PER_ENTER_FLASH * 2 / 10, TICKS_PER_ENTER_FLASH * 4 / 10, 0)
       @pic2.moveOpacity(TICKS_PER_ENTER_FLASH * 6 / 10, TICKS_PER_ENTER_FLASH * 4 / 10, 255)
     end
-    if Input.press?(Input::DOWN) &&
-       Input.press?(Input::BACK) &&
-       Input.press?(Input::CTRL)
-      close_title_screen_delete(scene, args)
-    end
+    # if Input.press?(Input::DOWN) &&
+    #    Input.press?(Input::BACK) &&
+    #    Input.press?(Input::CTRL)
+    #   close_title_screen_delete(scene, args)
+    # end
   end
 end
 

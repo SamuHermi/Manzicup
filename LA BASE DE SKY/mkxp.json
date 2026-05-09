@@ -12,7 +12,7 @@
   // Note that the "Game Title" defined in RPG Maker XP should not have
   // accented characters in it, which is why this property is useful.
   //
-  "windowTitle": "Pokémon Manzidadas",
+  "windowTitle": "La Base De Sky 1.2.0",
   // The game window's width and height, in pixels.
   //
   "defScreenW": 512,
@@ -25,20 +25,30 @@
   // "enableReset": true,
   // Enable F1 to open the keybinding menu.
   //
-  // "enableSettings": true,
+  "enableSettings": false,
   // The names of each input, as seen in the F1 keybinding menu. The names
   // have no other use.
   //
   "bindingNames": {
-    "c": "Use",
-    "b": "Back",
-    "a": "Action",
-    "x": "JumpUp",
-    "y": "JumpDown",
-    "z": "Special",
-    "l": "AUX1",
-    "r": "AUX2"
+    "c": "Use (C)",
+    "b": "Back (X)",
+    "a": "Action (Z)",
+    "x": "JumpUp (A)",
+    "y": "JumpDown (S)",
+    "z": "Special (D)",
+    "l": "AUX1 (Q)",
+    "r": "AUX2 (W)"
   },
+  // Font substitutions allow drop-in replacements of fonts to be used without
+  // changing the RGSS scripts, e.g. providing 'Liberation Sans' when the game
+  // thinks it's using 'Arial'. Font family to be substituted and replacement
+  // family are separated by one sole '>'. Be careful not to include any
+  // spaces.
+  // This is not connected to the built-in font, which is always used when a
+  // non-existing font family is requested by RGSS.
+  "fontSub": [
+    "Arial>Liberation Sans"
+  ],
   // The name of this game's save folder. If undefined, the save folder's name
   // will be the "Game Title" as defined in RPG Maker XP. It should not
   // contain any accented characters.
@@ -120,15 +130,15 @@
   // Sync screen redraws to the monitor refresh rate, to reduce screen
   // tearing.
   //
-  "vsync": true,
+  "vsync": false,
   // Use a fixed framerate that is approx. equal to the native screen refresh
   // rate. This is different from "fixedFramerate" because the actual frame
   // rate is reported back to the game, ensuring correct timers. If the screen
   // refresh rate cannot be determined, this option is force-disabled. This
   // option may be force-disabled at build time.
   //
-  "syncToRefreshrate": true,
+  "syncToRefreshrate": false,
   // The game's frame rate, if "syncToRefreshrate" is false.
   //
-  // "fixedFramerate": 60,
+  "fixedFramerate": 60
 }

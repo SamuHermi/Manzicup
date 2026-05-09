@@ -117,6 +117,14 @@ SaveData.register(:game_version) do
   new_game_value { Settings::GAME_VERSION }
 end
 
+SaveData.register(:lbdsky_version) do
+  load_in_bootup
+  ensure_class :String
+  save_value { LBDSKY::VERSION }
+  load_value { |value| $save_lbdsky_version = value }
+  new_game_value { LBDSKY::VERSION }
+end
+
 SaveData.register(:stats) do
   load_in_bootup
   ensure_class :GameStats
@@ -125,4 +133,3 @@ SaveData.register(:stats) do
   new_game_value { GameStats.new }
   reset_on_new_game
 end
-

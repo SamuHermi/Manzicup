@@ -85,7 +85,8 @@ end
 class Battle::Move::StatUpMove < Battle::Move
   attr_reader :statUp
 
-  def canSnatch?; return true; end
+  def canSnatch?;                   return true; end
+  def additionalEffectAffectsUser?; return true; end
 
   def pbMoveFailed?(user, targets)
     return false if damagingMove?
@@ -110,7 +111,8 @@ end
 class Battle::Move::MultiStatUpMove < Battle::Move
   attr_reader :statUp
 
-  def canSnatch?; return true; end
+  def canSnatch?;                   return true; end
+  def additionalEffectAffectsUser?; return true; end
 
   def pbMoveFailed?(user, targets)
     return false if damagingMove?
@@ -121,7 +123,7 @@ class Battle::Move::MultiStatUpMove < Battle::Move
       break
     end
     if failed
-      @battle.pbDisplay(_INTL("¡Las estadísticas de {1} no pueden aumentar más!", user.pbThis))
+      @battle.pbDisplay(_INTL("¡Las estadísticas de {1} no pueden aumentar más!", user.pbThis(true)))
       return true
     end
     return false
@@ -155,8 +157,14 @@ end
 class Battle::Move::StatDownMove < Battle::Move
   attr_reader :statDown
 
+  def pbOnStartUse(user, targets)
+    @stats_lowered = false
+  end
+
   def pbEffectWhenDealingDamage(user, target)
+    return if @stats_lowered
     return if @battle.pbAllFainted?(target.idxOwnSide)
+    @stats_lowered = true
     showAnim = true
     (@statDown.length / 2).times do |i|
       next if !user.pbCanLowerStatStage?(@statDown[i * 2], user, self)
@@ -186,6 +194,7 @@ class Battle::Move::TargetStatDownMove < Battle::Move
   end
 
   def pbAdditionalEffect(user, target)
+    return if !target.affectedByAdditionalEffects?
     return if target.damageState.substitute
     return if !target.pbCanLowerStatStage?(@statDown[0], user, self)
     target.pbLowerStatStage(@statDown[0], @statDown[1], user)
@@ -212,20 +221,20 @@ class Battle::Move::TargetMultiStatDownMove < Battle::Move
       # NOTE: It's a bit of a faff to make sure the appropriate failure message
       #       is shown here, I know.
       canLower = false
-      if target.hasActiveAbility?(:CONTRARY) && !@battle.moldBreaker
+      if target.hasActiveAbility?(:CONTRARY) && !target.beingMoldBroken?
         (@statDown.length / 2).times do |i|
           next if target.statStageAtMax?(@statDown[i * 2])
           canLower = true
           break
         end
-        @battle.pbDisplay(_INTL("¡Las estadísticas de {1} no pueden aumentar más!", user.pbThis)) if !canLower && show_message
+        @battle.pbDisplay(_INTL("¡Las estadísticas de {1} no pueden aumentar más!", user.pbThis(true))) if !canLower && show_message
       else
         (@statDown.length / 2).times do |i|
           next if target.statStageAtMin?(@statDown[i * 2])
           canLower = true
           break
         end
-        @battle.pbDisplay(_INTL("¡Las estadísticas de {1} no pueden disminuir más!", user.pbThis)) if !canLower && show_message
+        @battle.pbDisplay(_INTL("¡Las estadísticas de {1} no pueden disminuir más!", user.pbThis(true))) if !canLower && show_message
       end
       if canLower
         target.pbCanLowerStatStage?(@statDown[0], user, self, show_message)
@@ -247,7 +256,7 @@ class Battle::Move::TargetMultiStatDownMove < Battle::Move
       if failed
         @battle.pbShowAbilitySplash(target)
         if !Battle::Scene::USE_ABILITY_SPLASH
-          @battle.pbDisplay(_INTL("¡Se activó {1} de {2}!", target.pbThis, target.abilityName))
+          @battle.pbDisplay(_INTL("¡Se activó {1} de {2}!", target.pbThis(true), target.abilityName))
         end
         user.pbCanLowerStatStage?(@statDown[0], target, self, true, false, true)   # Show fail message
         @battle.pbHideAbilitySplash(target)
@@ -277,7 +286,9 @@ class Battle::Move::TargetMultiStatDownMove < Battle::Move
   end
 
   def pbAdditionalEffect(user, target)
-    pbLowerTargetMultipleStats(user, target) if !target.damageState.substitute
+    return if !target.affectedByAdditionalEffects?
+    return if target.damageState.substitute
+    pbLowerTargetMultipleStats(user, target)
   end
 end
 
@@ -398,7 +409,7 @@ class Battle::Move::HealingMove < Battle::Move
 
   def pbMoveFailed?(user, targets)
     if user.hp == user.totalhp
-      @battle.pbDisplay(_INTL("¡Los PS de {1} están al máximo!", user.pbThis))
+      @battle.pbDisplay(_INTL("¡Los PS de {1} están al máximo!", user.pbThis(true)))
       return true
     end
     return false
@@ -424,6 +435,10 @@ class Battle::Move::RecoilMove < Battle::Move
     return if user.hasActiveAbility?(:ROCKHEAD)
     amt = pbRecoilDamage(user, target)
     amt = 1 if amt < 1
+    if user.pokemon.isSpecies?(:BASCULIN) && [2, 3].include?(user.pokemon.form)
+      user.pokemon.evolution_counter += amt
+    end
+    user.pokemon.recoil_evolution(amt)
     user.pbReduceHP(amt, false)
     @battle.pbDisplay(_INTL("¡{1} también se ha hecho daño!", user.pbThis))
     user.pbItemHPHealCheck
@@ -512,7 +527,8 @@ class Battle::Move::WeatherMove < Battle::Move
     when :StrongWinds
       @battle.pbDisplay(_INTL("¡Las misteriosas turbulencias continúan sin cesar!"))
       return true
-    when @weatherType
+    end
+    if !@battle.pbCanStartWeather?(@weatherType)
       @battle.pbDisplay(_INTL("¡Pero ha fallado!"))
       return true
     end
@@ -521,6 +537,30 @@ class Battle::Move::WeatherMove < Battle::Move
 
   def pbEffectGeneral(user)
     @battle.pbStartWeather(user, @weatherType, true, false)
+  end
+end
+
+#===============================================================================
+# Terrain-inducing move.
+#===============================================================================
+class Battle::Move::TerrainMove < Battle::Move
+  attr_reader :terrainType
+
+  def initialize(battle, move)
+    super
+    @terrainType = :None
+  end
+
+  def pbMoveFailed?(user, targets)
+    if !@battle.pbCanStartTerrain?(@terrainType)
+      @battle.pbDisplay(_INTL("¡Pero ha fallado!"))
+      return true
+    end
+    return false
+  end
+
+  def pbEffectGeneral(user)
+    @battle.pbStartTerrain(user, @terrainType)
   end
 end
 
@@ -575,9 +615,9 @@ class Battle::Move::PledgeMove < Battle::Move
     return super
   end
 
-  def pbBaseDamage(baseDmg, user, target)
-    baseDmg *= 2 if @pledgeCombo
-    return baseDmg
+  def pbBasePower(base_power, user, target)
+    base_power *= 2 if @pledgeCombo
+    return base_power
   end
 
   def pbEffectGeneral(user)
@@ -604,7 +644,7 @@ class Battle::Move::PledgeMove < Battle::Move
     when :Rainbow   # Fire + Water
       if user.pbOwnSide.effects[PBEffects::Rainbow] == 0
         user.pbOwnSide.effects[PBEffects::Rainbow] = 4
-        msg = _INTL("¡Ha aparecido un arcoiris sobre {1}!", user.pbTeam(true))
+        msg = _INTL("¡Ha aparecido un arcoíris sobre {1}!", user.pbTeam(true))
         animName = (user.opposes?) ? "RainbowOpp" : "Rainbow"
       end
     when :Swamp   # Water + Grass
@@ -625,3 +665,41 @@ class Battle::Move::PledgeMove < Battle::Move
   end
 end
 
+class Battle::Move::TerapagosCategoryDependsOnHigherDamage < Battle::Move
+
+  def initialize(battle, move)
+    super
+    @calcCategory = 1
+  end
+
+  def pbTarget(user)
+    # Si es Terapagos en forma astral (forma 2) en combate doble, golpea a ambos rivales
+    if @battle.pbSideSize(0) > 1 && user.species == :TERAPAGOS && user.form == 2
+      return GameData::Target.get(:AllNearFoes)  # Golpea a todos los rivales cercanos
+    end
+    # Comportamiento normal: un solo objetivo
+    return GameData::Target.get(:NearOther)
+  end
+
+  def pbBaseType(user)
+    # Si es Terapagos en forma astral, usar tipo Stellar
+    if user.species == :TERAPAGOS && user.form == 2
+      return :STELLAR if GameData::Type.exists?(:STELLAR)
+    end
+    # Si no, mantener tipo Normal
+    return :NORMAL
+  end
+
+  def pbCalcTypeModSingle(moveType, defType, user, target)
+    # Si es tipo Stellar vs Pokémon teracristalizados, es supereficaz
+    if moveType == :STELLAR && target.tera?
+      return Effectiveness::SUPER_EFFECTIVE_MULTIPLIER
+    end
+    # Si es tipo Stellar vs Pokémon normales, es neutral
+    if moveType == :STELLAR
+      return Effectiveness::NORMAL_EFFECTIVE_MULTIPLIER
+    end
+    # Para otros casos, cálculo normal
+    return super
+  end
+end

@@ -1,65 +1,61 @@
 #===============================================================================
-# Battle preparation
+# Battle preparation.
 #===============================================================================
 class PokemonGlobalMetadata
-  attr_accessor :nextBattleBGM
-  attr_accessor :nextBattleVictoryBGM
-  attr_accessor :nextBattleCaptureME
-  attr_accessor :nextBattleBack
+  attr_accessor :nextBattleBGM, :nextBattleVictoryBGM, :nextBattleCaptureME, :nextBattleBack
 end
 
 #===============================================================================
 #
 #===============================================================================
 class Game_Temp
-  attr_accessor :encounter_triggered
-  attr_accessor :encounter_type
-  attr_accessor :party_levels_before_battle
-  attr_accessor :party_critical_hits_dealt
-  attr_accessor :party_direct_damage_taken
+  attr_accessor :encounter_triggered, :encounter_type, :party_levels_before_battle
 
   def battle_rules
-    @battle_rules = {} if !@battle_rules
-    return @battle_rules
+    @battle_rules ||= {}
+    @battle_rules
   end
 
   def clear_battle_rules
-    self.battle_rules.clear
+    battle_rules.clear
   end
 
   def add_battle_rule(rule, var = nil)
-    rules = self.battle_rules
+    rules = battle_rules
     case rule.to_s.downcase
-    when "single", "1v1", "1v2", "2v1", "1v3", "3v1",
-         "double", "2v2", "2v3", "3v2", "triple", "3v3"
-      rules["size"] = rule.to_s.downcase
-    when "canlose"                then rules["canLose"]             = true
-    when "cannotlose"             then rules["canLose"]             = false
-    when "canrun"                 then rules["canRun"]              = true
-    when "cannotrun"              then rules["canRun"]              = false
-    when "roamerflees"            then rules["roamerFlees"]         = true
-    when "canswitch"              then rules["canSwitch"]           = true
-    when "cannotswitch"           then rules["canSwitch"]           = false
-    when "noexp"                  then rules["expGain"]             = false
-    when "nomoney"                then rules["moneyGain"]           = false
-    when "disablepokeballs"       then rules["disablePokeBalls"]    = true
-    when "forcecatchintoparty"    then rules["forceCatchIntoParty"] = true
-    when "switchstyle"            then rules["switchStyle"]         = true
-    when "setstyle"               then rules["switchStyle"]         = false
-    when "anims"                  then rules["battleAnims"]         = true
-    when "noanims"                then rules["battleAnims"]         = false
-    when "terrain"
-      rules["defaultTerrain"] = GameData::BattleTerrain.try_get(var)&.id
-    when "weather"
-      rules["defaultWeather"] = GameData::BattleWeather.try_get(var)&.id
-    when "environment", "environ"
-      rules["environment"] = GameData::Environment.try_get(var)&.id
-    when "backdrop", "battleback" then rules["backdrop"]            = var
-    when "base"                   then rules["base"]                = var
-    when "outcome", "outcomevar"  then rules["outcomeVar"]          = var
-    when "nopartner"              then rules["noPartner"]           = true
+    when 'single', '1v1', '1v2', '2v1', '1v3', '3v1',
+         'double', '2v2', '2v3', '3v2', 'triple', '3v3'
+      rules[:side_sizes] = rule.to_s.downcase
+    when 'canlose'                then rules[:continue_if_lose]       = true
+    when 'cannotlose'             then rules[:continue_if_lose]       = false
+    when 'canrun'                 then rules[:cannot_run]             = false
+    when 'cannotrun'              then rules[:cannot_run]             = true
+    when 'canswitch'              then rules[:cannot_switch]          = false
+    when 'cannotswitch'           then rules[:cannot_switch]          = true
+    when 'roamerflees'            then rules[:roamer_flees]           = true
+    when 'noexp'                  then rules[:no_exp_gain]            = true
+    when 'nomoney'                then rules[:no_money_gain]          = true
+    when 'disablepokeballs'       then rules[:disable_poke_balls]     = true
+    when 'certaincapture'         then rules[:certain_capture]        = true
+    when 'forcecatchintoparty'    then rules[:force_catch_into_party] = true
+    when 'switchstyle'            then rules[:no_switch_style]        = false
+    when 'setstyle'               then rules[:no_switch_style]        = true
+    when 'anims'                  then rules[:no_battle_animations]   = false
+    when 'noanims'                then rules[:no_battle_animations]   = true
+    when 'environment', 'environ'
+      rules[:environment] = GameData::Environment.try_get(var)&.id
+    when 'weather'
+      rules[:default_weather] = GameData::BattleWeather.try_get(var)&.id
+    when 'terrain'
+      rules[:default_terrain] = GameData::BattleTerrain.try_get(var)&.id
+    when 'backdrop', 'battleback' then rules[:backdrop_name]          = var
+    when 'base'                   then rules[:base_name]              = var
+    when 'outcome', 'outcomevar'  then rules[:outcome_variable]       = var
+    when 'nopartner'              then rules[:no_partner_trainer]     = true
+    when 'adjustlevels'           then rules[:adjust_levels] = true
+    when 'adjustlevelsresetmoves' then rules[:adjust_levels_reset_moves] = true
     else
-      raise _INTL("La regla de combate \"{1}\" no existe.", rule)
+      raise _INTL('Battle rule "{1}" does not exist.', rule)
     end
   end
 end
@@ -75,15 +71,15 @@ def setBattleRule(*args)
       r = nil
     else
       case arg.downcase
-      when "terrain", "weather", "environment", "environ", "backdrop",
-           "battleback", "base", "outcome", "outcomevar"
+      when 'terrain', 'weather', 'environment', 'environ', 'backdrop',
+           'battleback', 'base', 'outcome', 'outcomevar'
         r = arg
         next
       end
       $game_temp.add_battle_rule(arg)
     end
   end
-  raise _INTL("Argumento {1} esperaba una variable después pero no la tiene.", r) if r
+  raise _INTL('Argumento {1} esperaba una variable después pero no la tiene.', r) if r
 end
 
 # Used to determine the environment in battle, and also the form of Burmy/
@@ -92,48 +88,45 @@ def pbGetEnvironment
   ret = :None
   map_env = $game_map.metadata&.battle_environment
   ret = map_env if map_env
-  if $game_temp.encounter_type &&
-     GameData::EncounterType.get($game_temp.encounter_type).type == :fishing
-    terrainTag = $game_player.pbFacingTerrainTag
-  else
-    terrainTag = $game_player.terrain_tag
-  end
+  terrainTag = if $game_temp.encounter_type &&
+                  GameData::EncounterType.get($game_temp.encounter_type).type == :fishing
+                 $game_player.pbFacingTerrainTag
+               else
+                 $game_player.terrain_tag
+               end
   tile_environment = terrainTag.battle_environment
-  if ret == :Forest && [:Grass, :TallGrass].include?(tile_environment)
+  if ret == :Forest && %i[Grass TallGrass].include?(tile_environment)
     ret = :ForestGrass
   elsif tile_environment
     ret = tile_environment
   end
-  return ret
+  ret
 end
 
 # Record current levels of Pokémon in party, to see if they gain a level during
 # battle and may need to evolve afterwards
 EventHandlers.add(:on_start_battle, :record_party_status,
-  proc {
-    $game_temp.party_levels_before_battle = []
-    $game_temp.party_critical_hits_dealt = []
-    $game_temp.party_direct_damage_taken = []
-    $player.party.each_with_index do |pkmn, i|
-      $game_temp.party_levels_before_battle[i] = pkmn.level
-      $game_temp.party_critical_hits_dealt[i] = 0
-      $game_temp.party_direct_damage_taken[i] = 0
-    end
-  }
-)
+                  proc {
+                    $game_temp.party_levels_before_battle = []
+                    $player.party.each_with_index do |pkmn, i|
+                      $game_temp.party_levels_before_battle[i] = pkmn.level
+                    end
+                  })
 
 def pbCanDoubleBattle?
   return true if $player.able_pokemon_count >= 2
-  return $PokemonGlobal.partner && $player.able_pokemon_count >= 1
+
+  $PokemonGlobal.partner && $player.able_pokemon_count >= 1
 end
 
 def pbCanTripleBattle?
   return true if $player.able_pokemon_count >= 3
-  return $PokemonGlobal.partner && $player.able_pokemon_count >= 2
+
+  $PokemonGlobal.partner && $player.able_pokemon_count >= 2
 end
 
 #===============================================================================
-# Helper methods for setting up and closing down battles
+# Helper methods for setting up and closing down battles.
 #===============================================================================
 module BattleCreationHelperMethods
   module_function
@@ -142,13 +135,14 @@ module BattleCreationHelperMethods
   def skip_battle?
     return true if $player.able_pokemon_count == 0
     return true if $DEBUG && Input.press?(Input::CTRL)
-    return false
+
+    false
   end
 
   def skip_battle(outcome_variable, trainer_battle = false)
-    pbMessage(_INTL("SALTANDO BATALLA...")) if !trainer_battle && $player.pokemon_count > 0
-    pbMessage(_INTL("SALTANDO BATALLA...")) if trainer_battle && $DEBUG
-    pbMessage(_INTL("TRAS VENCER...")) if trainer_battle && $player.able_pokemon_count > 0
+    pbMessage(_INTL('SALTANDO BATALLA...')) if !trainer_battle && $player.pokemon_count > 0
+    pbMessage(_INTL('SALTANDO BATALLA...')) if trainer_battle && $DEBUG
+    pbMessage(_INTL('TRAS VENCER...')) if trainer_battle && $player.able_pokemon_count > 0
     $game_temp.clear_battle_rules
     if $game_temp.memorized_bgm && $game_system.is_a?(Game_System)
       $game_system.bgm_pause
@@ -162,21 +156,23 @@ module BattleCreationHelperMethods
     $PokemonGlobal.nextBattleCaptureME  = nil
     $PokemonGlobal.nextBattleBack       = nil
     $PokemonEncounters.reset_step_count
-    outcome = 1   # Win
-    outcome = 0 if trainer_battle && $player.able_pokemon_count == 0   # Undecided
+    outcome = Battle::Outcome::WIN
+    outcome = Battle::Outcome::UNDECIDED if trainer_battle && $player.all_fainted?
     pbSet(outcome_variable, outcome)
-    return outcome
+    outcome
   end
 
   def partner_can_participate?(foe_party)
-    return false if !$PokemonGlobal.partner || $game_temp.battle_rules["noPartner"]
+    return false if !$PokemonGlobal.partner || $game_temp.battle_rules[:no_partner_trainer]
     return true if foe_party.length > 1
-    if $game_temp.battle_rules["size"]
-      return false if $game_temp.battle_rules["size"] == "single" ||
-                      $game_temp.battle_rules["size"][/^1v/i]   # "1v1", "1v2", "1v3", etc.
+
+    if $game_temp.battle_rules[:side_sizes]
+      return false if $game_temp.battle_rules[:side_sizes] == 'single' ||
+                      $game_temp.battle_rules[:side_sizes][/^1v/i] # "1v1", "1v2", "1v3", etc.
+
       return true
     end
-    return false
+    false
   end
 
   # Generate information for the player and partner trainer(s)
@@ -186,158 +182,162 @@ module BattleCreationHelperMethods
     pokemon_array = $player.party
     party_starts  = [0]
     if partner_can_participate?(foe_party)
-      ally = NPCTrainer.new($PokemonGlobal.partner[1], $PokemonGlobal.partner[0])
+      tr_name = $PokemonGlobal.partner[1]
+      Settings::RIVAL_NAMES.each do |rival|
+        next if rival[0] != $PokemonGlobal.partner[0] || !$game_variables[rival[1]].is_a?(String)
+
+        tr_name = $game_variables[rival[1]]
+        break
+      end
+      ally = NPCTrainer.new(tr_name, $PokemonGlobal.partner[0])
       ally.id    = $PokemonGlobal.partner[2]
       ally.party = $PokemonGlobal.partner[3]
-      ally_items[1] = ally.items.clone
+      data = GameData::Trainer.try_get($PokemonGlobal.partner[0], $PokemonGlobal.partner[1], $PokemonGlobal.partner[2])
+      ally_items[1] = data&.items.clone || []
       trainer_array.push(ally)
       pokemon_array = []
       $player.party.each { |pkmn| pokemon_array.push(pkmn) }
       party_starts.push(pokemon_array.length)
       ally.party.each { |pkmn| pokemon_array.push(pkmn) }
-      setBattleRule("double") if $game_temp.battle_rules["size"].nil?
+      setBattleRule('double') if $game_temp.battle_rules[:side_sizes].nil?
     end
-    return trainer_array, ally_items, pokemon_array, party_starts
+    [trainer_array, ally_items, pokemon_array, party_starts]
   end
 
   def create_battle_scene
-    return Battle::Scene.new
+    Battle::Scene.new
   end
 
   # Sets up various battle parameters and applies special rules.
   def prepare_battle(battle)
     battleRules = $game_temp.battle_rules
+    battle.rules = battleRules
+    # Set default values for some rules
+    battleRules[:no_switch_style] = ($PokemonSystem.battlestyle == 1) if battleRules[:no_switch_style].nil?
+    battleRules[:no_battle_animations] = ($PokemonSystem.battlescene == 1) if battleRules[:no_battle_animations].nil?
+    if battleRules[:certain_capture].nil?
+      battleRules[:certain_capture] =
+        $game_map.metadata&.has_flag?('CertainCaptures')
+    end
     # The size of the battle, i.e. how many Pokémon on each side (default: "single")
-    battle.setBattleMode(battleRules["size"]) if !battleRules["size"].nil?
-    # Whether the game won't black out even if the player loses (default: false)
-    battle.canLose = battleRules["canLose"] if !battleRules["canLose"].nil?
-    # Whether the player can choose to run from the battle (default: true)
-    battle.canRun = battleRules["canRun"] if !battleRules["canRun"].nil?
-    # Whether the player can manually choose to switch out Pokémon (default: true)
-    battle.canSwitch = battleRules["canSwitch"] if !battleRules["canSwitch"].nil?
-    # Whether wild Pokémon always try to run from battle (default: nil)
-    battle.rules["alwaysflee"] = battleRules["roamerFlees"]
-    # Whether Pokémon gain Exp/EVs from defeating/catching a Pokémon (default: true)
-    battle.expGain = battleRules["expGain"] if !battleRules["expGain"].nil?
-    # Whether the player gains/loses money at the end of the battle (default: true)
-    battle.moneyGain = battleRules["moneyGain"] if !battleRules["moneyGain"].nil?
-    # Whether Poké Balls cannot be thrown at all
-    battle.disablePokeBalls = battleRules["disablePokeBalls"] if !battleRules["disablePokeBalls"].nil?
+    battle.setBattleMode(battleRules[:side_sizes]) if battleRules[:side_sizes]
+    # Whether all attempts to capture Pokémon this battle will succeed
     # Whether the player is asked what to do with a new Pokémon when their party is full
     battle.sendToBoxes = $PokemonSystem.sendtoboxes if Settings::NEW_CAPTURE_CAN_REPLACE_PARTY_MEMBER
-    battle.sendToBoxes = 2 if battleRules["forceCatchIntoParty"]
-    # Whether the player is able to switch when an opponent's Pokémon faints
-    battle.switchStyle = ($PokemonSystem.battlestyle == 0)
-    battle.switchStyle = battleRules["switchStyle"] if !battleRules["switchStyle"].nil?
-    # Whether battle animations are shown
-    battle.showAnims = ($PokemonSystem.battlescene == 0)
-    battle.showAnims = battleRules["battleAnims"] if !battleRules["battleAnims"].nil?
-    # Terrain
-    if battleRules["defaultTerrain"].nil?
-      if Settings::OVERWORLD_WEATHER_SETS_BATTLE_TERRAIN
-        case $game_screen.weather_type
-        when :Storm
-          battle.defaultTerrain = :Electric
-        when :Fog
-          battle.defaultTerrain = :Misty
-        when :NoGravity
-          battle.field.effects[PBEffects::TrickRoom] = -1
-        end
-      end
-    else
-      battle.defaultTerrain = battleRules["defaultTerrain"]
-    end
+    battle.sendToBoxes = 2 if battleRules[:force_catch_into_party]
+    # Environment
+    battle.environment = battleRules[:environment] || pbGetEnvironment
     # Weather
-    if battleRules["defaultWeather"].nil?
+    if battleRules[:default_weather]
+      battle.defaultWeather = battleRules[:default_weather]
+    else
       case GameData::Weather.get($game_screen.weather_type).category
       when :Rain, :Storm
         battle.defaultWeather = :Rain
       when :Hail
-        battle.defaultWeather = :Hail
+        weather = Settings::HAIL_WEATHER_TYPE == 0 ? :Hail : :Snowstorm
+        battle.defaultWeather = weather
       when :Sandstorm
         battle.defaultWeather = :Sandstorm
       when :Sun
         battle.defaultWeather = :Sun
       when :ShadowSky
-        battle.defaultWeather = :ShadowSky    
+        battle.defaultWeather = :ShadowSky
       when :StrongWinds
         battle.defaultWeather = :StrongWinds
       end
-    else
-      battle.defaultWeather = battleRules["defaultWeather"]
     end
-    # Environment
-    if battleRules["environment"].nil?
-      battle.environment = pbGetEnvironment
-    else
-      battle.environment = battleRules["environment"]
+    # Terrain
+    if battleRules[:default_terrain]
+      battle.defaultTerrain = battleRules[:default_terrain]
+    elsif Settings::OVERWORLD_WEATHER_SETS_BATTLE_TERRAIN
+      case $game_screen.weather_type
+      when :Storm
+        battle.defaultTerrain = :Electric
+      when :Fog
+        battle.defaultTerrain = :Misty
+      end
     end
     # Backdrop graphic filename
-    if !battleRules["backdrop"].nil?
-      backdrop = battleRules["backdrop"]
+    if battleRules[:backdrop_name]
+      backdrop = battleRules[:backdrop_name]
     elsif $PokemonGlobal.nextBattleBack
       backdrop = $PokemonGlobal.nextBattleBack
     elsif $PokemonGlobal.surfing
-      backdrop = "water"   # This applies wherever you are, including in caves
+      backdrop = 'water' # This applies wherever you are, including in caves
     elsif $game_map.metadata
       back = $game_map.metadata.battle_background
-      backdrop = back if back && back != ""
+      backdrop = back if back && back != ''
     end
-    backdrop = "indoor1" if !backdrop
+    backdrop ||= 'indoor1'
     battle.backdrop = backdrop
     # Choose a name for bases depending on environment
-    if battleRules["base"].nil?
+    if battleRules[:base_name]
+      base = battleRules[:base_name]
+    else
       environment_data = GameData::Environment.try_get(battle.environment)
       base = environment_data.battle_base if environment_data
-    else
-      base = battleRules["base"]
     end
     battle.backdropBase = base if base
     # Time of day
     if $game_map.metadata&.battle_environment == :Cave
-      battle.time = 2   # This makes Dusk Balls work properly in caves
+      battle.time = 2 # This makes Dusk Balls work properly in caves
     elsif Settings::TIME_SHADING
       timeNow = pbGetTimeNow
-      if PBDayNight.isNight?(timeNow)
-        battle.time = 2
-      elsif PBDayNight.isEvening?(timeNow)
-        battle.time = 1
-      else
-        battle.time = 0
-      end
+      battle.time = if PBDayNight.isNight?(timeNow)
+                      2
+                    elsif PBDayNight.isEvening?(timeNow)
+                      1
+                    else
+                      0
+                    end
+    end
+    return unless defined?(battle.adjust_levels)
+
+    battle.adjust_levels = battleRules[:adjust_levels] unless battleRules[:adjust_levels].nil?
+    unless battleRules[:adjust_levels_reset_moves].nil?
+      battle.adjust_levels_reset_moves = battleRules[:adjust_levels_reset_moves]
+    end
+    return unless battle.adjust_levels || battle.adjust_levels_reset_moves
+
+    trainer_max_level = battle.pbParty(0).max_by { |pokemon| pokemon.level }.level
+    foe_max_level = battle.pbOpposingParty(0).max_by { |pokemon| pokemon.level }.level
+    battle.pbOpposingParty(0).map! do |pokemon|
+      substract = foe_max_level - pokemon.level
+      pokemon.level = trainer_max_level - substract
+      pokemon.calc_stats
+      pokemon.reset_moves if battle.adjust_levels_reset_moves
+      pokemon
     end
   end
 
-  def after_battle(outcome, can_lose)
+  def after_battle(outcome, continue_if_lose)
     $player.party.each do |pkmn|
-      pkmn.statusCount = 0 if pkmn.status == :POISON   # Bad poison becomes regular
+      pkmn.statusCount = 0 if pkmn.status == :POISON # Bad poison becomes regular
       pkmn.makeUnmega
       pkmn.makeUnprimal
       pkmn.makeUnmanzi
     end
     if $PokemonGlobal.partner
-      #$player.heal_party
-      if(pbHasSocialLink?($PokemonGlobal.partner[0]) && outcome == 1)
-        if(rand(100) < 5)
-          pbGainSocialLinkBond($PokemonGlobal.partner[0])
-        end
+      # $player.heal_party
+      if pbHasSocialLink?($PokemonGlobal.partner[0]) && outcome == 1 && (rand(100) < 5)
+        pbGainSocialLinkBond($PokemonGlobal.partner[0])
       end
-       
+
       $PokemonGlobal.partner[3].each do |pkmn|
-        #pkmn.heal
+        # pkmn.heal
         pkmn.makeUnmega
         pkmn.makeUnprimal
         pkmn.makeUnmanzi
       end
     end
-    if [2, 5].include?(outcome) && can_lose   # if loss or draw
+    if Battle::Outcome.should_black_out?(outcome) && continue_if_lose
+      # Fully restore the party instead of blacking out
       $player.party.each { |pkmn| pkmn.heal }
       timer_start = System.uptime
-      until System.uptime - timer_start >= 0.25
-        Graphics.update
-      end
+      Graphics.update until System.uptime - timer_start >= 0.25
     end
-    EventHandlers.trigger(:on_end_battle, outcome, can_lose)
+    EventHandlers.trigger(:on_end_battle, outcome, continue_if_lose)
     $game_player.straighten
   end
 
@@ -350,11 +350,20 @@ module BattleCreationHelperMethods
   #    5 - Draw
   def set_outcome(outcome, outcome_variable = 1, trainer_battle = false)
     case outcome
-    when 1, 4   # Won, caught
-      $stats.wild_battles_won += 1 if !trainer_battle
+    when Battle::Outcome::WIN, Battle::Outcome::CATCH
+      $stats.wild_battles_won ||= 0
+      $stats.trainer_battles_won ||= 0
+      $stats.wild_battles_won += 1 unless trainer_battle
       $stats.trainer_battles_won += 1 if trainer_battle
-    when 2, 3, 5   # Lost, fled, draw
-      $stats.wild_battles_lost += 1 if !trainer_battle
+    when Battle::Outcome::LOSE, Battle::Outcome::DRAW
+      $stats.wild_battles_lost ||= 0
+      $stats.trainer_battles_lost ||= 0
+      $stats.wild_battles_lost += 1 unless trainer_battle
+      $stats.trainer_battles_lost += 1 if trainer_battle
+    when Battle::Outcome::FLEE
+      $stats.wild_battles_fled ||= 0
+      $stats.trainer_battles_lost ||= 0
+      $stats.wild_battles_fled += 1 unless trainer_battle
       $stats.trainer_battles_lost += 1 if trainer_battle
     end
     pbSet(outcome_variable, outcome)
@@ -362,20 +371,19 @@ module BattleCreationHelperMethods
 end
 
 #===============================================================================
-# Wild battles
+# Wild battles.
 #===============================================================================
 class WildBattle
-  
   # Used when walking in tall grass, hence the additional code.
   def self.start(*args, can_override: false)
-    setBattleRule("databoxStyle", :Basic)
+    setBattleRule('databoxStyle', :Basic)
     foe_party = WildBattle.generate_foes(*args)
     # Potentially call a different WildBattle.start-type method instead (for
     # roaming Pokémon, Safari battles, Bug Contest battles)
     if foe_party.length == 1 && can_override
       handled = [nil]
       EventHandlers.trigger(:on_calling_wild_battle, foe_party[0], handled)
-      return handled[0] if !handled[0].nil?
+      return handled[0] unless handled[0].nil?
     end
     # Perform the battle
     outcome = WildBattle.start_core(*foe_party)
@@ -384,16 +392,15 @@ class WildBattle
       EventHandlers.trigger(:on_wild_battle_end, foe_party[0].species, foe_party[0].level, outcome)
     end
     # Return false if the player lost or drew the battle, and true if any other result
-    return outcome != 2 && outcome != 5
+    !Battle::Outcome.should_black_out?(outcome)
   end
 
   def self.start_core(*args)
-    outcome_variable = $game_temp.battle_rules["outcomeVar"] || 1
-    can_lose         = $game_temp.battle_rules["canLose"] || false
+    outcome_variable = $game_temp.battle_rules[:outcome_variable] || 1
+    can_lose         = $game_temp.battle_rules[:continue_if_lose] || false
     # Skip battle if the player has no able Pokémon, or if holding Ctrl in Debug mode
-    if BattleCreationHelperMethods.skip_battle?
-      return BattleCreationHelperMethods.skip_battle(outcome_variable)
-    end
+    return BattleCreationHelperMethods.skip_battle(outcome_variable) if BattleCreationHelperMethods.skip_battle?
+
     # Record information about party Pokémon to be used at the end of battle
     # (e.g. comparing levels for an evolution check)
     EventHandlers.trigger(:on_start_battle)
@@ -408,19 +415,19 @@ class WildBattle
     battle.party1starts = player_party_starts
     battle.ally_items   = ally_items
     # Set various other properties in the battle class
-    setBattleRule("#{foe_party.length}v#{foe_party.length}") if $game_temp.battle_rules["size"].nil?
+    setBattleRule("#{foe_party.length}v#{foe_party.length}") if $game_temp.battle_rules[:side_sizes].nil?
     BattleCreationHelperMethods.prepare_battle(battle)
     $game_temp.clear_battle_rules
     # Perform the battle itself
-    outcome = 0
-    pbBattleAnimation(pbGetWildBattleBGM(foe_party), (foe_party.length == 1) ? 0 : 2, foe_party) do
+    outcome = Battle::Outcome::UNDECIDED
+    pbBattleAnimation(pbGetWildBattleBGM(foe_party), foe_party.length == 1 ? 0 : 2, foe_party) do
       pbSceneStandby { outcome = battle.pbStartBattle }
       BattleCreationHelperMethods.after_battle(outcome, can_lose)
     end
     Input.update
     # Save the result of the battle in a Game Variable (1 by default)
     BattleCreationHelperMethods.set_outcome(outcome, outcome_variable)
-    return outcome
+    outcome
   end
 
   def self.generate_foes(*args)
@@ -429,35 +436,39 @@ class WildBattle
     args.each do |arg|
       case arg
       when Pokemon
-        raise _INTL("La especie {1} se ha indicado pero no el nivel.", species_id) if species_id
+        raise _INTL('La especie {1} se ha indicado pero no el nivel.', species_id) if species_id
+
         ret.push(arg)
       when Array
-        raise _INTL("La especie {1} se ha indicado pero no el nivel.", species_id) if species_id
+        raise _INTL('La especie {1} se ha indicado pero no el nivel.', species_id) if species_id
+
         species = GameData::Species.get(arg[0]).id
         pkmn = pbGenerateWildPokemon(species, arg[1])
         ret.push(pkmn)
       else
-        if species_id   # Expecting level
+        if species_id # Expecting level
           if !arg.is_a?(Integer) || !(1..GameData::GrowthRate.max_level).include?(arg)
-            raise _INTL("Se esperaba un nivel (1..{1}) pero {2} no es un número o un nivel válido.", GameData::GrowthRate.max_level, arg)
+            raise _INTL('Se esperaba un nivel (1..{1}) pero {2} no es un número o un nivel válido.',
+                        GameData::GrowthRate.max_level, arg)
           end
+
           ret.push(pbGenerateWildPokemon(species_id, arg))
           species_id = nil
-        else   # Expecting species ID
-          if !GameData::Species.exists?(arg)
-            raise _INTL("La especie {1} no existe.", arg)
-          end
+        else # Expecting species ID
+          raise _INTL('La especie {1} no existe.', arg) unless GameData::Species.exists?(arg)
+
           species_id = arg
         end
       end
     end
-    raise _INTL("La especie {1} se ha indicado pero no un nivel.", species_id) if species_id
-    return ret
+    raise _INTL('La especie {1} se ha indicado pero no un nivel.', species_id) if species_id
+
+    ret
   end
 end
 
 #===============================================================================
-# Trainer battles
+# Trainer battles.
 #===============================================================================
 class TrainerBattle
   # Used by most trainer events, which can be positioned in such a way that
@@ -470,7 +481,7 @@ class TrainerBattle
     # $game_temp.waiting_trainer and end this method. That second NPC event will
     # then trigger and cause the battle to happen against this first trainer and
     # themselves.
-    setBattleRule("databoxStyle", :Basic)
+    setBattleRule('databoxStyle', :Basic)
     if !$game_temp.waiting_trainer && pbMapInterpreterRunning? && pbCanDoubleBattle?
       thisEvent = pbMapInterpreter.get_self
       # Find all other triggered trainer events
@@ -478,7 +489,8 @@ class TrainerBattle
       otherEvent = []
       triggeredEvents.each do |i|
         next if i.id == thisEvent.id
-        next if $game_self_switches[[$game_map.map_id, i.id, "A"]]
+        next if $game_self_switches[[$game_map.map_id, i.id, 'A']]
+
         otherEvent.push(i)
       end
       # If there is exactly 1 other triggered trainer event, this trainer can be
@@ -497,22 +509,21 @@ class TrainerBattle
     if $game_temp.waiting_trainer
       new_args = args + [$game_temp.waiting_trainer[0]]
       outcome = TrainerBattle.start_core(*new_args)
-      pbMapInterpreter.pbSetSelfSwitch($game_temp.waiting_trainer[1], "A", true) if outcome == 1
+      pbMapInterpreter.pbSetSelfSwitch($game_temp.waiting_trainer[1], 'A', true) if outcome == 1
       $game_temp.waiting_trainer = nil
     else
       outcome = TrainerBattle.start_core(*args)
     end
     # Return true if the player won the battle, and false if any other result
-    return outcome == 1
+    outcome == Battle::Outcome::WIN
   end
 
   def self.start_core(*args)
-    outcome_variable = $game_temp.battle_rules["outcomeVar"] || 1
-    can_lose         = $game_temp.battle_rules["canLose"] || false
+    outcome_variable = $game_temp.battle_rules[:outcome_variable] || 1
+    can_lose         = $game_temp.battle_rules[:continue_if_lose] || false
     # Skip battle if the player has no able Pokémon, or if holding Ctrl in Debug mode
-    if BattleCreationHelperMethods.skip_battle?
-      return BattleCreationHelperMethods.skip_battle(outcome_variable, true)
-    end
+    return BattleCreationHelperMethods.skip_battle(outcome_variable, true) if BattleCreationHelperMethods.skip_battle?
+
     # Record information about party Pokémon to be used at the end of battle (e.g.
     # comparing levels for an evolution check)
     EventHandlers.trigger(:on_start_battle)
@@ -529,19 +540,19 @@ class TrainerBattle
     battle.ally_items   = ally_items
     battle.items        = foe_items
     # Set various other properties in the battle class
-    setBattleRule("#{foe_trainers.length}v#{foe_trainers.length}") if $game_temp.battle_rules["size"].nil?
+    setBattleRule("#{foe_trainers.length}v#{foe_trainers.length}") if $game_temp.battle_rules[:side_sizes].nil?
     BattleCreationHelperMethods.prepare_battle(battle)
     $game_temp.clear_battle_rules
     # Perform the battle itself
-    outcome = 0
-    pbBattleAnimation(pbGetTrainerBattleBGM(foe_trainers), (battle.singleBattle?) ? 1 : 3, foe_trainers) do
+    outcome = Battle::Outcome::UNDECIDED
+    pbBattleAnimation(pbGetTrainerBattleBGM(foe_trainers), battle.singleBattle? ? 1 : 3, foe_trainers) do
       pbSceneStandby { outcome = battle.pbStartBattle }
       BattleCreationHelperMethods.after_battle(outcome, can_lose)
     end
     Input.update
     # Save the result of the battle in a Game Variable (1 by default)
     BattleCreationHelperMethods.set_outcome(outcome, outcome_variable, true)
-    return outcome
+    outcome
   end
 
   def self.generate_foes(*args)
@@ -554,17 +565,20 @@ class TrainerBattle
     args.each_with_index do |arg, i|
       case arg
       when NPCTrainer
-        raise _INTL("El tipo de entrenador {1} se ha indicado pero no su nombre.", trainer_type) if trainer_type
+        raise _INTL('El tipo de entrenador {1} se ha indicado pero no su nombre.', trainer_type) if trainer_type
+
         trainer_array.push(arg)
         foe_items.push(arg.items)
         party_starts.push(pokemon_array.length)
         arg.party.each { |pkmn| pokemon_array.push(pkmn) }
-      when Array   # [trainer type, trainer name, version number, speech (optional)]
-        raise _INTL("El tipo de entrenador {1} se ha indicado pero no su nombre.", trainer_type) if trainer_type
+      when Array # [trainer type, trainer name, version number, speech (optional)]
+        raise _INTL('El tipo de entrenador {1} se ha indicado pero no su nombre.', trainer_type) if trainer_type
+
         trainer = pbLoadTrainer(arg[0], arg[1], arg[2])
-        pbMissingTrainer(arg[0], arg[1], arg[2]) if !trainer
-        trainer = pbLoadTrainer(arg[0], arg[1], arg[2]) if !trainer   # Try again
-        raise _INTL("Entrenador para datos '{1}' no se ha definido.", arg) if !trainer
+        pbMissingTrainer(arg[0], arg[1], arg[2]) unless trainer
+        trainer ||= pbLoadTrainer(arg[0], arg[1], arg[2]) # Try again
+        raise _INTL("Entrenador para datos '{1}' no se ha definido.", arg) unless trainer
+
         EventHandlers.trigger(:on_trainer_load, trainer)
         trainer.lose_text = arg[3] if arg[3] && !arg[3].empty?
         trainer_array.push(trainer)
@@ -572,14 +586,21 @@ class TrainerBattle
         party_starts.push(pokemon_array.length)
         trainer.party.each { |pkmn| pokemon_array.push(pkmn) }
       else
-        if trainer_name   # Expecting version number
+        if trainer_name # Expecting version number
           if !arg.is_a?(Integer) || arg < 0
-            raise _INTL("Se esperaba un número de versión de entrenador (0 o más) pero {1} no es un número o un valor válido.", arg)
+            raise _INTL(
+              'Se esperaba un número de versión de entrenador (0 o más) pero {1} no es un número o un valor válido.', arg
+            )
           end
+
           trainer = pbLoadTrainer(trainer_type, trainer_name, arg)
-          pbMissingTrainer(trainer_type, trainer_name, arg) if !trainer
-          trainer = pbLoadTrainer(trainer_type, trainer_name, arg) if !trainer   # Try again
-          raise _INTL("Entrenador para datos '{1}, {2}, {3}' no se ha definido.", trainer_type, trainer_name, arg) if !trainer
+          pbMissingTrainer(trainer_type, trainer_name, arg) unless trainer
+          trainer ||= pbLoadTrainer(trainer_type, trainer_name, arg) # Try again
+          unless trainer
+            raise _INTL("Entrenador para datos '{1}, {2}, {3}' no se ha definido.", trainer_type, trainer_name,
+                        arg)
+          end
+
           EventHandlers.trigger(:on_trainer_load, trainer)
           trainer_array.push(trainer)
           foe_items.push(trainer.items)
@@ -587,17 +608,19 @@ class TrainerBattle
           trainer.party.each { |pkmn| pokemon_array.push(pkmn) }
           trainer_type = nil
           trainer_name = nil
-        elsif trainer_type   # Expecting trainer name
+        elsif trainer_type # Expecting trainer name
           if !arg.is_a?(String) || arg.strip.empty?
             raise _INTL("Se esperaba un nombre de entrenador, pero '{1}' no es un nombre válido.", arg)
           end
-          if args[i + 1].is_a?(Integer)   # Version number is next
+
+          if args[i + 1].is_a?(Integer) # Version number is next
             trainer_name = arg.strip
           else
             trainer = pbLoadTrainer(trainer_type, arg)
-            pbMissingTrainer(trainer_type, arg, 0) if !trainer
-            trainer = pbLoadTrainer(trainer_type, arg) if !trainer   # Try again
-            raise _INTL("Entrenador para datos '{1}, {2}' no se ha definido.", trainer_type, arg) if !trainer
+            pbMissingTrainer(trainer_type, arg, 0) unless trainer
+            trainer ||= pbLoadTrainer(trainer_type, arg) # Try again
+            raise _INTL("Entrenador para datos '{1}, {2}' no se ha definido.", trainer_type, arg) unless trainer
+
             EventHandlers.trigger(:on_trainer_load, trainer)
             trainer_array.push(trainer)
             foe_items.push(trainer.items)
@@ -605,16 +628,16 @@ class TrainerBattle
             trainer.party.each { |pkmn| pokemon_array.push(pkmn) }
             trainer_type = nil
           end
-        else   # Expecting trainer type
-          if !GameData::TrainerType.exists?(arg)
-            raise _INTL("El tipo de entrenador {1} no existe.", arg)
-          end
+        else # Expecting trainer type
+          raise _INTL('El tipo de entrenador {1} no existe.', arg) unless GameData::TrainerType.exists?(arg)
+
           trainer_type = arg
         end
       end
     end
-    raise _INTL("El tipo de entrenador {1} se ha indicado, pero no es válido.", trainer_type) if trainer_type
-    return trainer_array, foe_items, pokemon_array, party_starts
+    raise _INTL('El tipo de entrenador {1} se ha indicado, pero no es válido.', trainer_type) if trainer_type
+
+    [trainer_array, foe_items, pokemon_array, party_starts]
   end
 end
 
@@ -622,43 +645,42 @@ end
 # After battles
 #===============================================================================
 EventHandlers.add(:on_end_battle, :evolve_and_black_out,
-  proc { |decision, canLose|
-    # Check for evolutions
-    pbEvolutionCheck if Settings::CHECK_EVOLUTION_AFTER_ALL_BATTLES ||
-                        (decision != 2 && decision != 5)   # not a loss or a draw
-    $game_temp.party_levels_before_battle = nil
-    $game_temp.party_critical_hits_dealt = nil
-    $game_temp.party_direct_damage_taken = nil
-    # Check for blacking out or gaining Pickup/Huney Gather items
-    case decision
-    when 1, 4   # Win, capture
-      $player.pokemon_party.each do |pkmn|
-        pbPickup(pkmn)
-        pbHoneyGather(pkmn)
-      end
-    when 2, 5   # Lose, draw
-      if !canLose
-        $game_system.bgm_unpause
-        $game_system.bgs_unpause
-        pbStartOver
-      end
-    end
-  }
-)
+                  proc { |outcome, canLose|
+                    # Check for evolutions
+                    pbEvolutionCheck if Settings::CHECK_EVOLUTION_AFTER_ALL_BATTLES ||
+                                        !Battle::Outcome.should_black_out?(outcome)
+                    $game_temp.party_levels_before_battle = nil
+                    # Check for blacking out or gaining Pickup/Huney Gather items
+                    case outcome
+                    when Battle::Outcome::WIN, Battle::Outcome::CATCH
+                      $player.pokemon_party.each do |pkmn|
+                        pbPickup(pkmn)
+                        pbHoneyGather(pkmn)
+                      end
+                    else
+                      if Battle::Outcome.should_black_out?(outcome) && !canLose
+                        $game_system.bgm_unpause
+                        $game_system.bgs_unpause
+                        pbStartOver
+                      end
+                    end
+                  })
 
 def pbEvolutionCheck
   $player.party.each_with_index do |pkmn, i|
     next if !pkmn || pkmn.egg?
     next if pkmn.fainted? && !Settings::CHECK_EVOLUTION_FOR_FAINTED_POKEMON
+
     # Find an evolution
     new_species = nil
     if new_species.nil? && $game_temp.party_levels_before_battle &&
        $game_temp.party_levels_before_battle[i] &&
        $game_temp.party_levels_before_battle[i] < pkmn.level
-      new_species = pkmn.check_evolution_on_level_up
+      new_species = pkmn.check_evolution_on_battle_level_up
     end
     new_species = pkmn.check_evolution_after_battle(i) if new_species.nil?
     next if new_species.nil?
+
     # Evolve Pokémon if possible
     evo = PokemonEvolutionScene.new
     evo.pbStartScreen(pkmn, new_species)
@@ -670,11 +692,11 @@ end
 def pbDynamicItemList(*args)
   ret = []
   args.each { |arg| ret.push(arg) if GameData::Item.exists?(arg) }
-  return ret
+  ret
 end
 
 # Common items to find via Pickup. Items from this list are added to the pool in
-# order, starting from a point dependng on the Pokémon's level. The number of
+# order, starting from a point depending on the Pokémon's level. The number of
 # items added is how many probabilities are in the PICKUP_COMMON_ITEM_CHANCES
 # array below.
 # There must be 9 + PICKUP_COMMON_ITEM_CHANCES.length number of items in this
@@ -703,7 +725,7 @@ PICKUP_COMMON_ITEMS = [
 # Chances to get each item added to the pool from the array above.
 PICKUP_COMMON_ITEM_CHANCES = [30, 10, 10, 10, 10, 10, 10, 4, 4]
 # Rare items to find via Pickup. Items from this list are added to the pool in
-# order, starting from a point dependng on the Pokémon's level. The number of
+# order, starting from a point depending on the Pokémon's level. The number of
 # items added is how many probabilities are in the PICKUP_RARE_ITEM_CHANCES
 # array below.
 # There must be 9 + PICKUP_RARE_ITEM_CHANCES.length number of items in this
@@ -729,13 +751,15 @@ PICKUP_RARE_ITEM_CHANCES = [1, 1]
 def pbPickup(pkmn)
   return if pkmn.egg? || !pkmn.hasAbility?(:PICKUP)
   return if pkmn.hasItem?
-  return unless rand(100) < 10   # 10% chance for Pickup to trigger
+  return unless rand(100) < 10 # 10% chance for Pickup to trigger
+
   num_rarity_levels = 10
   # Ensure common and rare item lists contain defined items
   common_items = pbDynamicItemList(*PICKUP_COMMON_ITEMS)
   rare_items = pbDynamicItemList(*PICKUP_RARE_ITEMS)
   return if common_items.length < num_rarity_levels - 1 + PICKUP_COMMON_ITEM_CHANCES.length
   return if rare_items.length < num_rarity_levels - 1 + PICKUP_RARE_ITEM_CHANCES.length
+
   # Determine the starting point for adding items from the above arrays into the
   # pool
   start_index = [([100, pkmn.level].min - 1) * num_rarity_levels / 100, 0].max
@@ -750,6 +774,7 @@ def pbPickup(pkmn)
   all_chances.each_with_index do |c, i|
     cumul += c
     next if rnd >= cumul
+
     pkmn.item = items[i]
     break
   end
@@ -757,10 +782,11 @@ end
 
 # Try to gain a Honey item after a battle if a Pokemon has the ability Honey Gather.
 def pbHoneyGather(pkmn)
-  return if !GameData::Item.exists?(:HONEY)
+  return unless GameData::Item.exists?(:HONEY)
   return if pkmn.egg? || !pkmn.hasAbility?(:HONEYGATHER) || pkmn.hasItem?
+
   chance = 5 + (((pkmn.level - 1) / 10) * 5)
   return unless rand(100) < chance
+
   pkmn.item = :HONEY
 end
-

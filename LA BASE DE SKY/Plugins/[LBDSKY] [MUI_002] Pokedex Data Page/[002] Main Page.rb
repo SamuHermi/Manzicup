@@ -1,14 +1,100 @@
 #===============================================================================
 # Main Data Page display
 #===============================================================================
-class PokemonPokedexInfo_Scene 
+class PokemonPokedexInfo_Scene
+  SPECIES_NAME_X = 84
+  SPECIES_NAME_Y = 56
+  # Layout constants to replace magic numbers
+  TYPE_ICON_WIDTH = 96
+  TYPE_ICON_HEIGHT = 32
+  TYPE_SINGLE_X = 347
+  TYPE_MULTI_BASE_X = 298
+  TYPE_MULTI_SPACING = 100
+
+  TYPE_GENDER_Y = 48
+
+  GENDER_ICON_X1 = 10
+  GENDER_ICON_X2 = 44
+  GENDER_ICON_SRC_UNIT = 32
+
+  HABITAT_X = 445
+  HABITAT_Y = 174
+  HABITAT_SRC_Y_UNIT = 48
+  HABITAT_WIDTH = 64
+  HABITAT_HEIGHT = 48
+
+  SHAPE_X = 375
+  SHAPE_Y = 170
+  SHAPE_SRC_UNIT = 60
+  SHAPE_SIZE = 60
+
+  EGG_GROUP_X = 302
+  EGG_RECT_ALT_X = 62
+  EGG_RECT_X = 0
+  EGG_SINGLE_Y = 188
+  EGG_MULTI_BASE_Y = 172
+  EGG_MULTI_SPACING = 30
+  EGG_SRC_WIDTH = 62
+  EGG_SRC_HEIGHT = 28
+  EGG_X = 302
+
+  STATS_LABEL_X = 12
+  STATS_LABEL_Y1 = 104
+  STATS_LABEL_Y2 = 132
+  STATS_LABEL_Y3 = 160
+  STATS_LABEL_Y4 = 188
+  STATS_LABEL_Y5 = 216
+  STATS_LABEL_Y6 = 244
+  STATS_LABEL_SPACING = 28
+
+  OVERLAY_STATS_X = 106
+  OVERLAY_STATS_Y_START = 105
+  OVERLAY_STATS_Y_SPACING = 28
+  OVERLAY_STATS_SRC_UNIT = 18
+  OVERLAY_STATS_HEIGHT = 18
+
+  STAT_BAR_SCALE = 100
+  STAT_BAR_BASE = 254.0
+  STAT_BAR_MIN_WIDTH = 1
+  STAT_BAR_ROUND_UNIT = 2
+
+  ABILITY_BTN_X = 306
+  MOVE_BTN_X = 434
+  ABILITY_MOVE_Y = 253
+  # Evolutions and special form icon constants
+  EVOLUTIONS_X = 234
+  EVOLUTIONS_Y_OFFSET = -34
+  EVOLUTIONS_SRC_UNIT = 64
+  EVOLUTIONS_WIDTH = 272
+  EVOLUTIONS_HEIGHT = 64
+
+  MEGA_ICON_X = 259
+  MEGA_ICON_Y = 49
+  PRIMAL_ICON_X = 256
+  PRIMAL_ICON_Y = 47
+  ULTRA_ICON_X = 257
+  ULTRA_ICON_Y = 47
+  DYNAMAX_ICON_X = 256
+  DYNAMAX_ICON_Y = 47
+
+  TERA_ICON_X = 257
+  TERA_ICON_Y = 47
+  TERA_SRC_UNIT = 32
+  TERA_ICON_SIZE = 32
+
+  # Tone presets
+  TONE_NORMAL = Tone.new(0, 0, 0, 0)
+  TONE_FADED = Tone.new(-255, -255, -255, 0)
+
   #-----------------------------------------------------------------------------
   # Controls for navigating the Data page.
   #-----------------------------------------------------------------------------
   def pbDataPageMenu
     pbPlayDecisionSE
     pbDrawDataNotes
-    species = GameData::Species.get_species_form(@species, @form).id
+    species_data = GameData::Species.get_species_form(@species, @form)
+    species_id = species_data.id
+    special_form, _check_form, _check_item = pbGetSpecialFormData(species_data)
     loop do
       Graphics.update
       Input.update
@@ -16,7 +102,7 @@ class PokemonPokedexInfo_Scene
       #-------------------------------------------------------------------------
       if Input.trigger?(Input::BACK)
         pbPlayCancelSE
-        @sprites["data_overlay"].bitmap.clear
+        @sprites['data_overlay'].bitmap.clear
         break
       #-------------------------------------------------------------------------
       elsif Input.trigger?(Input::USE)
@@ -24,21 +110,62 @@ class PokemonPokedexInfo_Scene
         #-----------------------------------------------------------------------
         # Displays move lists.
         when :moves
-          next if !$player.owned?(species)
-          pbChooseMove
+          next unless $player.owned?(species_id)
+
+          pbChooseMove(species_data, special_form)
         #-----------------------------------------------------------------------
         # Displays item/ability lists.
         when :item, :ability
-          next if !$player.owned?(species)
-          pbChooseDataList
+          next unless $player.owned?(species_id)
+
+          pbChooseDataList(special_form)
         #-----------------------------------------------------------------------
         # Displays compatible species lists.
         when :general, :family, :stats, :habitat, :egg, :shape
-          next if !$player.owned?(species)
+          next unless $player.owned?(species_id)
+
           pbChooseSpeciesDataList
         end
         break if @forceRefresh
       #-------------------------------------------------------------------------
+      elsif Input.trigger?(Input::SPECIAL) && @api_data && Settings::SHOW_STAT_CHANGES_WITH_POKEAPI
+        pbPlayDecisionSE
+        if @cursor == :stats
+          stat_diffs = []
+          api_total = 0
+          species_data = GameData::Species.get_species_form(@species, @form)
+          @api_data['stats'].each do |stat, api_value|
+            api_total += api_value
+            base_stat = species_data.base_stats[stat]
+            diff = (base_stat - api_value).to_i
+            if diff > 0
+              diff = "\\c[3]+#{diff.abs}" + "\\c[0]\n"
+            elsif diff < 0
+              diff = "\\c[2]-#{diff.abs}" + "\\c[0]\n"
+            end
+            next if diff == 0
+
+            stat_diffs << _INTL('{1}: {2}', GameData::Stat.get(stat).name, diff)
+          end
+          total_diff = species_data.base_stat_total > api_total ? "\\c[3]#{species_data.base_stat_total.to_i}" + "\\c[0]\n" : "\\c[2]#{species_data.base_stat_total.to_i}" + "\\c[0]\n"
+          has_stat_diff = stat_diffs.length > 0 || species_data.base_stat_total != api_total.to_i
+          stat_diffs << _INTL('Total: {1} => {2}', api_total.to_i, total_diff)
+          stat_diffs[stat_diffs.length - 1] = stat_diffs[stat_diffs.length - 1].chomp!
+          pbMessage(_INTL("Cambios de estadisticas:\n{1}", stat_diffs.join)) if has_stat_diff
+        elsif @cursor == :general
+          types_diff = []
+          api_types = @api_data['types']
+          species_data = GameData::Species.get_species_form(@species, @form)
+
+          species_types_name = species_data.types.map { |type| GameData::Type.get(type).name }
+          api_types_name = api_types.map { |type| GameData::Type.get(type).name }
+
+          types_diff = species_types_name - api_types_name
+          if types_diff.length > 0
+            pbMessage(_INTL("Cambios de tipos:\nTipos Originales: {1}\nTipos nuevos: {2}", api_types_name.join(', '),
+                            species_types_name.join(', ')))
+          end
+        end
       elsif Input.repeat?(Input::UP)
         old_cursor = @cursor
         case @cursor
@@ -115,19 +242,19 @@ class PokemonPokedexInfo_Scene
     @forceRefresh = false
     drawPage(@page)
   end
-  
+
   #-----------------------------------------------------------------------------
   # Utility for generating lists of data related to a viewed species.
   #-----------------------------------------------------------------------------
   def pbGenerateDataLists(species)
     @data_hash = {
-	  :species => species.id,
-      :general => [],
-      :habitat => [],
-      :shape   => [],
-      :stats   => [],
-      :egg     => [],
-      :family  => []
+      species: species.id,
+      general: [],
+      habitat: [],
+      shape: [],
+      stats: [],
+      egg: [],
+      family: []
     }
     #---------------------------------------------------------------------------
     # Determines if this species should display species in compatible Egg Groups.
@@ -153,64 +280,59 @@ class PokemonPokedexInfo_Scene
     family = species.get_family_species
     family_evos_temp = species.get_evolutions(true)
     family_evos = []
+    family_evos_with_forms = [] # Store species IDs with specific forms
     for i in family_evos_temp
-      family_evos << (i[0])
+      family_evos << i[0]
+      # Check if evolution method includes "Form" and extract form number
+      next unless i[1].to_s.include?('Form') && i[1].to_s =~ /Form(\d+)$/
+
+      form_number = ::Regexp.last_match(1).to_i
+      form_species = GameData::Species.get_species_form(i[0], form_number)
+      family_evos_with_forms << form_species.id if form_species
     end
     family_to_insert = []
-    blacklisted = [:PICHU_2, :FLOETTE_5, :GIMMIGHOUL_1].include?(species.id) ||
+    blacklisted = %i[PICHU_2 FLOETTE_5 GIMMIGHOUL_1].include?(species.id) ||
                   species.species == :PIKACHU && (8..15).include?(species.form)
+
     GameData::Species.each do |sp|
-
-      # Family members.
-      next if blacklisted
-
-      ## NO LO HAS VISTO
-      if sp.display_species?(@dexlist, species)
-        if family.include?(sp.species)
-          if sp.species == species.species
-            special_form, _check_form, _check_item = pbGetSpecialFormData(sp)
-            next if !special_form
-          end
-          # @data_hash[:family] << sp.id if (sp.form == species.form || (family_evos.include?(sp.id) && !@data_hash[:family].include?(sp.id)))
-          family_to_insert << sp if family_evos.include?(sp.species) || sp.form != species.form
+      # Family members - collect ALL evolutions, not filtered by display_species
+      if !blacklisted && family.include?(sp.species)
+        if sp.species == species.species
+          special_form, _check_form, _check_item = pbGetSpecialFormData(sp)
+          next unless special_form
         end
-      elsif sp.display_species?(@dexlist, species, false, true)
-          if family.include?(sp.species)
-            if sp.species == species.species
-              special_form, _check_form, _check_item = pbGetSpecialFormData(sp)
-              next if !special_form
-            end
-            # @data_hash[:family] << sp.id if sp.form == species.form || ( sp.id )
-            family_to_insert << sp if family_evos.include?(sp.species) || sp.form != species.form
-          end
+        # Add to family_to_insert if it's an evolution or different form
+        family_to_insert << sp if family_evos.include?(sp.species) || sp.form != species.form
       end
       #-------------------------------------------------------------------------
-      next if !sp.display_species?(@dexlist, species)
+      next unless sp.display_species?(@dexlist, species)
+
       regional_form = sp.form > 0 && sp.is_regional_form?
-      base_form = (sp.form > 0) ? GameData::Species.get_species_form(sp.species, sp.base_pokedex_form) : nil
+      base_form = sp.form > 0 ? GameData::Species.get_species_form(sp.species, sp.base_pokedex_form) : nil
       #-------------------------------------------------------------------------
       # Compatible gender ratio.
       if sp.gender_ratio == species.gender_ratio
         skipForm = base_form && !regional_form && sp.gender_ratio == base_form.gender_ratio
-        @data_hash[:general] << sp.id if !skipForm
+        @data_hash[:general] << sp.id unless skipForm
       end
       #-------------------------------------------------------------------------
       # Compatible habitat.
       if sp.habitat == species.habitat
         skipForm = base_form && !regional_form && sp.habitat == base_form.habitat
-        @data_hash[:habitat] << sp.id if !skipForm
+        @data_hash[:habitat] << sp.id unless skipForm
       end
       #-------------------------------------------------------------------------
       # Compatible shape & color.
       if sp.color == species.color && sp.shape == species.shape
         skipForm = base_form && !regional_form && sp.color == base_form.color && sp.shape == base_form.shape
-        @data_hash[:shape] << sp.id if !skipForm
+        @data_hash[:shape] << sp.id unless skipForm
       end
       #-------------------------------------------------------------------------
       # Compatible base stats.
       if !base_form || regional_form || base_form && sp.base_stats != base_form.base_stats
         GameData::Stat.each_main do |s|
           next if sp.base_stats[s.id] != species.base_stats[s.id]
+
           @data_hash[:stats] << sp.id
           break
         end
@@ -218,38 +340,45 @@ class PokemonPokedexInfo_Scene
       #-------------------------------------------------------------------------
       # Family members.
       next if blacklisted
+
       if family.include?(sp.species)
         if sp.species == species.species
           special_form, _check_form, _check_item = pbGetSpecialFormData(sp)
-          next if !special_form
+          next unless special_form
         end
         @data_hash[:family] << sp.id
       end
       #-------------------------------------------------------------------------
       # Compatible egg groups.
-      if showCompatible
-        if base_form && !regional_form && sp.egg_groups == base_form.egg_groups
-          next if sp.moves == base_form.moves && sp.tutor_moves == base_form.tutor_moves
-        end
-        sp.egg_groups.each do |group|
-          case group
-          when :Ditto
-            next if eggSpecies.egg_groups.include?(:Ditto)
-            next if eggSpecies.egg_groups.include?(:Undiscovered)
+      next unless showCompatible
+
+      if base_form && !regional_form && sp.egg_groups == base_form.egg_groups && sp.moves == base_form.moves && sp.tutor_moves == base_form.tutor_moves
+        next
+      end
+
+      sp.egg_groups.each do |group|
+        case group
+        when :Ditto
+          next if eggSpecies.egg_groups.include?(:Ditto)
+          next if eggSpecies.egg_groups.include?(:Undiscovered)
+
+          @data_hash[:egg] << sp.id
+        else
+          next if eggSpecies.egg_groups.include?(:Undiscovered)
+
+          if eggSpecies.egg_groups.include?(:Ditto)
+            next if sp.egg_groups.include?(:Ditto)
+            next if sp.egg_groups.include?(:Undiscovered)
+
             @data_hash[:egg] << sp.id
-          else
-            next if eggSpecies.egg_groups.include?(:Undiscovered)
-            if eggSpecies.egg_groups.include?(:Ditto)
-              next if sp.egg_groups.include?(:Ditto)
-              next if sp.egg_groups.include?(:Undiscovered)
-              @data_hash[:egg] << sp.id
-            elsif eggSpecies.egg_groups.include?(group)
-              next if eggSpecies.gender_ratio == :Genderless
-              gender = sp.gender_ratio
-              next if gender == :Genderless
-              next if [:AlwaysMale, :AlwaysFemale].include?(gender) && gender == eggSpecies.gender_ratio
-              @data_hash[:egg] << sp.id 
-            end
+          elsif eggSpecies.egg_groups.include?(group)
+            next if eggSpecies.gender_ratio == :Genderless
+
+            gender = sp.gender_ratio
+            next if gender == :Genderless
+            next if %i[AlwaysMale AlwaysFemale].include?(gender) && gender == eggSpecies.gender_ratio
+
+            @data_hash[:egg] << sp.id
           end
         end
       end
@@ -258,17 +387,21 @@ class PokemonPokedexInfo_Scene
       # Add forms that match the species form directly
       if fam.form == species.form
         @data_hash[:family] << fam.id
+      # Check if this specific form ID is in the evolution list with forms
+      elsif family_evos_with_forms.include?(fam.id)
+        @data_hash[:family] << fam.id
       else
         # Skip if there's another form of this species already added
         # or if this species isn't in the evolution family
-        next if family_to_insert.any? { |f| f.species == fam.species && f != fam } || 
+        next if family_to_insert.any? { |f| f.species == fam.species && f != fam } ||
                 !family_evos.include?(fam.species)
-                
+
         @data_hash[:family] << fam.id
       end
     end
     @data_hash.each_key do |key|
-	  next if key == :species
+      next if key == :species
+
       list = @data_hash[key].clone
       if key == :family
         sortlist = species.get_family_species
@@ -282,12 +415,14 @@ class PokemonPokedexInfo_Scene
     #---------------------------------------------------------------------------
     @data_hash[:ability] = Hash.new { |key, value| key[value] = [] }
     species.abilities.each do |a|
-      next if @data_hash[:ability][0].include?(a)	
+      next if @data_hash[:ability][0].include?(a)
+
       @data_hash[:ability][0] << a
     end
     species.hidden_abilities.each do |a|
-      next if @data_hash[:ability][0].include?(a)	
-      next if @data_hash[:ability][1].include?(a)	
+      next if @data_hash[:ability][0].include?(a)
+      next if @data_hash[:ability][1].include?(a)
+
       @data_hash[:ability][1] << a
     end
     case species.id
@@ -312,22 +447,25 @@ class PokemonPokedexInfo_Scene
     else
       species.wild_item_common.each do |i|
         next if @data_hash[:item][0].include?(i)
+
         @data_hash[:item][0] << i
       end
       species.wild_item_uncommon.each do |i|
         next if @data_hash[:item][0].include?(i)
         next if @data_hash[:item][1].include?(i)
+
         @data_hash[:item][1] << i
       end
       species.wild_item_rare.each do |i|
         next if @data_hash[:item][0].include?(i)
         next if @data_hash[:item][1].include?(i)
         next if @data_hash[:item][2].include?(i)
+
         @data_hash[:item][2] << i
       end
     end
   end
-  
+
   #-----------------------------------------------------------------------------
   # Utility for sorting all generated species lists in Pokedex order.
   #-----------------------------------------------------------------------------
@@ -337,20 +475,20 @@ class PokemonPokedexInfo_Scene
     list.each do |id|
       sp = GameData::Species.get(id).species
       sortlist.each_with_index do |dex, i|
-        species = (dex.is_a?(Hash)) ? dex[:species] : dex
-        if species == sp
-          newSort[i] = [] if !newSort[i]
-          newSort[i].push(id)
-          break
-        end
+        species = dex.is_a?(Hash) ? dex[:species] : dex
+        next unless species == sp
+
+        newSort[i] = [] unless newSort[i]
+        newSort[i].push(id)
+        break
       end
     end
     newSort.compact!
     newSort.flatten!
     newSort.uniq!
-    return newSort
+    newSort
   end
-  
+
   #-----------------------------------------------------------------------------
   # Utility for getting data related to special forms, such as Mega Evolutions.
   #-----------------------------------------------------------------------------
@@ -359,37 +497,45 @@ class PokemonPokedexInfo_Scene
     check_item = nil
     special_form = nil
     if species.form > 0
-      [:mega, :primal, :ultra, :gmax, :emax, :tera].each do |sym|
+      %i[mega primal ultra gmax emax tera].each do |sym|
         function = nil
         special_form = nil
         case sym
         when :mega
           if species.mega_stone || species.mega_move
-            special_form, check_form, check_item = sym, species.unmega_form, species.mega_stone
+            special_form = sym
+            check_form = species.unmega_form
+            check_item = species.mega_stone
             break
           end
         when :gmax
           if defined?(species.gmax_move) && species.gmax_move
-            special_form, check_form, check_item = sym, species.ungmax_form, nil
+            special_form = sym
+            check_form = species.ungmax_form
+            check_item = nil
             break
           end
-        when :primal then function = "getPrimalForm"
-        when :ultra  then function = "getUltraForm"
-        when :emax   then function = "getEternamaxForm"
-        when :tera   then function = "getTerastalForm"
+        when :primal then function = 'getPrimalForm'
+        when :ultra  then function = 'getUltraForm'
+        when :emax   then function = 'getEternamaxForm'
+        when :tera   then function = 'getTerastalForm'
         end
         next if function.nil?
-        if MultipleForms.hasFunction?(species.species, function)
-          dex_data = MultipleForms.call("getDataPageInfo", species)
-          next if !dex_data || species.form != dex_data[0]
-          special_form, check_form, check_item = sym, dex_data[1], dex_data[2]
-          break
-        end
+
+        next unless MultipleForms.hasFunction?(species.species, function)
+
+        dex_data = MultipleForms.call('getDataPageInfo', species)
+        next if !dex_data || species.form != dex_data[0]
+
+        special_form = sym
+        check_form = dex_data[1]
+        check_item = dex_data[2]
+        break
       end
     end
-    return special_form, check_form, check_item
+    [special_form, check_form, check_item]
   end
-  
+
   #-----------------------------------------------------------------------------
   # Draws the data page.
   #-----------------------------------------------------------------------------
@@ -397,170 +543,184 @@ class PokemonPokedexInfo_Scene
     base    = Color.new(248, 248, 248)
     shadow  = Color.new(72, 72, 72)
     path = Settings::POKEDEX_DATA_PAGE_GRAPHICS_PATH
-    overlay = @sprites["overlay"].bitmap
+    overlay = @sprites['overlay'].bitmap
     imagepos = []
     textpos = []
     owned = $player.owned?(@species)
     species_data = GameData::Species.get_species_form(@species, @form)
+    @data_hash ||= {}
     pbGenerateDataLists(species_data) if @data_hash[:species] != species_data.id
-    @sprites["itemicon"].item = (owned && !@data_hash[:item].empty?) ? @data_hash[:item].values.last.last : nil
-    @gender = 1 if species_data.gender_ratio == :AlwaysFemale || species_data.form_name == _INTL("Female")
+    if @sprites['itemicon']
+      @sprites['itemicon'].item = owned && !@data_hash[:item].empty? ? @data_hash[:item].values.last.last : nil
+    end
+    @gender = 1 if species_data.gender_ratio == :AlwaysFemale || species_data.form_name == _INTL('Hembra')
     pbDrawDataNotes(:encounter)
     #---------------------------------------------------------------------------
     # Draws species name & typing.
     #---------------------------------------------------------------------------
-    textpos.push([species_data.name, 84+30,  56, :left, base, Color.black, :outline])
+    textpos.push([species_data.name, SPECIES_NAME_X, SPECIES_NAME_Y, :left, base, Color.black, :outline])
     if owned
       species_data.types.each_with_index do |type, i|
         type_number = GameData::Type.get(type).icon_position
-        type_rect = Rect.new(0, type_number * 32, 96, 32)
-        type_x = (species_data.types.length == 1) ? 347 : 308 + (80 * i)
-        type_x += 46
-        overlay.blt(type_x, 48, @typebitmap.bitmap, type_rect)
+        type_rect = Rect.new(0, type_number * TYPE_ICON_HEIGHT, TYPE_ICON_WIDTH, TYPE_ICON_HEIGHT)
+        type_x = species_data.types.length == 1 ? TYPE_SINGLE_X : TYPE_MULTI_BASE_X + (TYPE_MULTI_SPACING * i)
+        overlay.blt(type_x, TYPE_GENDER_Y, @typebitmap.bitmap, type_rect)
       end
     end
     #---------------------------------------------------------------------------
     # Draws gender icons.
     #---------------------------------------------------------------------------
-    case species_data.gender_ratio
-    when :AlwaysMale   then gender = [1, 0]
-    when :AlwaysFemale then gender = [0, 1]
-    when :Genderless   then gender = [0, 0]
-    else
-      if owned && !gender_difference?(@form)
-        gender = [1, 1]
-      else
-        gender = (@gender == 0) ? [1, 0] : [0, 1]
-      end
-    end
-    imagepos.push([path + "gender", 10+16, 48, 32 * gender[0],  0, 32, 32],
-                  [path + "gender", 44+16, 48, 32 * gender[1], 32, 32, 32])
+    gender = case species_data.gender_ratio
+             when :AlwaysMale   then [1, 0]
+             when :AlwaysFemale then [0, 1]
+             when :Genderless   then [0, 0]
+             else
+               if owned && !gender_difference?(@form)
+                 [1, 1]
+               else
+                 @gender == 0 ? [1, 0] : [0, 1]
+               end
+             end
+    imagepos.push([path + 'gender', GENDER_ICON_X1, TYPE_GENDER_Y, GENDER_ICON_SRC_UNIT * gender[0], 0, GENDER_ICON_SRC_UNIT, GENDER_ICON_SRC_UNIT],
+                  [path + 'gender', GENDER_ICON_X2, TYPE_GENDER_Y, GENDER_ICON_SRC_UNIT * gender[1], GENDER_ICON_SRC_UNIT,
+                   GENDER_ICON_SRC_UNIT, GENDER_ICON_SRC_UNIT])
     #---------------------------------------------------------------------------
     # Draws habitat icon.
     #---------------------------------------------------------------------------
-    habitat = (owned) ? GameData::Habitat.get(species_data.habitat).icon_position : 0
-    imagepos.push([path + "habitats", 445+106, 174, 0, 48 * habitat, 64, 48])
+    habitat = owned ? GameData::Habitat.get(species_data.habitat).icon_position : 0
+    imagepos.push([path + 'habitats', HABITAT_X, HABITAT_Y, 0, HABITAT_SRC_Y_UNIT * habitat, HABITAT_WIDTH,
+                   HABITAT_HEIGHT])
     #---------------------------------------------------------------------------
     # Draws body shape icon.
     #---------------------------------------------------------------------------
     shape = GameData::BodyShape.get(species_data.shape).icon_position
-    imagepos.push(["Graphics/UI/Pokedex/icon_shapes", 375+89, 170, 0, 60 * shape, 60, 60])
+    imagepos.push(['Graphics/UI/Pokedex/icon_shapes', SHAPE_X, SHAPE_Y, 0, SHAPE_SRC_UNIT * shape, SHAPE_SIZE,
+                   SHAPE_SIZE])
     #---------------------------------------------------------------------------
     # Draws egg group icons.
     #---------------------------------------------------------------------------
     if owned
       egg_groups = species_data.egg_groups
-      egg_groups = [:None] if species_data.gender_ratio == :Genderless && 
+      egg_groups = [:None] if species_data.gender_ratio == :Genderless &&
                               !(egg_groups.include?(:Ditto) || egg_groups.include?(:Undiscovered))
     else
       egg_groups = [:None]
     end
-    rectX = (Settings::ALT_EGG_GROUP_NAMES) ? 62 : 0
+    rectX = Settings::ALT_EGG_GROUP_NAMES ? EGG_RECT_ALT_X : EGG_RECT_X
     egg_groups.each_with_index do |group, i|
       rectY = GameData::EggGroup.get(group).icon_position
-      group_y = (egg_groups.length == 1) ? 188 : 172 + 30 * i
-      imagepos.push([path + _INTL("egg_groups"), 302+72, group_y, rectX, 28 * rectY, 62, 28])
+      group_y = egg_groups.length == 1 ? EGG_SINGLE_Y : EGG_MULTI_BASE_Y + EGG_MULTI_SPACING * i
+      imagepos.push([path + 'egg_groups', EGG_GROUP_X, group_y, rectX, EGG_SRC_HEIGHT * rectY, EGG_SRC_WIDTH,
+                     EGG_SRC_HEIGHT])
     end
     #---------------------------------------------------------------------------
     # Draws the base stats text and bars.
     #---------------------------------------------------------------------------
     textpos.push(
-      [_INTL("PS"),        12+8, 104+17, :left, base, shadow, :outline],
-      [_INTL("Ataque"),    12+8, 132+17, :left, base, shadow, :outline],
-      [_INTL("Defensa"),   12+8, 160+17, :left, base, shadow, :outline],
-      [_INTL("At. Esp."),  12+8, 188+17, :left, base, shadow, :outline],
-      [_INTL("Df. Esp."),  12+8, 216+17, :left, base, shadow, :outline],
-      [_INTL("Velocidad"),  12+8, 244+17, :left, base, shadow, :outline]
+      [_INTL('PS'),        STATS_LABEL_X, STATS_LABEL_Y1, :left, base, shadow, :outline],
+      [_INTL('Ataque'),    STATS_LABEL_X, STATS_LABEL_Y2, :left, base, shadow, :outline],
+      [_INTL('Defensa'),   STATS_LABEL_X, STATS_LABEL_Y3, :left, base, shadow, :outline],
+      [_INTL('At. Esp.'),  STATS_LABEL_X, STATS_LABEL_Y4, :left, base, shadow, :outline],
+      [_INTL('Df. Esp.'),  STATS_LABEL_X, STATS_LABEL_Y5, :left, base, shadow, :outline],
+      [_INTL('Velocid.'),  STATS_LABEL_X, STATS_LABEL_Y6, :left, base, shadow, :outline]
     )
-    stats_order = [:HP, :ATTACK, :DEFENSE, :SPECIAL_ATTACK, :SPECIAL_DEFENSE, :SPEED]
+    stats_order = %i[HP ATTACK DEFENSE SPECIAL_ATTACK SPECIAL_DEFENSE SPEED]
     if owned
       stats_order.each_with_index do |s, i|
         stat = species_data.base_stats[s]
-        w = stat * 100 / 254.0
-        w = 1 if w < 1
-        w = ((w / 2).round) * 2
-        imagepos.push([path + "overlay_stats", 106+35, 17+105 + i * 28, 0, i * 18, w, 18])
+        w = stat * STAT_BAR_SCALE / STAT_BAR_BASE
+        w = STAT_BAR_MIN_WIDTH if w < STAT_BAR_MIN_WIDTH
+        w = (w / STAT_BAR_ROUND_UNIT).round * STAT_BAR_ROUND_UNIT
+        imagepos.push([path + 'overlay_stats', OVERLAY_STATS_X, OVERLAY_STATS_Y_START + i * OVERLAY_STATS_Y_SPACING, 0,
+                       i * OVERLAY_STATS_SRC_UNIT, w, OVERLAY_STATS_HEIGHT])
       end
     end
     #---------------------------------------------------------------------------
     # Draws Ability/Move button text.
     #---------------------------------------------------------------------------
-    textpos.push([_INTL("Habilidades"), 365, 253+23-8, :center, base, shadow, :outline],
-                 [_INTL("Movimientos"),535, 253+23-8, :center, base, shadow, :outline])			  
+    textpos.push([_INTL('Habilid.'), ABILITY_BTN_X, ABILITY_MOVE_Y, :center, base, shadow, :outline],
+                 [_INTL('Movimien.'), MOVE_BTN_X, ABILITY_MOVE_Y, :center, base, shadow, :outline])
     #---------------------------------------------------------------------------
     # Sets up sprites if the species is a special form.
     #---------------------------------------------------------------------------
     special_form, check_form, _check_item = pbGetSpecialFormData(species_data)
     if special_form
-      imagepos.push([path + "evolutions", 234+78, ICONS_POS_Y - 34, 0, 64, 272, 64])
+      imagepos.push([path + 'evolutions', EVOLUTIONS_X, ICONS_POS_Y + EVOLUTIONS_Y_OFFSET, 0, EVOLUTIONS_SRC_UNIT,
+                     EVOLUTIONS_WIDTH, EVOLUTIONS_HEIGHT])
       case special_form
-      when :mega        then imagepos.push(["Graphics/UI/Battle/icon_mega", 259+78-52+302, 49])
-      when :primal      then imagepos.push(["Graphics/UI/Battle/icon_primal_#{species_data.name}", 256+78-52+302, 47])
-      when :ultra       then imagepos.push([Settings::ZMOVE_GRAPHICS_PATH + "icon_ultra", 257+78-52+302, 47])
-      when :gmax, :emax then imagepos.push([Settings::DYNAMAX_GRAPHICS_PATH + "icon_dynamax", 256+78-52+302, 47-4])
+      when :mega        then imagepos.push(['Graphics/UI/Battle/icon_mega', MEGA_ICON_X, MEGA_ICON_Y])
+      when :primal      then imagepos.push(["Graphics/UI/Battle/icon_primal_#{species_data.name}", PRIMAL_ICON_X,
+                                            PRIMAL_ICON_Y])
+      when :ultra       then imagepos.push([Settings::ZMOVE_GRAPHICS_PATH + 'icon_ultra', ULTRA_ICON_X, ULTRA_ICON_Y])
+      when :gmax, :emax then imagepos.push([Settings::DYNAMAX_GRAPHICS_PATH + 'icon_dynamax', DYNAMAX_ICON_X,
+                                            DYNAMAX_ICON_Y])
       when :tera
         species_data.flags.each do |flag|
-          next if !flag[/^TeraType_(\w+)/i]
+          next unless flag[/^TeraType_(\w+)/i]
+
           pos = GameData::Type.get($~[1].to_sym).icon_position
-          imagepos.push([Settings::TERASTAL_GRAPHICS_PATH + "tera_types", 257+78, 47, 0, pos * 32, 32, 32])
+          imagepos.push([Settings::TERASTAL_GRAPHICS_PATH + 'tera_types', TERA_ICON_X, TERA_ICON_Y, 0,
+                         pos * TERA_SRC_UNIT, TERA_ICON_SIZE, TERA_ICON_SIZE])
           break
         end
       end
-      @sprites["familyicon0"].pbSetParams(@species, @gender, @form)
-      @sprites["familyicon0"].x = ICONS_RIGHT_DOUBLE
-      @sprites["familyicon0"].visible = true
-      @sprites["familyicon1"].pbSetParams(@species, @gender, check_form)
-      @sprites["familyicon1"].x = ICONS_LEFT_DOUBLE
-      @sprites["familyicon1"].visible = true
-      @sprites["familyicon2"].visible = false
+      @sprites['familyicon0'].pbSetParams(@species, @gender, @form)
+      @sprites['familyicon0'].x = ICONS_RIGHT_DOUBLE
+      @sprites['familyicon0'].visible = true
+      @sprites['familyicon1'].pbSetParams(@species, @gender, check_form)
+      @sprites['familyicon1'].x = ICONS_LEFT_DOUBLE
+      @sprites['familyicon1'].visible = true
+      @sprites['familyicon2'].visible = false
     else
       #-------------------------------------------------------------------------
       # Sets up sprites if the species is a single-stage species.
       #-------------------------------------------------------------------------
       prevo = species_data.get_previous_species
       if prevo == species_data.species || @data_hash[:family].empty?
-        imagepos.push([path + "evolutions", 234+78, ICONS_POS_Y - 34, 0, 0, 272, 64])
-        @sprites["familyicon0"].pbSetParams(@species, @gender, @form)
-        @sprites["familyicon0"].x = ICONS_CENTER
-        @sprites["familyicon0"].visible = true
-        @sprites["familyicon1"].visible = false
-        @sprites["familyicon2"].visible = false
+        imagepos.push([path + 'evolutions', EVOLUTIONS_X, ICONS_POS_Y + EVOLUTIONS_Y_OFFSET, 0, 0, EVOLUTIONS_WIDTH,
+                       EVOLUTIONS_HEIGHT])
+        @sprites['familyicon0'].pbSetParams(@species, @gender, @form)
+        @sprites['familyicon0'].x = ICONS_CENTER
+        @sprites['familyicon0'].visible = true
+        @sprites['familyicon1'].visible = false
+        @sprites['familyicon2'].visible = false
       #-------------------------------------------------------------------------
       # Sets up sprites if the species has multiple stages.
       #-------------------------------------------------------------------------
       else
-        form = (species_data.default_form >= 0) ? species_data.default_form : @form
+        form = species_data.default_form >= 0 ? species_data.default_form : @form
         prevo_data = GameData::Species.get_species_form(prevo, form)
-        stages = (species_data.get_baby_species == prevo) ? 1 : 2
-        imagepos.push([path + "evolutions", 234+78, ICONS_POS_Y - 34, 0, 64 * stages, 272, 64])
-        @sprites["familyicon0"].pbSetParams(@species, @gender, @form)
-        @sprites["familyicon0"].x = (stages == 1) ? ICONS_RIGHT_DOUBLE : ICONS_RIGHT_TRIPLE
-        @sprites["familyicon0"].visible = true
+        stages = species_data.get_baby_species == prevo ? 1 : 2
+        imagepos.push([path + 'evolutions', EVOLUTIONS_X, ICONS_POS_Y + EVOLUTIONS_Y_OFFSET, 0,
+                       EVOLUTIONS_SRC_UNIT * stages, EVOLUTIONS_WIDTH, EVOLUTIONS_HEIGHT])
+        @sprites['familyicon0'].pbSetParams(@species, @gender, @form)
+        @sprites['familyicon0'].x = stages == 1 ? ICONS_RIGHT_DOUBLE : ICONS_RIGHT_TRIPLE
+        @sprites['familyicon0'].visible = true
         if $player.seen?(prevo)
-          @sprites["familyicon1"].pbSetParams(prevo, @gender, prevo_data.form)
-          @sprites["familyicon1"].tone = Tone.new(0,0,0,0)
+          @sprites['familyicon1'].pbSetParams(prevo, @gender, prevo_data.form)
+          @sprites['familyicon1'].tone = TONE_NORMAL
         else
-          @sprites["familyicon1"].pbSetParams(prevo, @gender, prevo_data.form)
-          @sprites["familyicon1"].tone = Tone.new(-255,-255,-255,0)
+          @sprites['familyicon1'].pbSetParams(prevo, @gender, prevo_data.form)
+          @sprites['familyicon1'].tone = TONE_FADED
           # @sprites["familyicon1"].species = nil
         end
-        @sprites["familyicon1"].x = (stages == 1) ? ICONS_LEFT_DOUBLE : ICONS_CENTER
-        @sprites["familyicon1"].visible = true
+        @sprites['familyicon1'].x = stages == 1 ? ICONS_LEFT_DOUBLE : ICONS_CENTER
+        @sprites['familyicon1'].visible = true
         if stages == 2
           baby = species_data.get_baby_species
           baby_data = GameData::Species.get_species_form(baby, prevo_data.form)
           if $player.seen?(baby)
-            @sprites["familyicon2"].pbSetParams(baby, @gender, baby_data.form)
-            @sprites["familyicon2"].tone = Tone.new(0,0,0,0)
+            @sprites['familyicon2'].pbSetParams(baby, @gender, baby_data.form)
+            @sprites['familyicon2'].tone = TONE_NORMAL
           else
-            @sprites["familyicon2"].pbSetParams(baby, @gender, baby_data.form)
-            @sprites["familyicon2"].tone = Tone.new(-255,-255,-255,0)
+            @sprites['familyicon2'].pbSetParams(baby, @gender, baby_data.form)
+            @sprites['familyicon2'].tone = TONE_FADED
             # @sprites["familyicon2"].species = nil
           end
-          @sprites["familyicon2"].x = ICONS_LEFT_TRIPLE
-          @sprites["familyicon2"].visible = true
+          @sprites['familyicon2'].x = ICONS_LEFT_TRIPLE
+          @sprites['familyicon2'].visible = true
         else
-          @sprites["familyicon2"].visible = false
+          @sprites['familyicon2'].visible = false
         end
       end
     end

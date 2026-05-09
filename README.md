@@ -3,8 +3,76 @@
 **Creada por [Skyflyer](https://twitter.com/Sky_fangames) y [DPertierra](https://github.com/dpertierra)**
 
 ## Base de Pokémon Essentials en Español creada sobre la versión 21.1
-**DESCARGAR BASE: https://skyfangames.blogspot.com/2024/01/base-de-sky.html**
 
+### [DESCARGAR BASE](https://skyfangames.blogspot.com/2024/01/base-de-sky.html)
+
+### AÑADIDOS V 1.1.2
+
+- Refactor del BetterMoveRelearner.
+- Agrega opción de LoseText_F en el PBS de los trainers, este texto será usado cuando un trainer pierda cuando el jugador esté con el personajes femenino.
+- La incubadora ahora permite elegir los huevos desde el PC
+- Agrega opción para asignarle un estado a N Pokémon del equipo, puede ser en orden o aleatorio, se puede poner una probabilidad y además tiene en cuenta inmunidades por tipos o habilidades.
+- Al abrir la Pokedex desde el menú del equipo ahora, haciendolo con una forma alterna abre la Pokédex de esa forma.
+- Agrega opción para ordenar la caja del PC.
+- Agrega opción para buscar un Pokémon en la PC pulsando la W.
+- Correcciones pokedex quick access desde el PC.
+- Agrega opcion de pokevial infinito.
+- Agrega nombre de MT al encontrar una MT.
+- Agrega opcion fondo terreno y fondo TR a la vez.
+- Validacion para evitar crasheos Triple Axel DBK.
+- Correccion fiebre dorada.
+- Correcciones expshare, especialmente en nuevas partidas.
+- Correcciones NPC Random y Monotype.
+- Helper para ver si el primer pokemon del equipo es una especie en particular.
+- Actualizacion de las Luka's Scripting Utilities.
+- Agrega opcion de activar el turbo solo en combates.
+- Opción para asignarle un estado a N Pokémon del equipo.
+- Correcciones IA movs Paldea y Hisui.
+- Actualizada la pantalla de título de la base.
+- Actualiza MK
+
+
+### AÑADIDOS V 1.1.1
+
+- Múltiples correcciones de bugs
+- Agrega una opcion para que las MOs sean olvidables
+- Opcion para activar el expshare por evento y no al inicio de la partida
+- Actualización del MK
+- Corrección de errores en joiplay
+- Cambios de textos para que se adapten mejor a la UI
+- Mejoras en el scripts_combine y scripts_extract
+- La tecla SPECIAL (D) también cerrará el menu de objetos registrados basicamente conviertiendo la D en un toggle de este menú
+
+### AÑADIDOS V 1.1.0
+
+- Modificaciones de la mochila. Ahora incluye la posibilidad de ordenar los objetos, buscar uno escribiendo su nombre e incluso señalar objetos favoritos.
+- Más validaciones para las animaciones de ataques.
+- Se ha rehecho completamente el sistema de Regalo Misterioso. Ahora permite crear regalos por internet con contraseña, aparte de muchas mejoras.
+- Mejoras en el movimiento del jugador, ahora se mueve con solo darle tap a las teclas.
+- Correcciones en el precio de venta de algunos objetos, de acorde a las nuevas generaciones.
+- Mejoras en el PluginManager para que detecte cuando se agregan o eliminan carpetas.
+- Corrección de stats de mega Scizor.
+- Agregado que si se libera a un Pokémon con un objeto equipado, el objeto se guarda en la mochila.
+- Cambios en el NPC configurador del random del mapa de Scripts.
+- Agrega opción de usar las MOs sin aprenderlas.
+- Agrega posibilidad de flag Kicking en el PBS de moves.txt y metodo kickingMove? para saber si es un movimiento de patadas.
+- Cambia el precio de venta por defecto de 1/2 a 1/4 del precio de compra, de acuerdo a los cambios en BDSP y SV.
+- Agrega opción en el NameBox para que el color del cuadro sea independiente del del text box y tambien definir distintos Skins para distintos NPCs.
+- Corrección en el tiempo mostrado al guardar partida, independientemente del turbo.
+- Correcciones en el Buscasalvajes.
+- El Buscasalvajes ahora está ordenado por probabilidad de aparición
+- El buscasalvajes ahora mostrara la silueta del Pokémon en negro para Pokémon no vistos, el icono en escala de grises para Pokémon vistos pero no capturados y el icono a color para los Pokémon capturados.
+- Opción para que los objetos consumibles, como bayas, gemas, banda focus, etc. se restauren luego del combate, esto viene por defecto desactivado, para activarlo hay que cambiar la constante `RESTORE_HELD_ITEMS_AFTER_BATTLE` a true
+- Actualiza Ladrón a los cambios de 9na.
+- Opción para liberar todos los Pokémon de una caja de una sola vez, sus objetos se guardan en la mochila.
+- Correcciones al recibir Huevos ahora siempre ofrecerá meterlos a la incubadora si la tienes y ésta tiene espacio disponible.
+- Correcciones para la congelación de Hisui.
+- Se incluye la Ruby Standard Library (RSL) esto es un compilado de librerias de código que podrán importar en sus scripts para facilitarse distintas cosas, por ejemplo puede importar la libreria de JSON para manejar este tipo de archivos con mayor facilidad. Pueden encontrar mas información [aquí](https://ruby-doc.org/3.3.0/standard_library_rdoc.html)
+- Corrección de crash al agregar huevos teniendo la incubadora registrada.
+- Agrega opción de desactivar el vsync al menú de opciones.
+- Corrección del movimiento Throat Chop
+- Cambios menores de traducciones.
+- Pequeños arreglos menores.
 
 ### AÑADIDOS V 1.0.9
 
@@ -179,3 +247,4 @@
 - Repelente Infinito como objeto clave.
 - Acceso directo a la pokédex desde el menu del pokemon y desde el PC.
 - Turbo con 3 velocidades, tanto para combates como para el juego en general, arriba a la izquierda muestra la velocidad al cambiarla.
+

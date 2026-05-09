@@ -23,7 +23,7 @@
 
 if defined?(PluginManager)
   PluginManager.register({
-  :name => "Egg Hatcher",
+  :name => "Incubadora",
   :essentials => "21.1",
   :version => "1.1",
   :credits => ["Kyu","Clara","Turner","DPertierra"]
@@ -41,6 +41,17 @@ end
 
 #Box sprite of the hatcher
 class EggSprite < Sprite
+  
+  EGG_X_OFFSET = 2
+  EGG_Y_OFFSET = -5
+  STEPS_X = 35
+  STEPS_Y = 60
+  TEXT_ALIGNMENT = :center
+  SELECTION_RECT_X = 0
+  SELECTION_RECT_Y = 0
+  SELECTION_RECT_WIDTH = 68
+  SELECTION_RECT_HEIGHT = 100
+
   def initialize(viewport,selected,pokemon, x, y)
     super(viewport)
     @sprites = {}
@@ -63,18 +74,17 @@ class EggSprite < Sprite
       @frameskip = 10 if steps<2550
       @frameskip = 5 if steps<1275
       @sprites["egg"] = AnimatedSprite.create(sprite,2,@frameskip,self.viewport)
-      @sprites["egg"].x = self.x + 2
-      @sprites["egg"].y = self.y - 5
+      @sprites["egg"].x = self.x + EGG_X_OFFSET
+      @sprites["egg"].y = self.y + EGG_Y_OFFSET
       @sprites["egg"].play
       base = Color.new(6,35,52)
       shadow= Color.new(169,179,184)
       pbSetSystemFont(self.bitmap)
-      pbDrawTextPositions(self.bitmap,[[steps.to_s,35,
-      defined?(Settings::EGG_LEVEL) ? 60 : 65,2,base,shadow]])
+      pbDrawTextPositions(self.bitmap,[[steps.to_s, STEPS_X, STEPS_Y, TEXT_ALIGNMENT, base,shadow]])
     end
 
     if @selected
-      self.bitmap.blt(0,0,Bitmap.new("Graphics/Pictures/Egg Hatcher/selection"),Rect.new(0,0,68,100))
+      self.bitmap.blt(0,0,Bitmap.new("Graphics/Pictures/Egg Hatcher/selection"), Rect.new(SELECTION_RECT_X, SELECTION_RECT_Y, SELECTION_RECT_WIDTH, SELECTION_RECT_HEIGHT))
     end
   end
 
@@ -90,6 +100,17 @@ end
 
 #GlobalScene
 class Hatcher
+  TEXT_WIDTH = 183
+  TEXT_HEIGHT = 183
+  TEXT_X = 290
+  TEXT_Y = 80
+  EGG_START_X = 46
+  EGG_X_SPACING = 80
+  EGG_START_Y_FIRST = 46
+  EGG_START_Y_LAST = 158
+  TEXT_DESC_X = 0
+  TEXT_DESC_Y = 10
+  TEXT_DESC_WIDTH = 183
   def initialize
     if !$PokemonGlobal.eggs
       $PokemonGlobal.eggs ||= [nil,nil,nil,nil,nil,nil]
@@ -104,9 +125,9 @@ class Hatcher
     @sprites["bg"].bitmap = Bitmap.new("Graphics/Pictures/Egg Hatcher/hatcherbg")
 
     @sprites["text"] = Sprite.new(@viewport)
-    @sprites["text"].bitmap = Bitmap.new(183,183)
-    @sprites["text"].x = 290 
-    @sprites["text"].y = 80
+    @sprites["text"].bitmap = Bitmap.new(TEXT_WIDTH,TEXT_HEIGHT)
+    @sprites["text"].x = TEXT_X
+    @sprites["text"].y = TEXT_Y
     pbSetSystemFont(@sprites["text"].bitmap)
     refresh
   end
@@ -117,11 +138,11 @@ class Hatcher
     eggs = $PokemonGlobal.eggs
     for index in 0..5
       if index < 3
-        x = 46 + 80*index
-        y = 46
+        x = EGG_START_X + EGG_X_SPACING * index
+        y = EGG_START_Y_FIRST
       else
-        x = 46 + 80*(index - 3)
-        y = 158
+        x = EGG_START_X + EGG_X_SPACING * (index - 3)
+        y = EGG_START_Y_LAST
       end
       selected = (index == @index)? true : false
       @eggs["#{index}"] = EggSprite.new(@viewport,selected,eggs[index], x, y)
@@ -134,10 +155,10 @@ class Hatcher
       eggstate = _INTL("¿Qué eclosionará de esto? No parece estar cerca de eclosionar.") if steps < 10_200
       eggstate = _INTL("Parece moverse ocasionalmente. Puede estar cerca de eclosionar.") if steps < 2550
       eggstate = _INTL("¡Se escuchan sonido desde dentro! ¡Eclosionará pronto!") if steps < 1275
-      drawFormattedTextEx(@sprites["text"].bitmap,0,10,183,eggstate)
+      drawFormattedTextEx(@sprites["text"].bitmap,TEXT_DESC_X,TEXT_DESC_Y,TEXT_DESC_WIDTH,eggstate)
     else
       eggstate = _INTL("Selecciona una incubadora para añadir un Huevo.")
-      drawFormattedTextEx(@sprites["text"].bitmap,0,10,183,eggstate)
+      drawFormattedTextEx(@sprites["text"].bitmap,TEXT_DESC_X,TEXT_DESC_Y,TEXT_DESC_WIDTH,eggstate)
     end
   end
   
@@ -182,28 +203,35 @@ class Hatcher
       #Manipulate an egg
       if Input.trigger?(Input::USE)
         if $PokemonGlobal.eggs[@index] == nil
-          ret = Kernel.pbConfirmMessage("La incubadora está vacía\\n¿Quieres agregar un Huevo?")
+          ret = pbConfirmMessage(_INTL("La incubadora está vacía\n¿Quieres agregar un Huevo?"))
           if ret == true
-            chosen=0
-            pbFadeOutIn(99999){
-               scene = PokemonParty_Scene.new
-               screen = PokemonPartyScreen.new(scene, $player.party)
-               screen.pbStartScene(_INTL("Elige un Huevo."),false)
-               chosen=screen.pbChoosePokemon
-               screen.pbEndScene
-            }
-            if chosen != -1 && $player.party[chosen] != nil
-              if !$player.party[chosen].egg?
-                Kernel.pbMessage("El Pokémon elegido no es un Huevo.")
-              else
-                $PokemonGlobal.eggs[@index] = $player.party[chosen]
-                $player.party.delete_at(chosen)
-                $game_temp.bag_scene.pbHardRefresh if $game_temp && $game_temp.bag_scene && defined?($game_temp.bag_scene.pbHardRefresh)
+            if Settings::INCUBATOR_CHOOSE_EGG_FROM_PC
+              chosen = pbChooseEggFromPC
+              if chosen && chosen.is_a?(Pokemon)
+                $PokemonGlobal.eggs[@index] = chosen
+              end
+            else
+              chosen=0
+              pbFadeOutIn(99999){
+                scene = PokemonParty_Scene.new
+                screen = PokemonPartyScreen.new(scene, $player.party)
+                screen.pbStartScene(_INTL("Elige un Huevo."),false)
+                chosen=screen.pbChoosePokemon
+                screen.pbEndScene
+              }
+              if chosen != -1 && $player.party[chosen] != nil
+                if !$player.party[chosen].egg?
+                  pbMessage(_INTL("El Pokémon elegido no es un Huevo."))
+                else
+                  $PokemonGlobal.eggs[@index] = $player.party[chosen]
+                  $player.party.delete_at(chosen)
+                  $game_temp.bag_scene.pbHardRefresh if $game_temp && $game_temp.bag_scene && defined?($game_temp.bag_scene.pbHardRefresh)
+                end
               end
             end
           end
         else
-          ret = Kernel.pbConfirmMessage("¿Quieres sacar este Huevo de la incubadora?")
+          ret = pbConfirmMessage(_INTL("¿Quieres sacar este Huevo de la incubadora?"))
           if ret == true
             takeEgg($PokemonGlobal.eggs[@index],@index)
             $game_temp.bag_scene.pbHardRefresh if $game_temp && $game_temp.bag_scene && defined?($game_temp.bag_scene.pbHardRefresh)
@@ -225,14 +253,14 @@ class Hatcher
 end
 
 def takeEgg(egg,index)
-  sel = Kernel.pbConfirmMessage(_INTL("¿Quieres agregarlo a tu equipo?"))
+  sel = pbConfirmMessage(_INTL("¿Quieres agregarlo a tu equipo?"))
   if sel==true
-    Kernel.pbMessage(_INTL("Tu equipo está lleno.\1")) if $player.party.length == 6
+    pbMessage(_INTL("Tu equipo está lleno.\1")) if $player.party.length == 6
     pbStorePokemon(egg)
   else
     if pbBoxesFull?
-      Kernel.pbMessage(_INTL("¡No hay mas espacio para Pokémon!\1"))
-      Kernel.pbMessage(_INTL("¡Las cajas están llenas y no pueden recibir mas Pokémon!"))
+      pbMessage(_INTL("¡No hay mas espacio para Pokémon!\1"))
+      pbMessage(_INTL("¡Las cajas están llenas y no pueden recibir mas Pokémon!"))
       return
     end
     oldcurbox=$PokemonStorage.currentBox
@@ -240,10 +268,10 @@ def takeEgg(egg,index)
     curboxname=$PokemonStorage[oldcurbox].name
     boxname=$PokemonStorage[storedbox].name
     if storedbox!=oldcurbox
-      Kernel.pbMessage(_INTL("La caja \"{1}\" está llena.\1",curboxname))
-      Kernel.pbMessage(_INTL("{1} fue transferido a la caja \"{2}.\"",egg.name,boxname))
+      pbMessage(_INTL("La caja \"{1}\" está llena.\1",curboxname))
+      pbMessage(_INTL("{1} fue transferido a la caja \"{2}.\"",egg.name,boxname))
     else
-      Kernel.pbMessage(_INTL("{1} fue transferido a la caja \"{2}.\"",egg.name,boxname))
+      pbMessage(_INTL("{1} fue transferido a la caja \"{2}.\"",egg.name,boxname))
     end
   end
   $PokemonGlobal.eggs[index] = nil
@@ -260,7 +288,7 @@ def pbGenerateEgg(pkmn, text = "")
   pkmn.calc_stats
   # Add egg to party
   if (GameData::Item.exists?(:EGGHATCHER) && $bag.has?(:EGGHATCHER))
-    ret = Kernel.pbConfirmMessage("¿Quieres agregar el Huevo a la incubadora?")
+    ret = pbConfirmMessage(_INTL("¿Quieres agregar el Huevo a la incubadora?"))
     if ret == true
       ret = addEgg(pkmn)
       if ret == true
@@ -297,38 +325,110 @@ def addEgg(egg)
       return true
     end
   }
-  Kernel.pbMessage("La incubadora está llena.")
+  pbMessage("La incubadora está llena.")
   return false
 end
 
 
 EventHandlers.add(:on_step_taken, :incubadora, proc{|sender,e|
   next if !$player || !$PokemonGlobal.eggs
-  for i in 0...$PokemonGlobal.eggs.length
-   egg = $PokemonGlobal.eggs[i]
-   next if egg == nil
-   if egg.steps_to_hatch>0
-     egg.steps_to_hatch-=1
-     for poke in $player.party
-       if poke.hasAbility?(:FLAMEBODY) ||
-          poke.hasAbility?(:MAGMAARMOR)
-         egg.steps_to_hatch-=1
-         break
-       end
-     end
-     if egg.steps_to_hatch<=0
-      egg.steps_to_hatch=0
+  $PokemonGlobal.eggs.each_with_index do |egg, i|
+    next unless egg
+    next unless egg.steps_to_hatch.positive?
+    egg.steps_to_hatch -= 1
+    $player.pokemon_party.each do |poke|
+      next if !poke.ability&.has_flag?("FasterEggHatching")
+      egg.steps_to_hatch -= 1
+      break
+    end
+    if egg.steps_to_hatch <= 0
+      egg.steps_to_hatch = 0
       pbHatch(egg)
       takeEgg(egg,i)
-     end
-   end
+    end
   end
 })
+
 
 
 def openHatcher
   scene = Hatcher.new
   scene.update
+end
+
+
+class PokemonStorageScreen
+  def pbChooseEggFromPC
+    $game_temp.in_storage = true
+    @heldpkmn = nil
+    @scene.pbStartBox(self, 0)
+    retval = nil
+    to_delete =  []
+    loop do
+      selected = @scene.pbSelectBox(@storage.party)
+      if selected && selected[0] == -3   # Close box
+        if pbConfirm(_INTL("¿Salir del PC?"))
+          pbSEPlay("PC close")
+          break
+        end
+        next
+      end
+      if selected.nil?
+        next if pbConfirm(_INTL("¿Continuar operaciones?"))
+        break
+      elsif selected[0] == -4   # Box name
+        pbBoxCommands
+      else
+        pokemon = @storage[selected[0], selected[1]]
+        next if !pokemon
+        commands = [
+          _INTL("Elegir"),
+          _INTL("Datos"),
+        ]
+        commands.push(_INTL("Debug")) if $DEBUG
+        commands.push(_INTL("Cancelar"))
+        helptext = _INTL("Huevo elegido.")
+        command = pbShowCommands(helptext, commands)
+        case command
+        when 0   # Select
+          if pokemon.egg?
+            retval = pokemon
+            to_delete = selected
+            break
+          else
+            pbMessage(_INTL("¡Debes elegir un huevo!"))
+          end
+        when 1 # Summary
+          pbSummary(selected, nil)
+        when 2
+          if $DEBUG
+            pbPokemonDebug(pokemon, selected)
+          end
+        end
+      end
+    end
+    @scene.pbCloseBox
+    $game_temp.in_storage = false
+    if retval && retval.is_a?(Pokemon)
+      if to_delete[0] == -1
+        $player.party.delete_at(to_delete[1])
+        $game_temp&.bag_scene&.pbHardRefresh
+      else
+        @storage[to_delete[0], to_delete[1]] = nil
+      end
+    end
+    return retval
+  end
+end
+
+def pbChooseEggFromPC
+  chosen = nil
+  pbFadeOutIn {
+    scene = PokemonStorageScene.new
+    screen = PokemonStorageScreen.new(scene, $PokemonStorage)
+    chosen = screen.pbChooseEggFromPC
+  }
+  chosen
 end
 
 
@@ -346,6 +446,3 @@ ItemHandlers::UseInField.add(:EGGHATCHER,proc{|item|
   }
   next 1
 })
-
-
-

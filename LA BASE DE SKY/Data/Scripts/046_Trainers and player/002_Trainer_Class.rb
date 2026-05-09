@@ -8,9 +8,17 @@ class Trainer
   attr_accessor :language
   attr_accessor :party
 
+  def initialize(name, trainer_type)
+    @trainer_type = GameData::TrainerType.get(trainer_type).id
+    @name         = name
+    @id           = rand(2**16) | (rand(2**16) << 16)
+    @language     = pbGetLanguage
+    @party        = []
+  end
+
   def inspect
     str = super.chop
-    party_str = @party.map { |p| p.species_data.species }.inspect
+    party_str = @party.map { |pkmn| pkmn.species_data.species }.inspect
     str << sprintf(" %s @party=%s>", self.full_name, party_str)
     return str
   end
@@ -48,17 +56,18 @@ class Trainer
   def male?;             return GameData::TrainerType.get(self.trainer_type).male?;           end
   def female?;           return GameData::TrainerType.get(self.trainer_type).female?;         end
   def skill_level;       return GameData::TrainerType.get(self.trainer_type).skill_level;     end
+  def default_poke_ball; return GameData::TrainerType.get(self.trainer_type).poke_ball;       end
   def flags;             return GameData::TrainerType.get(self.trainer_type).flags;           end
   def has_flag?(flag);   return GameData::TrainerType.get(self.trainer_type).has_flag?(flag); end
 
   #=============================================================================
 
   def pokemon_party
-    return @party.find_all { |p| p && !p.egg? }
+    return @party.find_all { |pkmn| pkmn && !pkmn.egg? }
   end
 
   def able_party
-    return @party.find_all { |p| p && !p.egg? && !p.fainted? }
+    return @party.find_all { |pkmn| pkmn && !pkmn.egg? && !pkmn.fainted? }
   end
 
   def party_count
@@ -67,13 +76,13 @@ class Trainer
 
   def pokemon_count
     ret = 0
-    @party.each { |p| ret += 1 if p && !p.egg? }
+    @party.each { |pkmn| ret += 1 if pkmn && !pkmn.egg? }
     return ret
   end
 
   def able_pokemon_count
     ret = 0
-    @party.each { |p| ret += 1 if p && !p.egg? && !p.fainted? }
+    @party.each { |pkmn| ret += 1 if pkmn && !pkmn.egg? && !pkmn.fainted? }
     return ret
   end
 
@@ -95,7 +104,13 @@ class Trainer
   end
 
   def first_able_pokemon
-    return able_party[0]
+    return able_party.first
+  end
+
+  def first_able_pokemon?(species)
+    return false unless GameData::Species.exists?(species)
+    pkmn = first_able_pokemon
+    return pkmn.isSpecies?(species)
   end
 
   def last_party
@@ -103,13 +118,13 @@ class Trainer
   end
 
   def last_pokemon
-    p = pokemon_party
-    return (p.length > 0) ? p[p.length - 1] : nil
+    pkmn = pokemon_party
+    return (pkmn.length > 0) ? pkmn[pkmn.length - 1] : nil
   end
 
   def last_able_pokemon
-    p = able_party
-    return (p.length > 0) ? p[p.length - 1] : nil
+    pkmn = able_party
+    return (pkmn.length > 0) ? pkmn[pkmn.length - 1] : nil
   end
 
   def remove_pokemon_at_index(index)
@@ -178,22 +193,37 @@ class Trainer
 
   # Returns true if there is a Pokémon of the given species in the trainer's
   # party. You may also specify a particular form it should be.
-  def has_species?(species, form = -1)
-    return pokemon_party.any? { |p| p&.isSpecies?(species) && (form < 0 || p.form == form) }
+  def has_species?(species, form = -1, exclude_form = -1, check_pc = false)
+    # Check party first
+    party_result = pokemon_party.any? { |pkmn| pkmn&.isSpecies?(species) && (form < 0 || pkmn.form == form) && (exclude_form < 0 || pkmn.form != exclude_form) }
+    return true if party_result
+    
+    # If not found in party and check_pc is true, check PC storage
+    if check_pc && $PokemonStorage
+      (0...$PokemonStorage.maxBoxes).each do |i|
+        $PokemonStorage.maxPokemon(i).times do |j|
+          pkmn = $PokemonStorage[i, j]
+          if pkmn && pkmn.isSpecies?(species) && (form < 0 || pkmn.form == form) && (exclude_form < 0 || pkmn.form != exclude_form)
+            return true
+          end
+        end
+      end
+    end
+    
+    return false
   end
-
   # Returns whether there is a fatefully met Pokémon of the given species in the
   # trainer's party.
   def has_fateful_species?(species)
-    return pokemon_party.any? { |p| p&.isSpecies?(species) && p.obtain_method == 4 }
+    return pokemon_party.any? { |pkmn| pkmn&.isSpecies?(species) && pkmn.obtain_method == 4 }
   end
 
   # Returns whether there is a Pokémon with the given type in the trainer's
-  # party.
-  def has_pokemon_of_type?(type)
-    return false if !GameData::Type.exists?(type)
+  # party. excluded_pokemon is an array of Pokemon objects to ignore.
+  def has_pokemon_of_type?(type, excluded_pokemon = [])
+    return false unless GameData::Type.exists?(type)
     type = GameData::Type.get(type).id
-    return pokemon_party.any? { |p| p&.hasType?(type) }
+    return pokemon_party.any? { |pkmn| pkmn&.hasType?(type) && !excluded_pokemon.include?(pkmn) }
   end
 
   def find_pokemon_of_type(type, all = false)
@@ -201,6 +231,16 @@ class Trainer
 
     type = GameData::Type.get(type).id
     all ? pokemon_party.find_all { |p| p&.hasType?(type) } : pokemon_party.find { |p| p&.hasType?(type) }
+  end
+
+  def has_pokemon_with_ability?(ability)
+    return false unless GameData::Ability.exists?(ability)
+    return pokemon_party.any? { |pkmn| pkmn&.hasAbility?(ability) }
+  end
+
+  def find_pokemon_with_ability(ability, all = false)
+    return false unless GameData::Ability.exists?(ability)
+    return all ? pokemon_party.find_all { |pkmn| pkmn&.hasAbility?(ability) } : pokemon_party.find { |pkmn| pkmn&.hasAbility?(ability) }
   end
 
   # Checks whether any Pokémon in the party knows the given move, and returns
@@ -224,15 +264,45 @@ class Trainer
     @party.each { |pkmn| pkmn.heal }
   end
 
-  #=============================================================================
-
-  def initialize(name, trainer_type)
-    @trainer_type = GameData::TrainerType.get(trainer_type).id
-    @name         = name
-    @id           = rand(2**16) | (rand(2**16) << 16)
-    @language     = pbGetLanguage
-    @party        = []
+  # status: el status que se desea asignar, puede ser un GameData::Status, un String o un Symbol
+  # status_count: a cuántos Pokémon se les aplicará el status
+  # probability: la probalidad de que se le asigne el status entre 1% y 100%
+  # in_order: Si se asignará el status a los Pokémon de acuerdo a su posición en el equipo o si se seleccionará uno aleatorio
+  def give_status_party_pokemon(status, status_count = 1, probability = 25, in_order = true)
+    return if !GameData::Status.exists?(status) || able_pokemon_count < 1 || status_count < 1
+    probability = [[probability, 1].max, 100].min
+    
+    able_party_aux = able_party
+    count = 0
+    
+    if in_order || status_count >= able_party_aux.length
+      able_party_aux.each do |pokemon|
+        break if count >= status_count
+        next unless pokemon.can_get_status?(status) && rand(100) < probability
+        pokemon.status = status
+        count += 1 
+      end
+    else
+      while count < status_count && !able_party_aux.empty?
+        pokemon = able_party_aux.sample
+        able_party_aux.delete(pokemon)
+        next unless pokemon&.can_get_status?(status) && rand(100) < probability
+        pokemon.status = status
+        count += 1
+      end
+    end
   end
+
+  # Este metodo inicia un combate contra un NPC con tu mismo equipo.
+  def battle_self(trainer_name, trainer_type)
+    clone = NPCTrainer.new(trainer_name, trainer_type)
+    clone.party = Marshal.load(Marshal.dump($player.party))
+    # En caso de quererle dar items al rival como el mega aro seria
+    clone.items = [:MEGARING] if $bag.has?(:MEGARING)
+    TrainerBattle.start(clone)
+  end
+
+  #=============================================================================
 end
 
 #===============================================================================

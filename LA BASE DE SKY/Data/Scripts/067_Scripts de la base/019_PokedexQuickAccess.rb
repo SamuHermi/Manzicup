@@ -20,11 +20,15 @@ def openPokedexOnPokemon(species, gender, form = 0)
   else
     region = $PokemonGlobal.pokedexDex # National Dex -1, regional Dexes 0, 1, etc.
   end
-
   pokedexScene = PokemonPokedexInfo_Scene.new
   pokedexScreen = PokemonPokedexInfoScreen.new(pokedexScene)
-  pokedexScreen.pbStartSceneSingle(species, true)
+  dexlist, index = pbGetDexList(species, region)
   $player.pokedex.set_last_form_seen(species, gender, form)
+  if dexlist[index][:species] != species
+    return pbMessage(_INTL('No se encontró a {1} en la Pokédex.', GameData::Species.get(species).name))
+  end
+
+  pokedexScreen.pbStartScreen(dexlist, index, region)
 end
 
 def pbGetDexList(species_to_find = nil, region = -1)

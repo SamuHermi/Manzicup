@@ -189,11 +189,15 @@ class TilemapRenderer
     end
 
     def set_current_frame(filename)
-      frames = frame_count(filename)
-      if frames < 2
+      if $PokemonSystem.autotile_animations == 1
         @current_frames[filename] = 0
       else
-        @current_frames[filename] = ((System.uptime - @timer_start) / @frame_durations[filename]).floor % frames
+        frames = frame_count(filename)
+        if frames < 2
+          @current_frames[filename] = 0
+        else
+          @current_frames[filename] = ((System.uptime - @timer_start) / @frame_durations[filename]).floor % frames
+        end
       end
     end
 
@@ -218,6 +222,7 @@ class TilemapRenderer
     end
 
     def update
+      return if $PokemonSystem.autotile_animations == 1
       super
       # Update the current frame for each autotile
       @bitmaps.each_key do |filename|
@@ -420,7 +425,7 @@ class TilemapRenderer
 
   def refresh_tile_z(tile, map, y, layer, tile_id)
     if tile.shows_reflection
-      tile.z = -100
+      tile.z = -2000
     elsif tile.bridge && $PokemonGlobal.bridge > 0
       tile.z = 0
     else

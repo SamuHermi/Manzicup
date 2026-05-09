@@ -1,38 +1,53 @@
-=begin
+#===============================================================================
+# CREDITOS
+# Golisopod User, Wolf PP, Marin, Zik
+# Website    = https://www.youtube.com/watch?v=dQw4w9WgXcQ
+#===============================================================================
 module OWShadowSettings
+  # If true, calculates the shadow size based on the sprite's pixels.
+  # If false, uses the size defined in FIXED_SHADOW_SIZE for all.
+  AUTOMATIC_SHADOW_GENERATION = false
+
+  # Fixed shadow size when automatic generation is disabled (false).
+  # A value of 10 to 14 is standard for normal-sized characters.
+  FIXED_SHADOW_SIZE = 12
+
+  # ============================================================================
   # Set this to true if you want the event name and character name blacklists to be case sensitive.
   CASE_SENSITIVE_BLACKLISTS = false
 
   # If an event name contains one of these words, it will not have a shadow.
   SHADOWLESS_EVENT_NAME     = [
-    "door", "FlechaSalida", "nurse", "Enfermera", "Healing balls", "Balls curativas", "Mart","Tendero", "SmashRock", "RocaRompible", "StrengthBoulder", "PiedraFuerza",
-    "CutTree", "ArbolCorte", "HeadbuttTree", "ArbolGolpeCabeza", "BerryPlant", "Planta Bayas", ".shadowless", ".noshadow", ".sl", "Entrada Mazmorra Bosque", "Entrada Cueva", "Relic Stone",
-    "Escalera", "Portal"
+    'door', 'FlechaSalida', 'nurse', 'Enfermera', 'Healing balls', 'Balls curativas', 'Mart', 'Tendero', 'SmashRock', 'RocaRompible', 'StrengthBoulder', 'PiedraFuerza',
+    'CutTree', 'ArbolCorte', 'HeadbuttTree', 'ArbolGolpeCabeza', 'BerryPlant', 'Planta Bayas', '.shadowless', '.noshadow', '.sl', 'Entrada Mazmorra Bosque', 'Entrada Cueva', 'Relic Stone',
+    'Escalera', 'Puerta', 'ExitArrow', 'NoShadow'
   ]
 
   # If the character file and event uses contains one of these words in its filename, it will not have a shadow.
-  SHADOWLESS_CHARACTER_NAME = ["nil"]
+  SHADOWLESS_CHARACTER_NAME = ['nil']
 
   # If an event stands on a tile with one of these terrain tags, it will not have a shadow.
   # (Names can be seen in the script section "Terrain Tag")
-  SHADOWLESS_TERRAIN_NAME   = [
-    :Grass, :DeepWater, :StillWater, :Water, :Waterfall, :WaterfallCrest,
-    :Puddle
+  SHADOWLESS_TERRAIN_NAME   = %i[
+    Grass DeepWater StillWater Water Waterfall WaterfallCrest
+    Puddle
   ]
 
-  # If an event doesn't have a custom shadow defined, it will use this shadow graphic
-  DEFAULT_SHADOW_FILENAME   = "defaultShadow"
-
-  # Defaul shadow graphic used by the player
-  PLAYER_SHADOW_FILENAME    = "defaultShadow"
+  # Hash to adjust the shadow radius for specific character files.
+  # Key: Part of the filename (e.g., "PIKACHU").
+  # Value: [RADIUS, X, Y]
+  CHARACTER_SHADOW_FIX = {
+    'PIKACHU' => [-2, 0, 0],
+    'SNORLAX' => [8, 0, 0]
+  }
 end
-
 
 #-------------------------------------------------------------------------------
 # New Class for Shadow object
 #-------------------------------------------------------------------------------
 class Sprite_OWShadow
   attr_reader :visible
+
   #-----------------------------------------------------------------------------
   # Initialize a shadow sprite based on the name of the event
   #-----------------------------------------------------------------------------
@@ -43,114 +58,387 @@ class Sprite_OWShadow
     @sprite   = Sprite.new(viewport)
     @disposed = false
     @remove   = false
-    name      = ""
-    if !defined?(Game_FollowingPkmn) || !@event.is_a?(Game_FollowingPkmn)
-      if @event != $game_player
-        name = $~[1] if @event.name[/shdw\((.*?)\)/]
-      else
-        name = OWShadowSettings::PLAYER_SHADOW_FILENAME
-      end
-    end
-    name = OWShadowSettings::DEFAULT_SHADOW_FILENAME if nil_or_empty?(name)
-    @ow_shadow_bitmap = AnimatedBitmap.new("Graphics/Characters/Shadows/" + name)
-    RPG::Cache.retain("Graphics/Characters/Shadows/" + name)
+    @fix_radius = 0
+    @fix_x      = 0
+    @fix_y      = 0
+
+    # Store data for both directions
+    @shadow_data_down = nil
+    @shadow_data_up   = nil
+
+    # Track character/bitmap changes to regenerate shadow when needed
+    @last_character_name = nil
+    @last_bitmap = nil # Track the actual bitmap object
+
     update
   end
+
+  #-----------------------------------------------------------------------------
+  # Helper to calculate coordinates for a specific row
+  #-----------------------------------------------------------------------------
+  def get_frame_coordinates(row_direction)
+    rect = @rsprite.src_rect
+    bitmap = @rsprite.bitmap
+
+    # Si el src_rect tiene las dimensiones completas del bitmap, calculamos el tamaño del frame
+    # dividiendo por 4 (formato estándar de spritesheets 4x4)
+    if rect.width == bitmap.width && rect.height == bitmap.height
+      cw = bitmap.width / 4
+      ch = bitmap.height / 4
+    else
+      cw = rect.width
+      ch = rect.height
+    end
+
+    sx = 0
+    sy = 0
+
+    if @event.respond_to?(:character_name) && @event.character_name && !@event.character_name.empty?
+      # Detect single sheet: starts with $ or !, OR is a Follower sprite
+      char_name = @event.character_name
+      is_single_sheet = char_name[/^[$!]./] ? true : false
+      is_single_sheet = true if char_name.downcase.include?('follower')
+
+      if is_single_sheet
+        sx = 0
+        sy = ch * row_direction
+      else
+        idx = (@event.respond_to?(:character_index) ? @event.character_index : 0)
+        char_col = idx % 4
+        char_row = idx / 4
+        frames_per_char = (bitmap.width / cw) / 4
+        frames_per_char = 4 if frames_per_char < 1
+        sx = char_col * (frames_per_char * cw)
+        sy = (char_row * (4 * ch)) + (ch * row_direction)
+      end
+    end
+
+    return rect.x, rect.y if sx + cw > bitmap.width || sy + ch > bitmap.height
+
+    [sx, sy]
+  end
+
+  #-----------------------------------------------------------------------------
+  # Analyzes pixel density to ignore thin adornments
+  #-----------------------------------------------------------------------------
+  def analyze_footprint(bitmap, sx, sy, cw, ch)
+    # Settings for "Smart" detection
+    scan_height = 12
+    density_threshold = 3
+
+    scan_y_start = [ch - scan_height, 0].max
+    scan_y_end   = ch
+
+    min_x = cw
+    max_x = 0
+    found_body = false
+
+    (0...cw).each do |x|
+      pixel_count = 0
+      (scan_y_start...scan_y_end).each do |y|
+        next if (sx + x) >= bitmap.width || (sy + y) >= bitmap.height
+
+        pixel_count += 1 if bitmap.get_pixel(sx + x, sy + y).alpha > 20 # Tolerance for semi-transparency
+      end
+
+      # If this has enough "mass", it's the start of the body
+      next unless pixel_count >= density_threshold
+
+      min_x = x
+      found_body = true
+      break
+    end
+
+    return fallback_scan(bitmap, sx, sy, cw, ch) unless found_body
+
+    (0...cw).to_a.reverse.each do |x|
+      pixel_count = 0
+      (scan_y_start...scan_y_end).each do |y|
+        next if (sx + x) >= bitmap.width || (sy + y) >= bitmap.height
+
+        pixel_count += 1 if bitmap.get_pixel(sx + x, sy + y).alpha > 20
+      end
+
+      if pixel_count >= density_threshold
+        max_x = x
+        break
+      end
+    end
+
+    real_width = max_x - min_x + 1
+
+    # Calculate Offset
+    feet_center = min_x + (real_width / 2.0)
+    frame_center = cw / 2.0
+    offset_x = feet_center - frame_center
+
+    [real_width, offset_x]
+  end
+
+  #-----------------------------------------------------------------------------
+  # Fallback scan for sprites with very thin legs/floating
+  #-----------------------------------------------------------------------------
+  def fallback_scan(bitmap, sx, sy, cw, ch)
+    scan_y_start = [ch - 8, 0].max
+    scan_y_end = ch
+    min_x = cw
+    max_x = 0
+    found = false
+
+    (0...cw).each do |x|
+      (scan_y_start...scan_y_end).each do |y|
+        next if (sx + x) >= bitmap.width || (sy + y) >= bitmap.height
+
+        next unless bitmap.get_pixel(sx + x, sy + y).alpha > 0
+
+        min_x = x
+        found = true
+        break
+      end
+      break if found
+    end
+
+    if found
+      (0...cw).to_a.reverse.each do |x|
+        (scan_y_start...scan_y_end).each do |y|
+          next if (sx + x) >= bitmap.width || (sy + y) >= bitmap.height
+
+          if bitmap.get_pixel(sx + x, sy + y).alpha > 0
+            max_x = x
+            break
+          end
+        end
+        break if max_x > 0
+      end
+      real_width = max_x - min_x + 1
+      feet_center = min_x + (real_width / 2.0)
+      frame_center = cw / 2.0
+      return real_width, (feet_center - frame_center)
+    end
+
+    [cw, 0]
+  end
+
+  #-----------------------------------------------------------------------------
+  # Generate a shadow bitmap and offset
+  #-----------------------------------------------------------------------------
+  def generate_shadow_data(row_direction)
+    return nil if !@rsprite.bitmap || @rsprite.disposed?
+
+    bitmap = @rsprite.bitmap
+    rect = @rsprite.src_rect
+
+    # Si el src_rect tiene las dimensiones completas del bitmap, calculamos el tamaño del frame
+    # dividiendo por 4 (formato estándar de spritesheets 4x4)
+    if rect.width == bitmap.width && rect.height == bitmap.height
+      cw = bitmap.width / 4
+      ch = bitmap.height / 4
+    else
+      cw = rect.width
+      ch = rect.height
+    end
+
+    # Get coordinates for the specific frame (Down or Up)
+    sx, sy = get_frame_coordinates(row_direction)
+
+    if OWShadowSettings::AUTOMATIC_SHADOW_GENERATION
+      real_width, offset_x = analyze_footprint(bitmap, sx, sy, cw, ch)
+      logical_width = (real_width * 0.9 / 2).ceil + 4
+    else
+      offset_x = 0
+      logical_width = OWShadowSettings::FIXED_SHADOW_SIZE
+    end
+
+    # Apply Character Fix
+    if OWShadowSettings::AUTOMATIC_SHADOW_GENERATION
+      real_width, offset_x = analyze_footprint(bitmap, sx, sy, cw, ch)
+      logical_width = (real_width * 0.9 / 2).ceil + 4
+    else
+      offset_x = 0
+      logical_width = OWShadowSettings::FIXED_SHADOW_SIZE
+    end
+
+    # Apply Character Radius Fix
+    logical_width += @fix_radius
+    logical_width = [logical_width, 8].max
+    logical_width -= 1 if logical_width.odd?
+    logical_height = (logical_width * 0.5).ceil
+    logical_height = [logical_height, 4].max
+    logical_height += 1 if logical_height.odd?
+
+    bmp = Bitmap.new(logical_width * 2, logical_height * 2)
+    color = Color.new(0, 0, 0, 80)
+
+    cx = logical_width / 2.0 - 0.5
+    cy = logical_height / 2.0 - 0.5
+    rx = logical_width / 2.0
+    ry = logical_height / 2.0
+
+    (0...logical_height).each do |y|
+      (0...logical_width).each do |x|
+        dx = (x - cx) / rx
+        dy = (y - cy) / ry
+        bmp.fill_rect(x * 2, y * 2, 2, 2, color) if (dx**2 + dy**2) <= 0.9
+      end
+    end
+
+    { bitmap: bmp, offset: offset_x }
+  end
+
+  #-----------------------------------------------------------------------------
+  # Invalidate shadow data to force regeneration
+  #-----------------------------------------------------------------------------
+  def invalidate_shadow_data
+    @shadow_data_down[:bitmap].dispose if @shadow_data_down && @shadow_data_down[:bitmap]
+    @shadow_data_up[:bitmap].dispose if @shadow_data_up && @shadow_data_up[:bitmap]
+    @shadow_data_down = nil
+    @shadow_data_up = nil
+  end
+
   #-----------------------------------------------------------------------------
   # Override the bitmap of the shadow sprite
   #-----------------------------------------------------------------------------
   def set_bitmap(name)
-    if !pbResolveBitmap("Graphics/Characters/Shadows/" + name)
-      echoln("The Shadow File you are trying to set it absent from /Graphics/Characters/Shadows/")
-      return
-    end
-    @ow_shadow_bitmap = AnimatedBitmap.new("Graphics/Characters/Shadows/" + name)
-    RPG::Cache.retain("Graphics/Characters/Shadows/" + name)
+    invalidate_shadow_data
     @sprite.dispose if @sprite && !@sprite.disposed?
     @sprite = nil
     @sprite = Sprite.new(@viewport)
-    @sprite.bitmap  = @ow_shadow_bitmap.bitmap
     update
   end
+
   #-----------------------------------------------------------------------------
   # Dispose the shadow bitmap
   #-----------------------------------------------------------------------------
   def dispose
     return if @disposed
+
     @sprite.dispose if @sprite
+    @shadow_data_down[:bitmap].dispose if @shadow_data_down && @shadow_data_down[:bitmap]
+    @shadow_data_up[:bitmap].dispose if @shadow_data_up && @shadow_data_up[:bitmap]
     @sprite = nil
     @disposed = true
   end
+
   #-----------------------------------------------------------------------------
   # Check whether the shadow has been disposed
   #-----------------------------------------------------------------------------
-  def disposed?; return @disposed; end
-  #-----------------------------------------------------------------------------
-  # Calculation of shadow size when jumping
-  #-----------------------------------------------------------------------------
-  def jump_sprite
-    return unless @sprite
-    if @event.jump_distance_left && @event.jump_distance_left >= 1 && @event.jump_distance_left < @event.jump_peak
-      @sprite.zoom_x += 0.1
-      @sprite.zoom_y += 0.1
-    elsif @event.jump_distance_left && @event.jump_distance_left >= @event.jump_peak
-      @sprite.zoom_x -= 0.05
-      @sprite.zoom_y -= 0.05
-    end
-    @sprite.zoom_x = 1 if @sprite.zoom_x > 1
-    @sprite.zoom_x = 0 if @sprite.zoom_x < 0
-    @sprite.zoom_y = 1 if @sprite.zoom_y > 1
-    @sprite.zoom_y = 0 if @sprite.zoom_y < 0
-    if @event.jump_count == 1
-      @sprite.zoom_x = 1.0
-      @sprite.zoom_y = 1.0
-    end
-    @sprite.x = @event.screen_x
-    @sprite.y = @event.screen_y
-    @sprite.z = @rsprite.z - 1
+  def disposed?
+    @disposed
   end
+
   #-----------------------------------------------------------------------------
-  # Calculation of shadow size when jumping
+  # Calculation of shadow size and position
   #-----------------------------------------------------------------------------
   def update
     return if disposed? || !$scene.is_a?(Scene_Map)
-    return jump_sprite if @event.jumping?
-    @sprite = Sprite.new(@viewport) if !@sprite
-    @ow_shadow_bitmap.update
-    @sprite.bitmap  = @ow_shadow_bitmap.bitmap
-    @sprite.x       = @rsprite.x
-    @sprite.y       = @rsprite.y
-    @sprite.ox      = @ow_shadow_bitmap.width / 2
-    @sprite.oy      = @ow_shadow_bitmap.height - 2
-    @sprite.z       = @event.screen_z(@ow_shadow_bitmap.height) - 1
-    @sprite.zoom_x  = @rsprite.zoom_x
-    @sprite.zoom_y  = @rsprite.zoom_y
+
+    @sprite ||= Sprite.new(@viewport)
+
+    # Check if character graphic or bitmap changed - if so, regenerate shadow
+    current_char_name = @event.respond_to?(:character_name) ? @event.character_name : nil
+    current_bitmap = @rsprite.bitmap
+
+    # Invalidate if character name changed
+    if current_char_name != @last_character_name
+      @last_character_name = current_char_name
+      @fix_radius = 0
+      @fix_x      = 0
+      @fix_y      = 0
+      if current_char_name
+        OWShadowSettings::CHARACTER_SHADOW_FIX.each do |key, value|
+          next unless current_char_name.include?(key)
+
+          @fix_radius = value[0]
+          @fix_x      = value[1]
+          @fix_y      = value[2]
+          break
+        end
+      end
+
+      invalidate_shadow_data
+    end
+
+    # Invalidate if bitmap object changed (happens when events are created by code)
+    if current_bitmap != @last_bitmap
+      @last_bitmap = current_bitmap
+      invalidate_shadow_data
+    end
+
+    # Generate shadow data if needed
+    if (!@shadow_data_down || !@shadow_data_up) && @rsprite.bitmap && !@rsprite.disposed?
+      @shadow_data_down = generate_shadow_data(0) # Row 0: Down
+      @shadow_data_up   = generate_shadow_data(3) # Row 3: Up
+    end
+
+    return unless @shadow_data_down # Wait until generation is successful
+
+    is_floating = @event.respond_to?(:is_floating) && @event.is_floating
+    float_offset = is_floating && @event.respond_to?(:float_offset) ? @event.float_offset : 0
+    if @event.jumping?
+      ground_y = (@event.real_y - $game_map.display_y + 3) / 4 + 32
+      jump_offset = (ground_y - @rsprite.y).abs
+    elsif is_floating
+      ground_y = @rsprite.y + float_offset
+      jump_offset = 0
+    else
+      ground_y = @rsprite.y
+      jump_offset = 0
+    end
+    current_data = if [8, 6].include?(@event.direction)
+                     @shadow_data_up
+                   else
+                     @shadow_data_down
+                   end
+    current_data = @shadow_data_down if current_data.nil?
+
+    s_off_x = (@event.respond_to?(:shadow_offset_x) ? @event.shadow_offset_x.to_i : 0)
+    s_off_y = (@event.respond_to?(:shadow_offset_y) ? @event.shadow_offset_y.to_i : 0)
+    @sprite.bitmap  = current_data[:bitmap]
+    @sprite.x       = @rsprite.x + s_off_x + @fix_x
+    @sprite.y       = ground_y + s_off_y + @fix_y
+    @sprite.ox      = (current_data[:bitmap].width / 2) - current_data[:offset]
+    @sprite.oy      = current_data[:bitmap].height
+    @sprite.z       = @event.screen_z(current_data[:bitmap].height) - 1
+    scale_factor = 1.0
+
+    if @event.jumping?
+      scale_factor = 1.0 - (jump_offset * 0.01)
+    elsif is_floating
+      scale_factor = 1.0 - (float_offset * 0.03)
+    end
+
+    scale_factor = 0.4 if scale_factor < 0.4
+    scale_factor = 1.2 if scale_factor > 1.2
+
+    @sprite.zoom_x  = @rsprite.zoom_x * scale_factor
+    @sprite.zoom_y  = @rsprite.zoom_y * scale_factor
+
     @sprite.opacity = @rsprite.opacity
     @sprite.visible = @rsprite.visible && @event.shows_shadow?
   end
-  #-----------------------------------------------------------------------------
 end
 
 #-------------------------------------------------------------------------------
 # New Method for setting shadow of any event given the map id and event id
 #-------------------------------------------------------------------------------
 def pbSetOverworldShadow(name, event_id = nil, map_id = nil)
-  return if !$scene.is_a?(Scene_Map)
+  return unless $scene.is_a?(Scene_Map)
   return if nil_or_empty?(name)
+
   if !event_id
     $scene.spritesetGlobal.playersprite.ow_shadow.set_bitmap(name)
   else
-    map_id = $game_map.map_id if !map_id
+    map_id ||= $game_map.map_id
     $scene.spritesets[map_id].character_sprites[(event_id - 1)].ow_shadow.set_bitmap(name)
   end
 end
-
 
 #-------------------------------------------------------------------------------
 # Referencing and initializing Shadow Sprite in Sprite_Character
 #-------------------------------------------------------------------------------
 class Sprite_Character
   attr_accessor :ow_shadow
+
   #-----------------------------------------------------------------------------
   # Initializing Shadow with Character
   #-----------------------------------------------------------------------------
@@ -175,7 +463,8 @@ class Sprite_Character
   alias __ow_shadow__update update unless method_defined?(:__ow_shadow__update)
   def update(*args)
     __ow_shadow__update(*args)
-    return if !@ow_shadow
+    return unless @ow_shadow
+
     @ow_shadow.update
   end
 end
@@ -184,10 +473,8 @@ end
 # Adding shadow checking method to Game_Event
 #-------------------------------------------------------------------------------
 class Game_Character
-  attr_reader :jump_count
-  attr_reader :jump_distance
-  attr_reader :jump_distance_left
-  attr_reader :jump_peak
+  attr_reader :jump_count, :jump_distance, :jump_distance_left, :jump_peak
+
   #-----------------------------------------------------------------------------
   # Initializing Shadow with event
   #-----------------------------------------------------------------------------
@@ -199,27 +486,32 @@ class Game_Character
   #-----------------------------------------------------------------------------
   # Updating Shadow with Character
   #-----------------------------------------------------------------------------
-  alias __ow_shadow__calculate_bush_depth calculate_bush_depth unless method_defined?(:__ow_shadow__calculate_bush_depth)
+  unless method_defined?(:__ow_shadow__calculate_bush_depth)
+    alias __ow_shadow__calculate_bush_depth calculate_bush_depth
+  end
   def calculate_bush_depth(*args)
     __ow_shadow__calculate_bush_depth(*args)
     @shows_shadow = shows_shadow?(true)
   end
+
   #-----------------------------------------------------------------------------
   # Check whether the character should have a shadow
   #-----------------------------------------------------------------------------
   def shows_shadow?(recalc = false)
-    return @shows_shadow if !recalc
-    return false if nil_or_empty?(self.character_name) || self.transparent
+    return @shows_shadow unless recalc
+    return false if nil_or_empty?(character_name) || transparent
+
     if OWShadowSettings::CASE_SENSITIVE_BLACKLISTS
-      return false if OWShadowSettings::SHADOWLESS_CHARACTER_NAME.any?{ |e| self.character_name[/#{e}/] }
-      return false if self.respond_to?(:name) && OWShadowSettings::SHADOWLESS_EVENT_NAME.any? { |e| self.name[/#{e}/]}
+      return false if OWShadowSettings::SHADOWLESS_CHARACTER_NAME.any? { |e| character_name[/#{e}/] }
+      return false if respond_to?(:name) && OWShadowSettings::SHADOWLESS_EVENT_NAME.any? { |e| name[/#{e}/] }
     else
-      return false if OWShadowSettings::SHADOWLESS_CHARACTER_NAME.any?{ |e| self.character_name[/#{e}/i] }
-      return false if self.respond_to?(:name) && OWShadowSettings::SHADOWLESS_EVENT_NAME.any? { |e| self.name[/#{e}/]}
+      return false if OWShadowSettings::SHADOWLESS_CHARACTER_NAME.any? { |e| character_name[/#{e}/i] }
+      return false if respond_to?(:name) && OWShadowSettings::SHADOWLESS_EVENT_NAME.any? { |e| name[/#{e}/] }
     end
-    terrain = $game_map.terrain_tag(self.x, self.y)
-    return false if OWShadowSettings::SHADOWLESS_TERRAIN_NAME.any? { |e| terrain == e } if terrain
-    return true
+    terrain = $game_map.terrain_tag(x, y)
+    return false if terrain && OWShadowSettings::SHADOWLESS_TERRAIN_NAME.any? { |e| terrain == e }
+
+    true
   end
   #-----------------------------------------------------------------------------
   # Updating Shadows when transparency is changed
@@ -231,11 +523,7 @@ class Game_Character
   end
   #-----------------------------------------------------------------------------
 end
-#===============================================================================
-# CREDITOS
-# Golisopod User, Wolf PP, Marin
-# Website    = https://www.youtube.com/watch?v=dQw4w9WgXcQ
-#===============================================================================
+
 #-------------------------------------------------------------------------------
 # Updating Shadow with Character
 #-------------------------------------------------------------------------------
@@ -244,7 +532,7 @@ class Game_Event
   def refresh(*args)
     ret = __ow_shadow__refresh(*args)
     @shows_shadow = shows_shadow?(true)
-    return ret
+    ret
   end
 end
 
@@ -256,7 +544,7 @@ class Game_Player
   def set_movement_type(*args)
     ret = __ow_shadow__set_movement_type(*args)
     @shows_shadow = shows_shadow?(true)
-    return ret
+    ret
   end
   #-----------------------------------------------------------------------------
 end
@@ -274,4 +562,3 @@ end
 class Spriteset_Map
   attr_accessor :character_sprites
 end
-=end

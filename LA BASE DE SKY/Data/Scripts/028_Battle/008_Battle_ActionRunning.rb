@@ -1,24 +1,31 @@
+#===============================================================================
+#
+#===============================================================================
 class Battle
-  #=============================================================================
+  #-----------------------------------------------------------------------------
   # Running from battle
-  #=============================================================================
+  #-----------------------------------------------------------------------------
+
   def pbCanRun?(idxBattler)
     return false if trainerBattle?
+
     battler = @battlers[idxBattler]
-    return false if !@canRun && !battler.opposes?
+    return false if @rules[:cannot_run] && !battler.opposes?
+    return false if battler.effects[PBEffects::Commanding] >= 0 || battler.effects[PBEffects::CommandedBy] >= 0
     return true if battler.pbHasType?(:GHOST) && Settings::MORE_TYPE_EFFECTS
     return true if battler.abilityActive? &&
                    Battle::AbilityEffects.triggerCertainEscapeFromBattle(battler.ability, battler)
     return true if battler.itemActive? &&
                    Battle::ItemEffects.triggerCertainEscapeFromBattle(battler.item, battler)
     return false if battler.trappedInBattle?
+
     allOtherSideBattlers(idxBattler).each do |b|
       return false if b.abilityActive? &&
                       Battle::AbilityEffects.triggerTrappingByTarget(b.ability, battler, b, self)
       return false if b.itemActive? &&
                       Battle::ItemEffects.triggerTrappingByTarget(b.item, battler, b, self)
     end
-    return true
+    true
   end
 
   # Return values:
@@ -27,28 +34,30 @@ class Battle
   #  1: Ended the battle via Debug means
   def pbDebugRun
     return 0 if !$DEBUG || !Input.press?(Input::CTRL)
-    commands = [_INTL("Victoria"), _INTL("Derrota"),
-                _INTL("Empate"), _INTL("Rendirse")]
-    commands.push(_INTL("Captura")) if wildBattle?
-    commands.push(_INTL("Cancelar"))
-    case pbShowCommands(_INTL("Elige un resultado para este combate."), commands)
-    when 0   # Win
-      @decision = 1
-    when 1   # Loss
-      @decision = 2
-    when 2   # Draw
-      @decision = 5
-    when 3   # Run away/forfeit
-      pbSEPlay("Battle flee")
-      pbDisplayPaused(_INTL("¡Escapas sin problemas!"))
-      @decision = 3
-    when 4   # Capture
+
+    commands = [_INTL('Victoria'), _INTL('Derrota'),
+                _INTL('Empate'), _INTL('Rendirse')]
+    commands.push(_INTL('Captura')) if wildBattle?
+    commands.push(_INTL('Cancelar'))
+    case pbShowCommands(_INTL('Elige un resultado para este combate.'), commands)
+    when 0
+      @decision = Outcome::WIN
+    when 1
+      @decision = Outcome::LOSE
+    when 2
+      @decision = Outcome::DRAW
+    when 3
+      pbSEPlay('Battle flee')
+      pbDisplayPaused(_INTL('¡Escapas sin problemas!'))
+      @decision = Outcome::FLEE
+    when 4 # Capture
       return -1 if trainerBattle?
-      @decision = 4
+
+      @decision = Outcome::CATCH
     else
       return -1
     end
-    return 1
+    1
   end
 
   # Return values:
@@ -61,6 +70,7 @@ class Battle
     battler = @battlers[idxBattler]
     if battler.opposes?
       return 0 if trainerBattle?
+
       @choices[idxBattler][0] = :Run
       @choices[idxBattler][1] = 0
       @choices[idxBattler][2] = nil
@@ -68,72 +78,73 @@ class Battle
     end
     # Running from trainer battles
     if pbInDungeon?
-      if pbDisplayConfirm(_INTL("¿Quieres perder el combate y abandonar ahora?"))
-        pbSEPlay("Battle flee")
-        pbDisplay(_INTL("{1} perdió el combate!", self.pbPlayer.name))
-        @decision = 2
-        return 1
-      else
-        return 0
-      end
+      return 0 unless pbDisplayConfirm(_INTL('¿Quieres perder el combate y abandonar ahora?'))
+
+      pbSEPlay('Battle flee')
+      pbDisplay(_INTL('{1} perdió el combate!', pbPlayer.name))
+      @decision = 2
+      return 1
+
     else
       if trainerBattle?
         if @internalBattle
-          pbDisplayPaused(_INTL("¡No puedes huir de un combate contra un Entrenador!"))
-        elsif pbDisplayConfirm(_INTL("¿Quieres perder el combate y abandonar ahora?"))
-          pbSEPlay("Battle flee")
-          pbDisplay(_INTL("{1} perdió el combate!", self.pbPlayer.name))
+          pbDisplayPaused(_INTL('¡No puedes huir de un combate contra un Entrenador!'))
+        elsif pbDisplayConfirm(_INTL('¿Quieres perder el combate y abandonar ahora?'))
+          pbSEPlay('Battle flee')
+          pbDisplay(_INTL('{1} perdió el combate!', pbPlayer.name))
           @decision = 3
           return 1
         end
         return 0
       end
-      if !@canRun
-        pbDisplayPaused(_INTL("¡No puedes escapar!"))
+      unless @canRun
+        pbDisplayPaused(_INTL('¡No puedes escapar!'))
         return 0
       end
-      if !duringBattle
+      unless duringBattle
         if battler.pbHasType?(:GHOST) && Settings::MORE_TYPE_EFFECTS
-          pbSEPlay("Battle flee")
-          pbDisplayPaused(_INTL("¡Escapas sin problemas!"))
+          pbSEPlay('Battle flee')
+          pbDisplayPaused(_INTL('¡Escapas sin problemas!'))
           @decision = 3
           return 1
         end
         # Abilities that guarantee escape
         if battler.abilityActive? &&
-          Battle::AbilityEffects.triggerCertainEscapeFromBattle(battler.ability, battler)
+           Battle::AbilityEffects.triggerCertainEscapeFromBattle(battler.ability, battler)
           pbShowAbilitySplash(battler, true)
           pbHideAbilitySplash(battler)
-          pbSEPlay("Battle flee")
-          pbDisplayPaused(_INTL("¡Escapas sin problemas!"))
+          pbSEPlay('Battle flee')
+          pbDisplayPaused(_INTL('¡Escapas sin problemas!'))
           @decision = 3
           return 1
         end
         # Held items that guarantee escape
         if battler.itemActive? &&
-          Battle::ItemEffects.triggerCertainEscapeFromBattle(battler.item, battler)
-          pbSEPlay("Battle flee")
-          pbDisplayPaused(_INTL("¡{1} escapó usando {2}!", battler.pbThis, battler.itemName))
+           Battle::ItemEffects.triggerCertainEscapeFromBattle(battler.item, battler)
+          pbSEPlay('Battle flee')
+          pbDisplayPaused(_INTL('¡{1} escapó usando {2}!', battler.pbThis, battler.itemName))
           @decision = 3
           return 1
         end
         # Other certain trapping effects
         if battler.trappedInBattle?
-          pbDisplayPaused(_INTL("¡No puedes huir!"))
+          pbDisplayPaused(_INTL('¡No puedes huir!'))
           return 0
         end
         # Trapping abilities/items
         allOtherSideBattlers(idxBattler).each do |b|
-          next if !b.abilityActive?
+          next unless b.abilityActive?
+
           if Battle::AbilityEffects.triggerTrappingByTarget(b.ability, battler, b, self)
-            pbDisplayPaused(_INTL("¡{1} evita que se huya con {2}!", b.pbThis, b.abilityName))
+            pbDisplayPaused(_INTL('¡{1} evita que se huya con {2}!', b.pbThis, b.abilityName))
             return 0
           end
         end
         allOtherSideBattlers(idxBattler).each do |b|
-          next if !b.itemActive?
+          next unless b.itemActive?
+
           if Battle::ItemEffects.triggerTrappingByTarget(b.item, battler, b, self)
-            pbDisplayPaused(_INTL("¡{1} evita que se huya con {2}!", b.pbThis, b.itemName))
+            pbDisplayPaused(_INTL('¡{1} evita que se huya con {2}!', b.pbThis, b.itemName))
             return 0
           end
         end
@@ -141,7 +152,7 @@ class Battle
       # Fleeing calculation
       # Get the speeds of the Pokémon fleeing and the fastest opponent
       # NOTE: Not pbSpeed, because using unmodified Speed.
-      @runCommand += 1 if !duringBattle   # Make it easier to flee next time
+      @runCommand += 1 unless duringBattle # Make it easier to flee next time
       speedPlayer = @battlers[idxBattler].speed
       speedEnemy = 1
       allOtherSideBattlers(idxBattler).each do |b|
@@ -156,14 +167,21 @@ class Battle
         rate += @runCommand * 30
       end
       if rate >= 256 || @battleAI.pbAIRandom(256) < rate
-        pbSEPlay("Battle flee")
-        pbDisplayPaused(_INTL("¡Escapas sin problemas!"))
+        pbSEPlay('Battle flee')
+        pbDisplayPaused(_INTL('¡Escapas sin problemas!'))
         @decision = 3
         return 1
       end
-      pbDisplayPaused(_INTL("¡No puedes huir!"))
+      pbDisplayPaused(_INTL('¡No puedes huir!'))
       return -1
     end
+    if rate >= 256 || @battleAI.pbAIRandom(256) < rate
+      pbSEPlay('Battle flee')
+      pbDisplayPaused(_INTL('¡Escapas sin problemas!'))
+      @decision = Outcome::FLEE
+      return 1
+    end
+    pbDisplayPaused(_INTL('¡No puedes huir!'))
+    -1
   end
 end
-

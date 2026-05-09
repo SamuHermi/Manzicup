@@ -209,7 +209,7 @@ class BattleChallengeData
   def pbStart(t, numRounds)
     @inProgress   = true
     @resting      = false
-    @decision     = 0
+    @decision     = Battle::Outcome::UNDECIDED
     @swaps        = t.currentSwaps
     @wins         = t.currentWins
     @battleNumber = 1
@@ -258,7 +258,7 @@ class BattleChallengeData
   end
 
   def pbMatchOver?
-    return true if !@inProgress || @decision != 0
+    return true if !@inProgress || @decision != Battle::Outcome::UNDECIDED
     return @battleNumber > @numRounds
   end
 
@@ -285,7 +285,7 @@ class BattleChallengeData
     $bag = @oldBag
     Console.echo_li(@oldParty[0].name)
     return if !@inProgress
-    save = (@decision != 0)
+    save = (@decision != Battle::Outcome::UNDECIDED)
     reset
     $game_map.need_refresh = true
     Game.save(safe: true) if save
@@ -303,7 +303,7 @@ class BattleChallengeData
     @inProgress   = false
     @resting      = false
     @start        = nil
-    @decision     = 0
+    @decision     = Battle::Outcome::UNDECIDED
     @wins         = 0
     @swaps        = 0
     @battleNumber = 0
@@ -355,11 +355,11 @@ class BattleChallengeType
   end
 
   def saveWins(challenge)
-    if challenge.decision == 0     # if undecided
+    if challenge.decision == Battle::Outcome::UNDECIDED
       @currentWins  = 0
       @currentSwaps = 0
     else
-      if challenge.decision == 1   # if won
+      if challenge.decision == Battle::Outcome::WIN
         @currentWins  = challenge.wins
         @currentSwaps = challenge.swaps
       else                       # if lost
@@ -439,4 +439,3 @@ class BattleFactoryData
     return pbOrganizedBattleEx(@opponent, challenge.rules)
   end
 end
-

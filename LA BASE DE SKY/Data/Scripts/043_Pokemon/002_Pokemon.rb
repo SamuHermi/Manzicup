@@ -1,3 +1,28 @@
+#-------------------------------------------------------------------------------
+# Initializes Mirror Herb step counter.
+#-------------------------------------------------------------------------------
+class PokemonGlobalMetadata
+  attr_accessor :mirrorherb_steps, :seen_moves
+  alias paldea_initialize initialize
+  def initialize
+    @mirrorherb_steps = 0
+    @seen_moves = {}
+    paldea_initialize
+  end
+
+  def add_seen_move(pokemon, move_id)
+    @seen_moves ||= {}
+    @seen_moves[pokemon] ||= []
+    @seen_moves[pokemon].push(move_id)
+  end
+
+  def seen_move?(pokemon, move_id)
+    return false if !@seen_moves || !@seen_moves[pokemon]
+
+    @seen_moves[pokemon].include?(move_id)
+  end
+end
+
 #===============================================================================
 # Instances of this class are individual Pokémon.
 # The player's party Pokémon are stored in the array $player.party.
@@ -70,11 +95,13 @@ class Pokemon
   # @return [Integer] the map ID where egg was hatched (0 by default)
   attr_accessor :hatched_map
   # Another Pokémon which has been fused with this Pokémon (or nil if there is none).
-  # Currently only used by Kyurem, to record a fused Reshiram or Zekrom.
+  # Currently only used by Kyurem, Necrozma and Calyrex.
   # @return [Pokemon, nil] the Pokémon fused into this one (nil if there is none)
   attr_accessor :fused
   # @return [Integer] this Pokémon's personal ID
   attr_accessor :personalID
+  # A number used by certain species to evolve.
+  attr_writer :evolution_counter
   # Used by Galarian Yamask to remember that it took sufficient damage from a
   # battle and can evolve.
   attr_accessor :ready_to_evolve
@@ -108,7 +135,7 @@ class Pokemon
 
   def inspect
     str = super.chop
-    str << format(' %s Nv.%s>', @species, @level.to_s || '???')
+    str << format(_INTL(' %s Nv.%s>'), @species, @level.to_s || '???')
     str
   end
 
@@ -116,9 +143,14 @@ class Pokemon
     GameData::Species.get_species_form(@species, form_simple)
   end
 
-  #=============================================================================
-  # Species and form
-  #=============================================================================
+  def evolution_counter
+    @evolution_counter ||= 0
+    @evolution_counter
+  end
+
+  #-----------------------------------------------------------------------------
+  # Species and form.
+  #-----------------------------------------------------------------------------
 
   # Changes the Pokémon's species and re-calculates its statistics.
   # @param species_id [Symbol, String, GameData::Species] ID of the species to change this Pokémon to
@@ -126,25 +158,31 @@ class Pokemon
     new_species_data = GameData::Species.get(species_id)
     return if @species == new_species_data.species
 
-    @species     = new_species_data.species
+    @species = new_species_data.species
     default_form = new_species_data.default_form
     if default_form >= 0
-      @form      = default_form
+      @form            = default_form
     elsif new_species_data.form > 0
-      @form      = new_species_data.form
+      @form            = new_species_data.form
     end
-    @forced_form = nil
-    @gender      = nil if singleGendered?
-    @level       = nil # In case growth rate is different for the new species
-    @ability     = nil
+    @forced_form       = nil
+    @gender            = nil if singleGendered?
+    @level             = nil # In case growth rate is different for the new species
+    @ability           = nil
+    @evolution_counter = 0 # This counter is species-specific
     calc_stats
   end
 
   # @param check_species [Symbol, String, GameData::Species] ID of the species to check for
   # @return [Boolean] whether this Pokémon is of the specified species
-  def isSpecies?(check_species)
-    @species == check_species || (GameData::Species.exists?(check_species) &&
-                                        @species == GameData::Species.get(check_species).species)
+  def isSpecies?(*check_species)
+    return true if check_species.include?(@species)
+
+    check_species.each do |check_sp|
+      return true if GameData::Species.exists?(check_sp) &&
+                     @species == GameData::Species.get(check_sp).species
+    end
+    false
   end
 
   def form
@@ -187,9 +225,9 @@ class Pokemon
     calc_stats
   end
 
-  #=============================================================================
-  # Level
-  #=============================================================================
+  #-----------------------------------------------------------------------------
+  # Level.
+  #-----------------------------------------------------------------------------
 
   # @return [Integer] this Pokémon's level
   def level
@@ -243,16 +281,19 @@ class Pokemon
     (@exp - start_exp).to_f / (end_exp - start_exp)
   end
 
-  #=============================================================================
-  # Status
-  #=============================================================================
+  #-----------------------------------------------------------------------------
+  # Status.
+  #-----------------------------------------------------------------------------
 
   # Sets the Pokémon's health.
   # @param value [Integer] new HP value
   def hp=(value)
     @hp = value.clamp(0, @totalhp)
-    heal_status if @hp == 0
-    @ready_to_evolve = false if @hp == 0
+    return if @hp > 0
+
+    heal_status
+    @ready_to_evolve = false
+    @evolution_counter = 0 if isSpecies?(:BASCULIN) || isSpecies?(:YAMASK)
   end
 
   # Sets this Pokémon's status. See {GameData::Status} for all possible status effects.
@@ -264,6 +305,43 @@ class Pokemon
     raise ArgumentError, _INTL('Intento de definir {1} como estado del Pokémon', value.class.name) unless new_status
 
     @status = new_status.id
+  end
+
+  def give_status(status)
+    return if !able? || !can_get_status?(status)
+
+    self.status = status
+  end
+
+  def can_get_status?(status)
+    # Type immunities
+    hasImmuneType = false
+    case status
+    when :SLEEP
+      # No type is immune to sleep
+    when :POISON
+      hasImmuneType |= hasType?(:POISON)
+      hasImmuneType |= hasType?(:STEEL)
+    when :BURN
+      hasImmuneType |= hasType?(:FIRE)
+    when :PARALYSIS
+      hasImmuneType |= hasType?(:ELECTRIC) && Settings::MORE_TYPE_EFFECTS
+    when :FROZEN
+      hasImmuneType |= hasType?(:ICE)
+    when :FROSTBITE
+      hasImmuneType |= hasType?(:ICE)
+    end
+    return false if hasImmuneType
+
+    # Ability immunity
+    immuneByAbility = false
+    if Battle::AbilityEffects.triggerStatusImmunityNonIgnorable(ability, self, status)
+      immuneByAbility = true
+    elsif Battle::AbilityEffects.triggerStatusImmunity(ability, self, status)
+      immuneByAbility = true
+    end
+
+    !immuneByAbility
   end
 
   # @return [Boolean] whether the Pokémon is not fainted and not an egg
@@ -315,9 +393,24 @@ class Pokemon
     @ready_to_evolve = false
   end
 
-  #=============================================================================
-  # Types
-  #=============================================================================
+  #-----------------------------------------------------------------------------
+  # Stats.
+  #-----------------------------------------------------------------------------
+  def stat(id)
+    case id
+    when :HP              then return @totalhp
+    when :ATTACK          then return @attack
+    when :DEFENSE         then return @defense
+    when :SPECIAL_ATTACK  then return @spatk
+    when :SPECIAL_DEFENSE then return @spdef
+    when :SPEED           then return @speed
+    end
+    0
+  end
+
+  #-----------------------------------------------------------------------------
+  # Types.
+  #-----------------------------------------------------------------------------
 
   # @return [Array<Symbol>] an array of this Pokémon's types
   def types
@@ -343,9 +436,9 @@ class Pokemon
     types.include?(type)
   end
 
-  #=============================================================================
-  # Gender
-  #=============================================================================
+  #-----------------------------------------------------------------------------
+  # Gender.
+  #-----------------------------------------------------------------------------
 
   # @return [0, 1, 2] this Pokémon's gender (0 = male, 1 = female, 2 = genderless)
   def gender
@@ -362,6 +455,14 @@ class Pokemon
       end
     end
     @gender
+  end
+
+  def gender_name
+    case gender
+    when 0 then _INTL('Masculino')
+    when 1 then _INTL('Femenino')
+    when 2 then _INTL('Sin género')
+    end
   end
 
   # Sets this Pokémon's gender to a particular gender (if possible).
@@ -403,6 +504,18 @@ class Pokemon
     species_data.single_gendered?
   end
 
+  def changeGender(recheck_form = true)
+    return if singleGendered?
+
+    male? ? makeFemale : makeMale
+    return unless recheck_form
+
+    form = MultipleForms.call('getFormOnGenderChange', self)
+    return unless form
+
+    self.form = form
+  end
+
   #=============================================================================
   # Shininess
   #=============================================================================
@@ -419,6 +532,11 @@ class Pokemon
     @shiny
   end
 
+  def shiny=(value)
+    @shiny = value
+    @super_shiny = false unless @shiny
+  end
+
   # @return [Boolean] whether this Pokémon is super shiny (differently colored,
   #   square sparkles)
   def super_shiny?
@@ -428,6 +546,7 @@ class Pokemon
       c = (a >> 16) & 0xFFFF
       d = b ^ c
       @super_shiny = (d == 0)
+      @super_shiny = (d < Settings::SHINY_POKEMON_CHANCE / 10) if Settings::SUPER_SHINY_1_DE_10
     end
     @super_shiny
   end
@@ -436,6 +555,12 @@ class Pokemon
   def super_shiny=(value)
     @super_shiny = value
     @shiny = true if @super_shiny
+  end
+
+  # Makes this Pokémon not shiny.
+  def no_shinyness
+    @shiny = false
+    @super_shiny = false
   end
 
   #=============================================================================
@@ -639,7 +764,7 @@ class Pokemon
     # Find all level-up moves that self could have learned
     moveset = getMoveList
     knowable_moves = []
-    moveset.each { |m| knowable_moves.push(m[1]) if (0..this_level).include?(m[0]) }
+    moveset.each { |m| knowable_moves.push(m[1]) if m[0] >= 0 && m[0] <= this_level }
     # Remove duplicates (retaining the latest copy of each move)
     knowable_moves = knowable_moves.reverse
     knowable_moves |= []
@@ -650,6 +775,7 @@ class Pokemon
     first_move_index = 0 if first_move_index < 0
     (first_move_index...knowable_moves.length).each do |i|
       @moves.push(Pokemon::Move.new(knowable_moves[i]))
+      $PokemonGlobal.add_seen_move(species, knowable_moves[i])
     end
   end
 
@@ -669,8 +795,13 @@ class Pokemon
     end
     # Move is not already known; learn it
     @moves.push(Pokemon::Move.new(move_data.id))
+    $PokemonGlobal.add_seen_move(species, move_data.id)
     # Delete the first known move if self now knows more moves than it should
     @moves.shift if numMoves > MAX_MOVES
+  end
+
+  def seen_move?(move_id)
+    $PokemonGlobal.seen_move?(species, move_id)
   end
 
   # Deletes the given move from the Pokémon.
@@ -902,7 +1033,14 @@ class Pokemon
 
   # @return [String] the name of this Pokémon
   def name
-    nicknamed? ? @name : speciesName
+    return @name if nicknamed?
+
+    ret = speciesName.clone
+    if %i[NIDORANfE NIDORANmA].include?(@species)
+      ret.gsub!(/♂$/, '')
+      ret.gsub!(/♀$/, '')
+    end
+    ret
   end
 
   # @param value [String] the nickname of this Pokémon
@@ -914,6 +1052,11 @@ class Pokemon
   # @return [Boolean] whether this Pokémon has been nicknamed
   def nicknamed?
     @name && !@name.empty?
+  end
+
+  # @return [Boolean] whether this Pokémon can have its nickname changed
+  def can_change_nickname?
+    !egg? && !foreign? && !shadowPokemon?
   end
 
   # @return [String] the species name of this Pokémon
@@ -962,6 +1105,12 @@ class Pokemon
       gain = [5, 4, 3][happiness_range]
     when 'groom'
       gain = [10, 10, 4][happiness_range]
+    when 'massage1'
+      gain = 10
+    when 'massage2'
+      gain = 20
+    when 'massage3'
+      gain = 40
     when 'evberry'
       gain = [10, 5, 2][happiness_range]
     when 'vitamin'
@@ -984,14 +1133,16 @@ class Pokemon
       raise _INTL('Método de cambio de felicidad desconocido: {1}', method.to_s)
     end
     if gain > 0
-      gain += 1 if @obtain_map == $game_map.map_id
-      gain += 1 if @poke_ball == :LUXURYBALL
-      gain = (gain * 1.5).floor if hasItem?(:SOOTHEBELL)
+      unless %w[groom massage1 massage2 massage3].include?(method)
+        gain += 1 if @obtain_map == $game_map.map_id
+        gain += 1 if @poke_ball == :LUXURYBALL
+        gain = (gain * 1.5).floor if hasItem?(:SOOTHEBELL)
+      end
       if Settings::APPLY_HAPPINESS_SOFT_CAP && method != 'evberry'
         gain = @happiness >= 179 ? 0 : gain.clamp(0, 179 - @happiness)
       end
     end
-    @happiness = (@happiness + gain).clamp(0, 255)
+    @happiness = (@happiness + gain).clamp(0, Settings::MAX_HAPPINESS)
   end
 
   #=============================================================================
@@ -1002,6 +1153,16 @@ class Pokemon
   def check_evolution_on_level_up
     check_evolution_internal do |pkmn, new_species, method, parameter|
       success = GameData::Evolution.get(method).call_level_up(pkmn, parameter)
+      next success ? new_species : nil
+    end
+  end
+
+  # Checks whether this Pokemon can evolve because of levelling up in battle.
+  # This also checks call_level_up as above.
+  # @return [Symbol, nil] the ID of the species to evolve into
+  def check_evolution_on_battle_level_up
+    check_evolution_internal do |pkmn, new_species, method, parameter|
+      success = GameData::Evolution.get(method).call_battle_level_up(pkmn, parameter)
       next success ? new_species : nil
     end
   end
@@ -1066,7 +1227,15 @@ class Pokemon
     species_data.get_evolutions(true).each do |evo| # [new_species, method, parameter, boolean]
       next if evo[3] # Prevolution
 
-      ret = yield self, evo[0], evo[1], evo[2] # pkmn, new_species, method, parameter
+      new_species = evo[0]
+      # Check if evolution method includes "Form" and extract form number
+      # Extract form number from method name (e.g., "LevelNightForm1" -> 1)
+      if evo[1].to_s.include?('Form') && (evo[1].to_s =~ /Form(\d+)$/)
+        form_number = ::Regexp.last_match(1).to_i
+        # Build species ID with form (e.g., :LYCANROC_1)
+        new_species = GameData::Species.get_species_form(evo[0], form_number).id
+      end
+      ret = yield self, new_species, evo[1], evo[2] # pkmn, new_species, method, parameter
       return ret if ret
     end
     nil
@@ -1310,10 +1479,6 @@ class Pokemon
     @iv               = {}
     @ivMaxed          = {}
     @ev               = {}
-    @evo_move_count   = {}
-    @evo_crest_count  = {}
-    @evo_recoil_count = 0
-    @evo_step_count   = 0
     GameData::Stat.each_main do |s|
       @iv[s.id]       = rand(IV_STAT_LIMIT + 1)
       @ev[s.id]       = 0
@@ -1349,136 +1514,15 @@ class Pokemon
   end
 end
 
-################################################################################
-#
-# New evolution methods.
-#
-################################################################################
+def change_pokemon_gender(recheck_form = true)
+  pbChoosePokemon(1, 2, proc { |pkmn|
+    !pkmn.egg? && !pkmn.shadowPokemon? && !pkmn.singleGendered?
+  })
+  return false if $game_variables[1] == -1
 
-GameData::Evolution.register({
-                               id: :CollectItems,
-                               parameter: :Item,
-                               any_level_up: true,   # Needs any level up
-                               level_up_proc: proc { |pkmn, parameter|
-                                 next $bag.quantity(parameter) >= 999
-                               },
-                               after_evolution_proc: proc { |pkmn, new_species, parameter, evo_species|
-                                 next false if evo_species != new_species || $bag.quantity(parameter) < 999
-
-                                 $bag.remove(parameter, 999)
-                                 next true
-                               }
-                             })
-
-GameData::Evolution.register({
-                               id: :LevelWithPartner,
-                               parameter: Integer,
-                               level_up_proc: proc { |pkmn, parameter|
-                                 next pkmn.level >= parameter && $PokemonGlobal.partner
-                               }
-                             })
-
-GameData::Evolution.register({
-                               id: :LevelUseMoveCount,
-                               parameter: :Move,
-                               any_level_up: true,   # Needs any level up
-                               level_up_proc: proc { |pkmn, parameter|
-                                 next pkmn.evo_move_count(parameter) >= 20
-                               },
-                               after_evolution_proc: proc { |pkmn, new_species, parameter, evo_species|
-                                 next false if evo_species != new_species || pkmn.evo_move_count(parameter) < 20
-
-                                 pkmn.set_evo_move_count(parameter, 0)
-                                 next true
-                               }
-                             })
-
-GameData::Evolution.register({
-                               id: :LevelDefeatItsKindWithItem,
-                               parameter: :Item,
-                               any_level_up: true,   # Needs any level up
-                               level_up_proc: proc { |pkmn, parameter|
-                                 next pkmn.evo_crest_count(parameter) >= 3
-                               },
-                               after_evolution_proc: proc { |pkmn, new_species, parameter, evo_species|
-                                 next false if evo_species != new_species || pkmn.evo_crest_count(parameter) < 3
-
-                                 pkmn.set_evo_crest_count(parameter, 0)
-                                 next true
-                               }
-                             })
-
-GameData::Evolution.register({
-                               id: :LevelRecoilDamage,
-                               parameter: Integer,
-                               any_level_up: true,   # Needs any level up
-                               level_up_proc: proc { |pkmn, parameter|
-                                 next pkmn.evo_recoil_count >= parameter
-                               },
-                               after_evolution_proc: proc { |pkmn, new_species, parameter, evo_species|
-                                 next false if evo_species != new_species || pkmn.evo_recoil_count < parameter
-
-                                 pkmn.evo_recoil_count = 0
-                                 next true
-                               }
-                             })
-
-GameData::Evolution.register({
-                               id: :LevelRecoilDamageForm0,
-                               parameter: Integer,
-                               any_level_up: true,   # Needs any level up
-                               level_up_proc: proc { |pkmn, parameter|
-                                 if pkmn.evo_recoil_count >= parameter
-                                   pkmn.form = pkmn.gender if pkmn.form == 0
-                                   next true
-                                 end
-                               },
-                               after_evolution_proc: proc { |pkmn, new_species, parameter, evo_species|
-                                 next false if evo_species != new_species || pkmn.evo_recoil_count < parameter
-
-                                 pkmn.evo_recoil_count = 0
-                                 next true
-                               }
-                             })
-
-GameData::Evolution.register({
-                               id: :LevelWalk,
-                               parameter: Integer,
-                               any_level_up: true,   # Needs any level up
-                               level_up_proc: proc { |pkmn, parameter|
-                                 next pkmn.evo_step_count >= parameter
-                               },
-                               after_evolution_proc: proc { |pkmn, new_species, parameter, evo_species|
-                                 next false if evo_species != new_species || pkmn.evo_step_count < parameter
-
-                                 pkmn.evo_step_count = 0
-                                 next true
-                               }
-                             })
-
-################################################################################
-#
-# Step-based event handlers.
-#
-################################################################################
-
-#-------------------------------------------------------------------------------
-# Tracks steps taken to trigger walking evolutions for the lead Pokemon.
-#-------------------------------------------------------------------------------
-EventHandlers.add(:on_player_step_taken, :evolution_steps, proc {
-  $player.first_able_pokemon.walking_evolution if $player.party_count > 0
-})
-
-#-------------------------------------------------------------------------------
-# Initializes Mirror Herb step counter.
-#-------------------------------------------------------------------------------
-class PokemonGlobalMetadata
-  attr_accessor :mirrorherb_steps
-  alias paldea_initialize initialize
-  def initialize
-    @mirrorherb_steps = 0
-    paldea_initialize
-  end
+  pokemon = pbGetPokemon(1)
+  pokemon.changeGender(recheck_form)
+  true
 end
 
 #-------------------------------------------------------------------------------
