@@ -4,12 +4,13 @@ class Battle::Battler
   #=============================================================================
   def pbProcessTurn(choice, tryFlee = true)
     return false if fainted?
+
     # Wild roaming Pokémon always flee if possible
     if tryFlee && wild? &&
-       @battle.rules["alwaysflee"] && @battle.pbCanRun?(@index)
+       @battle.rules['alwaysflee'] && @battle.pbCanRun?(@index)
       pbBeginTurn(choice)
-      pbSEPlay("Battle flee")
-      @battle.pbDisplay(_INTL("¡{1} ha huido del combate!", pbThis))
+      pbSEPlay('Battle flee')
+      @battle.pbDisplay(_INTL('¡{1} ha huido del combate!', pbThis))
       @battle.decision = 3
       pbEndTurn(choice)
       return true
@@ -21,22 +22,22 @@ class Battle::Battler
       when 2
         idxOther = (@index + 2) % 4
       when 3
-        if @index != 2 && @index != 3   # If not in middle spot already
-          idxOther = (@index.even?) ? 2 : 3
+        if @index != 2 && @index != 3 # If not in middle spot already
+          idxOther = @index.even? ? 2 : 3
         end
       end
       if idxOther >= 0
         @battle.pbSwapBattlers(@index, idxOther)
         case @battle.pbSideSize(@index)
         when 2
-          @battle.pbDisplay(_INTL("¡{1} se ha desplazado!", pbThis))
+          @battle.pbDisplay(_INTL('¡{1} se ha desplazado!', pbThis))
         when 3
-          @battle.pbDisplay(_INTL("¡{1} se movió al centro!", pbThis))
+          @battle.pbDisplay(_INTL('¡{1} se movió al centro!', pbThis))
         end
       end
       pbBeginTurn(choice)
       pbCancelMoves
-      @lastRoundMoved = @battle.turnCount   # Done something this round
+      @lastRoundMoved = @battle.turnCount # Done something this round
       return true
     end
     # If this battler's action for this round wasn't "use a move"
@@ -52,7 +53,7 @@ class Battle::Battler
     @battle.pbJudge
     # Update priority order
     @battle.pbCalculatePriority if Settings::RECALCULATE_TURN_ORDER_AFTER_SPEED_CHANGES
-    return true
+    true
   end
 
   #=============================================================================
@@ -66,10 +67,10 @@ class Battle::Battler
     @effects[PBEffects::MoveNext]            = false
     @effects[PBEffects::Quash]               = 0
     # Encore's effect ends if the encored move is no longer available
-    if @effects[PBEffects::Encore] > 0 && pbEncoredMoveIndex < 0
-      @effects[PBEffects::Encore]     = 0
-      @effects[PBEffects::EncoreMove] = nil
-    end
+    return unless @effects[PBEffects::Encore] > 0 && pbEncoredMoveIndex < 0
+
+    @effects[PBEffects::Encore]     = 0
+    @effects[PBEffects::EncoreMove] = nil
   end
 
   # Called when the usage of various multi-turn moves is disrupted due to
@@ -81,7 +82,7 @@ class Battle::Battler
     # Outragers get confused anyway if they are disrupted during their final
     # turn of using the move
     if @effects[PBEffects::Outrage] == 1 && pbCanConfuseSelf?(false) && !full_cancel
-      pbConfuse(_INTL("¡El cansancio ha terminado confundiendo a {1}!", pbThis))
+      pbConfuse(_INTL('¡El cansancio ha terminado confundiendo a {1}!', pbThis))
     end
     # Cancel usage of most multi-turn moves
     @effects[PBEffects::TwoTurnAttack] = nil
@@ -95,9 +96,9 @@ class Battle::Battler
   end
 
   def pbEndTurn(_choice)
-    @lastRoundMoved = @battle.turnCount   # Done something this round
+    @lastRoundMoved = @battle.turnCount # Done something this round
     if !@effects[PBEffects::ChoiceBand] &&
-       (hasActiveItem?([:CHOICEBAND, :CHOICESPECS, :CHOICESCARF]) ||
+       (hasActiveItem?(%i[CHOICEBAND CHOICESPECS CHOICESCARF]) ||
        hasActiveAbility?(:GORILLATACTICS))
       if @lastMoveUsed && pbHasMove?(@lastMoveUsed)
         @effects[PBEffects::ChoiceBand] = @lastMoveUsed
@@ -109,20 +110,20 @@ class Battle::Battler
     @effects[PBEffects::Charge]      = 0 if @effects[PBEffects::Charge] == 1
     @effects[PBEffects::GemConsumed] = nil
     @effects[PBEffects::ShellTrap]   = false
-    @battle.allBattlers.each { |b| b.pbContinualAbilityChecks }   # Trace, end primordial weathers
+    @battle.allBattlers.each { |b| b.pbContinualAbilityChecks } # Trace, end primordial weathers
   end
 
   def pbConfusionDamage(msg)
     @damageState.reset
     confusionMove = Battle::Move::Confusion.new(@battle, nil)
-    confusionMove.calcType = confusionMove.pbCalcType(self)   # nil
-    @damageState.typeMod = confusionMove.pbCalcTypeMod(confusionMove.calcType, self, self)   # 8
+    confusionMove.calcType = confusionMove.pbCalcType(self) # nil
+    @damageState.typeMod = confusionMove.pbCalcTypeMod(confusionMove.calcType, self, self) # 8
     confusionMove.pbCheckDamageAbsorption(self, self)
     confusionMove.pbCalcDamage(self, self)
     confusionMove.pbReduceDamage(self, self)
     self.hp -= @damageState.hpLost
     confusionMove.pbAnimateHitAndHPLost(self, [self])
-    @battle.pbDisplay(msg)   # "It hurt itself in its confusion!"
+    @battle.pbDisplay(msg) # "It hurt itself in its confusion!"
     confusionMove.pbRecordDamageLost(self, self)
     confusionMove.pbEndureKOMessage(self)
     pbFaint if fainted?
@@ -154,11 +155,11 @@ class Battle::Battler
   def pbUseMove(choice, specialUsage = false)
     # NOTE: This is intentionally determined before a multi-turn attack can
     #       set specialUsage to true.
-    skipAccuracyCheck = (specialUsage && choice[2] != @battle.struggle)
+    skipAccuracyCheck = specialUsage && choice[2] != @battle.struggle
     # Start using the move
     pbBeginTurn(choice)
     # Force the use of certain moves if they're already being used
-    if !@battle.futureSight
+    unless @battle.futureSight
       if usingMultiTurnAttack?
         choice[2] = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(@currentMove))
         specialUsage = true
@@ -166,36 +167,38 @@ class Battle::Battler
             @battle.pbCanShowCommands?(@index)
         idxEncoredMove = pbEncoredMoveIndex
         if idxEncoredMove >= 0 && choice[1] != idxEncoredMove &&
-           @battle.pbCanChooseMove?(@index, idxEncoredMove, false)   # Change move if battler was Encored mid-round
+           @battle.pbCanChooseMove?(@index, idxEncoredMove, false) # Change move if battler was Encored mid-round
           choice[1] = idxEncoredMove
           choice[2] = @moves[idxEncoredMove]
-          choice[3] = -1   # No target chosen
+          choice[3] = -1 # No target chosen
         end
       end
     end
     # Labels the move being used as "move"
     move = choice[2]
-    return if !move   # if move was not chosen somehow
+    return unless move # if move was not chosen somehow
+
     # Try to use the move (inc. disobedience)
     @lastMoveFailed = false
-    if !pbTryUseMove(choice, move, specialUsage, skipAccuracyCheck)
+    unless pbTryUseMove(choice, move, specialUsage, skipAccuracyCheck)
       @lastMoveUsed     = nil
       @lastMoveUsedType = nil
-      if !specialUsage
+      unless specialUsage
         @lastRegularMoveUsed   = nil
         @lastRegularMoveTarget = -1
       end
-      @battle.pbGainExp   # In case self is KO'd due to confusion
+      @battle.pbGainExp # In case self is KO'd due to confusion
       pbCancelMoves
       pbEndTurn(choice)
       return
     end
-    move = choice[2]   # In case disobedience changed the move to be used
-    return if !move   # if move was not chosen somehow
+    move = choice[2] # In case disobedience changed the move to be used
+    return unless move # if move was not chosen somehow
+
     # Subtract PP
     if !specialUsage && !pbReducePP(move)
-      @battle.pbDisplay(_INTL("¡{1} ha usado {2}!", pbThis, move.name))
-      @battle.pbDisplay(_INTL("¡Pero al movimiento no le quedan PP!"))
+      @battle.pbDisplay(_INTL('¡{1} ha usado {2}!', pbThis, move.name))
+      @battle.pbDisplay(_INTL('¡Pero al movimiento no le quedan PP!'))
       @lastMoveUsed          = nil
       @lastMoveUsedType      = nil
       @lastRegularMoveUsed   = nil
@@ -206,20 +209,20 @@ class Battle::Battler
       return
     end
     # Stance Change
-    if isSpecies?(:AEGISLASH) && self.ability == :STANCECHANGE
+    if isSpecies?(:AEGISLASH) && ability == :STANCECHANGE
       if move.damagingMove?
-        pbChangeForm(1, _INTL("¡{1} cambió a Forma Filo!", pbThis))
+        pbChangeForm(1, _INTL('¡{1} cambió a Forma Filo!', pbThis))
       elsif move.id == :KINGSSHIELD
-        pbChangeForm(0, _INTL("¡{1} cambió a Forma Escudo!", pbThis))
+        pbChangeForm(0, _INTL('¡{1} cambió a Forma Escudo!', pbThis))
       end
     end
     if isSpecies?(:CONSTELLAR) && move.id == :ECLIPSE
       if form == 1
-        pbChangeForm(0, _INTL("¡{1} cambió a Forma Solar!", pbThis))
+        pbChangeForm(0, _INTL('¡{1} cambió a Forma Solar!', pbThis))
       elsif form == 0
-        pbChangeForm(1, _INTL("¡{1} cambió a Forma Lunar!", pbThis))
+        pbChangeForm(1, _INTL('¡{1} cambió a Forma Lunar!', pbThis))
       end
-    end    
+    end
     # Calculate the move's type during this usage
     move.calcType = move.pbCalcType(self)
     # Start effect of Mold Breaker
@@ -230,7 +233,7 @@ class Battle::Battler
       @effects[PBEffects::TwoTurnAttack] = move.id
       @currentMove = move.id
     else
-      @effects[PBEffects::TwoTurnAttack] = nil   # Cancel use of two-turn attack
+      @effects[PBEffects::TwoTurnAttack] = nil # Cancel use of two-turn attack
     end
     # Add to counters for moves which increase them when used in succession
     move.pbChangeUsageCounters(self, specialUsage)
@@ -244,30 +247,32 @@ class Battle::Battler
     end
     # Record move as having been used
     @lastMoveUsed     = move.id
-    @lastMoveUsedType = move.calcType   # For Conversion 2
-    if !specialUsage
-      @lastRegularMoveUsed   = move.id   # For Disable, Encore, Instruct, Mimic, Mirror Move, Sketch, Spite
-      @lastRegularMoveTarget = choice[3]   # For Instruct (remembering original target is fine)
-      @movesUsed.push(move.id) if !@movesUsed.include?(move.id)   # For Last Resort
+    @lastMoveUsedType = move.calcType # For Conversion 2
+    unless specialUsage
+      @lastRegularMoveUsed   = move.id # For Disable, Encore, Instruct, Mimic, Mirror Move, Sketch, Spite
+      @lastRegularMoveTarget = choice[3] # For Instruct (remembering original target is fine)
+      @movesUsed.push(move.id) unless @movesUsed.include?(move.id) # For Last Resort
     end
-    @battle.lastMoveUsed = move.id   # For Copycat
-    @battle.lastMoveUser = @index   # For "self KO" battle clause to avoid draws
-    @battle.successStates[@index].useState = 1   # Battle Arena - assume failure
+    @battle.lastMoveUsed = move.id # For Copycat
+    @battle.lastMoveUser = @index # For "self KO" battle clause to avoid draws
+    @battle.successStates[@index].useState = 1 # Battle Arena - assume failure
     # Find the default user (self or Snatcher) and target(s)
     user = pbFindUser(choice, move)
     user = pbChangeUser(choice, move, user)
     targets = pbFindTargets(choice, move, user)
     targets = pbChangeTargets(move, user, targets)
     # Pressure
-    if !specialUsage
+    unless specialUsage
       targets.each do |b|
         next unless b.opposes?(user) && b.hasActiveAbility?(:PRESSURE)
+
         PBDebug.log("[Ability triggered] #{b.pbThis}'s #{b.abilityName}")
         user.pbReducePP(move)
       end
       if move.pbTarget(user).affects_foe_side
         @battle.allOtherSideBattlers(user).each do |b|
           next unless b.hasActiveAbility?(:PRESSURE)
+
           PBDebug.log("[Ability triggered] #{b.pbThis}'s #{b.abilityName}")
           user.pbReducePP(move)
         end
@@ -276,16 +281,17 @@ class Battle::Battler
     # Dazzling/Queenly Majesty make the move fail here
     @battle.pbPriority(true).each do |b|
       next if !b || !b.abilityActive?
-      if Battle::AbilityEffects.triggerMoveBlocking(b.ability, b, user, targets, move, @battle)
-        @battle.pbDisplayBrief(_INTL("¡{1} ha usado {2}!", user.pbThis, move.name))
-        @battle.pbShowAbilitySplash(b)
-        @battle.pbDisplay(_INTL("¡{1} no puede usar {2}!", user.pbThis, move.name))
-        @battle.pbHideAbilitySplash(b)
-        user.lastMoveFailed = true
-        pbCancelMoves
-        pbEndTurn(choice)
-        return
-      end
+
+      next unless Battle::AbilityEffects.triggerMoveBlocking(b.ability, b, user, targets, move, @battle)
+
+      @battle.pbDisplayBrief(_INTL('¡{1} ha usado {2}!', user.pbThis, move.name))
+      @battle.pbShowAbilitySplash(b)
+      @battle.pbDisplay(_INTL('¡{1} no puede usar {2}!', user.pbThis, move.name))
+      @battle.pbHideAbilitySplash(b)
+      user.lastMoveFailed = true
+      pbCancelMoves
+      pbEndTurn(choice)
+      return
     end
     # "X used Y!" message
     # Can be different for Bide, Fling, Focus Punch and Future Sight
@@ -295,12 +301,12 @@ class Battle::Battler
     move.pbDisplayUseMessage(self)
     # Snatch's message (user is the new user, self is the original user)
     if move.snatched
-      @lastMoveFailed = true   # Intentionally applies to self, not user
-      @battle.pbDisplay(_INTL("¡{1} ha robado el movimiento de {2}!", user.pbThis, pbThis(true)))
+      @lastMoveFailed = true # Intentionally applies to self, not user
+      @battle.pbDisplay(_INTL('¡{1} ha robado el movimiento de {2}!', user.pbThis, pbThis(true)))
     end
     # "But it failed!" checks
     if move.pbMoveFailed?(user, targets)
-      PBDebug.log(sprintf("[Move failed] In function code %s's def pbMoveFailed?", move.function_code))
+      PBDebug.log(format("[Move failed] In function code %s's def pbMoveFailed?", move.function_code))
       user.lastMoveFailed = true
       pbCancelMoves
       pbEndTurn(choice)
@@ -312,18 +318,18 @@ class Battle::Battler
     # Self-thawing due to the move
     if user.status == :FROZEN && move.thawsUser?
       user.pbCureStatus(false)
-      @battle.pbDisplay(_INTL("¡{1} derritió el hielo!", user.pbThis))
+      @battle.pbDisplay(_INTL('¡{1} derritió el hielo!', user.pbThis))
     end
     # Powder
     if user.effects[PBEffects::Powder] && move.calcType == :FIRE
-      @battle.pbCommonAnimation("Powder", user)
-      @battle.pbDisplay(_INTL("¡El polvo ha reaccionado con el movimiento y ha explotado!"))
+      @battle.pbCommonAnimation('Powder', user)
+      @battle.pbDisplay(_INTL('¡El polvo ha reaccionado con el movimiento y ha explotado!'))
       user.lastMoveFailed = true
-      if ![:Rain, :HeavyRain].include?(user.effectiveWeather) && user.takesIndirectDamage?
+      if !%i[Rain HeavyRain].include?(user.effectiveWeather) && user.takesIndirectDamage?
         user.pbTakeEffectDamage((user.totalhp / 4.0).round, false) do |hp_lost|
-          @battle.pbDisplay(_INTL("¡{1} ha sido dañado por el polvo!", user.pbThis))
+          @battle.pbDisplay(_INTL('¡{1} ha sido dañado por el polvo!', user.pbThis))
         end
-        @battle.pbGainExp   # In case user is KO'd by this
+        @battle.pbGainExp # In case user is KO'd by this
       end
       pbCancelMoves
       pbEndTurn(choice)
@@ -334,7 +340,7 @@ class Battle::Battler
       case @battle.pbWeather
       when :HeavyRain
         if move.calcType == :FIRE
-          @battle.pbDisplay(_INTL("¡El diluvio impide todos los ataques de tipo Fuego!"))
+          @battle.pbDisplay(_INTL('¡El diluvio impide todos los ataques de tipo Fuego!'))
           user.lastMoveFailed = true
           pbCancelMoves
           pbEndTurn(choice)
@@ -342,7 +348,7 @@ class Battle::Battler
         end
       when :HarshSun
         if move.calcType == :WATER
-          @battle.pbDisplay(_INTL("¡El sol brilla con tanta intensidad que el agua se evapora, lo que afecta a los movimientos de tipo Agua!"))
+          @battle.pbDisplay(_INTL('¡El sol brilla con tanta intensidad que el agua se evapora, lo que afecta a los movimientos de tipo Agua!'))
           user.lastMoveFailed = true
           pbCancelMoves
           pbEndTurn(choice)
@@ -351,19 +357,19 @@ class Battle::Battler
       end
     end
     # Protean
-    if user.hasActiveAbility?([:LIBERO, :PROTEAN]) &&
+    if user.hasActiveAbility?(%i[LIBERO PROTEAN]) &&
        !move.callsAnotherMove? && !move.snatched &&
        user.pbHasOtherType?(move.calcType) && !GameData::Type.get(move.calcType).pseudo_type
       @battle.pbShowAbilitySplash(user)
       user.pbChangeTypes(move.calcType)
       typeName = GameData::Type.get(move.calcType).name
-      @battle.pbDisplay(_INTL("¡{1} ha cambiado a tipo {2}!", user.pbThis, typeName))
+      @battle.pbDisplay(_INTL('¡{1} ha cambiado a tipo {2}!', user.pbThis, typeName))
       @battle.pbHideAbilitySplash(user)
       # NOTE: The GF games say that if Curse is used by a non-Ghost-type
       #       Pokémon which becomes Ghost-type because of Protean, it should
       #       target and curse itself. I think this is silly, so I'm making it
       #       choose a random opponent to curse instead.
-      if move.function_code == "CurseTargetOrLowerUserSpd1RaiseUserAtkDef1" && targets.length == 0
+      if move.function_code == 'CurseTargetOrLowerUserSpd1RaiseUserAtkDef1' && targets.length == 0
         choice[3] = -1
         targets = pbFindTargets(choice, move, user)
       end
@@ -377,9 +383,9 @@ class Battle::Battler
       # def pbFindTargets should have found a target(s), but it didn't because
       # they were all fainted
       # All target types except: None, User, UserSide, FoeSide, BothSides
-      @battle.pbDisplay(_INTL("Pero no había objetivo..."))
+      @battle.pbDisplay(_INTL('Pero no había objetivo...'))
       user.lastMoveFailed = true
-    else   # We have targets, or move doesn't use targets
+    else # We have targets, or move doesn't use targets
       # Reset whole damage state, perform various success checks (not accuracy)
       @battle.allBattlers.each do |b|
         b.droppedBelowHalfHP = false
@@ -388,6 +394,7 @@ class Battle::Battler
       targets.each do |b|
         b.damageState.reset
         next if pbSuccessCheckAgainstTarget(move, user, b, targets)
+
         b.damageState.unaffected = true
       end
       # Magic Coat/Magic Bounce checks (for moves which don't target Pokémon)
@@ -395,6 +402,7 @@ class Battle::Battler
         @battle.pbPriority(true).each do |b|
           next if b.fainted? || !b.opposes?(user)
           next if b.semiInvulnerable?
+
           if b.effects[PBEffects::MagicCoat]
             magicCoater = b.index
             b.effects[PBEffects::MagicCoat] = false
@@ -413,14 +421,16 @@ class Battle::Battler
       realNumHits = 0
       numHits.times do |i|
         break if magicCoater >= 0 || magicBouncer >= 0
+
         success = pbProcessMoveHit(move, user, targets, i, skipAccuracyCheck)
-        if !success
+        unless success
           if i == 0 && targets.length > 0
             hasFailed = false
             targets.each do |t|
               next if t.damageState.protected
+
               hasFailed = t.damageState.unaffected
-              break if !t.damageState.unaffected
+              break unless t.damageState.unaffected
             end
             user.lastMoveFailed = hasFailed
           end
@@ -428,11 +438,11 @@ class Battle::Battler
         end
         realNumHits += 1
         break if user.fainted?
-        break if [:SLEEP, :FROZEN].include?(user.status)
+        break if %i[SLEEP FROZEN].include?(user.status)
         # NOTE: If a multi-hit move becomes disabled partway through doing those
         #       hits (e.g. by Cursed Body), the rest of the hits continue as
         #       normal.
-        break if targets.none? { |t| !t.fainted? }   # All targets are fainted
+        break if targets.none? { |t| !t.fainted? } # All targets are fainted
       end
       # Battle Arena only - attack is successful
       @battle.successStates[user.index].useState = 2
@@ -440,6 +450,7 @@ class Battle::Battler
         @battle.successStates[user.index].typeMod = 0
         targets.each do |b|
           next if b.damageState.unaffected
+
           @battle.successStates[user.index].typeMod += b.damageState.typeMod
         end
       end
@@ -450,28 +461,30 @@ class Battle::Battler
         if move.damagingMove?
           targets.each do |b|
             next if b.damageState.unaffected || b.damageState.substitute
+
             move.pbEffectivenessMessage(user, b, targets.length)
           end
         end
         if realNumHits == 1
-          @battle.pbDisplay(_INTL("¡Golpeó una vez!"))
+          @battle.pbDisplay(_INTL('¡Golpeó una vez!'))
         elsif realNumHits > 1
-          @battle.pbDisplay(_INTL("N.º de golpes: {1}.", realNumHits))
+          @battle.pbDisplay(_INTL('N.º de golpes: {1}.', realNumHits))
         end
       end
       # Magic Coat's bouncing back (move has targets)
       targets.each do |b|
         next if b.fainted?
         next if !b.damageState.magicCoat && !b.damageState.magicBounce
+
         @battle.pbShowAbilitySplash(b) if b.damageState.magicBounce
-        @battle.pbDisplay(_INTL("¡Capa Mágica hizo rebotar {2} de {1}!", b.pbThis, move.name))
+        @battle.pbDisplay(_INTL('¡Capa Mágica hizo rebotar {2} de {1}!', b.pbThis, move.name))
         @battle.pbHideAbilitySplash(b) if b.damageState.magicBounce
         newChoice = choice.clone
         newChoice[3] = user.index
         newTargets = pbFindTargets(newChoice, move, b)
         newTargets = pbChangeTargets(move, b, newTargets)
         success = false
-        if !move.pbMoveFailed?(b, newTargets)
+        unless move.pbMoveFailed?(b, newTargets)
           newTargets.each_with_index do |newTarget, idx|
             if pbSuccessCheckAgainstTarget(move, b, newTarget, newTargets)
               success = true
@@ -482,23 +495,21 @@ class Battle::Battler
           newTargets.compact!
         end
         pbProcessMoveHit(move, b, newTargets, 0, false) if success
-        b.lastMoveFailed = true if !success
+        b.lastMoveFailed = true unless success
         targets.each { |otherB| otherB.pbFaint if otherB&.fainted? }
         user.pbFaint if user.fainted?
       end
       # Magic Coat's bouncing back (move has no targets)
       if magicCoater >= 0 || magicBouncer >= 0
-        mc = @battle.battlers[(magicCoater >= 0) ? magicCoater : magicBouncer]
-        if !mc.fainted?
+        mc = @battle.battlers[magicCoater >= 0 ? magicCoater : magicBouncer]
+        unless mc.fainted?
           user.lastMoveFailed = true
           @battle.pbShowAbilitySplash(mc) if magicBouncer >= 0
-          @battle.pbDisplay(_INTL("¡Capa Mágica hizo rebotar {2} de {1}!", mc.pbThis, move.name))
+          @battle.pbDisplay(_INTL('¡Capa Mágica hizo rebotar {2} de {1}!', mc.pbThis, move.name))
           @battle.pbHideAbilitySplash(mc) if magicBouncer >= 0
           success = false
-          if !move.pbMoveFailed?(mc, [])
-            success = pbProcessMoveHit(move, mc, [], 0, false)
-          end
-          mc.lastMoveFailed = true if !success
+          success = pbProcessMoveHit(move, mc, [], 0, false) unless move.pbMoveFailed?(mc, [])
+          mc.lastMoveFailed = true unless success
           targets.each { |b| b.pbFaint if b&.fainted? }
           user.pbFaint if user.fainted?
         end
@@ -522,18 +533,21 @@ class Battle::Battler
     # Battle Arena only - update skills
     @battle.allBattlers.each { |b| @battle.successStates[b.index].updateSkill }
     # Shadow Pokémon triggering Hyper Mode
-    pbHyperMode if @battle.choices[@index][0] != :None   # Not if self is replaced
+    pbHyperMode if @battle.choices[@index][0] != :None # Not if self is replaced
     # End of move usage
     pbEndTurn(choice)
     # Instruct
     @battle.allBattlers.each do |b|
       next if !b.effects[PBEffects::Instruct] || !b.lastMoveUsed
+
       b.effects[PBEffects::Instruct] = false
       idxMove = -1
       b.eachMoveWithIndex { |m, i| idxMove = i if m.id == b.lastMoveUsed }
       next if idxMove < 0
+
       oldLastRoundMoved = b.lastRoundMoved
-      @battle.pbDisplay(_INTL("¡{1} sigue el mandato de {2} y repite su último movimiento!", b.pbThis, user.pbThis(true)))
+      @battle.pbDisplay(_INTL('¡{1} sigue el mandato de {2} y repite su último movimiento!', b.pbThis,
+                              user.pbThis(true)))
       b.effects[PBEffects::Instructed] = true
       if b.pbCanChooseMove?(b.moves[idxMove], false)
         PBDebug.logonerr do
@@ -566,8 +580,8 @@ class Battle::Battler
         preTarget = user.index if nextUser.opposes?(user) || !nextUser.opposes?(preTarget)
         @battle.pbShowAbilitySplash(nextUser, true)
         @battle.pbHideAbilitySplash(nextUser)
-        if !Battle::Scene::USE_ABILITY_SPLASH
-          @battle.pbDisplay(_INTL("¡{1} continuó la danza con {2}!",
+        unless Battle::Scene::USE_ABILITY_SPLASH
+          @battle.pbDisplay(_INTL('¡{1} continuó la danza con {2}!',
                                   nextUser.pbThis, nextUser.abilityName))
         end
         nextUser.effects[PBEffects::Dancer] = true
@@ -589,9 +603,10 @@ class Battle::Battler
   #=============================================================================
   def pbProcessMoveHit(move, user, targets, hitNum, skipAccuracyCheck)
     return false if user.fainted?
+
     # For two-turn attacks being used in a single turn
     move.pbInitialEffect(user, targets, hitNum)
-    numTargets = 0   # Number of targets that are affected by this hit
+    numTargets = 0 # Number of targets that are affected by this hit
     # Count a hit for Parental Bond (if it applies)
     user.effects[PBEffects::ParentalBond] -= 1 if user.effects[PBEffects::ParentalBond] > 0
     # Accuracy check (accuracy/evasion calc)
@@ -599,6 +614,7 @@ class Battle::Battler
       targets.each do |b|
         b.damageState.missed = false
         next if b.damageState.unaffected
+
         if pbSuccessCheckPerHit(move, user, b, skipAccuracyCheck)
           numTargets += 1
         else
@@ -610,11 +626,10 @@ class Battle::Battler
       if targets.length > 0 && numTargets == 0 && !move.worksWithNoTargets?
         targets.each do |b|
           next if !b.damageState.missed || b.damageState.magicCoat
+
           pbMissMessage(move, user, b)
-          if user.itemActive?
-            Battle::ItemEffects.triggerOnMissingTarget(user.item, user, b, move, hitNum, @battle)
-          end
-          break if move.pbRepeatHit?   # Dragon Darts only shows one failure message
+          Battle::ItemEffects.triggerOnMissingTarget(user.item, user, b, move, hitNum, @battle) if user.itemActive?
+          break if move.pbRepeatHit? # Dragon Darts only shows one failure message
         end
         move.pbCrashDamage(user)
         user.pbItemHPHealCheck
@@ -624,22 +639,23 @@ class Battle::Battler
     end
     # If we get here, this hit will happen and do something
     all_targets = targets
-    targets = move.pbDesignateTargetsForHit(targets, hitNum)   # For Dragon Darts
+    targets = move.pbDesignateTargetsForHit(targets, hitNum) # For Dragon Darts
     targets.each { |b| b.damageState.resetPerHit }
     #---------------------------------------------------------------------------
     # Calculate damage to deal
     if move.pbDamagingMove?
       targets.each do |b|
         next if b.damageState.unaffected
+
         # Check whether Substitute/Disguise will absorb the damage
         move.pbCheckDamageAbsorption(user, b)
         # Calculate the damage against b
         # pbCalcDamage shows the "eat berry" animation for SE-weakening
         # berries, although the message about it comes after the additional
         # effect below
-        move.pbCalcDamage(user, b, targets.length)   # Stored in damageState.calcDamage
+        move.pbCalcDamage(user, b, targets.length) # Stored in damageState.calcDamage
         # Lessen damage dealt because of False Swipe/Endure/etc.
-        move.pbReduceDamage(user, b)   # Stored in damageState.hpLost
+        move.pbReduceDamage(user, b) # Stored in damageState.hpLost
       end
     end
     # Show move animation (for this hit)
@@ -648,25 +664,24 @@ class Battle::Battler
     if user.effects[PBEffects::GemConsumed] && hitNum == 0
       # NOTE: The consume animation and message for Gems are shown now, but the
       #       actual removal of the item happens in def pbEffectsAfterMove.
-      @battle.pbCommonAnimation("UseItem", user)
-      @battle.pbDisplay(_INTL("¡{1} refuerza el poder de {2}!",
+      @battle.pbCommonAnimation('UseItem', user)
+      @battle.pbDisplay(_INTL('¡{1} refuerza el poder de {2}!',
                               GameData::Item.get(user.effects[PBEffects::GemConsumed]).name, move.name))
     end
     # Messages about missed target(s) (relevant for multi-target moves only)
-    if !move.pbRepeatHit?
+    unless move.pbRepeatHit?
       targets.each do |b|
-        next if !b.damageState.missed
+        next unless b.damageState.missed
+
         pbMissMessage(move, user, b)
-        if user.itemActive?
-          Battle::ItemEffects.triggerOnMissingTarget(user.item, user, b, move, hitNum, @battle)
-        end
+        Battle::ItemEffects.triggerOnMissingTarget(user.item, user, b, move, hitNum, @battle) if user.itemActive?
       end
     end
     # Deal the damage (to all allies first simultaneously, then all foes
     # simultaneously)
     if move.pbDamagingMove?
       # This just changes the HP amounts and does nothing else
-      targets.each { |b| move.pbInflictHPDamage(b) if !b.damageState.unaffected }
+      targets.each { |b| move.pbInflictHPDamage(b) unless b.damageState.unaffected }
       # Animate the hit flashing and HP bar changes
       move.pbAnimateHitAndHPLost(user, targets)
     end
@@ -676,6 +691,7 @@ class Battle::Battler
     if move.pbDamagingMove?
       targets.each do |b|
         next if b.damageState.unaffected
+
         # NOTE: This method is also used for the OHKO special message.
         move.pbHitEffectivenessMessages(user, b, targets.length)
         # Record data about the hit for various effects' purposes
@@ -685,22 +701,26 @@ class Battle::Battler
       # and Incinerate's berry destruction
       targets.each do |b|
         next if b.damageState.unaffected
+
         move.pbEffectWhenDealingDamage(user, b)
       end
       # Ability/item effects such as Static/Rocky Helmet, and Grudge, etc.
       targets.each do |b|
         next if b.damageState.unaffected
+
         pbEffectsOnMakingHit(move, user, b)
       end
       # Disguise/Endure/Sturdy/Focus Sash/Focus Band messages
       targets.each do |b|
         next if b.damageState.unaffected
+
         move.pbEndureKOMessage(b)
       end
       # HP-healing held items (checks all battlers rather than just targets
       # because Flame Burst's splash damage affects non-targets)
       @battle.pbPriority(true).each do |b|
         next if move.preventsBattlerConsumingHealingBerry?(b, targets)
+
         b.pbItemHPHealCheck
       end
       # Animate battlers fainting (checks all battlers rather than just targets
@@ -711,26 +731,31 @@ class Battle::Battler
     # Main effect (recoil/drain, etc.)
     targets.each do |b|
       next if b.damageState.unaffected
+
       move.pbEffectAgainstTarget(user, b)
     end
     move.pbEffectGeneral(user)
     targets.each { |b| b.pbFaint if b&.fainted? }
     user.pbFaint if user.fainted?
     # Additional effect
-    if !user.hasActiveAbility?(:SHEERFORCE)
+    unless user.hasActiveAbility?(:SHEERFORCE)
       targets.each do |b|
         next if b.damageState.calcDamage == 0
+
         chance = move.pbAdditionalEffectChance(user, b)
         next if chance <= 0
-        move.pbAdditionalEffect(user, b) if @battle.pbRandom(100) < chance
+
+        move.pbAdditionalEffect(user, b) # if @battle.pbRandom(100) < chance
       end
     end
     # Make the target flinch (because of an item/ability)
     targets.each do |b|
       next if b.fainted?
       next if b.damageState.calcDamage == 0 || b.damageState.substitute
+
       chance = move.pbFlinchChance(user, b)
       next if chance <= 0
+
       if @battle.pbRandom(100) < chance
         PBDebug.log("[Item/ability triggered] #{user.pbThis}'s King's Rock/Razor Fang or Stench")
         b.pbFlinch(user)
@@ -742,17 +767,19 @@ class Battle::Battler
     #       message about it only shows here.
     targets.each do |b|
       next if b.damageState.unaffected
-      next if !b.damageState.berryWeakened
-      @battle.pbDisplay(_INTL("¡{1} redujo el daño de {2}!", b.itemName, b.pbThis(true)))
+      next unless b.damageState.berryWeakened
+
+      @battle.pbDisplay(_INTL('¡{1} redujo el daño de {2}!', b.itemName, b.pbThis(true)))
       b.pbConsumeItem
     end
     # Steam Engine (goes here because it should be after stat changes caused by
     # the move)
-    if [:FIRE, :WATER].include?(move.calcType)
+    if %i[FIRE WATER].include?(move.calcType)
       targets.each do |b|
         next if b.damageState.unaffected
         next if b.damageState.calcDamage == 0 || b.damageState.substitute
-        next if !b.hasActiveAbility?(:STEAMENGINE)
+        next unless b.hasActiveAbility?(:STEAMENGINE)
+
         b.pbRaiseStatStageByAbility(:SPEED, 6, b) if b.pbCanRaiseStatStage?(:SPEED, b)
       end
     end
@@ -764,7 +791,6 @@ class Battle::Battler
        targets.any? { |b| !b.fainted? && !b.damageState.unaffected }
       pbProcessMoveHit(move, user, all_targets, 1, skipAccuracyCheck)
     end
-    return true
+    true
   end
 end
-

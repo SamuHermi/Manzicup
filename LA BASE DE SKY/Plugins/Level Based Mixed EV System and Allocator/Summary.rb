@@ -49,7 +49,7 @@ class EVAllocationSprite < Sprite
     w = @EVsel.width
     h = @EVsel.height
     self.x = 254
-    self.y = 126 + (index * 37)
+    self.y = 152 + (index * 37)
     self.bitmap = @EVsel.bitmap
     if preselected
       src_rect.set(0, h, w, h)
@@ -112,8 +112,8 @@ class EVAllocationSprite2 < Sprite
     w = @EVsel2.width
     h = @EVsel2.height
     self.x = 254
-    self.y = 126
-    self.y = 126 + (index * 37) if index > 0
+    self.y = 152
+    self.y = 152 + (index * 37) if index > 0
     self.bitmap = @EVsel2.bitmap
     if preselected
       src_rect.set(0, h, w, h)
@@ -166,6 +166,16 @@ class PokemonSummary_Scene
     evcap = 252 if evcap > 252
     evsum = @pokemon.ev[:HP] + @pokemon.ev[:ATTACK] + @pokemon.ev[:DEFENSE] + @pokemon.ev[:SPECIAL_DEFENSE] + @pokemon.ev[:SPEED]
     evsum += @pokemon.ev[:SPECIAL_ATTACK] if Settings::PURIST_MODE
+    # Snapshot EVs and stats at entry so the delta display has a baseline
+    $ev_entry_snapshot = {
+      ev: @pokemon.ev.dup,
+      hp: @pokemon.totalhp,
+      atk: @pokemon.attack,
+      def_: @pokemon.defense,
+      satk: @pokemon.spatk,
+      sdef: @pokemon.spdef,
+      spd: @pokemon.speed
+    }
     drawPage(3)
     loop do
       evpool = 80 + @pokemon.level * 8
@@ -224,12 +234,50 @@ class PokemonSummary_Scene
         @pokemon.ev[:SPECIAL_ATTACK] = 0
         @pokemon.ev[:SPECIAL_DEFENSE] = 0
         @pokemon.ev[:SPEED] = 0
+        $ev_preset_selected = -1 # clear preset highlight on full reset
         @pokemon.calc_stats
         Graphics.update
         Input.update
         pbUpdate
         drawPage(3)
       end
+      # DemICE - EV Preset bar navigation
+      # D cycles the highlighted preset forward through the icon bar.
+      # Z (Action) applies the highlighted preset to the Pokémon's EVs.
+      # $ev_preset_selected holds the currently highlighted index (0..N-1) or -1.
+      $ev_preset_selected ||= -1
+
+      # D — cycle highlight rightward, wrapping back to 0 after the last preset
+      if Input.trigger?(Input::SPECIAL)
+        $ev_preset_selected = ($ev_preset_selected + 1) % EV_PRESETS.length
+        pbPlayCursorSE
+        drawPage(3)
+      end
+
+      # Z (Action) — apply currently highlighted preset
+      if Input.trigger?(Input::ACTION) && $ev_preset_selected >= 0
+        Console.echo_li("Applying preset ##{$ev_preset_selected} to Pokémon...")
+        fully_assigned = pbApplyEVPreset(@pokemon, $ev_preset_selected)
+        unless fully_assigned
+          pbMessage(_INTL("Los porcentajes de este preset no suman 100.\nAlgunos EVs del pool quedan sin asignar."))
+        end
+        # Reset snapshot so deltas are relative to the freshly applied preset
+        $ev_entry_snapshot = {
+          ev: @pokemon.ev.dup,
+          hp: @pokemon.totalhp,
+          atk: @pokemon.attack,
+          def_: @pokemon.defense,
+          satk: @pokemon.spatk,
+          sdef: @pokemon.spdef,
+          spd: @pokemon.speed
+        }
+        pbPlayDecisionSE
+        Graphics.update
+        Input.update
+        pbUpdate
+        drawPage(3)
+      end
+      # DemICE end presets
       if Input.trigger?(Input::DOWN)
         selEV += 1
         selEV = 0 if selEV > 5
@@ -268,91 +316,50 @@ class PokemonSummary_Scene
         end
         pbPlayCursorSE
       end
-      if Input.trigger?(Input::LEFT)
+      if Input.trigger?(Input::LEFT) || Input.repeat?(Input::LEFT)
+        cycling = Input.trigger?(Input::LEFT)
         case selEV
         when 0
-          @pokemon.ev[:HP] -= 4
+          @pokemon.ev[:HP] -= 1
           if @pokemon.ev[:HP] < 0
-            @pokemon.ev[:HP] = 0
-            @pokemon.ev[:HP] = if (evpool - evsum) > evcap
-                                 evcap
-                               else
-                                 evpool - evsum
-                               end
-            @pokemon.ev[:HP] = @pokemon.ev[:HP].div(4) * 4
+            @pokemon.ev[:HP] = cycling ? [evpool - evsum, evcap].min : 0
           end
           @pokemon.calc_stats
         when 1
-          @pokemon.ev[:ATTACK] -= 4
+          @pokemon.ev[:ATTACK] -= 1
           if @pokemon.ev[:ATTACK] < 0
-            @pokemon.ev[:ATTACK] = 0
-            @pokemon.ev[:ATTACK] = if (evpool - evsum) > evcap
-                                     evcap
-                                   else
-                                     evpool - evsum
-                                   end
-            @pokemon.ev[:ATTACK] = @pokemon.ev[:ATTACK].div(4) * 4
+            @pokemon.ev[:ATTACK] = cycling ? [evpool - evsum, evcap].min : 0
           end
           @pokemon.calc_stats
         when 2
-          @pokemon.ev[:DEFENSE] -= 4
+          @pokemon.ev[:DEFENSE] -= 1
           if @pokemon.ev[:DEFENSE] < 0
-            @pokemon.ev[:DEFENSE] = 0
-            @pokemon.ev[:DEFENSE] = if (evpool - evsum) > evcap
-                                      evcap
-                                    else
-                                      evpool - evsum
-                                    end
-            @pokemon.ev[:DEFENSE] = @pokemon.ev[:DEFENSE].div(4) * 4
+            @pokemon.ev[:DEFENSE] = cycling ? [evpool - evsum, evcap].min : 0
           end
           @pokemon.calc_stats
         when 3
           if Settings::PURIST_MODE
-            @pokemon.ev[:SPECIAL_ATTACK] -= 4
+            @pokemon.ev[:SPECIAL_ATTACK] -= 1
             if @pokemon.ev[:SPECIAL_ATTACK] < 0
-              @pokemon.ev[:SPECIAL_ATTACK] = 0
-              @pokemon.ev[:SPECIAL_ATTACK] = if (evpool - evsum) > evcap
-                                               evcap
-                                             else
-                                               evpool - evsum
-                                             end
-              @pokemon.ev[:SPECIAL_ATTACK] = @pokemon.ev[:SPECIAL_ATTACK].div(4) * 4
+              @pokemon.ev[:SPECIAL_ATTACK] = cycling ? [evpool - evsum, evcap].min : 0
             end
           else
-            @pokemon.ev[:ATTACK] -= 4
+            @pokemon.ev[:ATTACK] -= 1
             if @pokemon.ev[:ATTACK] < 0
-              @pokemon.ev[:ATTACK] = 0
-              @pokemon.ev[:ATTACK] = if (evpool - evsum) > evcap
-                                       evcap
-                                     else
-                                       evpool - evsum
-                                     end
-              @pokemon.ev[:ATTACK] = @pokemon.ev[:ATTACK].div(4) * 4
+              @pokemon.ev[:ATTACK] = cycling ? [evpool - evsum, evcap].min : 0
             end
           end
           @pokemon.calc_stats
         when 4
-          @pokemon.ev[:SPECIAL_DEFENSE] -= 4
+          @pokemon.ev[:SPECIAL_DEFENSE] -= 1
           if @pokemon.ev[:SPECIAL_DEFENSE] < 0
-            @pokemon.ev[:SPECIAL_DEFENSE] = 0
-            @pokemon.ev[:SPECIAL_DEFENSE] = if (evpool - evsum) > evcap
-                                              evcap
-                                            else
-                                              evpool - evsum
-                                            end
-            @pokemon.ev[:SPECIAL_DEFENSE] = @pokemon.ev[:SPECIAL_DEFENSE].div(4) * 4
+            @pokemon.ev[:SPECIAL_DEFENSE] = cycling ? [evpool - evsum, evcap].min : 0
           end
           @pokemon.calc_stats
         when 5
-          @pokemon.ev[:SPEED] -= 4
+          @pokemon.ev[:SPEED] -= 1
           if @pokemon.ev[:SPEED] < 0
-            @pokemon.ev[:SPEED] = 0
-            @pokemon.ev[:SPEED] = if (evpool - evsum) > evcap
-                                    evcap
-                                  else
-                                    evpool - evsum
-                                  end
-            @pokemon.ev[:SPEED] = @pokemon.ev[:SPEED].div(4) * 4
+            @pokemon.ev[:SPEED] = cycling ? [evpool - evsum, evcap].min : 0
           end
           @pokemon.calc_stats
         end
@@ -363,33 +370,47 @@ class PokemonSummary_Scene
         dorefresh = true
         drawPage(3)
       end
-      next unless Input.trigger?(Input::RIGHT)
+      next unless Input.trigger?(Input::RIGHT) || Input.repeat?(Input::RIGHT)
 
+      cycling = Input.trigger?(Input::RIGHT)
       case selEV
       when 0
-        @pokemon.ev[:HP] += 4
-        @pokemon.ev[:HP] = 0 if @pokemon.ev[:HP] > evcap || evsum >= evpool
+        @pokemon.ev[:HP] += 1
+        if @pokemon.ev[:HP] > evcap || evsum >= evpool
+          @pokemon.ev[:HP] = cycling ? 0 : [evcap, evpool - evsum + @pokemon.ev[:HP]].min
+        end
       when 1
-        @pokemon.ev[:ATTACK] += 4
-        @pokemon.ev[:ATTACK] = 0 if @pokemon.ev[:ATTACK] > evcap || evsum >= evpool
+        @pokemon.ev[:ATTACK] += 1
+        if @pokemon.ev[:ATTACK] > evcap || evsum >= evpool
+          @pokemon.ev[:ATTACK] = cycling ? 0 : [evcap, evpool - evsum + @pokemon.ev[:ATTACK]].min
+        end
       when 2
-        @pokemon.ev[:DEFENSE] += 4
-        @pokemon.ev[:DEFENSE] = 0 if @pokemon.ev[:DEFENSE] > evcap || evsum >= evpool
+        @pokemon.ev[:DEFENSE] += 1
+        if @pokemon.ev[:DEFENSE] > evcap || evsum >= evpool
+          @pokemon.ev[:DEFENSE] = cycling ? 0 : [evcap, evpool - evsum + @pokemon.ev[:DEFENSE]].min
+        end
       when 3
         if Settings::PURIST_MODE
-          @pokemon.ev[:SPECIAL_ATTACK] += 4
-          @pokemon.ev[:SPECIAL_ATTACK] = 0 if @pokemon.ev[:SPECIAL_ATTACK] > evcap || evsum >= evpool
+          @pokemon.ev[:SPECIAL_ATTACK] += 1
+          if @pokemon.ev[:SPECIAL_ATTACK] > evcap || evsum >= evpool
+            @pokemon.ev[:SPECIAL_ATTACK] = cycling ? 0 : [evcap, evpool - evsum + @pokemon.ev[:SPECIAL_ATTACK]].min
+          end
         else
-          @pokemon.ev[:ATTACK] += 4
-          @pokemon.ev[:ATTACK] = 0 if @pokemon.ev[:ATTACK] > evcap || evsum >= evpool
+          @pokemon.ev[:ATTACK] += 1
+          if @pokemon.ev[:ATTACK] > evcap || evsum >= evpool
+            @pokemon.ev[:ATTACK] = cycling ? 0 : [evcap, evpool - evsum + @pokemon.ev[:ATTACK]].min
+          end
         end
       when 4
-        @pokemon.ev[:SPECIAL_DEFENSE] += 4
-        @pokemon.ev[:SPECIAL_DEFENSE] = 0 if @pokemon.ev[:SPECIAL_DEFENSE] > evcap || evsum >= evpool
+        @pokemon.ev[:SPECIAL_DEFENSE] += 1
+        if @pokemon.ev[:SPECIAL_DEFENSE] > evcap || evsum >= evpool
+          @pokemon.ev[:SPECIAL_DEFENSE] = cycling ? 0 : [evcap, evpool - evsum + @pokemon.ev[:SPECIAL_DEFENSE]].min
+        end
       when 5
-        @pokemon.ev[:SPEED] += 4
-        @pokemon.ev[:SPEED] = 0 if @pokemon.ev[:SPEED] > evcap || evsum >= evpool
-        @pokemon.ev[:SPEED] = @pokemon.ev[:SPEED].div(4) * 4
+        @pokemon.ev[:SPEED] += 1
+        if @pokemon.ev[:SPEED] > evcap || evsum >= evpool
+          @pokemon.ev[:SPEED] = cycling ? 0 : [evcap, evpool - evsum + @pokemon.ev[:SPEED]].min
+        end
       end
       @pokemon.calc_stats
       Graphics.update
@@ -399,6 +420,8 @@ class PokemonSummary_Scene
       drawPage(3)
     end
     $evalloc = false
+    $ev_preset_selected = -1
+    $ev_entry_snapshot = nil
     @sprites['EVsel'].visible = false
     @sprites['EVsel2'].visible = false
   end
@@ -503,8 +526,9 @@ class PokemonSummary_Scene
 
         textpos.push(['EV Pool:', 8, 293, 0, Color.new(255, 255, 255), Color.new(148, 148, 214)])
         textpos.push([format('%d', evpool), 134, 293, 1, Color.new(255, 255, 255), Color.new(148, 148, 214)])
-        textpos.push(['[S] resets EVs', 172, 293, 0, Color.new(64, 64, 64), Color.new(176, 176, 176)])
-        drawTextEx(overlay, 6, 325, 282, 2, "When EV is 0:   [<-] to max.\nWhen EV is max: [->] to 0.", Color.new(64, 64, 64),
+        textpos.push(['[S] reset  [X] preset  [Z] aplicar', 172, 293, 0, Color.new(64, 64, 64),
+                      Color.new(176, 176, 176)])
+        drawTextEx(overlay, 6, 325, 282, 2, '[<-]/<-> cambia EV.  [S] reset  [X] preset  [Z] aplicar', Color.new(64, 64, 64),
                    Color.new(176, 176, 176))
       else
         # Draw ability name and description
@@ -595,8 +619,9 @@ class PokemonSummary_Scene
 
         textpos.push(['EV Pool:', 224, 290, 0, base, shadow])
         textpos.push([format('%d', evpool), 344, 290, 1, base, shadow])
-        textpos.push(['[S] resets EVs', 362, 290, 0, Color.new(64, 64, 64), Color.new(176, 176, 176)])
-        drawTextEx(overlay, 224, 322, 282, 2, 'When EV is 0:     [<-] to max.  When EV is max: [->] to 0.', Color.new(64, 64, 64),
+        textpos.push(['[S] reset  [X] preset  [Z] aplicar', 362, 290, 0, Color.new(64, 64, 64),
+                      Color.new(176, 176, 176)])
+        drawTextEx(overlay, 224, 322, 282, 2, '[<-]/<-> EV  [X] preset  [Z] aplicar', Color.new(64, 64, 64),
                    Color.new(176, 176, 176))
       else
         # Draw ability name and description
@@ -686,8 +711,9 @@ class PokemonSummary_Scene
 
         textpos.push(['EV Pool:', 224, 290, 0, base, shadow])
         textpos.push([format('%d', evpool), 344, 290, 1, base, shadow])
-        textpos.push(['[S] resets EVs', 362, 290, 0, Color.new(64, 64, 64), Color.new(176, 176, 176)])
-        drawTextEx(overlay, 224, 322, 282, 2, 'When EV is 0:     [<-] to max.  When EV is max: [->] to 0.', Color.new(64, 64, 64),
+        textpos.push(['[S] reset  [X] preset  [Z] aplicar', 362, 290, 0, Color.new(64, 64, 64),
+                      Color.new(176, 176, 176)])
+        drawTextEx(overlay, 224, 322, 282, 2, '[<-]/<-> EV  [X] preset  [Z] aplicar', Color.new(64, 64, 64),
                    Color.new(176, 176, 176))
       else
         # Draw ability name and description
@@ -754,12 +780,13 @@ class PokemonSummary_Scene
       if $evalloc
         pbDrawImagePositions(overlay,
                              [['Graphics/Plugins/Level Based Mixed EV System and Allocator/hideAbilclear', 218,
-                               284]])
+                               284 + 18]])
 
         textpos.push(['EV Pool:', 224, 290, 0, base, shadow])
         textpos.push([format('%d', evpool), 344, 290, 1, base, shadow])
-        textpos.push(['[S] resets EVs', 362, 290, 0, Color.new(64, 64, 64), Color.new(176, 176, 176)])
-        drawTextEx(overlay, 224, 322, 282, 2, 'When EV is 0:     [<-] to max.  When EV is max: [->] to 0.', Color.new(64, 64, 64),
+        textpos.push(['[S] reset  [X] preset  [Z] aplicar', 362, 290, 0, Color.new(64, 64, 64),
+                      Color.new(176, 176, 176)])
+        drawTextEx(overlay, 224, 322, 282, 2, '[<-]/<-> EV  [X] preset  [Z] aplicar', Color.new(64, 64, 64),
                    Color.new(176, 176, 176))
       end
       # Draw all text

@@ -1,5 +1,5 @@
 module LBDSKY
-  LA_BASE_DE_SKY_VERSION = "1.0.9" # No modificar esto
+  VERSION = '1.0.9' # No modificar esto
 end
 
 class Scene_DebugIntro
@@ -14,35 +14,34 @@ end
 
 def pbCallTitle
   return Scene_DebugIntro.new if $DEBUG && !Settings::SHOW_TITLE_SCREEN_ON_DEBUG
-  return Scene_Intro.new
+
+  Scene_Intro.new
 end
 
 def mainFunction
-  if true #$DEBUG
+  if true # $DEBUG
     pbCriticalCode { mainFunctionDebug }
   else
     mainFunctionDebug
   end
-  return 1
+  1
 end
 
 def mainFunctionDebug
-  begin
-    MessageTypes.load_default_messages if FileTest.exist?("Data/messages_core.dat")
-    PluginManager.runPlugins
-    Compiler.main
-    Game.initialize
-    Game.set_up_system
-    Graphics.update
-    Graphics.freeze
-    $scene = pbCallTitle
-    $scene.main until $scene.nil?
-    Graphics.transition
-  rescue Hangup
-    pbPrintException($!) if !$DEBUG
-    pbEmergencySave
-    raise
-  end
+  MessageTypes.load_default_messages if FileTest.exist?('Data/messages_core.dat')
+  PluginManager.runPlugins
+  Compiler.main
+  Game.initialize
+  Game.set_up_system
+  Graphics.update
+  Graphics.freeze
+  $scene = pbCallTitle
+  $scene.main until $scene.nil?
+  Graphics.transition
+rescue Hangup
+  pbPrintException($!) unless $DEBUG
+  pbEmergencySave
+  raise
 end
 
 loop do
@@ -56,4 +55,3 @@ loop do
     break
   end
 end
-

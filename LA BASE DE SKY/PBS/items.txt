@@ -2102,82 +2102,281 @@ Description = Medicina en spray que cura todos los problemas de estado de un Pok
 [PEWTERCRUNCHIES]
 Name = Rokikos
 NamePlural = Rokikos
-Pocket = 2
-Price = 250
-FieldUse = OnPokemon
-BattleUse = OnPokemon
+Pocket = 7
+Price = 350
+BattleUse = OnBattler
 Flags = Fling_30
-Description = Snack crujiente típico de Ciudad Plateada. Cura todos los problemas de estado de un Pokémon.
+Description = Snack crujiente típico de Ciudad Plateada. Puedes tirarlos por el suelo para que los pisen los Pokémon.
 #-------------------------------
 [RAGECANDYBAR]
 Name = Caramelo Furia
 NamePlural = Caramelos Furia
-Pocket = 2
+Pocket = 7
 Price = 350
-FieldUse = OnPokemon
-BattleUse = OnPokemon
+BattleUse = OnBattler
 Flags = Fling_30
-Description = Caramelo típico de Pueblo Caoba, muy popular como souvenir.
+Description = Caramelo típico de Pueblo Caoba, enfurece al Pokémon que lo come.
 #-------------------------------
 [LAVACOOKIE]
 Name = Galleta Lava
 NamePlural = Galletas Lava
-Pocket = 2
+Pocket = 7
 Price = 350
-FieldUse = OnPokemon
-BattleUse = OnPokemon
+BattleUse = OnBattler
 Flags = Fling_30
 Description = Dulce típico de Pueblo Lavacalda que cura todos los problemas de estado de un Pokémon.
+#-------------------------------
+[POKEBLOCKRAINBOW]
+Name = Pokécubo arcoíris
+NamePlural = Pokécubos arcoíris
+Pocket = 7
+Price = 500
+BattleUse = OnBattler
+Flags = Fling_30
+Description = Caramelo de varios colores, dejará al Pokémon que lo coma sintiendo arcoiris durante 5 turnos.
 #-------------------------------
 [OLDGATEAU]
 Name = Barrita Plus
 NamePlural = Barritas Plus
-Pocket = 2
+Pocket = 7
 Price = 350
-FieldUse = OnPokemon
-BattleUse = OnPokemon
+BattleUse = OnBattler
 Flags = Fling_30
-Description = Especialidad de la Vieja Mansión. Cura los problemas de estado de un Pokémon.
+Description = Especialidad de la Vieja Mansión. Genera una Pantalla de Luz y un Reflejo.
 #-------------------------------
 [CASTELIACONE]
 Name = Porcehelado
 NamePlural = Porcehelados
-Pocket = 2
+Pocket = 7
 Price = 350
-FieldUse = OnPokemon
-BattleUse = OnPokemon
+BattleUse = OnBattler
 Flags = Fling_30
-Description = Especialidad de Ciudad Porcelana. Cura los problemas de estado de un Pokémon.
+Description = Especialidad de Ciudad Porcelana. El dulce aliento del Pokémon genera un Velo Aurora, solo se puede tomar al sol.
 #-------------------------------
 [LUMIOSEGALETTE]
 Name = Crêpe Luminalia
 NamePlural = Crêpes Luminalia
-Pocket = 2
+Pocket = 7
 Price = 350
-FieldUse = OnPokemon
-BattleUse = OnPokemon
+BattleUse = OnBattler
 Flags = Fling_30
-Description = Postre típico de Ciudad Luminalia. Cura los problemas de estado de un Pokémon.
+Description = Postre típico de Ciudad Luminalia. Su fina masa recuerda a la suave brisa de los Campos Eliseos.
 #-------------------------------
 [SHALOURSABLE]
 Name = Galleta Yantra
 NamePlural = Galletas Yantra
-Pocket = 2
+Pocket = 7
 Price = 350
-FieldUse = OnPokemon
-BattleUse = OnPokemon
+BattleUse = OnBattler
 Flags = Fling_30
 Description = Especialidad de Ciudad Yantra. Cura los problemas de estado de un Pokémon.
 #-------------------------------
 [BIGMALASADA]
 Name = Malasada Maxi
 NamePlural = Malasadas Maxi
-Pocket = 2
+Pocket = 7
 Price = 350
-FieldUse = OnPokemon
-BattleUse = OnPokemon
+BattleUse = OnBattler
+Flags = Fling_30
+Description = Fritura típica de Alola, si no la quieres siempre puedes tirársela al enemigo para crear un suelo pegajoso.
+#-------------------------------
+[SANDWICH]
+Name = Bocadillo
+NamePlural = Bocadillos
+Pocket = 7
+Price = 350
+BattleUse = OnBattler
 Flags = Fling_30
 Description = Fritura típica de Alola que cura todos los problemas de estado de un Pokémon.
+#-------------------------------
+[SPICYDRYPOKEPUFF]
+Name = Pokocho picanseco
+NamePlural = Pokochos picansecos
+Pocket = 7
+Price = 350
+BattleUse = OnBattler
+Flags = Fling_30
+Description = Pequeño bizcocho hecho con bayas. Sube el Ataque y la Velocidad.
+#-------------------------------
+[DRYSPICYPOKEPUFF]
+Name = Pokocho secopicante
+NamePlural = Pokochos secopicantes
+Pocket = 7
+Price = 350
+BattleUse = OnBattler
+Flags = Fling_30
+Description = Pequeño bizcocho hecho con bayas. Sube la Velocidad y el Ataque.
+#-------------------------------
+[SPICYSWEETPOKEPUFF]
+Name = Pokocho picandulce
+NamePlural = Pokochos picandulces
+Pocket = 7
+Price = 350
+BattleUse = OnBattler
+Flags = Fling_30
+Description = Pequeño bizcocho hecho con bayas. Sube el Ataque y el Ataque Especial.
+#-------------------------------
+[SWEETSPICYPOKEPUFF]
+Name = Pokocho dulcepicante
+NamePlural = Pokochos dulcepicantes
+Pocket = 7
+Price = 350
+BattleUse = OnBattler
+Flags = Fling_30
+Description = Pequeño bizcocho hecho con bayas. Sube el Ataque Especial y el Ataque.
+#-------------------------------
+[SPICYBITTERPOKEPUFF]
+Name = Pokocho picanamargo
+NamePlural = Pokochos picanamargos
+Pocket = 7
+Price = 350
+BattleUse = OnBattler
+Flags = Fling_30
+Description = Pequeño bizcocho hecho con bayas. Sube el Ataque y la Defensa.
+#-------------------------------
+[BITTERSPICYPOKEPUFF]
+Name = Pokocho amarpicante
+NamePlural = Pokochos amarpicantes
+Pocket = 7
+Price = 350
+BattleUse = OnBattler
+Flags = Fling_30
+Description = Pequeño bizcocho hecho con bayas. Sube la Defensa y el Ataque.
+#-------------------------------
+[SPICYSOURPOKEPUFF]
+Name = Pokocho picanácido
+NamePlural = Pokochos picanácidos
+Pocket = 7
+Price = 350
+BattleUse = OnBattler
+Flags = Fling_30
+Description = Pequeño bizcocho hecho con bayas. Sube el Ataque y la Defensa Especial.
+#-------------------------------
+[SOURSPICYPOKEPUFF]
+Name = Pokocho acidopicante
+NamePlural = Pokochos acidopicantes
+Pocket = 7
+Price = 350
+BattleUse = OnBattler
+Flags = Fling_30
+Description = Pequeño bizcocho hecho con bayas. Sube la Defensa Especial y el Ataque.
+#-------------------------------
+[DRYSWEETPOKEPUFF]
+Name = Pokocho secodulce
+NamePlural = Pokochos picansecos
+Pocket = 7
+Price = 350
+BattleUse = OnBattler
+Flags = Fling_30
+Description = Pequeño bizcocho hecho con bayas. Sube la Velocidad y el Ataque Especial.
+#-------------------------------
+[SWEETDRYPOKEPUFF]
+Name = Pokocho dulceseco
+NamePlural = Pokochos dulcesecos
+Pocket = 7
+Price = 350
+BattleUse = OnBattler
+Flags = Fling_30
+Description = Pequeño bizcocho hecho con bayas. Sube el Ataque Especial y la Velocidad.
+#-------------------------------
+[DRYBITTERPOKEPUFF]
+Name = Pokocho secoamargo
+NamePlural = Pokochos secoamargos
+Pocket = 7
+Price = 350
+BattleUse = OnBattler
+Flags = Fling_30
+Description = Pequeño bizcocho hecho con bayas. Sube la Velocidad y la Defensa.
+#-------------------------------
+[BITTERDRYPOKEPUFF]
+Name = Pokocho amarseco
+NamePlural = Pokochos amarsecos
+Pocket = 7
+Price = 350
+BattleUse = OnBattler
+Flags = Fling_30
+Description = Pequeño bizcocho hecho con bayas. Sube la Defensa y la Velocidad.
+#-------------------------------
+[DRYSOURPOKEPUFF]
+Name = Pokocho secoácido
+NamePlural = Pokochos secoácidos
+Pocket = 7
+Price = 350
+BattleUse = OnBattler
+Flags = Fling_30
+Description = Pequeño bizcocho hecho con bayas. Sube la Velocidad y la Defensa Especial.
+#-------------------------------
+[SOURDRYPOKEPUFF]
+Name = Pokocho acidoseco
+NamePlural = Pokochos acidosecos
+Pocket = 7
+Price = 350
+BattleUse = OnBattler
+Flags = Fling_30
+Description = Pequeño bizcocho hecho con bayas. Sube la Defensa Especial y la Velocidad.
+#-------------------------------
+[SWEETBITTERPOKEPUFF]
+Name = Pokocho dulceamargo
+NamePlural = Pokochos dulceamargos
+Pocket = 7
+Price = 350
+BattleUse = OnBattler
+Flags = Fling_30
+Description = Pequeño bizcocho hecho con bayas. Sube el Ataque Especial y la Defensa.
+#-------------------------------
+[BITTERSWEETPOKEPUFF]
+Name = Pokocho amardulce
+NamePlural = Pokochos amardulce
+Pocket = 7
+Price = 350
+BattleUse = OnBattler
+Flags = Fling_30
+Description = Pequeño bizcocho hecho con bayas. Sube la Defensa y el Ataque Especial.
+#-------------------------------
+[SWEETSOURPOKEPUFF]
+Name = Pokocho dulceácido
+NamePlural = Pokochos dulceácidos
+Pocket = 7
+Price = 350
+BattleUse = OnBattler
+Flags = Fling_30
+Description = Pequeño bizcocho hecho con bayas. Sube el Ataque Especial y la Defensa Especial.
+#-------------------------------
+[SOURSWEETPOKEPUFF]
+Name = Pokocho acidodulce
+NamePlural = Pokochos acidodulces
+Pocket = 7
+Price = 350
+BattleUse = OnBattler
+Flags = Fling_30
+Description = Pequeño bizcocho hecho con bayas. Sube la Defensa Especial y el Ataque Especial.
+#-------------------------------
+[BITTERSOURPOKEPUFF]
+Name = Pokocho amarácido
+NamePlural = Pokochos amarácidos
+Pocket = 7
+Price = 350
+BattleUse = OnBattler
+Flags = Fling_30
+Description = Pequeño bizcocho hecho con bayas. Sube la Defensa y la Defensa Especial.
+#-------------------------------
+[SOURBITTERPOKEPUFF]
+Name = Pokocho acidoamargo
+NamePlural = Pokochos acidoamargos
+Pocket = 7
+Price = 350
+BattleUse = OnBattler
+Flags = Fling_30
+Description = Pequeño bizcocho hecho con bayas. Sube la Defensa Especial y la Defensa.
+#-------------------------------
+[FOULPOKEPUFF]
+Name = Pokocho chungo
+NamePlural = Pokochos chungos
+Pocket = 7
+Price = 350
+BattleUse = OnFoe
+Flags = Fling_30
+Description = Pequeño bizcocho de mala calidad. Se lo puedes lanzar a un Pokémon rival para debilitarlo.
 #-------------------------------
 [REVIVE]
 Name = Revivir
@@ -2215,10 +2414,9 @@ Name = Corazón Dulce
 NamePlural = Corazones Dulces
 Pocket = 2
 Price = 3000
-FieldUse = OnPokemon
-BattleUse = OnPokemon
+BattleUse = OnBattler
 Flags = Fling_30
-Description = Chocolatina de sabor dulce. Restaura 20 PS de un Pokémon.
+Description = Chocolatina de sabor dulce. Puedes pedir un deseo de amor verdadero al consumirlo.
 #-------------------------------
 [FRESHWATER]
 Name = Agua Fresca
@@ -2710,7 +2908,7 @@ Description = Dispositivo con diseño capsular que atrapa Pokémon salvajes. Se 
 Name = Safari Ball
 NamePlural = Safari Balls
 Pocket = 3
-Price = 0
+Price = 200
 BattleUse = OnFoe
 Flags = PokeBall
 Description = Poké Ball con un diseño de camuflaje que se utiliza únicamente en el Gran Pantano.
@@ -2719,7 +2917,7 @@ Description = Poké Ball con un diseño de camuflaje que se utiliza únicamente 
 Name = Competi Ball
 NamePlural = Competi Balls
 Pocket = 3
-Price = 300
+Price = 200
 BattleUse = OnFoe
 Flags = PokeBall
 Description = Poké Ball especial para el Concurso de Captura de Bichos.
@@ -2819,7 +3017,7 @@ Description = Una Poké Ball que aumenta su eficacia si se usa en el turno 1 del
 Name = Gloria Ball
 NamePlural = Gloria Balls
 Pocket = 3
-Price = 0
+Price = 300
 BattleUse = OnFoe
 Flags = PokeBall
 Description = Es una Poké Ball muy particular que se creó para conmemorar algún acontecimiento.
@@ -5163,7 +5361,7 @@ Description = Primer turno: se sumerge en el mar. Segundo turno: emerge y ataca.
 Name = Baya Zreza
 NamePlural = Bayas Zreza
 Pocket = 5
-Price = 20
+Price = 200
 FieldUse = OnPokemon
 BattleUse = OnPokemon
 Flags = Berry,Fling_10,NaturalGift_FIRE_80
@@ -5173,7 +5371,7 @@ Description = Los Pokémon pueden llevarla o usarla para recuperarse de la pará
 Name = Baya Atania
 NamePlural = Bayas Atania
 Pocket = 5
-Price = 20
+Price = 200
 FieldUse = OnPokemon
 BattleUse = OnPokemon
 Flags = Berry,Fling_10,NaturalGift_WATER_80
@@ -5183,7 +5381,7 @@ Description = Los Pokémon pueden llevarla o usarla para despertar del sueño.
 Name = Baya Meloc
 NamePlural = Bayas Meloc
 Pocket = 5
-Price = 20
+Price = 200
 FieldUse = OnPokemon
 BattleUse = OnPokemon
 Flags = Berry,Fling_10,NaturalGift_ELECTRIC_80
@@ -5193,7 +5391,7 @@ Description = Los Pokémon pueden llevarla o usarla para curarse del envenenamie
 Name = Baya Safre
 NamePlural = Bayas Safre
 Pocket = 5
-Price = 20
+Price = 200
 FieldUse = OnPokemon
 BattleUse = OnPokemon
 Flags = Berry,Fling_10,NaturalGift_GRASS_80
@@ -5203,7 +5401,7 @@ Description = Los Pokémon pueden llevarla o usarla para curarse las quemaduras.
 Name = Baya Perasi
 NamePlural = Bayas Perasi
 Pocket = 5
-Price = 20
+Price = 200
 FieldUse = OnPokemon
 BattleUse = OnPokemon
 Flags = Berry,Fling_10,NaturalGift_ICE_80
@@ -5213,7 +5411,7 @@ Description = Los Pokémon pueden llevarla o usarla para descongelarse.
 Name = Baya Zanama
 NamePlural = Bayas Zanama
 Pocket = 5
-Price = 75
+Price = 1200
 FieldUse = OnPokemon
 BattleUse = OnMove
 Flags = Berry,Fling_10,NaturalGift_FIGHTING_80
@@ -5223,7 +5421,7 @@ Description = Los Pokémon pueden llevarla o usarla para restaurar 10 PP de un m
 Name = Baya Aranja
 NamePlural = Bayas Aranja
 Pocket = 5
-Price = 20
+Price = 200
 FieldUse = OnPokemon
 BattleUse = OnPokemon
 Flags = Berry,Fling_10,NaturalGift_POISON_80
@@ -5233,7 +5431,7 @@ Description = Los Pokémon pueden usarla o llevarla para restaurar 10 PS.
 Name = Baya Caquic
 NamePlural = Bayas Caquic
 Pocket = 5
-Price = 20
+Price = 200
 BattleUse = OnBattler
 Flags = Berry,Fling_10,NaturalGift_GROUND_80
 Description = Los Pokémon pueden usarla o llevarla para salir del estado de confusión.
@@ -5252,7 +5450,7 @@ Description = Los Pokémon pueden llevarla o usarla para recuperarse de problema
 Name = Baya Zidra
 NamePlural = Bayas Zidra
 Pocket = 5
-Price = 200
+Price = 700
 FieldUse = OnPokemon
 BattleUse = OnPokemon
 Flags = Berry,Fling_10,NaturalGift_PSYCHIC_80
@@ -5262,7 +5460,7 @@ Description = Los Pokémon pueden usarla o llevarla para restaurar algunos PS.
 Name = Baya Higog
 NamePlural = Bayas Higog
 Pocket = 5
-Price = 20
+Price = 1500
 Flags = Berry,Fling_10,NaturalGift_BUG_80
 Description = Restaura los PS del Pokémon que la usa en un apuro, pero puede causar confusión.
 #-------------------------------
@@ -5270,7 +5468,7 @@ Description = Restaura los PS del Pokémon que la usa en un apuro, pero puede ca
 Name = Baya Wiki
 NamePlural = Bayas Wiki
 Pocket = 5
-Price = 20
+Price = 1500
 Flags = Berry,Fling_10,NaturalGift_ROCK_80
 Description = Restaura los PS del Pokémon que la usa en un apuro, pero puede causar confusión.
 #-------------------------------
@@ -5278,7 +5476,7 @@ Description = Restaura los PS del Pokémon que la usa en un apuro, pero puede ca
 Name = Baya Ango
 NamePlural = Bayas Ango
 Pocket = 5
-Price = 20
+Price =150020
 Flags = Berry,Fling_10,NaturalGift_GHOST_80
 Description = Restaura los PS del Pokémon que la usa en un apuro, pero puede causar confusión.
 #-------------------------------
@@ -5286,7 +5484,7 @@ Description = Restaura los PS del Pokémon que la usa en un apuro, pero puede ca
 Name = Baya Guaya
 NamePlural = Bayas Guaya
 Pocket = 5
-Price = 20
+Price = 1500
 Flags = Berry,Fling_10,NaturalGift_DRAGON_80
 Description = Restaura los PS del Pokémon que la usa en un apuro, pero puede causar confusión.
 #-------------------------------
@@ -5294,7 +5492,7 @@ Description = Restaura los PS del Pokémon que la usa en un apuro, pero puede ca
 Name = Baya Pabaya
 NamePlural = Bayas Pabaya
 Pocket = 5
-Price = 20
+Price = 1500
 Flags = Berry,Fling_10,NaturalGift_DARK_80
 Description = Restaura los PS del Pokémon que la usa en un apuro, pero puede causar confusión.
 #-------------------------------

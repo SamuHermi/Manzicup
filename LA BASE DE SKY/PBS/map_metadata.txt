@@ -576,7 +576,14 @@ Name = Paseo Pósito
 Outdoor = true
 SnapEdges = true
 #-------------------------------
-[117]   # Zona Otaka
+[117]   # Puraza de Abasatosu
 Name = Puraza de Abasatosu
 Outdoor = true
 SnapEdges = true
+TrainerBattleBGM = Oshi no Ko Opening _ YOASOBI - IDOL
+WildBattleBGM = Oshi no Ko Opening _ YOASOBI - IDOL
+#-------------------------------
+[120]   # Ayuntamiento
+SnapEdges = true
+TrainerBattleBGM = Bravely Default - Conflict's Chime
+WildBattleBGM = Bravely Default - Conflict's Chime

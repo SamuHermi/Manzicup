@@ -10,25 +10,25 @@ class Battle::Scene::FightMenu < Battle::Scene::MenuBase
     self.y = Graphics.height - 96
     @battler = nil
     resetMenuToggles
-    @customUI = PluginManager.installed?("Customizable Battle UI")
-    folder = @customUI ? "#{$game_variables[53]}/" : ""
-    path = "Graphics/UI/Battle/" + folder
+    @customUI = PluginManager.installed?('Customizable Battle UI')
+    folder = @customUI ? "#{$game_variables[53]}/" : ''
+    path = 'Graphics/UI/Battle/' + folder
     if USE_GRAPHICS
-      @buttonBitmap  = AnimatedBitmap.new(_INTL(path + "cursor_fight"))
-      @typeBitmap    = AnimatedBitmap.new(_INTL("Graphics/UI/types"))
-      @shiftBitmap   = AnimatedBitmap.new(_INTL(path + "cursor_shift"))
+      @buttonBitmap  = AnimatedBitmap.new(_INTL(path + 'cursor_fight'))
+      @typeBitmap    = AnimatedBitmap.new(_INTL('Graphics/UI/types'))
+      @shiftBitmap   = AnimatedBitmap.new(_INTL(path + 'cursor_shift'))
       @actionButtonBitmap = {}
       addSpecialActionButtons(path)
       background = IconSprite.new(0, Graphics.height - 96, viewport)
-      background.setBitmap(path + "overlay_fight")
-      addSprite("background", background)
+      background.setBitmap(path + 'overlay_fight')
+      addSprite('background', background)
       @buttons = Array.new(Pokemon::MAX_MOVES) do |i|
         button = Sprite.new(viewport)
         button.bitmap = @buttonBitmap.bitmap
-        button.x = self.x + 4
+        button.x = x + 4
         button.x += (i.even? ? 0 : (@buttonBitmap.width / 2) - 4)
-        button.y = self.y + 6
-        button.y += (((i / 2) == 0) ? 0 : BUTTON_HEIGHT - 4)
+        button.y = y + 6
+        button.y += ((i / 2) == 0 ? 0 : BUTTON_HEIGHT - 4)
         button.src_rect.width  = @buttonBitmap.width / 2
         button.src_rect.height = BUTTON_HEIGHT
         if @customUI
@@ -38,45 +38,45 @@ class Battle::Scene::FightMenu < Battle::Scene::MenuBase
         addSprite("button_#{i}", button)
         next button
       end
-      @overlay = BitmapSprite.new(Graphics.width, Graphics.height - self.y, viewport)
-      @overlay.x = self.x
-      @overlay.y = self.y
+      @overlay = BitmapSprite.new(Graphics.width, Graphics.height - y, viewport)
+      @overlay.x = x
+      @overlay.y = y
       pbSetNarrowFont(@overlay.bitmap)
-      addSprite("overlay", @overlay)
-      @infoOverlay = BitmapSprite.new(Graphics.width, Graphics.height - self.y, viewport)
-      @infoOverlay.x = self.x
-      @infoOverlay.y = self.y
+      addSprite('overlay', @overlay)
+      @infoOverlay = BitmapSprite.new(Graphics.width, Graphics.height - y, viewport)
+      @infoOverlay.x = x
+      @infoOverlay.y = y
       pbSetNarrowFont(@infoOverlay.bitmap)
-      addSprite("infoOverlay", @infoOverlay)
+      addSprite('infoOverlay', @infoOverlay)
       @typeIcon = Sprite.new(viewport)
       @typeIcon.bitmap = @typeBitmap.bitmap
-      @typeIcon.x      = self.x + 416
-      @typeIcon.y      = self.y + 20
+      @typeIcon.x      = x + 416
+      @typeIcon.y      = y + 20
       @typeIcon.src_rect.height = TYPE_ICON_HEIGHT
-      addSprite("typeIcon", @typeIcon)
+      addSprite('typeIcon', @typeIcon)
       @actionButton = Sprite.new(viewport)
-      addSprite("actionButton", @actionButton)
+      addSprite('actionButton', @actionButton)
       @shiftButton = Sprite.new(viewport)
       @shiftButton.bitmap = @shiftBitmap.bitmap
-      @shiftButton.x      = self.x + 4
-      @shiftButton.y      = self.y - @shiftBitmap.height
-      addSprite("shiftButton", @shiftButton)
+      @shiftButton.x      = x + 4
+      @shiftButton.y      = y - @shiftBitmap.height
+      addSprite('shiftButton', @shiftButton)
     else
       @msgBox = Window_AdvancedTextPokemon.newWithSize(
-        "", self.x + 320, self.y, Graphics.width - 320, Graphics.height - self.y, viewport
+        '', x + 320, y, Graphics.width - 320, Graphics.height - y, viewport
       )
       @msgBox.baseColor   = @customUI ? @base_color   : TEXT_BASE_COLOR
       @msgBox.shadowColor = @customUI ? @shadow_color : TEXT_SHADOW_COLOR
       pbSetNarrowFont(@msgBox.contents)
-      addSprite("msgBox", @msgBox)
+      addSprite('msgBox', @msgBox)
       @cmdWindow = Window_CommandPokemon.newWithSize(
-        [], self.x, self.y, 320, Graphics.height - self.y, viewport
+        [], x, y, 320, Graphics.height - y, viewport
       )
       @cmdWindow.columns       = 2
       @cmdWindow.columnSpacing = 4
       @cmdWindow.ignore_input  = true
       pbSetNarrowFont(@cmdWindow.contents)
-      addSprite("cmdWindow", @cmdWindow)
+      addSprite('cmdWindow', @cmdWindow)
     end
     self.z = z
   end
@@ -86,36 +86,37 @@ class Battle::Scene::FightMenu < Battle::Scene::MenuBase
     dx_dispose
     @actionButtonBitmap.each_value { |bmp| bmp&.dispose }
   end
-  
+
   def chosenButton=(value)
     oldValue = @chosenButton
     @chosenButton = value
     refresh if @chosenButton != oldValue
   end
-  
+
   def refreshSpecialActionButton
-    return if !USE_GRAPHICS
+    return unless USE_GRAPHICS
+
     button = @actionButtonBitmap[@chosenButton]
     if !button
-      @visibility["actionButton"] = false
+      @visibility['actionButton'] = false
     else
       buttonCount, buttonMode = getButtonSettings
-      @actionButton.bitmap = button.bitmap    
-      @actionButton.x = self.x + ((@shiftMode > 0) ? 204 : 120)
-      @actionButton.y = self.y - (button.height / buttonCount)
+      @actionButton.bitmap = button.bitmap
+      @actionButton.x = x + (@shiftMode > 0 ? 204 : 120)
+      @actionButton.y = y - (button.height / buttonCount)
       @actionButton.src_rect.height = button.height / buttonCount
       @actionButton.src_rect.y = buttonMode * button.height / buttonCount
-      @actionButton.z = self.z - 1
-      @visibility["actionButton"] = (@mode > 0)
+      @actionButton.z = z - 1
+      @visibility['actionButton'] = (@mode > 0)
     end
   end
-  
+
   def refreshButtonNames
-    moves = (@battler) ? @battler.moves : []
-    if !USE_GRAPHICS
+    moves = @battler ? @battler.moves : []
+    unless USE_GRAPHICS
       commands = []
       [4, moves.length].max.times do |i|
-        commands.push((moves[i]) ? moves[i].name : "-")
+        commands.push(moves[i] ? moves[i].name : '-')
       end
       @cmdWindow.commands = commands
       return
@@ -123,7 +124,8 @@ class Battle::Scene::FightMenu < Battle::Scene::MenuBase
     @overlay.bitmap.clear
     textPos = []
     @buttons.each_with_index do |button, i|
-      next if !@visibility["button_#{i}"]
+      next unless @visibility["button_#{i}"]
+
       x = button.x - self.x + (button.src_rect.width / 2)
       y = button.y - self.y + 14
       moveNameBase = TEXT_BASE_COLOR
@@ -138,7 +140,8 @@ class Battle::Scene::FightMenu < Battle::Scene::MenuBase
   end
 
   def refresh
-    return if !@battler
+    return unless @battler
+
     refreshSelection
     refreshSpecialActionButton
     refreshShiftButton
@@ -156,7 +159,7 @@ class Battle::Scene::CommandMenu < Battle::Scene::MenuBase
     [0, 2, 1, 10], # 5 = Fight, Bag, Pokemon, Cheer
     [0, 11, 1, 3], # 6 = Fight, Launch, Pokemon, Run
     [0, 11, 1, 9], # 7 = Fight, Launch, Pokemon, Cancel
-    [0, 11, 1, 4], # 8 = Fight, Launch, Pokemon, Call
+    [0, 11, 1, 4] # 8 = Fight, Launch, Pokemon, Call
   ]
 end
 
@@ -165,7 +168,7 @@ class Battle::Scene::TargetMenu < Battle::Scene::MenuBase
     [0, 2, 1, 10], # 5 = Fight, Bag, Pokemon, Cheer
     [0, 11, 1, 3], # 6 = Fight, Launch, Pokemon, Run
     [0, 11, 1, 9], # 7 = Fight, Launch, Pokemon, Cancel
-    [0, 11, 1, 4], # 8 = Fight, Launch, Pokemon, Call
+    [0, 11, 1, 4] # 8 = Fight, Launch, Pokemon, Call
   ]
 end
 
@@ -179,43 +182,54 @@ class Battle::Scene
   # Edited for command menu display.
   #-----------------------------------------------------------------------------
   def pbCommandMenu(idxBattler, firstAction)
-    bagCommand = _INTL("Mochila")
-    shadowTrainer = (GameData::Type.exists?(:SHADOW) && @battle.trainerBattle?)
-    runCommand = (shadowTrainer) ? _INTL("Llamar") : (firstAction) ? _INTL("Huir") : _INTL("Cancelar")
+    bagCommand = _INTL('Mochila')
+    shadowTrainer = GameData::Type.exists?(:SHADOW) && @battle.trainerBattle?
+    runCommand = if shadowTrainer
+                   _INTL('Llamar')
+                 else
+                   firstAction ? _INTL('Huir') : _INTL('Cancelar')
+                 end
     hasCheer = defined?(@battle.cheerMode) && @battle.cheerMode
     if hasCheer
-      runCommand = _INTL("Animar")
+      runCommand = _INTL('Animar')
       mode = 5
     elsif @battle.launcherBattle?
-      bagCommand = _INTL("Launch")
-      mode = (shadowTrainer) ? 8 : (firstAction) ? 6 : 7
+      bagCommand = _INTL('Launch')
+      mode = if shadowTrainer
+               8
+             else
+               firstAction ? 6 : 7
+             end
     else
-      mode = (shadowTrainer) ? 2 : (firstAction) ? 0 : 1
+      mode = if shadowTrainer
+               2
+             else
+               firstAction ? 0 : 1
+             end
     end
     cmds = [
       _INTL("¿Qué debería\nhacer {1}?", @battle.battlers[idxBattler].name),
-      _INTL("Luchar"), bagCommand,
-      _INTL("Pokémon"), runCommand
+      _INTL('Luchar'), bagCommand,
+      _INTL('Pokémon'), runCommand
     ]
     ret = pbCommandMenuEx(idxBattler, cmds, mode)
     ret = 4 if ret == 3 && (shadowTrainer || hasCheer)
-    ret = -1 if ret == 3 && (!firstAction && !hasCheer)
-    return 3 if ret > 3 && ($DEBUG && Input.press?(Input::CTRL))
-    return ret
+    ret = -1 if ret == 3 && !firstAction && !hasCheer
+    return 3 if ret > 3 && $DEBUG && Input.press?(Input::CTRL)
+
+    ret
   end
-  
+
   #-----------------------------------------------------------------------------
   # Edited for fight menu functionality.
   #-----------------------------------------------------------------------------
   def pbFightMenu(idxBattler, specialAction = nil)
     battler = @battle.battlers[idxBattler]
-    cw = @sprites["fightWindow"]
+    cw = @sprites['fightWindow']
     cw.battler = battler
     moveIndex = 0
-    if battler.moves[@lastMove[idxBattler]]&.id
-      moveIndex = @lastMove[idxBattler]
-    end
-    cw.setIndexAndMode(moveIndex, (!specialAction.nil?) ? 1 : 0)
+    moveIndex = @lastMove[idxBattler] if battler.moves[@lastMove[idxBattler]]&.id
+    cw.setIndexAndMode(moveIndex, !specialAction.nil? ? 1 : 0)
     pbSetSpecialActionModes(idxBattler, specialAction, cw)
     cw.refresh
     needFullRefresh = true
@@ -227,9 +241,9 @@ class Battle::Scene
         needFullRefresh = false
       end
       if needRefresh
-        newMode = (@battle.pbBattleMechanicIsRegistered?(idxBattler, specialAction)) ? 2 : 1
+        newMode = @battle.pbBattleMechanicIsRegistered?(idxBattler, specialAction) ? 2 : 1
         if newMode != cw.mode
-          cw.mode = newMode 
+          cw.mode = newMode
           pbFightMenu_Update(battler, specialAction, cw)
         end
         needRefresh = false
@@ -247,25 +261,29 @@ class Battle::Scene
       end
       if cw.index != oldIndex
         pbPlayCursorSE
-        pbFightMenu_Update(battler, specialAction, cw)		
+        pbFightMenu_Update(battler, specialAction, cw)
       end
       if Input.trigger?(Input::USE)
         pbPlayDecisionSE
         break if yield pbFightMenu_Confirm(battler, specialAction, cw)
+
         needFullRefresh = true
         needRefresh = true
       elsif Input.trigger?(Input::BACK)
         break if yield pbFightMenu_Cancel(battler, specialAction, cw)
+
         needRefresh = true
       elsif Input.trigger?(Input::ACTION)
         if specialAction
           needFullRefresh = pbFightMenu_Action(battler, specialAction, cw)
           break if yield specialAction
+
           needRefresh = true
         end
       elsif Input.trigger?(Input::SPECIAL)
         if cw.shiftMode > 0
           break if yield pbFightMenu_Shift(battler, cw)
+
           needRefresh = true
         end
       end
@@ -277,8 +295,8 @@ class Battle::Scene
 end
 
 def pbPlayActionSE
-  file = pbResolveAudioFile("DX Action Button", 80)
-  if file.name && file.name != ""
+  file = pbResolveAudioFile('DX Action Button', 80)
+  if file.name && file.name != ''
     pbSEPlay(file)
   else
     pbPlayDecisionSE
@@ -292,8 +310,9 @@ end
 #-------------------------------------------------------------------------------
 class Battle
   def pbFightMenu(idxBattler)
-    return pbAutoChooseMove(idxBattler) if !pbCanShowFightMenu?(idxBattler)
+    return pbAutoChooseMove(idxBattler) unless pbCanShowFightMenu?(idxBattler)
     return true if pbAutoFightMenu(idxBattler)
+
     ret = false
     @scene.pbFightMenu(idxBattler, pbGetEligibleBattleMechanic(idxBattler)) do |cmd|
       case cmd
@@ -308,49 +327,51 @@ class Battle
       else
         next false if cmd < 0 || !@battlers[idxBattler].moves[cmd] ||
                       !@battlers[idxBattler].moves[cmd].id
-        next false if !pbRegisterMove(idxBattler, cmd)
+        next false unless pbRegisterMove(idxBattler, cmd)
         next false if !singleBattle? &&
                       !pbChooseTarget(@battlers[idxBattler], @battlers[idxBattler].moves[cmd])
+
         ret = true
       end
       next true
     end
-    return ret
+    ret
   end
-  
+
   def pbCanShowFightMenu?(idxBattler)
     battler = @battlers[idxBattler]
     return false if battler.effects[PBEffects::Encore] > 0 &&
                     !pbCanUseAnyBattleMechanic?(idxBattler)
+
     usable = false
     battler.eachMoveWithIndex do |_m, i|
-      next if !pbCanChooseMove?(idxBattler, i, false)
+      next unless pbCanChooseMove?(idxBattler, i, false)
+
       usable = true
       break
     end
-    return usable
+    usable
   end
-  
+
   def pbCanChooseMove?(idxBattler, idxMove, showMessages, sleepTalk = false)
     battler = @battlers[idxBattler]
-    move = (idxMove.is_a?(Integer)) ? battler.moves[idxMove] : idxMove
+    move = idxMove.is_a?(Integer) ? battler.moves[idxMove] : idxMove
     return false unless move
+
     if move.pp == 0 && move.total_pp > 0 && !sleepTalk
-      pbDisplayPaused(_INTL("¡No quedan PP para este movimiento!")) if showMessages
+      pbDisplayPaused(_INTL('¡No quedan PP para este movimiento!')) if showMessages
       return false
     end
-    if battler.effects[PBEffects::Encore] > 0
-      if !move.powerMove? && move.id != battler.effects[PBEffects::EncoreMove]
-        if showMessages
-          encoreMove = GameData::Move.get(battler.effects[PBEffects::EncoreMove]).name
-          pbDisplayPaused(_INTL("¡{1} solo puede usar {2} debido a Otra vez!", battler.name, encoreMove))
-        end
-        return false
+    if (battler.effects[PBEffects::Encore] > 0) && !move.powerMove? && move.id != battler.effects[PBEffects::EncoreMove]
+      if showMessages
+        encoreMove = GameData::Move.get(battler.effects[PBEffects::EncoreMove]).name
+        pbDisplayPaused(_INTL('¡{1} solo puede usar {2} debido a Otra vez!', battler.name, encoreMove))
       end
+      return false
     end
-    return battler.pbCanChooseMove?(move, true, showMessages, sleepTalk)
+    battler.pbCanChooseMove?(move, true, showMessages, sleepTalk)
   end
-  
+
   def pbCancelChoice(idxBattler)
     if @choices[idxBattler][0] == :UseItem
       item = @choices[idxBattler][1]
@@ -359,21 +380,23 @@ class Battle
     pbUnregisterAllSpecialActions(idxBattler)
     pbClearChoice(idxBattler)
   end
-  
+
   alias dx_pbItemUsesAllActions? pbItemUsesAllActions?
   def pbItemUsesAllActions?(item)
-    return true if GameData::Item.get(item).has_flag?("UsesAllBattleActions")
-    return dx_pbItemUsesAllActions?(item)
+    return true if GameData::Item.get(item).has_flag?('UsesAllBattleActions')
+
+    dx_pbItemUsesAllActions?(item)
   end
-  
+
   def pbCommandPhase
     $CanToggle = true
     @command_phase = true
     @scene.pbBeginCommandPhase
     @battlers.each_with_index do |b, i|
-      next if !b
+      next unless b
+
       pbClearChoice(i) if pbCanShowCommands?(i)
-      pbDeluxeTriggers(i, nil, "RoundStartCommand", 1 + @turnCount) if !b.fainted?
+      pbDeluxeTriggers(i, nil, 'RoundStartCommand', 1 + @turnCount) unless b.fainted?
     end
     2.times { |side| pbActionCommands(side) }
     pbCommandPhaseLoop(true)
@@ -384,44 +407,49 @@ class Battle
     pbCommandPhaseLoop(false)
     @command_phase = false
   end
-  
+
   def pbAttackPhase
     @scene.pbBeginAttackPhase
     @battlers.each_with_index do |b, i|
-      next if !b
-      pbDeluxeTriggers(i, nil, "RoundStartAttack", 1 + @turnCount) if !b.fainted?
-      b.turnCount += 1 if !b.fainted?
+      next unless b
+
+      pbDeluxeTriggers(i, nil, 'RoundStartAttack', 1 + @turnCount) unless b.fainted?
+      b.turnCount += 1 unless b.fainted?
       @successStates[i].clear
       if @choices[i][0] != :UseMove && @choices[i][0] != :Shift && @choices[i][0] != :SwitchOut
         b.effects[PBEffects::DestinyBond] = false
         b.effects[PBEffects::Grudge]      = false
       end
-      b.effects[PBEffects::Rage] = false if !pbChoseMoveFunctionCode?(i, "StartRaiseUserAtk1WhenDamaged")
+      b.effects[PBEffects::Rage] = false if !pbChoseMoveFunctionCode?(i,
+                                                                      'StartRaiseUserAtk1WhenDamaged') && !b.abilityActive?(:BERSERK)
     end
     pbCalculatePriority(true)
-    PBDebug.log("")
+    PBDebug.log('')
     pbAttackPhaseSpecialActions1
     pbAttackPhasePriorityChangeMessages
     pbAttackPhaseCall
     pbAttackPhaseSpecialActions2
     pbAttackPhaseSwitch
     return if @decision > 0
+
     pbAttackPhaseItems
     return if @decision > 0
+
     pbAttackPhaseSpecialActions3
     pbAttackPhaseMoves
   end
-  
+
   def pbPursuit(idxSwitcher)
     @switching = true
     pbPriority.each do |b|
       next if b.fainted? || !b.opposes?(idxSwitcher)
-      next if b.movedThisRound? || !pbChoseMoveFunctionCode?(b.index, "PursueSwitchingFoe")
+      next if b.movedThisRound? || !pbChoseMoveFunctionCode?(b.index, 'PursueSwitchingFoe')
       next unless pbMoveCanTarget?(b.index, idxSwitcher, @choices[b.index][2].pbTarget(b))
       next unless pbCanChooseMove?(b.index, @choices[b.index][1], false)
-      next if b.status == :SLEEP || b.status == :FROZEN
+      next if %i[SLEEP FROZEN].include?(b.status)
       next if b.effects[PBEffects::SkyDrop] >= 0
       next if b.hasActiveAbility?(:TRUANT) && b.effects[PBEffects::Truant]
+
       owner = pbGetOwnerIndexFromBattlerIndex(b.index)
       pbPursuitSpecialActions(b, owner)
       @choices[b.index][3] = idxSwitcher
@@ -431,7 +459,6 @@ class Battle
     @switching = false
   end
 end
-
 
 #===============================================================================
 # Battle::AI rewrites.
@@ -444,51 +471,48 @@ class Battle::AI
     ret = false
     PBDebug.logonerr { ret = pbChooseToSwitchOut }
     if ret
-      PBDebug.log("")
+      PBDebug.log('')
       return
     end
     ret = false
     PBDebug.logonerr { ret = pbChooseToUseItem }
     if ret
-      PBDebug.log("")
+      PBDebug.log('')
       return
     end
     PBDebug.logonerr { ret = pbChooseToUseSpecialCommand }
     if ret
-      PBDebug.log("")
+      PBDebug.log('')
       return
     end
     if @battle.pbAutoFightMenu(idxBattler)
-      PBDebug.log("")
+      PBDebug.log('')
       return
     end
     pbRegisterEnemySpecialAction(idxBattler)
     choices = pbGetMoveScores
     pbChooseMove(choices)
-    PBDebug.log("")
+    PBDebug.log('')
     pbRegisterEnemySpecialAction2(idxBattler)
   end
-  
+
   def pbGetMovesToScore
-    moves_to_score = [] 
+    moves_to_score = []
     Pokemon::MAX_MOVES.times do |i|
       move = @user.battler.moves[i]
       moves_to_score.push(move)
     end
-    return moves_to_score
+    moves_to_score
   end
-  
+
   def pbGetMoveScores
     choices = []
     moves_to_score = pbGetMovesToScore
     moves_to_score.each_with_index do |orig_move, idxMove|
-      next if !orig_move
-      if idxMove >= Pokemon::MAX_MOVES
-        until idxMove < Pokemon::MAX_MOVES
-          idxMove -= Pokemon::MAX_MOVES
-        end
-      end
-      if !@battle.pbCanChooseMove?(@user.index, orig_move, false)
+      next unless orig_move
+
+      idxMove -= Pokemon::MAX_MOVES until idxMove < Pokemon::MAX_MOVES if idxMove >= Pokemon::MAX_MOVES
+      unless @battle.pbCanChooseMove?(@user.index, orig_move, false)
         if orig_move.pp == 0 && orig_move.total_pp > 0
           PBDebug.log_ai("#{@user.name} cannot use #{orig_move.name} (no PP left)")
         else
@@ -497,16 +521,16 @@ class Battle::AI
         next
       end
       set_up_move_check(orig_move)
-      if @trainer.has_skill_flag?("PredictMoveFailure") && pbPredictMoveFailure
+      if @trainer.has_skill_flag?('PredictMoveFailure') && pbPredictMoveFailure
         PBDebug.log_ai("#{@user.name} is considering using #{orig_move.name}...")
-        PBDebug.log_score_change(MOVE_FAIL_SCORE - MOVE_BASE_SCORE, "move will fail")
+        PBDebug.log_score_change(MOVE_FAIL_SCORE - MOVE_BASE_SCORE, 'move will fail')
         add_move_to_choices(choices, idxMove, MOVE_FAIL_SCORE, -1, orig_move)
         next
       end
       target_data = @move.pbTarget(@user.battler)
-      if @move.function_code == "CurseTargetOrLowerUserSpd1RaiseUserAtkDef1" &&
-         @move.rough_type == :GHOST && @user.has_active_ability?([:LIBERO, :PROTEAN])
-        target_data = GameData::Target.get((Settings::MECHANICS_GENERATION >= 8) ? :RandomNearFoe : :NearFoe)
+      if @move.function_code == 'CurseTargetOrLowerUserSpd1RaiseUserAtkDef1' &&
+         @move.rough_type == :GHOST && @user.has_active_ability?(%i[LIBERO PROTEAN])
+        target_data = GameData::Target.get(Settings::MECHANICS_GENERATION >= 8 ? :RandomNearFoe : :NearFoe)
       end
       case target_data.num_targets
       when 0
@@ -519,18 +543,20 @@ class Battle::AI
         num_targets = 0
         @battle.allBattlers.each do |b|
           next if redirected_target && b.index != redirected_target
-          next if !pbAbleToTarget?(@user.battler, b, target_data) # For rival species
+          next unless pbAbleToTarget?(@user.battler, b, target_data) # For rival species
+
           PBDebug.log_ai("#{@user.name} is considering using #{orig_move.name} against #{b.name} (#{b.index})...")
           score = MOVE_BASE_SCORE
           PBDebug.logonerr { score = pbGetMoveScore([b]) }
           add_move_to_choices(choices, idxMove, score, b.index, orig_move)
           num_targets += 1
         end
-        PBDebug.log("     no valid targets") if num_targets == 0
+        PBDebug.log('     no valid targets') if num_targets == 0
       else
         targets = []
         @battle.allBattlers.each do |b|
-          next if !@battle.pbMoveCanTarget?(@user.battler.index, b.index, target_data)
+          next unless @battle.pbMoveCanTarget?(@user.battler.index, b.index, target_data)
+
           targets.push(b)
         end
         PBDebug.log_ai("#{@user.name} is considering using #{orig_move.name}...")
@@ -540,16 +566,16 @@ class Battle::AI
       end
     end
     @battle.moldBreaker = false
-    return choices
+    choices
   end
-  
+
   def add_move_to_choices(choices, idxMove, score, idxTarget = -1, orig_move = nil)
     choices.push([idxMove, score, idxTarget, 0, orig_move])
-    if @user.wild? && @user.pokemon.personalID % @user.battler.moves.length == idxMove
-      choices.push([idxMove, score, idxTarget, 0, orig_move])
-    end
+    return unless @user.wild? && @user.pokemon.personalID % @user.battler.moves.length == idxMove
+
+    choices.push([idxMove, score, idxTarget, 0, orig_move])
   end
-  
+
   def pbChooseMove(choices)
     user_battler = @user.battler
     if choices.length == 0
@@ -582,7 +608,7 @@ class Battle::AI
     if $INTERNAL
       PBDebug.log_ai("Move choices for #{@user.name}:")
       choices.each_with_index do |c, i|
-        chance = sprintf("%5.1f", (c[3] > 0) ? 100.0 * c[3] / total_score : 0)
+        chance = format('%5.1f', c[3] > 0 ? 100.0 * c[3] / total_score : 0)
         log_msg = "   * #{chance}% to use #{c[4].name}"
         log_msg += " (target #{c[2]})" if c[2] >= 0
         log_msg += ": score #{c[1]}"
@@ -593,18 +619,19 @@ class Battle::AI
     choices.each do |c|
       randNum -= c[3]
       next if randNum >= 0
+
       pbRegisterEnemySpecialActionFromMove(user_battler, c[4])
       @battle.pbRegisterMove(user_battler.index, c[0], false)
       @battle.pbRegisterTarget(user_battler.index, c[2]) if c[2] && c[2] >= 0
       break
     end
-    if @battle.choices[user_battler.index][2]
-      move_name = @battle.choices[user_battler.index][2].name
-      if @battle.choices[user_battler.index][3] >= 0
-        PBDebug.log("   => will use #{move_name} (target #{@battle.choices[user_battler.index][3]})")
-      else
-        PBDebug.log("   => will use #{move_name}")
-      end
+    return unless @battle.choices[user_battler.index][2]
+
+    move_name = @battle.choices[user_battler.index][2].name
+    if @battle.choices[user_battler.index][3] >= 0
+      PBDebug.log("   => will use #{move_name} (target #{@battle.choices[user_battler.index][3]})")
+    else
+      PBDebug.log("   => will use #{move_name}")
     end
   end
 end

@@ -9609,7 +9609,6 @@ TotalPP = 15
 Target = NearOther
 FunctionCode = IncreasePowerInElectricTerrain
 Flags = Contact,CanProtect,CanMirrorMove,Slicing
-EffectChance = 10
 Description = El usuario desgarra al objetivo con una espada etérea cuyo poder aumenta en el terreno eléctrico.
 #-------------------------------
 [BLOODMOON]

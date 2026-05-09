@@ -1,5 +1,0 @@
-Name       = Box Ranch System
-Version    = 1.0
-Essentials = 21.1
-Website    = coming soon
-Credits    = Nononever

@@ -104,6 +104,8 @@ def pbReceivePokemon(pkmn, level = 5, see_form = true)
       screen.pbDexEntry(pkmn.species)
     end
   end
+  Console.echo_li(pkmn.name + ' se ha recibido.')
+  pbDetectAndApplyDefaultEVPreset(pkmn)
   # Nickname and add the Pokémon
   pkmn.calc_stats
   Console.echo_li("\nAl recibir: \n\t")

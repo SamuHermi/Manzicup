@@ -254,6 +254,9 @@ Pokemon = SHEDINJA,72
 	EV = 252,0,172,84,0,0
 	TeraType = ELECTRIC
 #-------------------------------
+# NPCs
+#-------------------------------
+
 [TRIPULANTE,Azul]
 LoseText = ...
 Pokemon = TOXEL,33
@@ -391,6 +394,88 @@ Pokemon = WEEPINBELL,36
 LoseText = ...
 Pokemon = SERVINE,36
 Pokemon = BAYLEEF,36
+#-------------------------------
+[NADADOR,Luis]
+LoseText = Me has aguado el día...
+Pokemon = HORSEA,20
+Pokemon = POLIWHIRL,21
+#-------------------------------
+[NADADOR,Ricardo]
+LoseText = ¡Veo que te mueves bien por el agua!
+Pokemon = SEAKING,52
+Pokemon = CLOYSTER,52
+#-------------------------------
+[NADADOR,Dino]
+LoseText = ¡Puagh! ¡No he podido más!
+Pokemon = POLITOED,52
+Pokemon = STARMIE,52
+#-------------------------------
+[NADADORA,Lourdes]
+LoseText = Humillada y empapada, ¡qué poco me gusta!
+Pokemon = KRABBY,20
+Pokemon = SEEL,21
+#-------------------------------
+[NADADORA,Cati]
+LoseText = ¡No le he dado bien a las piernas!
+Pokemon = CURSOLA,52
+#-------------------------------
+[NADADORA,Nora]
+LoseText = ¡Uy! ¡Se me escapan las Pokéball!
+Pokemon = SHELLDER,52
+Pokemon = SHELLDER,52
+Pokemon = CLOYSTER,51
+#-------------------------------
+[NADADORA,Leonor]
+LoseText = ¡Me hundo en las profundidades!
+Pokemon = SLOWKING,52
+#-------------------------------
+[NADADORA,Milena]
+LoseText = ¿Ya hemos acabado?
+Pokemon = STARMIE,51
+Pokemon = QWILFISH,52
+#-------------------------------
+[NADADOR,Xenorth]
+LoseText = ¡Auch! Creo que he tragado agua salada.
+Pokemon = GOLISOPOD,75
+Pokemon = STARAPTOR,75
+#-------------------------------
+[NADADORA,Luciana]
+LoseText = ¡Bien hecho! Aunque deberías relajarte más.
+Pokemon = AZUMARILL,75
+Pokemon = TSAREENA,75
+#-------------------------------
+[NADADORA,Cecilia]
+LoseText = Tranqui, que llevo dinero encima.
+Pokemon = SAMUROTT,80
+#-------------------------------
+[BRUJA,Aida]
+LoseText = Mardisión pa' tí.
+Pokemon = MURKROW,25
+#-------------------------------
+[BRUJA,Sarah]
+LoseText = No me lleves a la hoguera, por favor.
+Pokemon = GOOMY,26
+Pokemon = TINKATUFF,26
+#-------------------------------
+[BRUJA,Sarah]
+LoseText = Deberías unirte a nuestro aquelarre.
+Pokemon = RALTS,11
+Pokemon = IMPIDIMP,12
+#-------------------------------
+[BRUJA,Yona]
+LoseText = Nuestras pócimas son menos amargas que esta derrota.
+Pokemon = ARBOK,50
+Pokemon = ALAKAZAM,50
+#-------------------------------
+[BRUJA,Dora]
+LoseText = ¿Qué clase de brujería es esta?
+Pokemon = DUSCLOPS,50
+Pokemon = CHANDELURE,50
+#-------------------
+[BRUJA,Neila]
+LoseText = Te lanzaré un hechizo esta noche
+Pokemon = GARDEVOIR,50
+Pokemon = CERULEDGE,50
 #-------------------------------
 [MINER,Steve]
 LoseText = ...

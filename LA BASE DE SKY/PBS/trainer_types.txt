@@ -156,6 +156,13 @@ BaseMoney = 48
 Maps = 117
 Rarity = 1
 #-------------------------------
+[BRUJA]
+Name = Meiga
+Gender = Female
+BaseMoney = 48
+Maps = 120
+Rarity = 1
+#-------------------------------
 [TAMER]
 Name = Domador
 Gender = Male
@@ -222,25 +229,13 @@ Name = Médium
 Gender = Female
 BaseMoney = 32
 #-------------------------------
-[SWIMMER_M]
+[NADADOR]
 Name = Nadador
 Gender = Male
 BaseMoney = 16
 SkillLevel = 32
 #-------------------------------
-[SWIMMER_F]
-Name = Nadadora
-Gender = Female
-BaseMoney = 16
-SkillLevel = 32
-#-------------------------------
-[SWIMMER2_M]
-Name = Nadador
-Gender = Male
-BaseMoney = 16
-SkillLevel = 32
-#-------------------------------
-[SWIMMER2_F]
+[NADADORA]
 Name = Nadadora
 Gender = Female
 BaseMoney = 16

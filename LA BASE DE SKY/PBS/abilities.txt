@@ -1387,3 +1387,7 @@ Description = Aumenta el daño de cualquier tipo un 30% en Campo de Hierba.
 [AURADORADA]
 Name = Aura Dorada
 Description = "Aumenta el daño de tipo Eléctrico un 30%."
+#-------------------------------
+[SPICYSPRAY]
+Name = Salpicante
+Description = Cuando el Pokémon poseedor de la habilidad recibe daño de un movimiento, quema al Pokémon atacante.
