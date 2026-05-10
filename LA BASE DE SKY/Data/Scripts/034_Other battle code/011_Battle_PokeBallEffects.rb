@@ -30,7 +30,6 @@ end
 #===============================================================================
 # IsUnconditional
 #===============================================================================
-
 Battle::PokeBallEffects::IsUnconditional.add(:MASTERBALL, proc { |ball, battle, battler|
   next true
 })
@@ -41,7 +40,6 @@ Battle::PokeBallEffects::IsUnconditional.add(:MASTERBALL, proc { |ball, battle, 
 #       Ball is a Beast Ball). In this case, all Balls' catch rates are set
 #       elsewhere to 0.1x.
 #===============================================================================
-
 Battle::PokeBallEffects::ModifyCatchRate.add(:GREATBALL, proc { |ball, catchRate, battle, battler|
   next catchRate * 1.5
 })
@@ -57,42 +55,42 @@ Battle::PokeBallEffects::ModifyCatchRate.add(:SAFARIBALL, proc { |ball, catchRat
 Battle::PokeBallEffects::ModifyCatchRate.add(:NETBALL, proc { |ball, catchRate, battle, battler|
   multiplier = (Settings::NEW_POKE_BALL_CATCH_RATES) ? 3.5 : 3
   catchRate *= multiplier if battler.pbHasType?(:BUG) || battler.pbHasType?(:WATER)
-  next [catchRate, 255].min
+  next catchRate
 })
 
 Battle::PokeBallEffects::ModifyCatchRate.add(:DIVEBALL, proc { |ball, catchRate, battle, battler|
   catchRate *= 3.5 if battle.environment == :Underwater
-  next [catchRate, 255].min
+  next catchRate
 })
 
 Battle::PokeBallEffects::ModifyCatchRate.add(:NESTBALL, proc { |ball, catchRate, battle, battler|
   if battler.level <= 30
     catchRate *= [(41 - battler.level) / 10.0, 1].max
   end
-  next [catchRate, 255].min
+  next catchRate
 })
 
 Battle::PokeBallEffects::ModifyCatchRate.add(:REPEATBALL, proc { |ball, catchRate, battle, battler|
   multiplier = (Settings::NEW_POKE_BALL_CATCH_RATES) ? 3.5 : 3
   catchRate *= multiplier if battle.pbPlayer.owned?(battler.species)
-  next [catchRate, 255].min
+  next catchRate
 })
 
 Battle::PokeBallEffects::ModifyCatchRate.add(:TIMERBALL, proc { |ball, catchRate, battle, battler|
   multiplier = [1 + (0.3 * battle.turnCount), 4].min
   catchRate *= multiplier
-  next [catchRate, 255].min
+  next catchRate
 })
 
 Battle::PokeBallEffects::ModifyCatchRate.add(:DUSKBALL, proc { |ball, catchRate, battle, battler|
   multiplier = (Settings::NEW_POKE_BALL_CATCH_RATES) ? 3 : 3.5
   catchRate *= multiplier if battle.time == 2   # Night or in cave
-  next [catchRate, 255].min
+  next catchRate
 })
 
 Battle::PokeBallEffects::ModifyCatchRate.add(:QUICKBALL, proc { |ball, catchRate, battle, battler|
   catchRate *= 5 if battle.turnCount == 0
-  next [catchRate, 255].min
+  next catchRate
 })
 
 Battle::PokeBallEffects::ModifyCatchRate.add(:FASTBALL, proc { |ball, catchRate, battle, battler|
@@ -104,7 +102,7 @@ Battle::PokeBallEffects::ModifyCatchRate.add(:FASTBALL, proc { |ball, catchRate,
 
 Battle::PokeBallEffects::ModifyCatchRate.add(:LEVELBALL, proc { |ball, catchRate, battle, battler|
   maxlevel = 0
-  battle.allSameSideBattlers(true).each { |b| maxlevel = b.level if b.level > maxlevel }
+  battle.allSameSideBattlers.each { |b| maxlevel = b.level if b.level > maxlevel }
   if maxlevel >= battler.level * 4
     catchRate *= 8
   elsif maxlevel >= battler.level * 2
@@ -124,9 +122,6 @@ Battle::PokeBallEffects::ModifyCatchRate.add(:LUREBALL, proc { |ball, catchRate,
   next [catchRate, 255].min
 })
 
-# NOTE: This is the only Poké Ball that directly modifies the original catch
-#       rate, rather than being a multiplier. As such, it needs to ensure that
-#       the catch rate remains in the range 1-255.
 Battle::PokeBallEffects::ModifyCatchRate.add(:HEAVYBALL, proc { |ball, catchRate, battle, battler|
   next 0 if catchRate == 0
   weight = battler.pbWeight
@@ -179,7 +174,7 @@ Battle::PokeBallEffects::ModifyCatchRate.add(:SPORTBALL, proc { |ball, catchRate
 
 Battle::PokeBallEffects::ModifyCatchRate.add(:DREAMBALL, proc { |ball, catchRate, battle, battler|
   catchRate *= 4 if battler.asleep?
-  next [catchRate, 255].min
+  next catchRate
 })
 
 Battle::PokeBallEffects::ModifyCatchRate.add(:BEASTBALL, proc { |ball, catchRate, battle, battler|
@@ -194,7 +189,6 @@ Battle::PokeBallEffects::ModifyCatchRate.add(:BEASTBALL, proc { |ball, catchRate
 #===============================================================================
 # OnCatch
 #===============================================================================
-
 Battle::PokeBallEffects::OnCatch.add(:HEALBALL, proc { |ball, battle, pkmn|
   pkmn.heal
 })
@@ -202,3 +196,4 @@ Battle::PokeBallEffects::OnCatch.add(:HEALBALL, proc { |ball, battle, pkmn|
 Battle::PokeBallEffects::OnCatch.add(:FRIENDBALL, proc { |ball, battle, pkmn|
   pkmn.happiness = (Settings::APPLY_HAPPINESS_SOFT_CAP) ? 150 : 200
 })
+

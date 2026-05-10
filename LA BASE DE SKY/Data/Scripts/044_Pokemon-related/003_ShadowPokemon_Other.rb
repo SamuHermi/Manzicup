@@ -111,18 +111,14 @@ class RelicStoneScreen
   def pbDisplay(x)
     @scene.pbDisplay(x)
   end
-  alias show_message pbDisplay
 
   def pbConfirm(x)
     @scene.pbConfirm(x)
   end
-  alias show_confirm_message pbConfirm
 
   def pbUpdate; end
-  alias update pbUpdate
 
   def pbRefresh; end
-  alias refresh pbRefresh
 
   def pbStartScreen(pokemon)
     @scene.pbStartScene(pokemon)
@@ -213,7 +209,7 @@ class Battle::Battler
     p = self.pokemon
     if @battle.pbRandom(p.heart_gauge) <= p.max_gauge_size / 4
       p.hyper_mode = true
-      @battle.pbDisplay(_INTL("¡Las emociones de {1} alcanzaron un punto álgido!\n¡Entró en Hiperestado!", self.pbThis(this)))
+      @battle.pbDisplay(_INTL("¡Las emociones de {1} alcanzaron un punto álgido!\n¡Entró en Hiperestado!", self.pbThis))
     end
   end
 
@@ -364,9 +360,6 @@ class Battle::Move::UserLosesHalfHP < Battle::Move::RecoilMove
     # NOTE: This move's recoil is not prevented by Rock Head/Magic Guard.
     amt = pbRecoilDamage(user, target)
     amt = 1 if amt < 1
-    if user.pokemon.isSpecies?(:BASCULIN) && [2, 3].include?(user.pokemon.form)
-      user.pokemon.evolution_counter += amt
-    end
     user.pbReduceHP(amt, false)
     @battle.pbDisplay(_INTL("¡{1} se ha dañado por el retroceso!", user.pbThis))
     user.pbItemHPHealCheck
@@ -424,9 +417,8 @@ end
 #===============================================================================
 #
 #===============================================================================
-
 # Record current heart gauges of Pokémon in party, to see if they drop to zero
-# during battle and need to say they're ready to be purified afterwards.
+# during battle and need to say they're ready to be purified afterwards
 EventHandlers.add(:on_start_battle, :record_party_heart_gauges,
   proc {
     $game_temp.party_heart_gauges_before_battle = []
@@ -437,7 +429,7 @@ EventHandlers.add(:on_start_battle, :record_party_heart_gauges,
 )
 
 EventHandlers.add(:on_end_battle, :check_ready_to_purify,
-  proc { |_outcome, _canLose|
+  proc { |_decision, _canLose|
     $game_temp.party_heart_gauges_before_battle.each_with_index do |value, i|
       pkmn = $player.party[i]
       next if !pkmn || !value || value == 0
@@ -466,3 +458,4 @@ EventHandlers.add(:on_player_step_taken, :lower_heart_gauges,
     $PokemonGlobal.purifyChamber&.update
   }
 )
+

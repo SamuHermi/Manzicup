@@ -50,7 +50,7 @@ class PokemonPokedexInfo_Scene
     # Example
     #---------------------------------------------------------------------------
     if page_id == :page_mining
-      pbMessage(_INTL("Iniciar minijuego de minería."))
+      pbMessage(_INTL("Begin mining mini-game."))
       pbMiningGame
       return true
     end

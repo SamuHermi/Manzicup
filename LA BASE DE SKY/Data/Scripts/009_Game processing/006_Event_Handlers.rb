@@ -30,8 +30,8 @@ class Event
     @callbacks.clear
   end
 
-  # Triggers the event and calls all its event handlers. Normally called only by
-  # the code where the event occurred.
+  # Triggers the event and calls all its event handlers.  Normally called only
+  # by the code where the event occurred.
   # The first argument is the sender of the event, the second argument contains
   # the event's parameters. If three or more arguments are given, this method
   # supports the following callbacks:
@@ -70,7 +70,7 @@ class NamedEvent
 
   # Adds an event handler procedure from the event.
   def add(key, proc)
-    @callbacks[key] = proc
+    @callbacks[key] = proc if !@callbacks.has_key?(key)
   end
 
   # Removes an event handler procedure from the event.
@@ -104,10 +104,6 @@ class HandlerHash
     return nil
   end
 
-  def keys
-    return @hash.keys.clone
-  end
-
   def add(id, handler = nil, &handlerBlock)
     if ![Proc, Hash].include?(handler.class) && !block_given?
       raise ArgumentError, "#{self.class.name} para #{id.inspect} no tiene un controlador (handler) válido (se proporcionó #{handler.inspect})"
@@ -133,14 +129,14 @@ class HandlerHash
     @hash.each_pair { |key, value| yield key, value }
   end
 
+  def keys
+    return @hash.keys.clone
+  end
+
   # NOTE: The call does not pass id as a parameter to the proc/block.
   def trigger(id, *args)
     handler = self[id]
     return handler&.call(*args)
-  end
-
-  def empty?
-    return @hash.empty?
   end
 end
 
@@ -162,10 +158,6 @@ class HandlerHashSymbol
       return add_if[1] if add_if[0].call(sym)
     end
     return nil
-  end
-
-  def keys
-    return @hash.keys
   end
 
   def add(sym, handler = nil, &handlerBlock)
@@ -231,10 +223,6 @@ class HandlerHashEnum
       end
     end
     return ret
-  end
-
-  def keys
-    return @hash.keys
   end
 
   def fromSymbol(sym)
@@ -308,3 +296,4 @@ end
 
 class MoveHandlerHash < HandlerHashSymbol
 end
+

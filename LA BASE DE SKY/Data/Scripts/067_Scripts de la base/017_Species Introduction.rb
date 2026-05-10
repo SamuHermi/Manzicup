@@ -107,13 +107,13 @@ class SpeciesIntro
   
   def text_message
     ret = name
-    ret += @message_complement || _INTL(". El Pokémon {1}.", category)
+    ret += @message_complement || _INTL(". Pokémon {1}.", category)
     return ret
   end
 
   def create_picture_icon(bitmap)
     ret = PictureWindow.new(bitmap)
-    if PluginManager.installed?("Sprites Animados") || PluginManager.installed?("[DBK] Animated Pokémon System")
+    if PluginManager.installed?("Sprites Animados")
       ret.width = ret.height
       ret.zoom_x = ret.zoom_x * 2
       ret.zoom_y = ret.zoom_y * 2

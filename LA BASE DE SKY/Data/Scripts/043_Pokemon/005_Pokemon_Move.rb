@@ -43,101 +43,36 @@ class Pokemon
     # @return [Integer] total PP
     def total_pp
       max_pp = GameData::Move.get(@id).total_pp
-      max_pp + (max_pp * @ppup / 5)
+      return max_pp + (max_pp * @ppup / 5)
     end
     alias totalpp total_pp
 
-    def function_code
-      GameData::Move.get(@id).function_code
-    end
-
-    def power
-      GameData::Move.get(@id).power
-    end
-
-    def type
-      GameData::Move.get(@id).type
-    end
-
-    def category
-      GameData::Move.get(@id).category
-    end
-
-    def physical_move?
-      GameData::Move.get(@id).physical?
-    end
-
-    def special_move?
-      GameData::Move.get(@id).special?
-    end
-
-    def status_move?
-      GameData::Move.get(@id).status?
-    end
-
-    def accuracy
-      GameData::Move.get(@id).accuracy
-    end
-
-    def effect_chance
-      GameData::Move.get(@id).effect_chance
-    end
-
-    def target
-      GameData::Move.get(@id).target
-    end
-
-    def priority
-      GameData::Move.get(@id).priority
-    end
-
-    def flags
-      GameData::Move.get(@id).flags
-    end
-
-    def name
-      GameData::Move.get(@id).name
-    end
-
-    def description
-      GameData::Move.get(@id).description
-    end
-
-    def hidden_move?
-      GameData::Move.get(@id).hidden_move?
-    end
+    def function_code;  return GameData::Move.get(@id).function_code; end
+    def power;          return GameData::Move.get(@id).power;         end
+    def type;           return GameData::Move.get(@id).type;          end
+    def category;       return GameData::Move.get(@id).category;      end
+    def physical_move?; return GameData::Move.get(@id).physical?;     end
+    def special_move?;  return GameData::Move.get(@id).special?;      end
+    def status_move?;   return GameData::Move.get(@id).status?;       end
+    def accuracy;       return GameData::Move.get(@id).accuracy;      end
+    def effect_chance;  return GameData::Move.get(@id).effect_chance; end
+    def target;         return GameData::Move.get(@id).target;        end
+    def priority;       return GameData::Move.get(@id).priority;      end
+    def flags;          return GameData::Move.get(@id).flags;         end
+    def name;           return GameData::Move.get(@id).name;          end
+    def description;    return GameData::Move.get(@id).description;   end
+    def hidden_move?;   return GameData::Move.get(@id).hidden_move?;  end
 
     # @deprecated This method is slated to be removed in v22.
     def base_damage
-      Deprecation.warn_method('base_damage', 'v22', 'power')
-      @power
+      Deprecation.warn_method("base_damage", "v22", "power")
+      return @power
     end
 
-    def display_type(pkmn)
-      GameData::Move.get(@id).display_type(pkmn, self)
-    end
-
-    def display_category(pkmn)
-      GameData::Move.get(@id).display_category(pkmn, self)
-    end
-
-    def display_damage(pkmn)
-      GameData::Move.get(@id).display_damage(pkmn, self)
-    end
-
-    def display_power(pkmn)
-      GameData::Move.get(@id).display_power(pkmn, self)
-    end
-
-    def display_accuracy(pkmn)
-      GameData::Move.get(@id).display_accuracy(pkmn, self)
-    end
-  end
-
-  def find_move(move_id)
-    return nil if move_id.nil? || !GameData::Move.exists?(move_id)
-
-    move_id = GameData::Move.get(move_id).id
-    @moves.find { |m| m.id == move_id }
+    def display_type(pkmn);     return GameData::Move.get(@id).display_type(pkmn, self);     end
+    def display_category(pkmn); return GameData::Move.get(@id).display_category(pkmn, self); end
+    def display_damage(pkmn);   return GameData::Move.get(@id).display_damage(pkmn, self);   end
+    def display_accuracy(pkmn); return GameData::Move.get(@id).display_accuracy(pkmn, self); end
   end
 end
+

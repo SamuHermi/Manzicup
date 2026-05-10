@@ -1,65 +1,44 @@
-# -------------------------------------------------------------------------------
-# Redistributes a Pokémon's EVs proportionally when it gains levels.
-# Preserves the ratio between stats, fills the new pool, respects evcap,
-# and corrects rounding remainders by assigning leftover EVs to the stats
-# with the highest proportional claim that haven't yet hit the cap.
-# -------------------------------------------------------------------------------
-def pbRedistributeEVsForLevel(pkmn, new_level)
-  new_evpool = 80 + new_level * 8
-  new_evpool = new_evpool.div(4) * 4
-  new_evpool = 512 if new_evpool > 512
-  new_evcap  = 40 + new_level * 4
-  new_evcap  = new_evcap.div(4) * 4
-  new_evcap  = 252 if new_evcap > 252
-
-  stat_ids = []
-  GameData::Stat.each_main { |s| stat_ids << s.id }
-  stat_ids.delete(:SPECIAL_ATTACK) unless Settings::PURIST_MODE
-
-  evsum = stat_ids.sum { |s| pkmn.ev[s] }
-  return if evsum == 0 # no EVs assigned yet — nothing to redistribute
-
-  # Calculate proportions from current EVs
-  proportions = {}
-  stat_ids.each { |s| proportions[s] = pkmn.ev[s].to_f / evsum }
-
-  # First pass: assign proportional share, floor, respect cap
-  assigned = 0
-  new_evs = {}
-  fractionals = {}
-  stat_ids.each do |s|
-    raw   = new_evpool * proportions[s]
-    value = [raw.floor, new_evcap].min
-    new_evs[s]      = value
-    fractionals[s]  = raw - raw.floor
-    assigned       += value
-  end
-
-  # Second pass: distribute remainder by largest fractional part first
-  remainder = new_evpool - assigned
-  if remainder > 0
-    sorted = fractionals.sort_by { |_, frac| -frac }.map(&:first)
-    sorted.each do |s|
-      break if remainder <= 0
-      next if new_evs[s] >= new_evcap
-
-      add = [1, new_evcap - new_evs[s], remainder].min
-      new_evs[s] += add
-      remainder  -= add
-    end
-  end
-
-  # Apply new EVs
-  stat_ids.each { |s| pkmn.ev[s] = new_evs[s] }
-  pkmn.ev[:SPECIAL_ATTACK] = pkmn.ev[:ATTACK] unless Settings::PURIST_MODE
-  pkmn.calc_stats
-end
-
 alias mixed_ev_alloc_pbChangeLevel pbChangeLevel
 def pbChangeLevel(pkmn, new_level, scene)
   if new_level > pkmn.level
-    # DemICE edit — redistribute EVs proportionally to the new pool
-    pbRedistributeEVsForLevel(pkmn, new_level)
+    # DemICE edit
+    evpool = 80 + pkmn.level * 8
+    evpool = evpool.div(4) * 4
+    evpool = 512 if evpool > 512
+    evcap = 40 + pkmn.level * 4
+    evcap = evcap.div(4) * 4
+    evcap = 252 if evcap > 252
+    increment = 4 * (new_level - pkmn.level)
+    evsum = pkmn.ev[:HP] + pkmn.ev[:ATTACK] + pkmn.ev[:DEFENSE] + pkmn.ev[:SPECIAL_DEFENSE] + pkmn.ev[:SPEED]
+    evsum += pkmn.ev[:SPECIAL_ATTACK] if Settings::PURIST_MODE
+    evarray = []
+    GameData::Stat.each_main do |s|
+      evarray.push(pkmn.ev[s.id])
+    end
+    if evsum > 0 && evpool > evsum && evarray.max < evcap && evarray.max_nth(2) < evcap
+      GameData::Stat.each_main do |s|
+        next unless pkmn.ev[s.id] == evarray.max
+
+        pkmn.ev[s.id] += increment
+        pkmn.calc_stats
+        pkmn.ev[s.id] += increment if pkmn.ev[s.id] < evcap
+        pkmn.calc_stats
+      end
+      evsum = pkmn.ev[:HP] + pkmn.ev[:ATTACK] + pkmn.ev[:DEFENSE] + pkmn.ev[:SPECIAL_DEFENSE] + pkmn.ev[:SPEED]
+      evsum += pkmn.ev[:SPECIAL_ATTACK] if Settings::PURIST_MODE
+      evarray = []
+      GameData::Stat.each_main do |s|
+        evarray.push(pkmn.ev[s.id])
+      end
+      if evpool > evsum
+        GameData::Stat.each_main do |s|
+          if pkmn.ev[s.id] == evarray.max_nth(2)
+            pkmn.ev[s.id] += increment
+            pkmn.calc_stats
+          end
+        end
+      end
+    end
     # DemICE end
   elsif new_level < pkmn.level
     GameData::Stat.each_main do |s|
@@ -77,8 +56,43 @@ class Battle
     mixed_ev_alloc_pbGainExpOne(idxParty, defeatedBattler, numPartic, expShare, expAll, showMessages)
 
     if pkmn.level > current_level
-      # DemICE edit — redistribute EVs proportionally to the new pool
-      pbRedistributeEVsForLevel(pkmn, pkmn.level)
+      # DemICE edit
+      evpool = 80 + pkmn.level * 8
+      evpool = evpool.div(4) * 4
+      evpool = 512 if evpool > 512
+      evcap = 40 + pkmn.level * 4
+      evcap = evcap.div(4) * 4
+      evcap = 252 if evcap > 252
+      evsum = pkmn.ev[:HP] + pkmn.ev[:ATTACK] + pkmn.ev[:DEFENSE] + pkmn.ev[:SPECIAL_DEFENSE] + pkmn.ev[:SPEED]
+      evsum += pkmn.ev[:SPECIAL_ATTACK] if Settings::PURIST_MODE
+      evarray = []
+      GameData::Stat.each_main do |s|
+        evarray.push(pkmn.ev[s.id])
+      end
+      if evsum > 0 && evpool > evsum && evarray.max < evcap && evarray.max_nth(2) < evcap
+        GameData::Stat.each_main do |s|
+          next unless pkmn.ev[s.id] == evarray.max
+
+          pkmn.ev[s.id] += 4
+          pkmn.calc_stats
+          pkmn.ev[s.id] += 4 if pkmn.ev[s.id] < evcap
+          pkmn.calc_stats
+        end
+        evsum = pkmn.ev[:HP] + pkmn.ev[:ATTACK] + pkmn.ev[:DEFENSE] + pkmn.ev[:SPECIAL_DEFENSE] + pkmn.ev[:SPEED]
+        evsum += pkmn.ev[:SPECIAL_ATTACK] if Settings::PURIST_MODE
+        evarray = []
+        GameData::Stat.each_main do |s|
+          evarray.push(pkmn.ev[s.id])
+        end
+        if evpool > evsum
+          GameData::Stat.each_main do |s|
+            if pkmn.ev[s.id] == evarray.max_nth(2)
+              pkmn.ev[s.id] += 4
+              pkmn.calc_stats
+            end
+          end
+        end
+      end
       pkmn.calc_stats
       # DemICE end
     elsif pkmn.level < current_level

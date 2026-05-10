@@ -93,7 +93,7 @@ EventHandlers.add(:on_player_step_taken_can_transfer, :safari_game_counter,
     next if Settings::SAFARI_STEPS == 0 || !pbInSafari? || pbSafariState.decision != 0
     pbSafariState.steps -= 1
     next if pbSafariState.steps > 0
-    pbMessage("\\se[Safari Zone end]" + _INTL("Megafonía: ¡Ding-dong!") + "\\wtnp[20]\1")
+    pbMessage("\\se[Safari Zone end]" + _INTL("Megafonía: ¡Ding-dong!") + "\1")
     pbMessage(_INTL("Megafonía: ¡Tu partida del Safari ha terminado!"))
     pbSafariState.decision = 1
     pbSafariState.pbGoToStart
@@ -128,15 +128,15 @@ def pbSafariBattle(pkmn, level = 1)
   battle.ballCount = pbSafariState.ballcount
   BattleCreationHelperMethods.prepare_battle(battle)
   # Perform the battle itself
-  outcome = Battle::Outcome::UNDECIDED
+  decision = 0
   pbBattleAnimation(pbGetWildBattleBGM(foeParty), 0, foeParty) do
-    pbSceneStandby { outcome = battle.pbStartBattle }
+    pbSceneStandby { decision = battle.pbStartBattle }
   end
   Input.update
   # Update Safari game data based on result of battle
   pbSafariState.ballcount = battle.ballCount
   if pbSafariState.ballcount <= 0
-    if outcome != Battle::Outcome::LOSE   # Last Safari Ball was used to catch the wild Pokémon
+    if decision != 2   # Last Safari Ball was used to catch the wild Pokémon
       pbMessage(_INTL("Megafonía: ¡Se te acabaron las Safari Balls! ¡Se acabó el tiempo!"))
     end
     pbSafariState.decision = 1
@@ -147,16 +147,16 @@ def pbSafariBattle(pkmn, level = 1)
   #    2 - Player ran out of Safari Balls
   #    3 - Player or wild Pokémon ran from battle, or player forfeited the match
   #    4 - Wild Pokémon was caught
-  if outcome == Battle::Outcome::CATCH
+  if decision == 4
     $stats.safari_pokemon_caught += 1
     pbSafariState.captures += 1
     $stats.most_captures_per_safari_game = [$stats.most_captures_per_safari_game, pbSafariState.captures].max
   end
-  pbSet(1, outcome)
+  pbSet(1, decision)
   # Used by the Poké Radar to update/break the chain
-  EventHandlers.trigger(:on_wild_battle_end, pkmn.species_data.id, pkmn.level, outcome)
+  EventHandlers.trigger(:on_wild_battle_end, pkmn.species_data.id, pkmn.level, decision)
   # Return the outcome of the battle
-  return outcome
+  return decision
 end
 
 #===============================================================================

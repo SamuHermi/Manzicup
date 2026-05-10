@@ -24,9 +24,6 @@ def pbListScreen(title, lister)
   selectedmap = -1
   commands = lister.commands
   selindex = lister.startIndex
-
-  full_original_list = lister.commands.clone
-
   if commands.length == 0
     value = lister.value(-1)
     lister.dispose
@@ -37,7 +34,21 @@ def pbListScreen(title, lister)
   end
   list.commands = commands
   list.index    = selindex
-  selectedmap = list_screen_handle_input(list, lister, selectedmap, full_original_list)
+  loop do
+    Graphics.update
+    Input.update
+    list.update
+    if list.index != selectedmap
+      lister.refresh(list.index)
+      selectedmap = list.index
+    end
+    if Input.trigger?(Input::BACK)
+      selectedmap = -1
+      break
+    elsif Input.trigger?(Input::USE)
+      break
+    end
+  end
   value = lister.value(selectedmap)
   lister.dispose
   title.dispose
@@ -47,43 +58,7 @@ def pbListScreen(title, lister)
   return value
 end
 
-def list_screen_handle_input(list, lister, selectedmap, full_original_list, screen_block = false, &block)
-  breaked = false
-  loop do
-    Graphics.update
-    Input.update
-    list.update
-    lister.update if defined?(lister.update)
-    if list.index != selectedmap
-      lister.refresh(list.index)
-      selectedmap = list.index
-    end
-    if Input.trigger?(Input::BACK)
-      selectedmap = -1 if !screen_block
-      breaked = true
-      break
-    elsif Input.trigger?(Input::ACTION) && screen_block
-      yield(Input::ACTION, lister.value(selectedmap))
-      list.commands = lister.commands
-      list.index = list.commands.length if list.index == list.commands.length
-      lister.refresh(list.index)
-    elsif Input.trigger?(Input::USE)
-      if screen_block
-        yield(Input::USE, lister.value(selectedmap))
-        list.commands = lister.commands
-        list.index = list.commands.length if list.index == list.commands.length
-        lister.refresh(list.index)
-      else
-        breaked = true
-        break
-      end
-    end
-    list_screen_handle_input_enhancements(list, lister, selectedmap, full_original_list, screen_block, &block)
-  end
-  return selectedmap if breaked
-end
-
-def pbListScreenBlock(title, lister, &block)
+def pbListScreenBlock(title, lister)
   viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
   viewport.z = 99999
   list = pbListWindow([], Graphics.width / 2)
@@ -97,9 +72,6 @@ def pbListScreenBlock(title, lister, &block)
   selectedmap = -1
   commands = lister.commands
   selindex = lister.startIndex
-
-  full_original_list = lister.commands.clone
-
   if commands.length == 0
     value = lister.value(-1)
     lister.dispose
@@ -110,7 +82,28 @@ def pbListScreenBlock(title, lister, &block)
   end
   list.commands = commands
   list.index = selindex
-  list_screen_handle_input(list, lister, selectedmap, full_original_list, true, &block)
+  loop do
+    Graphics.update
+    Input.update
+    list.update
+    if list.index != selectedmap
+      lister.refresh(list.index)
+      selectedmap = list.index
+    end
+    if Input.trigger?(Input::ACTION)
+      yield(Input::ACTION, lister.value(selectedmap))
+      list.commands = lister.commands
+      list.index = list.commands.length if list.index == list.commands.length
+      lister.refresh(list.index)
+    elsif Input.trigger?(Input::BACK)
+      break
+    elsif Input.trigger?(Input::USE)
+      yield(Input::USE, lister.value(selectedmap))
+      list.commands = lister.commands
+      list.index = list.commands.length if list.index == list.commands.length
+      lister.refresh(list.index)
+    end
+  end
   lister.dispose
   title.dispose
   list.dispose
@@ -220,12 +213,11 @@ class MusicFileLister
     folder = (@bgm) ? "Audio/BGM/" : "Audio/ME/"
     @commands.clear
     Dir.chdir(folder) do
-      Dir.glob("*.wav") { |f| @commands.push(f) }
+#      Dir.glob("*.mp3") { |f| @commands.push(f) }
       Dir.glob("*.ogg") { |f| @commands.push(f) }
-      Dir.glob("*.mp3") { |f| @commands.push(f) }
-      Dir.glob("*.midi") { |f| @commands.push(f) }
+      Dir.glob("*.wav") { |f| @commands.push(f) }
       Dir.glob("*.mid") { |f| @commands.push(f) }
-      Dir.glob("*.wma") { |f| @commands.push(f) }
+      Dir.glob("*.midi") { |f| @commands.push(f) }
     end
     @commands.uniq!
     @commands.sort! { |a, b| a.downcase <=> b.downcase }

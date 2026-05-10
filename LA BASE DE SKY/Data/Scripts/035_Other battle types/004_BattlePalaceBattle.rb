@@ -159,8 +159,8 @@ class BattlePalaceBattle < Battle
 
   def pbEndOfRoundPhase
     super
-    return if decided?
-    allBattlers(true).each { |b| pbPinchChange(b) }
+    return if @decision != 0
+    allBattlers.each { |b| pbPinchChange(b) }
   end
 end
 
@@ -243,3 +243,4 @@ class Battle::AI
     return false
   end
 end
+

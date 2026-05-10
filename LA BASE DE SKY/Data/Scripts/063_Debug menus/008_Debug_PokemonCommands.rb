@@ -475,7 +475,7 @@ MenuHandlers.add(:pokemon_debug_menu, :forget_move, {
   "parent" => :moves,
   "effect" => proc { |pkmn, pkmnid, heldpoke, settingUpBattle, screen|
     moveindex = screen.pbChooseMove(pkmn, _INTL("Elige un movimiento para olvidarlo."))
-    if moveindex >= 0 && !pkmn.moves.empty? && moveindex < pkmn.moves.length && pkmn.moves[moveindex]
+    if moveindex >= 0
       movename = pkmn.moves[moveindex].name
       pkmn.forget_move_at_index(moveindex)
       screen.pbDisplay(_INTL("{1} olvidó {2}.", pkmn.name, movename))
@@ -780,7 +780,7 @@ MenuHandlers.add(:pokemon_debug_menu, :species_and_form, {
           f = formcmds[0][cmd2]
           if f != pkmn.form
             if MultipleForms.hasFunction?(pkmn, "getForm")
-              next if !screen.pbConfirm(_INTL("Esta especie decide su propia forma. ¿Sobrescribir?"))
+              next if !screen.pbConfirm(_INTL("Esta especie decide su propia forma. ¿Sobreescribir?"))
               pkmn.forced_form = f
             end
             pkmn.form = f
@@ -812,8 +812,8 @@ MenuHandlers.add(:pokemon_debug_menu, :set_shininess, {
     cmd = 0
     loop do
       msg_idx = pkmn.shiny? ? (pkmn.super_shiny? ? 1 : 0) : 2
-      msg = [_INTL("Es variocolor."), _INTL("Es súper variocolor."), _INTL("Es normal (no variocolor).")][msg_idx]
-      cmd = screen.pbShowCommands(msg, [_INTL("Hacer variocolor"), _INTL("Hacer súper variocolor"),
+      msg = [_INTL("Es variocolor."), _INTL("Es super variocolor."), _INTL("Es normal (no variocolor).")][msg_idx]
+      cmd = screen.pbShowCommands(msg, [_INTL("Hacer variocolor"), _INTL("Hacer super variocolor"),
                                         _INTL("Hacer normal"), _INTL("Resetear")], cmd)
       break if cmd < 0
       case cmd
@@ -1050,7 +1050,7 @@ MenuHandlers.add(:pokemon_debug_menu, :shadow_pkmn, {
     cmd = 0
     loop do
       msg = [_INTL("No es un Pokémon Oscuro."),
-             _INTL("La puerta del corazón es {1} (etapa {2}).", pkmn.heart_gauge, pkmn.heartStage)][pkmn.shadowPokemon? ? 1 : 0]
+             _INTL("La puerta del corazón es {1} (estapa {2}).", pkmn.heart_gauge, pkmn.heartStage)][pkmn.shadowPokemon? ? 1 : 0]
       cmd = screen.pbShowCommands(msg, [_INTL("Hacer oscuro"), _INTL("Definir puerta del corazón")], cmd)
       break if cmd < 0
       case cmd
@@ -1099,7 +1099,7 @@ MenuHandlers.add(:pokemon_debug_menu, :duplicate, {
   "parent"      => :main,
   "always_show" => false,
   "effect"      => proc { |pkmn, pkmnid, heldpoke, settingUpBattle, screen|
-    next false if !screen.pbConfirm(_INTL("¿Segur{1} que quieres copiar este Pokémon?", $player.female? ? 'a' : 'o'))
+    next false if !screen.pbConfirm(_INTL("¿Seguro que quieres copiar este Pokémon?"))
     clonedpkmn = pkmn.clone
     case screen
     when PokemonPartyScreen
@@ -1135,7 +1135,7 @@ MenuHandlers.add(:pokemon_debug_menu, :delete, {
   "parent"      => :main,
   "always_show" => false,
   "effect"      => proc { |pkmn, pkmnid, heldpoke, settingUpBattle, screen|
-    next false if !screen.pbConfirm(_INTL("¿Estás segur{1} de que quieres eliminar este Pokémon?", $player.female? ? 'a' : 'o'))
+    next false if !screen.pbConfirm(_INTL("¿Estás seguro de que quieres eliminar este Pokémon?"))
     case screen
     when PokemonPartyScreen
       screen.party.delete_at(pkmnid)

@@ -70,14 +70,14 @@ class Battle::Move::RandomlyDamageOrHealTarget < Battle::Move
     return super
   end
 
-  def pbBasePower(base_power, user, target)
+  def pbBaseDamage(baseDmg, user, target)
     return @presentDmg
   end
 
   def pbEffectAgainstTarget(user, target)
     return if @presentDmg > 0
     target.pbRecoverHP(target.totalhp / 4)
-    @battle.pbDisplay(_INTL("Los PS de {1} han sido restaurados.", target.pbThis(true)))
+    @battle.pbDisplay(_INTL("Los PS de {1} han sido restaurados.", target.pbThis))
   end
 
   def pbShowAnimation(id, user, targets, hitNum = 0, showAnimation = true)
@@ -122,7 +122,7 @@ class Battle::Move::HealAllyOrDamageFoe < Battle::Move
   def pbEffectAgainstTarget(user, target)
     return if !@healing
     target.pbRecoverHP(target.totalhp / 2)
-    @battle.pbDisplay(_INTL("Los PS de {1} han sido restaurados.", target.pbThis(true)))
+    @battle.pbDisplay(_INTL("Los PS de {1} han sido restaurados.", target.pbThis))
   end
 
   def pbShowAnimation(id, user, targets, hitNum = 0, showAnimation = true)
@@ -150,7 +150,7 @@ class Battle::Move::CurseTargetOrLowerUserSpd1RaiseUserAtkDef1 < Battle::Move
 
   def pbTarget(user)
     if user.pbHasType?(:GHOST)
-      ghost_target = (Settings::MECHANICS_GENERATION == 8) ? :RandomNearFoe : :NearFoe
+      ghost_target = (Settings::MECHANICS_GENERATION >= 8) ? :RandomNearFoe : :NearFoe
       return GameData::Target.get(ghost_target)
     end
     return super
@@ -278,13 +278,13 @@ class Battle::Move::EffectDependsOnEnvironment < Battle::Move
     return if @battle.pbRandom(100) >= chance
     case @secretPower
     when 2
-      target.pbSleep(user) if target.pbCanSleep?(user, false, self)
+      target.pbSleep if target.pbCanSleep?(user, false, self)
     when 10
       target.pbBurn(user) if target.pbCanBurn?(user, false, self)
     when 0, 1
       target.pbParalyze(user) if target.pbCanParalyze?(user, false, self)
     when 9
-      target.pbFreeze(user) if target.pbCanFreeze?(user, false, self)
+      target.pbFreeze if target.pbCanFreeze?(user, false, self)
     when 5
       if target.pbCanLowerStatStage?(:ATTACK, user, self)
         target.pbLowerStatStage(:ATTACK, 1, user)
@@ -345,11 +345,11 @@ class Battle::Move::HitsAllFoesAndPowersUpInPsychicTerrain < Battle::Move
     return super
   end
 
-  def pbBasePower(base_power, user, target)
+  def pbBaseDamage(baseDmg, user, target)
     if @battle.field.terrain == :Psychic && user.affectedByTerrain?
-      base_power = base_power * 3 / 2
+      baseDmg = baseDmg * 3 / 2
     end
-    return base_power
+    return baseDmg
   end
 end
 
@@ -384,9 +384,9 @@ class Battle::Move::DoublePowerAfterFusionFlare < Battle::Move
     super
   end
 
-  def pbBasePowerMultiplier(power_mult, user, target)
-    power_mult *= 2 if @doublePower
-    return power_mult
+  def pbBaseDamageMultiplier(damageMult, user, target)
+    damageMult *= 2 if @doublePower
+    return damageMult
   end
 
   def pbEffectGeneral(user)
@@ -409,9 +409,9 @@ class Battle::Move::DoublePowerAfterFusionBolt < Battle::Move
     super
   end
 
-  def pbBasePowerMultiplier(power_mult, user, target)
-    power_mult *= 2 if @doublePower
-    return power_mult
+  def pbBaseDamageMultiplier(damageMult, user, target)
+    damageMult *= 2 if @doublePower
+    return damageMult
   end
 
   def pbEffectGeneral(user)
@@ -505,12 +505,9 @@ end
 class Battle::Move::CounterDamagePlusHalf < Battle::Move::FixedDamageMove
   def pbAddTarget(targets, user)
     return if user.lastFoeAttacker.length == 0
-    user.lastFoeAttacker.reverse_each do |party_index|
-      battler = @battle.pbFindBattler(party_index, user.index + 1)
-      next if !battler || battler.effects[PBEffects::Commanding] >= 0
-      user.pbAddTarget(targets, user, battler, self, false)
-      break
-    end
+    lastAttacker = user.lastFoeAttacker.last
+    return if lastAttacker < 0 || !user.opposes?(lastAttacker)
+    user.pbAddTarget(targets, user, @battle.battlers[lastAttacker], self, false)
   end
 
   def pbMoveFailed?(user, targets)
@@ -575,14 +572,14 @@ class Battle::Move::PowerDependsOnUserStockpile < Battle::Move
     return false
   end
 
-  def pbBasePower(base_power, user, target)
+  def pbBaseDamage(baseDmg, user, target)
     return 100 * user.effects[PBEffects::Stockpile]
   end
 
   def pbEffectAfterAllHits(user, target)
     return if user.fainted? || user.effects[PBEffects::Stockpile] == 0
     return if target.damageState.unaffected
-    @battle.pbDisplay(_INTL("¡Desaparecieron los efectos de la Reserva de {1}!", user.pbThis(true)))
+    @battle.pbDisplay(_INTL("¡Desaparecieron los efectos de la Reserva de {1}!", user.pbThis))
     return if @battle.pbAllFainted?(target.idxOwnSide)
     showAnim = true
     if user.effects[PBEffects::StockpileDef] > 0 &&
@@ -629,9 +626,9 @@ class Battle::Move::HealUserDependingOnUserStockpile < Battle::Move
     when 3 then hpGain = user.totalhp
     end
     if user.pbRecoverHP(hpGain) > 0
-      @battle.pbDisplay(_INTL("Los PS de {1} han sido restaurados.", user.pbThis(true)))
+      @battle.pbDisplay(_INTL("Los PS de {1} han sido restaurados.", user.pbThis))
     end
-    @battle.pbDisplay(_INTL("¡Desaparecieron los efectos de la Reserva de {1}!", user.pbThis(true)))
+    @battle.pbDisplay(_INTL("¡Desaparecieron los efectos de la Reserva de {1}!", user.pbThis))
     showAnim = true
     if user.effects[PBEffects::StockpileDef] > 0 &&
        user.pbCanLowerStatStage?(:DEFENSE, user, self)
@@ -727,8 +724,6 @@ class Battle::Move::UseLastMoveUsed < Battle::Move
       "ProtectUserFromDamagingMovesObstruct",              # Obstruct           # Not listed on Bulbapedia
       "ProtectUserFromTargetingMovesSpikyShield",          # Spiky Shield
       "ProtectUserBanefulBunker",                          # Baneful Bunker
-      "ProtectUserFromDamagingMovesSilkTrap",              # Silk Trap
-      "ProtectUserFromDamagingMovesBurningBulwark",        # Burning Bulwark
       # Moves that call other moves
       "UseLastMoveUsedByTarget",                           # Mirror Move
       "UseLastMoveUsed",                                   # Copycat (this move)
@@ -762,7 +757,6 @@ class Battle::Move::UseLastMoveUsed < Battle::Move
       "StarmobilePoisonTarget",                # Noxious Torque
       "StarmobileSleepTarget",                 # Wicked Torque
       "ProtectUserBurningBulwark",             # Burning Bulwark
-      "ProtectUserFromDamagingMovesSilkTrap",  # Silk Trap
       "TerapagosCategoryDependsOnHigherDamage" # Tera Starstorm
     ]
     if Settings::MECHANICS_GENERATION >= 6
@@ -796,12 +790,6 @@ end
 
 #===============================================================================
 # Uses the last move that the target used. (Mirror Move)
-# TODO: In Gen 5-6, this copies the most recent move that hit the user. In Gen
-#       7+, this copies the target's move (it's unclear if said move needed to
-#       have targeted the user). The Gen 7+ effect might have applied in earlier
-#       Gens, but there's no research.
-# TODO: In Gen 7+ (maybe earlier), this can copy a move from before the user
-#       switches in. Ensure this happens.
 #===============================================================================
 class Battle::Move::UseLastMoveUsedByTarget < Battle::Move
   def ignoresSubstitute?(user); return true; end
@@ -981,8 +969,6 @@ class Battle::Move::UseRandomMove < Battle::Move
       "ProtectUserFromDamagingMovesObstruct",              # Obstruct
       "ProtectUserFromTargetingMovesSpikyShield",          # Spiky Shield
       "ProtectUserBanefulBunker",                          # Baneful Bunker
-      "ProtectUserFromDamagingMovesSilkTrap",              # Silk Trap
-      "ProtectUserFromDamagingMovesBurningBulwark",        # Burning Bulwark
       # Moves that call other moves
       "UseLastMoveUsedByTarget",                           # Mirror Move
       "UseLastMoveUsed",                                   # Copycat
@@ -1075,8 +1061,6 @@ class Battle::Move::UseRandomMoveFromUserParty < Battle::Move
       "ProtectUserFromDamagingMovesObstruct",              # Obstruct           # Not listed on Bulbapedia
       "ProtectUserFromTargetingMovesSpikyShield",          # Spiky Shield
       "ProtectUserBanefulBunker",                          # Baneful Bunker
-      "ProtectUserFromDamagingMovesSilkTrap",              # Silk Trap
-      "ProtectUserFromDamagingMovesBurningBulwark",        # Burning Bulwark
       # Moves that call other moves
       "UseLastMoveUsedByTarget",                           # Mirror Move
       "UseLastMoveUsed",                                   # Copycat
@@ -1112,6 +1096,7 @@ class Battle::Move::UseRandomMoveFromUserParty < Battle::Move
       "StarmobileConfuseTarget",               # Magical Torque
       "StarmobilePoisonTarget",                # Noxious Torque
       "StarmobileSleepTarget",                 # Wicked Torque
+      "ProtectUserBurningBulwark",             # Burning Bulwark
       "TerapagosCategoryDependsOnHigherDamage" # Tera Starstorm
     ]
     if Settings::MECHANICS_GENERATION >= 6
@@ -1335,18 +1320,19 @@ class Battle::Move::ReplaceMoveWithTargetLastMoveUsed < Battle::Move
   def initialize(battle, move)
     super
     @moveBlacklist = [
-      "ReplaceMoveWithTargetLastMoveUsed",   # Sketch (this move)
-      "RevivePokemonToHalfHP",               # Revival Blessing
-      "Struggle"                             # Struggle
+      "ReplaceMoveWithTargetLastMoveUsed",                   # Sketch (this move)
+      "Struggle",                                            # Struggle
+      "SleepTargetIfUserDarkrai",                            # Dark Void
+      "HoopaRemoveProtectionsBypassSubstituteLowerUserDef1", # Hyperspace Fury
+      "TypeDependsOnUserMorpekoFormRaiseUserSpeed1",         # Aura Wheel
+      "StarmobileBurnTarget",                                # Blazing Torque
+      "StarmobileParalyzeTarget",                            # Combat Torque
+      "StarmobileConfuseTarget",                             # Magical Torque
+      "StarmobilePoisonTarget",                              # Noxious Torque
+      "StarmobileSleepTarget",                               # Wicked Torque
+      "RevivePokemonHalfHP",                                 # Revival Blessing
+      "TerapagosCategoryDependsOnHigherDamage"               # Tera Starstorm
     ]
-    @signatureMoveBlacklist = []
-    if Settings::MECHANICS_GENERATION >= 9
-      @signatureMoveBlacklist = [
-        :DARKVOID,
-        :HYPERSPACEFURY,
-        :TERASTARSTORM
-      ]
-    end
   end
 
   def pbMoveFailed?(user, targets)
@@ -1362,7 +1348,6 @@ class Battle::Move::ReplaceMoveWithTargetLastMoveUsed < Battle::Move
     if !lastMoveData ||
        user.pbHasMove?(target.lastRegularMoveUsed) ||
        @moveBlacklist.include?(lastMoveData.function_code) ||
-       @signatureMoveBlacklist.include?(lastMoveData.id) ||
        lastMoveData.type == :SHADOW
       @battle.pbDisplay(_INTL("¡Pero ha fallado!")) if show_message
       return true
@@ -1382,3 +1367,27 @@ class Battle::Move::ReplaceMoveWithTargetLastMoveUsed < Battle::Move
     end
   end
 end
+
+#===============================================================================
+# Ivy Cudgel
+#===============================================================================
+# The type of the move changes to reflect Ogerpon's mask.
+#-------------------------------------------------------------------------------
+class Battle::Move::TypeIsUserSecondType < Battle::Move
+  def pbBaseType(user)
+    return @type if !user.isSpecies?(:OGERPON)
+    userTypes = user.pokemon.types
+    return userTypes[1] || userTypes[0] || @type
+  end
+  
+  def pbShowAnimation(id, user, targets, hitNum = 0, showAnimation = true)
+    case pbBaseType(user)
+    when :WATER then hitNum = 1
+    when :FIRE  then hitNum = 2
+    when :ROCK  then hitNum = 3
+    else             hitNum = 0
+    end
+    super
+  end
+end
+

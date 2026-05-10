@@ -65,7 +65,7 @@ class Battle::AI::AITrainer
       @skill_flags.push("ConsiderSwitching")
       @skill_flags.push("HPAware")
     end
-    if !medium_skill?   # Low skill
+    if !medium_skill?
       @skill_flags.push("UsePokemonInOrder")
     elsif best_skill?
       @skill_flags.push("ReserveLastPokemon")
@@ -81,8 +81,6 @@ class Battle::AI::AITrainer
     end
     @skill_flags.compact!
   end
-
-  #-----------------------------------------------------------------------------
 
   def has_skill_flag?(flag)
     return @skill_flags.include?(flag)
@@ -100,3 +98,4 @@ class Battle::AI::AITrainer
     return @skill >= 100
   end
 end
+

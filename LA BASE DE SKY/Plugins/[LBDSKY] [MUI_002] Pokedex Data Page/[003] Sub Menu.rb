@@ -2,17 +2,11 @@
 # Used for drawing entire pages worth of species icon sprites at a time.
 #===============================================================================
 class PokemonDataPageSprite < Sprite
-  PAGE_SIZE      = 12  # The number of species icons per page.
-  ROW_SIZE       = 6   # The number of species icons per row.
-  ICON_GAP       = 72  # The pixel gap between each species icon.
-  PAGE_X         = 43  # The x coordinates of where the icons are placed.
-  PAGE_Y         = 26  # The y coordinates of where the icons are placed.
-  WRAPPER_WIDTH  = 44
-  WRAPPER_HEIGHT = 100
-
-  # Tone presets
-  TONE_NORMAL = Tone.new(0, 0, 0, 0)
-  TONE_FADED = Tone.new(-255, -255, -255, 0)
+  PAGE_SIZE = 16  # The number of species icons per page.
+  ROW_SIZE  = 8   # The number of species icons per row.
+  ICON_GAP  = 72  # The pixel gap between each species icon.
+  PAGE_X    = 35  # The x coordinates of where the icons are placed.
+  PAGE_Y    = 36  # The y coordinates of where the icons are placed.
 
   def initialize(list, page, viewport = nil)
     super(viewport)
@@ -20,11 +14,10 @@ class PokemonDataPageSprite < Sprite
     xpos = PAGE_X
     ypos = PAGE_Y
     offset = 1
-    list = [list] * PAGE_SIZE unless list.is_a?(Array)
+    list = [list] * PAGE_SIZE if !list.is_a?(Array)
     PAGE_SIZE.times do |i|
       index = PAGE_SIZE * page + i
       break if index > list.length - 1
-
       pokemon = list[index]
       offset += 1 if i >= ROW_SIZE * offset
       @pokemonsprites[i] = PokemonSpeciesIconSprite.new(pokemon, viewport)
@@ -34,29 +27,31 @@ class PokemonDataPageSprite < Sprite
       @pokemonsprites[i].x = xpos - ICON_GAP
       @pokemonsprites[i].y = ypos + ICON_GAP * offset
     end
-    @contents = BitmapWrapper.new(WRAPPER_WIDTH, WRAPPER_HEIGHT)
+    @contents = BitmapWrapper.new(44, 100)
     self.bitmap = @contents
     self.x = 0
     self.y = 0
   end
-
+  
   def dispose
-    return if disposed?
-
-    PAGE_SIZE.times do |i|
-      @pokemonsprites[i]&.dispose
+    if !disposed?
+      PAGE_SIZE.times do |i|
+        @pokemonsprites[i]&.dispose
+      end
+      @contents.dispose
+      super
     end
-    @contents.dispose
-    super
   end
-
+  
   def visible=(value)
     super
     PAGE_SIZE.times do |i|
-      @pokemonsprites[i].visible = value if @pokemonsprites[i] && !@pokemonsprites[i].disposed?
+      if @pokemonsprites[i] && !@pokemonsprites[i].disposed?
+        @pokemonsprites[i].visible = value
+      end
     end
   end
-
+  
   def setPokemon(list, page, gender = 0)
     PAGE_SIZE.times do |i|
       index = PAGE_SIZE * page + i
@@ -76,131 +71,52 @@ class PokemonDataPageSprite < Sprite
         end
         @pokemonsprites[i].pbSetParams(species.species, sp_gender, sp_form)
         @pokemonsprites[i].visible = true
-        @pokemonsprites[i].tone = if !$player.owned?(pokemon)
-                                    TONE_FADED
-                                  else
-                                    TONE_NORMAL
-                                  end
+        if !$player.owned?(pokemon)
+          @pokemonsprites[i].tone = Tone.new(-255,-255,-255,0)
+        else
+          @pokemonsprites[i].tone = Tone.new(0,0,0,0)
+        end
       elsif pokemon == :RETURN
         @pokemonsprites[i].pbSetParams(pokemon, 0, 0)
-        @pokemonsprites[i].tone = TONE_NORMAL
+        @pokemonsprites[i].tone = Tone.new(0,0,0,0)
         @pokemonsprites[i].visible = true
       else
         @pokemonsprites[i].visible = false
       end
     end
   end
-
+  
   def getPokemon(index)
-    @pokemonsprites[index]
+    return @pokemonsprites[index]
   end
-
+  
   def getPageSize(list, page)
     count = 0
     PAGE_SIZE.times do |i|
       index = PAGE_SIZE * page + i
       break if index > list.length - 1
-
       count += 1 if list[index]
     end
-    count
+    return count
   end
-
+  
   def update
     @pokemonsprites.each { |s| s.update }
   end
 end
 
+
 #===============================================================================
 # Handles the various Data Page sub menus.
 #===============================================================================
 class PokemonPokedexInfo_Scene
-  # Sub menu layout constants (moved from method-local into class-level)
-  HEADER_NAME_X = 256
-  HEADER_NAME_Y = 248
-  PAGE_COUNTER_X = 51
-  PAGE_COUNTER_Y = 249
-
-  SUBMENU_BG_X = 0
-  SUBMENU_BG_Y = 88
-  SUBMENU_BG_SRC_Y_TOP = 0
-  SUBMENU_BG_SRC_Y_ALT = 196
-  SUBMENU_BG_SRC_H = 196
-  SUBMENU_BG_SRC_W = 512
-
-  CURSOR_OFFSET_X = -5
-  CURSOR_OFFSET_Y = -4
-  CURSOR_SRC_X = 402
-  CURSOR_SRC_Y = 132
-  CURSOR_SIZE = 76
-
-  PAGE_CURSOR_LEFT_X = 88
-  PAGE_CURSOR_RIGHT_X = 348
-  PAGE_CURSOR_Y = 242
-  PAGE_CURSOR_SRC_LEFT_X = 0
-  PAGE_CURSOR_SRC_Y = 70
-  PAGE_CURSOR_SRC_RIGHT_X = 76
-  PAGE_CURSOR_W = 76
-  PAGE_CURSOR_H = 32
-
-  HEADING_Y = 40
-  MESSAGEBOX_BOTTOM_OFFSET = 100
-  SUBMENU_SMALL_X = 468
-  SUBMENU_SMALL_Y = 244
-  SUBMENU_SMALL_SRC_X = 440
-  SUBMENU_SMALL_SRC_Y = 392
-  SUBMENU_SMALL_W = 28
-  SUBMENU_SMALL_H = 28
-
-  HEADING_ICON_X = 14
-  HEADING_ICON_Y = 50
-  EGG_ICON_X = -2
-  EGG_ICON_Y = 26
-  HEADING_TEXT_X = 52
-  HEADING_TEXT_Y = 56
-
-  DATA_TEXT_X = 34
-  DATA_TEXT_Y = 294
-  DATA_TEXT_W = 446
-
-  # Item/ability list layout
-  ITEM_ROW_X = 50
-  ITEM_ROW_BASE_Y = 104
-  ITEM_ROW_SPACING = 42
-  ITEM_ROW_SRC_Y1 = 392
-  ITEM_ROW_SRC_Y2 = 432
-  ITEM_ROW_SRC_W = 412
-  ITEM_ROW_SRC_H = 40
-  INDEX_PAGE_X = 115
-  INDEX_PAGE_Y = 243
-  NAME_COL_X = 326
-  NAME_ROW_BASE = 114
-
-  ICON_COL_X = 98
-  ICON_ROW_BASE = 110
-  ICON_SRC_X = 468
-  ICON_SRC_Y = 392
-  ICON_W = 34
-  ICON_H = 28
-
-  CURSOR_PANEL_X = 184
-  CURSOR_PANEL_BASE_Y = 98
-  CURSOR_PANEL_SRC_Y = 288
-  CURSOR_PANEL_W = 284
-  CURSOR_PANEL_H = 52
-
-  PAGE_CURSOR_MID_X = 248
-  PAGE_CURSOR_MID_Y = 236
-  PAGE_CURSOR_RIGHT_ALT_X = 328
-
   #-----------------------------------------------------------------------------
   # Controls for navigating sub menus that display pages of species icons.
   #-----------------------------------------------------------------------------
   def pbChooseSpeciesDataList(cursor = nil)
-    cursor ||= @cursor
+    cursor = @cursor if !cursor
     list = pbFilterDataList(cursor, @data_hash[cursor].clone)
     return if list.empty?
-
     list.uniq!
     newEntry  = -1
     row_size  = PokemonDataPageSprite::ROW_SIZE
@@ -208,7 +124,7 @@ class PokemonPokedexInfo_Scene
     page      = 0
     index     = 0
     maxpage   = ((list.length - 1) / page_size).floor
-    pbSEPlay('GUI storage show party panel')
+    pbSEPlay("GUI storage show party panel")
     pbDrawSpeciesDataList(list, index, page, maxpage, cursor)
     loop do
       Graphics.update
@@ -222,24 +138,26 @@ class PokemonPokedexInfo_Scene
         if index >= row_size
           index -= row_size
           dorefresh = true
-        elsif page > 0
-          page -= 1
-          index += row_size
-          dorefresh = true
-        elsif maxpage > 0
-          page = maxpage
-          count = @sprites['pokelist'].getPageSize(list, page) - 1
-          if index + row_size <= count
+        else
+          if page > 0
+            page -= 1
             index += row_size
-          elsif index > count
-            index = count
+            dorefresh = true
+          elsif maxpage > 0
+            page = maxpage
+            count = @sprites["pokelist"].getPageSize(list, page) - 1
+            if index + row_size <= count
+              index += row_size
+            elsif index > count
+              index = count
+            end
+            dorefresh = true
           end
-          dorefresh = true
         end
       #-------------------------------------------------------------------------
       elsif Input.repeat?(Input::DOWN)
         if index < row_size
-          count = @sprites['pokelist'].getPageSize(list, page) - 1
+          count = @sprites["pokelist"].getPageSize(list, page) - 1
           if count < index + row_size
             if page == maxpage && maxpage > 0
               page = 0
@@ -250,51 +168,55 @@ class PokemonPokedexInfo_Scene
             index += row_size
             dorefresh = true
           end
-        elsif page < maxpage
-          page += 1
-          count = @sprites['pokelist'].getPageSize(list, page) - 1
-          index -= row_size
-          index = count if index > count
-          dorefresh = true
-        elsif maxpage > 0
-          page = 0
-          index -= row_size if index >= row_size
-          dorefresh = true
+        else
+          if page < maxpage
+            page += 1
+            count = @sprites["pokelist"].getPageSize(list, page) - 1
+            index -= row_size
+            index = count if index > count
+            dorefresh = true
+          elsif maxpage > 0
+            page = 0
+            index -= row_size if index >= row_size
+            dorefresh = true
+          end
         end
       #-------------------------------------------------------------------------
       elsif Input.repeat?(Input::LEFT)
         if index > 0
           index -= 1
           dorefresh = true
-        elsif page > 0
-          page -= 1
-          count = @sprites['pokelist'].getPageSize(list, page) - 1
-          index = count
-          dorefresh = true
         else
-          page = maxpage
-          count = @sprites['pokelist'].getPageSize(list, page) - 1
-          next if count == 0 && page == 0
-
-          index = count
-          dorefresh = true
+          if page > 0
+            page -= 1
+            count = @sprites["pokelist"].getPageSize(list, page) - 1
+            index = count
+            dorefresh = true
+          else
+            page = maxpage
+            count = @sprites["pokelist"].getPageSize(list, page) - 1
+            next if count == 0 && page == 0
+            index = count
+            dorefresh = true
+          end
         end
       #-------------------------------------------------------------------------
       elsif Input.repeat?(Input::RIGHT)
-        count = @sprites['pokelist'].getPageSize(list, page) - 1
+        count = @sprites["pokelist"].getPageSize(list, page) - 1
         next if count == 0 && page == 0
-
         if index < count
           index += 1
           dorefresh = true
-        elsif page < maxpage
-          page += 1
-          index = 0
-          dorefresh = true
         else
-          page = 0
-          index = 0
-          dorefresh = true
+          if page < maxpage
+            page += 1
+            index = 0
+            dorefresh = true
+          else
+            page = 0
+            index = 0
+            dorefresh = true
+          end
         end
       #-------------------------------------------------------------------------
       elsif Input.repeat?(Input::JUMPUP)
@@ -317,9 +239,9 @@ class PokemonPokedexInfo_Scene
         page_size = PokemonDataPageSprite::PAGE_SIZE
         idxList = (page * page_size) + index
         sp = GameData::Species.try_get(list[idxList])
-        unless sp
-          pbSEPlay('GUI storage hide party panel')
-          @sprites['pokelist'].visible = false
+        if !sp
+          pbSEPlay("GUI storage hide party panel")
+          @sprites["pokelist"].visible = false
           if @viewingMoves
             pbDrawMoveList
           else
@@ -328,67 +250,62 @@ class PokemonPokedexInfo_Scene
           end
           break
         end
-        full_name = if sp.form > 0 && sp.form_name
-                      if sp.form_name.include?(sp.name)
-                        _INTL('{1}', sp.form_name)
-                      else
-                        _INTL('{2} {1}', sp.form_name, sp.name)
-                      end
-                    else
-                      _INTL('{1}', sp.name)
-                    end
-        if $player.owned?(sp) && pbConfirmMessage(_INTL('¿Saltar a la página de la Pokédex de <c2=043c3aff>{1}</c2>?',
-                                                        full_name))
+        if sp.form > 0 && sp.form_name
+          if sp.form_name.include?(sp.name)
+            full_name = _INTL("{1}", sp.form_name)
+          else
+            full_name = _INTL("{2} {1}", sp.form_name, sp.name)
+          end
+        else
+          full_name = _INTL("{1}", sp.name)
+        end
+        if $player.owned?(sp) && pbConfirmMessage(_INTL("¿Saltar a la página de la Pokédex de <c2=043c3aff>{1}</c2>?", full_name))
           @dexlist.each_with_index do |dex, i|
             next if dex[:species] != sp.species
-
             newEntry = i
             break
           end
           @cursor = :general
           @moveListIndex = 0
           @viewingMoves = false
-          @sprites['movecmds'].index = 0
-          @sprites['leftarrow'].visible = false
-          @sprites['rightarrow'].visible = false
-          @sprites['pokelist'].visible = false
-          @sprites['data_overlay'].bitmap.clear
+          @sprites["movecmds"].index = 0
+          @sprites["leftarrow"].visible = false
+          @sprites["rightarrow"].visible = false
+          @sprites["pokelist"].visible = false
+          @sprites["data_overlay"].bitmap.clear
           @index = newEntry
-          gender = @sprites['pokelist'].getPokemon(index).gender
+          gender = @sprites["pokelist"].getPokemon(index).gender
           $player.pokedex.set_last_form_seen(sp.species, gender, sp.form)
           pbUpdateDummyPokemon
           @available = pbGetAvailableForms
-          pbSEPlay('GUI naming tab swap start')
+          pbSEPlay("GUI naming tab swap start")
           @forceRefresh = true
           break
         end
       #-------------------------------------------------------------------------
       elsif Input.trigger?(Input::ACTION)
-        next unless @viewingMoves
+        next if !@viewingMoves
         next if @data_hash[:egg].empty?
-
         move = GameData::Move.try_get(pbCurrentMoveID)
-        next unless move
-
+        next if !move
         case cursor
         when :move
-          msg = _INTL('¿Ver solo las <c2=043c3aff>especies compatibles</c2> que conocen <c2=65467b14>{1}</c2>?',
-                      move.name)
+          msg = _INTL("¿Ver solo las <c2=043c3aff>especies compatibles</c2> que conocen <c2=65467b14>{1}</c2>?", move.name)
           if pbConfirmMessage(msg)
             try_list = pbFilterDataList(:egg, @data_hash[:egg])
             if try_list.empty?
-              pbMessage(_INTL('No se han encontrado especies compatibles.'))
+              pbMessage(_INTL("No se han encontrado especies compatibles."))
             else
               cursor = :egg
               dorefresh = true
             end
           end
         when :egg
-          msg = _INTL('¿Ver <c2=043c3aff>todas las especies</c2> que conocen <c2=65467b14>{1}</c2>?', move.name)
+          msg = _INTL("¿Ver <c2=043c3aff>todas las especies</c2> que conocen <c2=65467b14>{1}</c2>?", move.name)
           if pbConfirmMessage(msg)
             try_list = pbFilterDataList(:move, @data_hash[:move])
             if try_list.empty?
-              pbMessage(_INTL('No se ha encontrado ninguna especie.'))
+              pbMessage(_INTL("No se ha encontrado ninguna especie."))
             else
               cursor = :move
               dorefresh = true
@@ -403,8 +320,8 @@ class PokemonPokedexInfo_Scene
         end
       #-------------------------------------------------------------------------
       elsif Input.trigger?(Input::BACK)
-        pbSEPlay('GUI storage hide party panel')
-        @sprites['pokelist'].visible = false
+        pbSEPlay("GUI storage hide party panel")
+        @sprites["pokelist"].visible = false
         if @viewingMoves
           pbDrawMoveList
         else
@@ -415,12 +332,12 @@ class PokemonPokedexInfo_Scene
       end
       #-------------------------------------------------------------------------
       if dorefresh
-        sound == 0 ? pbPlayCursorSE : pbSEPlay('GUI naming tab swap start')
+        (sound == 0) ? pbPlayCursorSE : pbSEPlay("GUI naming tab swap start")
         pbDrawSpeciesDataList(list, index, page, maxpage, cursor)
       end
     end
   end
-
+  
   #-----------------------------------------------------------------------------
   # Filters species list for specific areas of compatibility.
   #-----------------------------------------------------------------------------
@@ -435,32 +352,29 @@ class PokemonPokedexInfo_Scene
       when :move   # Displays all owned species that may learn the move.
         list = []
         GameData::Species.each do |sp|
-          next unless sp.display_species?(@dexlist, species, true)
-
+          next if !sp.display_species?(@dexlist, species, true)
           regional_form = sp.form > 0 && sp.is_regional_form?
-          base_form = sp.form > 0 ? GameData::Species.get_species_form(sp.species, sp.base_pokedex_form) : nil
-          if base_form && !regional_form && sp.moves.sort == base_form.moves.sort &&
-             sp.get_tutor_moves.sort == base_form.get_tutor_moves.sort
-            next
+          base_form = (sp.form > 0) ? GameData::Species.get_species_form(sp.species, sp.base_pokedex_form) : nil
+          next if base_form && !regional_form && 
+		          sp.moves == base_form.moves && 
+              sp.get_tutor_moves == base_form.get_tutor_moves
+          if sp.moves.any? { |m| m[1] == moveID } ||
+             sp.get_tutor_moves.include?(moveID) ||
+             sp.get_egg_moves.include?(moveID)
+            list.push(sp.id)
           end
-          next unless sp.moves.any? { |m| m[1] == moveID } ||
-                      sp.get_tutor_moves.include?(moveID) ||
-                      sp.get_inherited_moves.include?(moveID)
-
-          list.push(sp.id)
         end
         list = pbSortDataList(list)
       when :egg    # Displays only species in a compatible Egg Group.
         compatible = []
         list.each do |s|
           next if s == :RETURN
-
           sp = GameData::Species.try_get(s)
-          next unless sp && sp.moves.any? { |m| m[1] == moveID } ||
-                      sp.get_tutor_moves.include?(moveID) ||
-                      sp.get_inherited_moves.include?(moveID)
-
-          compatible.push(s)
+          if sp && sp.moves.any? { |m| m[1] == moveID } ||
+             sp.get_tutor_moves.include?(moveID) ||
+             sp.get_egg_moves.include?(moveID)
+            compatible.push(s)
+          end
         end
         list = pbSortDataList(compatible)
       end
@@ -470,15 +384,15 @@ class PokemonPokedexInfo_Scene
     elsif GameData::Ability.exists?(cursor)
       list = []
       GameData::Species.each do |sp|
-        next unless sp.display_species?(@dexlist, species)
-
+        next if !sp.display_species?(@dexlist, species)
         regional_form = sp.form > 0 && sp.is_regional_form?
-        base_form = sp.form > 0 ? GameData::Species.get_species_form(sp.species, sp.base_pokedex_form) : nil
-        next if base_form && !regional_form &&
-                sp.abilities == base_form.abilities &&
-                sp.hidden_abilities == base_form.hidden_abilities
-
-        list.push(sp.id) if sp.abilities.include?(cursor) || sp.hidden_abilities.include?(cursor)
+        base_form = (sp.form > 0) ? GameData::Species.get_species_form(sp.species, sp.base_pokedex_form) : nil
+        next if base_form && !regional_form && 
+		        sp.abilities == base_form.abilities && 
+            sp.hidden_abilities == base_form.hidden_abilities
+        if sp.abilities.include?(cursor) || sp.hidden_abilities.include?(cursor)
+          list.push(sp.id)
+        end
       end
       list = pbSortDataList(list)
     #---------------------------------------------------------------------------
@@ -487,20 +401,18 @@ class PokemonPokedexInfo_Scene
     elsif GameData::Item.exists?(cursor)
       list = []
       GameData::Species.each do |sp|
-        next unless sp.display_species?(@dexlist, species)
-
+        next if !sp.display_species?(@dexlist, species)
         regional_form = sp.form > 0 && sp.is_regional_form?
-        base_form = sp.form > 0 ? GameData::Species.get_species_form(sp.species, sp.base_pokedex_form) : nil
-        next if base_form && !regional_form &&
-                sp.wild_item_common   == base_form.wild_item_common   &&
+        base_form = (sp.form > 0) ? GameData::Species.get_species_form(sp.species, sp.base_pokedex_form) : nil
+        next if base_form && !regional_form && 
+		        sp.wild_item_common   == base_form.wild_item_common   && 
                 sp.wild_item_uncommon == base_form.wild_item_uncommon &&
                 sp.wild_item_rare     == base_form.wild_item_rare
-
-        next unless sp.wild_item_common.include?(cursor) ||
-                    sp.wild_item_uncommon.include?(cursor) ||
-                    sp.wild_item_rare.include?(cursor)
-
-        list.push(sp.id)
+        if sp.wild_item_common.include?(cursor) ||
+           sp.wild_item_uncommon.include?(cursor) ||
+           sp.wild_item_rare.include?(cursor)
+          list.push(sp.id)
+        end
       end
       list = pbSortDataList(list)
     #---------------------------------------------------------------------------
@@ -514,7 +426,7 @@ class PokemonPokedexInfo_Scene
     else
       list.push(:RETURN)
     end
-    list
+    return list
   end
 
   #-----------------------------------------------------------------------------
@@ -522,8 +434,7 @@ class PokemonPokedexInfo_Scene
   #-----------------------------------------------------------------------------
   def pbDrawSpeciesDataList(list, index, page, maxpage, cursor = nil)
     return if list.empty?
-
-    overlay = @sprites['data_overlay'].bitmap
+    overlay = @sprites["data_overlay"].bitmap
     overlay.clear
     base = Color.new(248, 248, 248)
     shadow = Color.new(72, 72, 72)
@@ -531,47 +442,42 @@ class PokemonPokedexInfo_Scene
     page_size = PokemonDataPageSprite::PAGE_SIZE
     idxList = (page * page_size) + index
     species_data = GameData::Species.try_get(list[idxList])
-    gender = cursor == :egg ? [1, 0][@gender] : @gender
-    @sprites['pokelist'].setPokemon(list, page, gender)
-    pokesprite = @sprites['pokelist'].getPokemon(index)
-    name = species_data ? species_data.name : _INTL('Volver')
-
+    gender = (cursor == :egg) ? [1, 0][@gender] : @gender
+    @sprites["pokelist"].setPokemon(list, page, gender)
+    pokesprite = @sprites["pokelist"].getPokemon(index)
+    name = (species_data) ? species_data.name : _INTL("Volver")
     textpos = [
-      [name, HEADER_NAME_X, HEADER_NAME_Y, :center, base, shadow, :outline],
-      [format('%d/%d', page + 1, maxpage + 1), PAGE_COUNTER_X, PAGE_COUNTER_Y, :center, base, shadow, :outline]
+      [name, 320, 258, :center, base, shadow, :outline],
+      [sprintf("%d/%d", page + 1, maxpage + 1), 51+12, 249+10, :center, base, shadow, :outline]
     ]
     imagepos = [
-      [path + 'submenu', SUBMENU_BG_X, SUBMENU_BG_Y, 0, SUBMENU_BG_SRC_Y_TOP, SUBMENU_BG_SRC_W, SUBMENU_BG_SRC_H],
-      [path + 'cursor', pokesprite.x + CURSOR_OFFSET_X, pokesprite.y + CURSOR_OFFSET_Y, CURSOR_SRC_X, CURSOR_SRC_Y,
-       CURSOR_SIZE, CURSOR_SIZE]
+      [path + "submenu", 0, 98, 0, 0, 640, 196], 
+      [path + "cursor", pokesprite.x - 5, pokesprite.y - 4, 402, 132, 76, 76]
     ]
     if page < maxpage
-      imagepos.push([path + 'page_cursor', PAGE_CURSOR_LEFT_X, PAGE_CURSOR_Y, PAGE_CURSOR_SRC_LEFT_X,
-                     PAGE_CURSOR_SRC_Y, PAGE_CURSOR_W, PAGE_CURSOR_H])
+      imagepos.push([path + "page_cursor", 138, 252, 0, 70, 76, 32])
     end
     if page > 0
-      imagepos.push([path + 'page_cursor', PAGE_CURSOR_RIGHT_X, PAGE_CURSOR_Y, PAGE_CURSOR_SRC_RIGHT_X,
-                     PAGE_CURSOR_SRC_Y, PAGE_CURSOR_W, PAGE_CURSOR_H])
+      imagepos.push([path + "page_cursor", 426, 252, 76, 70, 76, 32])
     end
     #---------------------------------------------------------------------------
     # Draws header and message box if viewing moves.
     #---------------------------------------------------------------------------
     if @viewingMoves
       imagepos.push(
-        [path + 'heading', 0, HEADING_Y],
-        [path + 'messagebox', 0, Graphics.height - MESSAGEBOX_BOTTOM_OFFSET],
-        [path + 'submenu', SUBMENU_SMALL_X, SUBMENU_SMALL_Y, SUBMENU_SMALL_SRC_X, SUBMENU_SMALL_SRC_Y, SUBMENU_SMALL_W,
-         SUBMENU_SMALL_H]
+        [path + "heading", 0, 40], 
+        [path + "messagebox", 0, Graphics.height - 100],
+        [path + "submenu", 468+90, 244+7, 440, 392, 28, 28]
       )
       case cursor
       when :move
-        heading = _INTL('Especies que conocen el movimiento:')
-        imagepos.push([_INTL('Graphics/UI/Pokedex/icon_own'), HEADING_ICON_X, HEADING_ICON_Y])
+        heading = _INTL("Especies que conocen el movimiento:")
+        imagepos.push([_INTL("Graphics/UI/Pokedex/icon_own"), 14, 50])
       when :egg
-        heading = _INTL('Especies compatibles que conocen este movimiento:')
-        imagepos.push([_INTL('Graphics/Pokemon/Eggs/000_icon'), EGG_ICON_X, EGG_ICON_Y, 0, 0, 64, 64])
+        heading = _INTL("Especies compatibles que conocen este movimiento:")
+        imagepos.push([_INTL("Graphics/Pokemon/Eggs/000_icon"), -2, 26, 0, 0, 64, 64])
       end
-      textpos.push([heading, HEADING_TEXT_X, HEADING_TEXT_Y, :left, base, Color.black, :outline])
+      textpos.push([heading, 52,  56, :left, base, Color.black, :outline])
     end
     #---------------------------------------------------------------------------
     # Draws message box text.
@@ -587,7 +493,7 @@ class PokemonPokedexInfo_Scene
       when :habitat then data_text = pbDataTextHabitat(path, species_data, overlay, s2.habitat)
       when :move    then data_text = pbDataTextMoveSource(path, species_data, overlay)
       end
-      unless data_text
+      if !data_text
         if GameData::Ability.exists?(cursor)
           data_text = pbDataTextAbilitySource(path, species_data, overlay, cursor)
         elsif GameData::Item.exists?(cursor)
@@ -595,37 +501,35 @@ class PokemonPokedexInfo_Scene
         end
       end
     else
-      view = if GameData::Ability.exists?(cursor)
-               _INTL('Habilidades de la especie')
-             elsif GameData::Item.exists?(cursor)
-               _INTL('Objetos equipados de la especie')
-             else
-               @viewingMoves ? _INTL('Movimientos de la especie') : _INTL('datos de la especie')
-             end
-      data_text = _INTL('{1}Volver a {2}.', DATA_TEXT_TAGS[0], view)
+      if GameData::Ability.exists?(cursor)
+        view = _INTL("Habilidades de la especie")
+      elsif GameData::Item.exists?(cursor)
+        view = _INTL("Objetos equipados de la especie")
+      else
+        view = (@viewingMoves) ? _INTL("Movimientos de la especie") : _INTL("datos de la especie")
+      end
+      data_text = DATA_TEXT_TAGS[0] + _INTL("Volver a") + " #{view}."
     end
     pbDrawImagePositions(overlay, imagepos)
     pbDrawTextPositions(overlay, textpos)
-    drawFormattedTextEx(overlay, DATA_TEXT_X, DATA_TEXT_Y, DATA_TEXT_W, _INTL('{1}', data_text))
+    drawFormattedTextEx(overlay, 34+25, 294+38, 528, _INTL("{1}", data_text))
   end
-
+  
   #-----------------------------------------------------------------------------
   # Controls for navigating text-based sub menus. (Ability/Item)
   #-----------------------------------------------------------------------------
   def pbChooseDataList(cursor = nil)
-    return unless $player.owned?(@species)
-
-    cursor ||= @cursor
+    return if !$player.owned?(@species)
+    cursor = @cursor if !cursor
     list = []
     @data_hash[cursor].each { |k, v| list.concat(v) }
     pbPlayBuzzerSE if list.empty?
     return if list.empty?
-
     list.uniq!
-    list.push(_INTL('Volver'))
+    list.push(_INTL("Volver"))
     index = 0
     maxidx = list.length - 1
-    pbSEPlay('GUI storage show party panel')
+    pbSEPlay("GUI storage show party panel")
     pbDrawDataList(list, index, cursor)
     loop do
       Graphics.update
@@ -663,205 +567,108 @@ class PokemonPokedexInfo_Scene
         end
       elsif Input.trigger?(Input::USE)
         if index == list.length - 1
-          pbSEPlay('GUI storage hide party panel')
+          pbSEPlay("GUI storage hide party panel")
           drawPage(@page)
           pbDrawDataNotes
           break
         else
           pbChooseSpeciesDataList(list[index])
           break if @forceRefresh
-
           pbDrawDataList(list, index, cursor)
         end
       elsif Input.trigger?(Input::BACK)
-        pbSEPlay('GUI storage hide party panel')
+        pbSEPlay("GUI storage hide party panel")
         drawPage(@page)
         pbDrawDataNotes
         break
-      elsif Input.trigger?(Input::SPECIAL) && cursor == :ability && Settings::SHOW_STAT_CHANGES_WITH_POKEAPI
-        show_ability_diffs
       end
     end
   end
-
-  def show_ability_diffs
-    species = GameData::Species.get_species_form(@species, @form)
-    if !@api_data || @api_data['species'] != species.id || @api_data['form'] != @form
-      @api_data = PokeAPI.get_data(species)
-    end
-
-    return unless @api_data
-
-    api_abilities = @api_data['abilities']
-    abilities = species.abilities
-    hidden_abilities = species.hidden_abilities
-
-    # Prepare game abilities with slot numbers
-    game_abilities = {}
-    abilities.each_with_index do |ability, i|
-      game_abilities[ability.to_sym] = [GameData::Ability.get(ability).name, i + 1, false]
-    end
-    hidden_abilities.each do |ability|
-      game_abilities[ability.to_sym] = [GameData::Ability.get(ability).name, 3, true]
-    end
-
-    # Sort by slot number
-    game_abilities = game_abilities.sort_by { |_key, value| value[1] }.to_h
-    api_abilities = api_abilities.sort_by { |_key, value| value[1] }.to_h
-
-    # Find differences for each slot
-    changed_abilities = []
-    added_abilities = []
-    removed_abilities = []
-
-    # Check slots 1, 2, and 3 (hidden)
-    (1..3).each do |slot|
-      game_ability = game_abilities.find { |_key, data| data[1] == slot }
-      api_ability = api_abilities.find { |_key, data| data[1] == slot }
-
-      if game_ability && api_ability
-        # Both have abilities in this slot
-        game_key, game_data = game_ability
-        api_key, api_data = api_ability
-
-        if game_key != api_key
-          # Ability changed (Scenario 1: Ability A => Ability B)
-          slot_name = slot == 3 ? _INTL('Habilidad Oculta') : _INTL('Habilidad {1}', slot)
-          changed_abilities.push([slot_name, api_data[0], game_data[0]])
-        end
-      elsif game_ability && !api_ability
-        # Game has ability, API doesn't (Scenario 3: Added ability)
-        game_key, game_data = game_ability
-        slot_name = slot == 3 ? _INTL('Habilidad Oculta') : _INTL('Habilidad {1}', slot)
-        added_abilities.push([slot_name, game_data[0]])
-      elsif !game_ability && api_ability
-        # API has ability, game doesn't (Scenario 2: Removed ability)
-        api_key, api_data = api_ability
-        slot_name = slot == 3 ? _INTL('Habilidad Oculta') : _INTL('Habilidad {1}', slot)
-        removed_abilities.push([slot_name, api_data[0]])
-      end
-    end
-
-    # Build difference text
-    return unless !changed_abilities.empty? || !added_abilities.empty? || !removed_abilities.empty?
-
-    diff_text = _INTL("Diferencias de Habilidades:\n")
-
-    # Show changes first (in slot order)
-    changed_abilities.each do |slot_name, old_ability, new_ability|
-      diff_text += _INTL("\\c[1]{1} => {2}\\c[0]\n", old_ability, new_ability)
-    end
-
-    # Show added abilities
-    added_abilities.each do |slot_name, ability_name|
-      diff_text += _INTL("\\c[3]{1}: {2}\\c[0]\n", slot_name, ability_name)
-    end
-
-    # Show removed abilities
-    removed_abilities.each do |slot_name, ability_name|
-      diff_text += _INTL("\\c[2]Eliminada: {1}\\c[0]\n", ability_name)
-    end
-
-    pbPlayDecisionSE
-    diff_text.chomp!
-    pbMessage(_INTL('{1}', diff_text))
-  end
-
+  
   #-----------------------------------------------------------------------------
   # Draws text-based sub menus. (Ability/item)
   #-----------------------------------------------------------------------------
   def pbDrawDataList(list, index, cursor = nil)
-    cursor ||= @cursor
+    cursor = @cursor if !cursor
     case cursor
     when :item    then data = GameData::Item
     when :ability then data = GameData::Ability
     end
     return if list.empty?
-
-    overlay = @sprites['data_overlay'].bitmap
+    overlay = @sprites["data_overlay"].bitmap
     overlay.clear
     base = Color.new(248, 248, 248)
     shadow = Color.new(72, 72, 72)
     path = Settings::POKEDEX_DATA_PAGE_GRAPHICS_PATH
     textpos = []
-    imagepos = [[path + 'submenu', SUBMENU_BG_X, SUBMENU_BG_Y, 0, SUBMENU_BG_SRC_Y_ALT, SUBMENU_BG_SRC_W,
-                 SUBMENU_BG_SRC_H]]
+    imagepos = [[path + "submenu", 0, 98, 0, 196, 640, 196]]
     last_idx = list.length - 1
-    real_idx = case index
-               when 0        then 0
-               when last_idx then last_idx > 2 ? 2 : index
-               else 1
-               end
-    idx_start = index > 1 ? index - 1 : 0
+    case index
+    when 0        then real_idx = 0
+    when last_idx then real_idx = (last_idx > 2) ? 2 : index
+    else               real_idx = 1
+    end
+    idx_start = (index > 1) ? index - 1 : 0
     if last_idx - index > 0
       idx_end = idx_start + 2
     else
-      idx_start = last_idx - 2 > 0 ? last_idx - 2 : 0
+      idx_start = (last_idx - 2 > 0) ? last_idx - 2 : 0
       idx_end = last_idx
     end
     list[idx_start..idx_end].each_with_index do |id, i|
       idx = 0
-      note = ''
+      note = ""
       @data_hash[cursor].keys.each do |num|
-        next unless @data_hash[cursor][num].include?(id)
-
+        next if !@data_hash[cursor][num].include?(id)
         case cursor
         when :item
           case num
-          when 0 then note = _INTL('Común')
-          when 1 then note = _INTL('Poco común')
-          when 2 then note = _INTL('Raro')
+          when 0 then note = _INTL("Común")
+          when 1 then note = _INTL("Poco común")
+          when 2 then note = _INTL("Raro")
           end
         when :ability
           case num
-          when 0 then note = _INTL('Habil. {1}', list.index(id) + 1)
-          when 1 then note = _INTL('H. Oculta')
-          when 2 then note = _INTL('H. Especial')
+          when 0 then note = _INTL("Habil.") + " #{list.index(id) + 1}"
+          when 1 then note = _INTL("H. Oculta")
+          when 2 then note = _INTL("H. Especial")
           end
         end
         idx = num
-        break unless nil_or_empty?(note)
+        break if !nil_or_empty?(note)
       end
       case idx
-      when 1 then imagepos.push([path + 'submenu', ITEM_ROW_X, ITEM_ROW_BASE_Y + ITEM_ROW_SPACING * i, 0,
-                                 ITEM_ROW_SRC_Y1, ITEM_ROW_SRC_W, ITEM_ROW_SRC_H])
-      when 2 then imagepos.push([path + 'submenu', ITEM_ROW_X, ITEM_ROW_BASE_Y + ITEM_ROW_SPACING * i, 0,
-                                 ITEM_ROW_SRC_Y2, ITEM_ROW_SRC_W, ITEM_ROW_SRC_H])
+      when 1 then imagepos.push([path + "submenu", 114, 114 + 42 * i, 0, 392, 412, 40])
+      when 2 then imagepos.push([path + "submenu", 114, 114 + 42 * i, 0, 432, 412, 40])
       end
       if index < list.length - 1
-        textpos.push([format('%d/%d', index + 1, list.length - 1), INDEX_PAGE_X, INDEX_PAGE_Y, :center, base, shadow,
-                      :outline])
+        textpos.push([sprintf("%d/%d", index + 1, list.length - 1), 115+68, 253, :center, base, shadow, :outline])
       end
       if id.is_a?(Symbol)
         textpos.push(
-          [_INTL('{1}', note), INDEX_PAGE_X, NAME_ROW_BASE + ITEM_ROW_SPACING * i, :center, base, shadow, :outline],
-          [data.get(id).name, NAME_COL_X, NAME_ROW_BASE + ITEM_ROW_SPACING * i, :center, base, shadow, :outline]
+          [_INTL("{1}", note), 115+64, 124 + 42 * i, :center, base, shadow, :outline],
+          [data.get(id).name, 326+64, 124 + 42 * i, :center, base, shadow, :outline]
         )
       else
-        imagepos.push([path + 'submenu', ICON_COL_X, ICON_ROW_BASE + ITEM_ROW_SPACING * i, ICON_SRC_X, ICON_SRC_Y,
-                       ICON_W, ICON_H])
-        textpos.push([id, NAME_COL_X, NAME_ROW_BASE + ITEM_ROW_SPACING * i, :center, base, Color.new(148, 148, 148),
-                      :outline])
+        imagepos.push([path + "submenu", 98+64, 120 + 42 * i, 468, 392, 34, 28])
+        textpos.push([id, 326+64, 124 + 42 * i, :center, base, Color.new(148, 148, 148), :outline])
       end
     end
-    imagepos.push([path + 'cursor', CURSOR_PANEL_X, CURSOR_PANEL_BASE_Y + ITEM_ROW_SPACING * real_idx, 0,
-                   CURSOR_PANEL_SRC_Y, CURSOR_PANEL_W, CURSOR_PANEL_H])
+    imagepos.push([path + "cursor", 184+64, 98+10 + 42 * real_idx, 0, 288, 284, 52])
     if index < list.length - 1
-      imagepos.push([path + 'page_cursor', PAGE_CURSOR_MID_X, PAGE_CURSOR_MID_Y, PAGE_CURSOR_SRC_LEFT_X,
-                     PAGE_CURSOR_SRC_Y, PAGE_CURSOR_W, PAGE_CURSOR_H])
+      imagepos.push([path + "page_cursor", 248+42, 246, 0, 70, 76, 32])
     end
     if index > 0
-      imagepos.push([path + 'page_cursor', PAGE_CURSOR_RIGHT_ALT_X, PAGE_CURSOR_MID_Y, PAGE_CURSOR_SRC_RIGHT_X,
-                     PAGE_CURSOR_SRC_Y, PAGE_CURSOR_W, PAGE_CURSOR_H])
+      imagepos.push([path + "page_cursor", 328+42, 246, 76, 70, 76, 32])
     end
     pbDrawImagePositions(overlay, imagepos)
     pbDrawTextPositions(overlay, textpos)
-    data_text = case list[index]
-                when Symbol
-                  DATA_TEXT_TAGS[0] + data.get(list[index]).description
-                else
-                  DATA_TEXT_TAGS[0] + _INTL('Volver a los datos de la especie.')
-                end
-    drawFormattedTextEx(overlay, DATA_TEXT_X, DATA_TEXT_Y, DATA_TEXT_W, _INTL('{1}', data_text))
+    case list[index]
+    when Symbol
+      data_text = DATA_TEXT_TAGS[0] + data.get(list[index]).description
+    else
+      data_text = DATA_TEXT_TAGS[0] + _INTL("Volver a los datos de la especie.")
+    end
+    drawFormattedTextEx(overlay, 34+26, 294+38, 532, _INTL("{1}", data_text))
   end
 end

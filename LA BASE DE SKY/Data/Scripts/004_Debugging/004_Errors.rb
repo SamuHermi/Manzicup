@@ -13,67 +13,54 @@ class EventScriptError < Exception
   end
 end
 
-def pbGetExceptionMessage(e, _script = '')
-  return e.event_message.dup if e.is_a?(EventScriptError) # Mensaje con mapa/ID de evento generado en otro lugar
-
+def pbGetExceptionMessage(e, _script = "")
+  return e.event_message.dup if e.is_a?(EventScriptError)   # Mensaje con mapa/ID de evento generado en otro lugar
   emessage = e.message.dup
   emessage.force_encoding(Encoding::UTF_8)
   case e
   when Hangup
-    emessage = 'El script está tardando demasiado. El juego se reiniciará.'
+    emessage = "El script está tardando demasiado. El juego se reiniciará."
   when Errno::ENOENT
-    filename = emessage.sub('No existe el fichero o directorio - ', '')
+    filename = emessage.sub("No existe el fichero o directorio - ", "")
     emessage = "Archivo #{filename} no encontrado."
   end
-  begin
-    emessage.gsub!(/Sección(\d+)/) { $RGSS_SCRIPTS[Regexp.last_match(1).to_i][1] }
-  rescue StandardError
-    nil
-  end
-  emessage
+  emessage.gsub!(/Sección(\d+)/) { $RGSS_SCRIPTS[$1.to_i][1] } rescue nil
+  return emessage
 end
 
 def pbPrintException(e)
   emessage = pbGetExceptionMessage(e)
   # begin message formatting
   message = "[Pokémon Essentials versión #{Essentials::VERSION}]\r\n"
-  message += "#{Essentials::ERROR_TEXT}" # For third party scripts to add to
-  message += "[LA BASE DE SKY versión #{LBDSKY::VERSION}]\r\n"
-  unless e.is_a?(EventScriptError)
+  message += "#{Essentials::ERROR_TEXT}"   # For third party scripts to add to
+  message += "[LA BASE DE SKY versión #{LBDSKY::LA_BASE_DE_SKY_VERSION}]\r\n"
+  if !e.is_a?(EventScriptError)
     message += "Excepción: #{e.class}\r\n"
-    message += 'Mensaje: '
+    message += "Mensaje: "
   end
   message += emessage
   # show last 10/25 lines of backtrace
-  unless e.is_a?(EventScriptError)
+  if !e.is_a?(EventScriptError)
     message += "\r\n\r\nTraza:\r\n"
-    backtrace_text = ''
+    backtrace_text = ""
     if e.backtrace
-      maxlength = $INTERNAL ? 25 : 10
+      maxlength = ($INTERNAL) ? 25 : 10
       e.backtrace[0, maxlength].each { |i| backtrace_text += "#{i}\r\n" }
     end
-    begin
-      backtrace_text.gsub!(/Section(\d+)/) { $RGSS_SCRIPTS[Regexp.last_match(1).to_i][1] }
-    rescue StandardError
-      nil
-    end
+    backtrace_text.gsub!(/Section(\d+)/) { $RGSS_SCRIPTS[$1.to_i][1] } rescue nil
     message += backtrace_text
   end
   # output to log
-  errorlog = 'errorlog.txt'
-  errorlog = RTP.getSaveFileName('errorlog.txt') if begin
-    Object.const_defined?(:RTP)
-  rescue StandardError
-    false
-  end
-  File.open(errorlog, 'ab') do |f|
+  errorlog = "errorlog.txt"
+  errorlog = RTP.getSaveFileName("errorlog.txt") if (Object.const_defined?(:RTP) rescue false)
+  File.open(errorlog, "ab") do |f|
     f.write("\r\n=================\r\n\r\n[#{Time.now}]\r\n")
     f.write(message)
   end
   # format/censor the error log directory
-  errorlogline = errorlog.gsub('/', '\\')
-  errorlogline.sub!(Dir.pwd + '\\', '')
-  errorlogline.sub!(pbGetUserName, 'USERNAME')
+  errorlogline = errorlog.gsub("/", "\\")
+  errorlogline.sub!(Dir.pwd + "\\", "")
+  errorlogline.sub!(pbGetUserName, "USERNAME")
   errorlogline = "\r\n" + errorlogline if errorlogline.length > 20
   # output message
   print("#{message}\r\nEsta excepción se registró en #{errorlogline}.\r\nMantenga presionada la tecla Ctrl al cerrar este mensaje para copiarlo al portapapeles.")
@@ -95,13 +82,16 @@ def pbCriticalCode
     ret = 1
   rescue Exception
     e = $!
-    raise if e.is_a?(Reset) || e.is_a?(SystemExit)
-
-    pbPrintException(e)
-    if e.is_a?(Hangup)
-      ret = 2
-      raise Reset.new
+    if e.is_a?(Reset) || e.is_a?(SystemExit)
+      raise
+    else
+      pbPrintException(e)
+      if e.is_a?(Hangup)
+        ret = 2
+        raise Reset.new
+      end
     end
   end
-  ret
+  return ret
 end
+

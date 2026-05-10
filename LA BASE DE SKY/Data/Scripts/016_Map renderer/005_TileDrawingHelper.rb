@@ -1,6 +1,3 @@
-#===============================================================================
-#
-#===============================================================================
 class TileDrawingHelper
   attr_accessor :tileset
   attr_accessor :autotiles
@@ -84,8 +81,6 @@ class TileDrawingHelper
     return self.new(bmtileset, bmautotiles)
   end
 
-  #-----------------------------------------------------------------------------
-
   def initialize(tileset, autotiles)
     if tileset.mega?
       @tileset = TilemapRenderer::TilesetWrapper.wrapTileset(tileset)
@@ -108,8 +103,8 @@ class TileDrawingHelper
   end
 
   def bltSmallAutotile(bitmap, x, y, cxTile, cyTile, id, frame)
-    return if id >= TilemapRenderer::TILESET_START_ID || frame < 0 || !@autotiles
-    autotile = @autotiles[(id / TilemapRenderer::TILES_PER_AUTOTILE) - 1]
+    return if id >= 384 || frame < 0 || !@autotiles
+    autotile = @autotiles[(id / 48) - 1]
     return if !autotile || autotile.disposed?
     cxTile = [cxTile / 2, 1].max
     cyTile = [cyTile / 2, 1].max
@@ -118,8 +113,8 @@ class TileDrawingHelper
       src_rect = Rect.new(anim, 0, 32, 32)
       bitmap.stretch_blt(Rect.new(x, y, cxTile * 2, cyTile * 2), autotile, src_rect)
     else
-      anim = frame * 32 * 3   # Frames of a large autotile are 3 tiles wide
-      id %= TilemapRenderer::TILES_PER_AUTOTILE
+      anim = frame * 96
+      id %= 48
       tiles = AUTOTILE_PATTERNS[id >> 3][id & 7]
       src = Rect.new(0, 0, 0, 0)
       4.times do |i|
@@ -132,15 +127,14 @@ class TileDrawingHelper
   end
 
   def bltSmallRegularTile(bitmap, x, y, cxTile, cyTile, id)
-    return if id < TilemapRenderer::TILESET_START_ID || !@tileset || @tileset.disposed?
-    rect = Rect.new(((id - TilemapRenderer::TILESET_START_ID) % TilemapRenderer::TILESET_TILES_PER_ROW) * 32,
-                    ((id - TilemapRenderer::TILESET_START_ID) / TilemapRenderer::TILESET_TILES_PER_ROW) * 32, 32, 32)
+    return if id < 384 || !@tileset || @tileset.disposed?
+    rect = Rect.new(((id - 384) % 8) * 32, ((id - 384) / 8) * 32, 32, 32)
     rect = TilemapRenderer::TilesetWrapper.getWrappedRect(rect) if @shouldWrap
     bitmap.stretch_blt(Rect.new(x, y, cxTile, cyTile), @tileset, rect)
   end
 
   def bltSmallTile(bitmap, x, y, cxTile, cyTile, id, frame = 0)
-    if id >= TilemapRenderer::TILESET_START_ID
+    if id >= 384
       bltSmallRegularTile(bitmap, x, y, cxTile, cyTile, id)
     elsif id > 0
       bltSmallAutotile(bitmap, x, y, cxTile, cyTile, id, frame)
@@ -156,7 +150,7 @@ class TileDrawingHelper
   end
 
   def bltTile(bitmap, x, y, id, frame = 0)
-    if id >= TilemapRenderer::TILESET_START_ID
+    if id >= 384
       bltRegularTile(bitmap, x, y, id)
     elsif id > 0
       bltAutotile(bitmap, x, y, id, frame)
@@ -245,3 +239,4 @@ def getPassabilityMinimap(mapid)
   minimap.dispose
   return ret
 end
+

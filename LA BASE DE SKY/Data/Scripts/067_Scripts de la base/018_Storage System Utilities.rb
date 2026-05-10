@@ -7,7 +7,7 @@ class StorageGrabber
   def initialize
     clear
   end
-
+  
   #===============================================================================
   # Adds hovered over pokemon to held pokemon
   #===============================================================================
@@ -19,9 +19,9 @@ class StorageGrabber
   # Is the grabber holding a Pokemon?
   #===============================================================================
   def holding_anything?
-    !@mons.empty?
+    return !@mons.empty?
   end
-
+  
   #===============================================================================
   # Sets the pivot (top left Pokemon)
   #===============================================================================
@@ -29,7 +29,7 @@ class StorageGrabber
     @pivot      = selection
     @mock_pivot = selection
   end
-
+  
   #===============================================================================
   # Begins hovering phase
   #===============================================================================
@@ -44,20 +44,24 @@ class StorageGrabber
     @mock_pivot = f_col + f_row * PokemonBox::BOX_WIDTH
     for i in 0...PokemonBox::BOX_WIDTH
       next if (i < p_col && i < s_col) || (i > p_col && i > s_col)
-
       for j in 0...PokemonBox::BOX_HEIGHT
         next if (j < p_row && j < s_row) || (j > p_row && j > s_row)
-
         add_to(i - f_col,  j - f_row)
       end
     end
   end
-
+  
   #===============================================================================
   # Is the grabber carrying?
   #===============================================================================
-  attr_accessor :carrying
-
+  def carrying
+    return @carrying
+  end
+  
+  def carrying=(value)
+    @carrying = value
+  end
+  
   #===============================================================================
   # Adds Pokémon and their positions (relative to top left) to @carried_mons
   #===============================================================================
@@ -72,9 +76,8 @@ class StorageGrabber
       ret.push([pkmn, x, y])
     end
     @carried_mons = ret
-    @source_box = box_num # Track the source box
   end
-
+  
   #===============================================================================
   # Gets storage index of carried mons for deletion
   #===============================================================================
@@ -87,9 +90,9 @@ class StorageGrabber
       y = i[2] + p_row
       ret.push(y * PokemonBox::BOX_WIDTH + x)
     end
-    ret
+    return ret
   end
-
+  
   #===============================================================================
   # Places mons in those positions
   # STOPS IF THERE IS NOT A SPACE FOR EVERY MON
@@ -101,7 +104,7 @@ class StorageGrabber
     for i in @carried_mons
       col = s_col + i[1]
       if col >= PokemonBox::BOX_WIDTH
-        can_place = false
+        can_place = false 
         next
       end
       row = s_row + i[2]
@@ -112,13 +115,14 @@ class StorageGrabber
       pseudo_sel = row * PokemonBox::BOX_WIDTH + col
       can_place = false if storage[box_num, pseudo_sel] # Occupied
     end
-    can_place
+    return can_place
   end
-
+  
   #===============================================================================
   # Gets index number of mons proposed to be put in boxes in above def.
   #===============================================================================
   def get_new_carried_mons(selection)
+    
     ret   = []
     s_col = selection % PokemonBox::BOX_WIDTH
     s_row = (selection / PokemonBox::BOX_WIDTH).floor
@@ -128,24 +132,23 @@ class StorageGrabber
       pseudo_sel = row * PokemonBox::BOX_WIDTH + col
       ret.push([pseudo_sel, i[0]])
     end
-    ret
+    return ret
   end
-
+  
   #===============================================================================
   # Removes any poured Pokemon
   #===============================================================================
   def pour(count)
     return if count == 0
-
     to_del = get_new_carried_mons(0)
-    to_del = to_del.sort { |a, b| a[0] <=> b[0] }
-    ret = @carried_mons.clone
-    count.times do
-      ret.pop
-    end
-    @carried_mons = ret
+	to_del = to_del.sort{ |a, b| a[0] <=> b[0] }
+	ret = @carried_mons.clone
+	count.times do
+	  ret.pop
+	end
+	@carried_mons = ret
   end
-
+  
   #===============================================================================
   # Clears everything
   #===============================================================================
@@ -155,21 +158,28 @@ class StorageGrabber
     @mock_pivot   = nil
     @carrying     = false
     @carried_mons = []
-    @source_box   = nil
   end
-
+  
   #===============================================================================
   # Utilities
   #===============================================================================
-  attr_reader :mons
-
-  attr_reader :mock_pivot, :carried_mons, :source_box
-
+  def mons
+    return @mons
+  end
+  
+  def mock_pivot
+    return @mock_pivot
+  end
+  
   def contains_an_egg?
     for i in @carried_mons
-      return true if i[0]&.egg?
+      return true if i[0].egg?
     end
-    false
+    return false
+  end
+  
+  def carried_mons
+    return @carried_mons
   end
 end
 
@@ -195,7 +205,7 @@ end
 # Using Version 21 or not?
 #===============================================================================
 def pbVersion21?
-  Essentials::VERSION.include?('21')
+  return Essentials::VERSION.include?("21")
 end
 
 #===============================================================================
@@ -211,47 +221,39 @@ class PokemonBoxIcon < IconSprite
   def make_clear
     @type = :Clear
   end
-
   def make_green
     @type = :Green
   end
-
   def make_grey
     @type = :Grey
   end
-
+  
   #===============================================================================
   # update Override
   #===============================================================================
   def update
     super
-    @type ||= :Clear
-    return update_21 if pbVersion21?
-
+    @type = :Clear if !@type
+	return update_21 if pbVersion21?
     @release.update
     do_colours
     dispose if @startRelease && !releasing?
   end
-
+  
   def update_21
     do_colours
-    # Apply tone after any bitmap changes
-    self.tone = if @should_be_grey
-                  Tone.new(0, 0, 0, 255)
-                else
-                  Tone.new(0, 0, 0, 0)
-                end
-    return unless releasing?
-
-    self.zoom_x = lerp(1.0, 0.0, 1.5, @release_timer_start, System.uptime)
-    self.zoom_y = zoom_x
-    self.opacity = lerp(255, 0, 1.5, @release_timer_start, System.uptime)
-    return unless opacity == 0
-
-    @release_timer_start = nil
-    dispose
+    if releasing?
+      time_now = System.uptime
+      self.zoom_x = lerp(1.0, 0.0, 1.5, @release_timer_start, System.uptime)
+      self.zoom_y = self.zoom_x
+      self.opacity = lerp(255, 0, 1.5, @release_timer_start, System.uptime)
+      if self.opacity == 0
+        @release_timer_start = nil
+        dispose
+      end
+    end
   end
-
+  
   def do_colours
     case @type
     when :Clear
@@ -269,51 +271,46 @@ end
 #===============================================================================
 class PokemonBoxArrow < Sprite
   attr_accessor :multi
-
+  
   #===============================================================================
   # initialize Add On
   #===============================================================================
   alias swdfm_init initialize
   def initialize(viewport = nil)
     swdfm_init(viewport)
-    @path = STORAGE_ARROW_PATH
-    if @path == ''
-      @path = 'Graphics/Pictures/Storage/'
-      @path = 'Graphics/UI/Storage/' if pbVersion21?
-    end
+	@path  = STORAGE_ARROW_PATH
+	if @path == ""
+      @path  = "Graphics/Pictures/Storage/"
+      @path  = "Graphics/UI/Storage/" if pbVersion21?
+	end
     @multi = false
-    @handsprite.addBitmap('point1g', @path + 'cursor_point_1_g')
-    @handsprite.addBitmap('point2g', @path + 'cursor_point_2_g')
-    @handsprite.addBitmap('grabg', @path + 'cursor_grab_g')
-    @handsprite.addBitmap('fistg', @path + 'cursor_fist_g')
+    @handsprite.addBitmap("point1g", @path + "cursor_point_1_g")
+    @handsprite.addBitmap("point2g", @path + "cursor_point_2_g")
+    @handsprite.addBitmap("grabg", @path + "cursor_grab_g")
+    @handsprite.addBitmap("fistg", @path + "cursor_fist_g")
   end
-
+  
   #===============================================================================
   # update Override (v20)
   #===============================================================================
   def update
     @updating = true
     super
-    return update_21 if pbVersion21?
-
+	return update_21 if pbVersion21?
     heldpkmn = heldPokemon
     heldpkmn&.update
     @handsprite.update
-    @holding = false unless heldpkmn
+    @holding = false if !heldpkmn
     t = @tension
-    b = if @multi
-          'g'
-        else
-          (@quickswap ? 'q' : '')
-        end
+    b = @multi ? "g" : (@quickswap ? "q" : "")
     if @grabbingState > 0
       if @grabbingState <= 4 * Graphics.frame_rate / 20
-        @handsprite.change_bitmap('grab' + b)
+        @handsprite.changeBitmap("grab" + b)
         self.y = @spriteY + (4.0 * @grabbingState * 20 / Graphics.frame_rate)
         @grabbingState += 1
       elsif @grabbingState <= 8 * Graphics.frame_rate / 20
         @holding = true
-        @handsprite.change_bitmap('fist' + b)
+        @handsprite.changeBitmap("fist" + b)
         self.y = @spriteY + (4 * ((8 * Graphics.frame_rate / 20) - @grabbingState) * 20 / Graphics.frame_rate)
         @grabbingState += 1
       else
@@ -321,38 +318,38 @@ class PokemonBoxArrow < Sprite
       end
     elsif @placingState > 0
       if @placingState <= 4 * Graphics.frame_rate / 20
-        @handsprite.change_bitmap('fist' + b)
+        @handsprite.changeBitmap("fist" + b)
         self.y = @spriteY + (4.0 * @placingState * 20 / Graphics.frame_rate)
-        @placingState += 1
+		@placingState += 1
       elsif @placingState <= 8 * Graphics.frame_rate / 20
         @holding = false
         @heldpkmn = nil
-        @handsprite.change_bitmap('grab' + b)
+        @handsprite.changeBitmap("grab" + b)
         self.y = @spriteY + (4 * ((8 * Graphics.frame_rate / 20) - @placingState) * 20 / Graphics.frame_rate)
-        @placingState += 1
-      else
+		@placingState += 1
+	  else
         @placingState = 0
       end
     elsif holding?
-      @handsprite.change_bitmap('fist' + b)
+      @handsprite.changeBitmap("fist" + b)
     elsif t == :Selecting
-      @handsprite.change_bitmap('grab' + b)
+      @handsprite.changeBitmap("grab" + b)
     elsif t == :Moving
-      @handsprite.change_bitmap('fist' + b)
-    else # Idling
+      @handsprite.changeBitmap("fist" + b)
+    else   # Idling
       self.x = @spriteX
       self.y = @spriteY
       if @frame < Graphics.frame_rate / 2
-        @handsprite.change_bitmap('point1' + b)
+        @handsprite.changeBitmap("point1" + b)
       else
-        @handsprite.change_bitmap('point2' + b)
+        @handsprite.changeBitmap("point2" + b)
       end
     end
     @frame += 1
     @frame = 0 if @frame >= Graphics.frame_rate
     @updating = false
   end
-
+  
   #===============================================================================
   # update Override (v21)
   #===============================================================================
@@ -360,54 +357,50 @@ class PokemonBoxArrow < Sprite
     heldpkmn = heldPokemon
     heldpkmn&.update
     @handsprite.update
-    @holding = false unless heldpkmn
+    @holding = false if !heldpkmn
     t = @tension
-    b = if @multi
-          'g'
-        else
-          (@quickswap ? 'q' : '')
-        end
+    b = @multi ? "g" : (@quickswap ? "q" : "")
     if @grabbing_timer_start
       if System.uptime - @grabbing_timer_start <= GRAB_TIME / 2
-        @handsprite.change_bitmap('grab' + b)
+        @handsprite.changeBitmap("grab" + b)
         self.y = @spriteY + lerp(0, 16, GRAB_TIME / 2, @grabbing_timer_start, System.uptime)
       else
         @holding = true
-        @handsprite.change_bitmap('fist' + b)
+        @handsprite.changeBitmap("fist" + b)
         delta_y = lerp(16, 0, GRAB_TIME / 2, @grabbing_timer_start + (GRAB_TIME / 2), System.uptime)
         self.y = @spriteY + delta_y
         @grabbing_timer_start = nil if delta_y == 0
       end
     elsif @placing_timer_start
       if System.uptime - @placing_timer_start <= GRAB_TIME / 2
-        @handsprite.change_bitmap('fist' + b)
+        @handsprite.changeBitmap("fist" + b)
         self.y = @spriteY + lerp(0, 16, GRAB_TIME / 2, @placing_timer_start, System.uptime)
       else
         @holding = false
         @heldpkmn = nil
-        @handsprite.change_bitmap('grab' + b)
+        @handsprite.changeBitmap("grab" + b)
         delta_y = lerp(16, 0, GRAB_TIME / 2, @placing_timer_start + (GRAB_TIME / 2), System.uptime)
         self.y = @spriteY + delta_y
         @placing_timer_start = nil if delta_y == 0
       end
     elsif holding?
-      @handsprite.change_bitmap('fist' + b)
+      @handsprite.changeBitmap("fist" + b)
     elsif t == :Selecting
-      @handsprite.change_bitmap('grab' + b)
+      @handsprite.changeBitmap("grab" + b)
     elsif t == :Moving
-      @handsprite.change_bitmap('fist' + b)
-    else # Idling
+      @handsprite.changeBitmap("fist" + b)
+    else   # Idling
       self.x = @spriteX
       self.y = @spriteY
-      if (System.uptime / 0.5).to_i.even? # Changes every 0.5 seconds
-        @handsprite.change_bitmap('point1' + b)
+      if (System.uptime / 0.5).to_i.even?   # Changes every 0.5 seconds
+        @handsprite.changeBitmap("point1" + b)
       else
-        @handsprite.change_bitmap('point2' + b)
+        @handsprite.changeBitmap("point2" + b)
       end
     end
     @updating = false
   end
-
+  
   #===============================================================================
   # Additional methods: Tension
   # Used For Multiple Grabbing
@@ -415,11 +408,11 @@ class PokemonBoxArrow < Sprite
   def set_tension
     @tension = :Selecting # 1
   end
-
+  
   def start_tension
     @tension = :Moving # 2
   end
-
+  
   def release_tension
     @tension = :None # 0
   end
@@ -430,7 +423,7 @@ end
 #===============================================================================
 class PokemonStorageScene
   attr_reader :multi
-
+  
   #===============================================================================
   # pbStartBox Addition
   #===============================================================================
@@ -439,7 +432,7 @@ class PokemonStorageScene
     @grabber = StorageGrabber.new
     swdfm_start_box(*args)
   end
-
+  
   #===============================================================================
   # pbSetArrow Addition
   #===============================================================================
@@ -447,14 +440,12 @@ class PokemonStorageScene
   def pbSetArrow(arrow, selection)
     swdfm_set_arrow(arrow, selection)
     return unless selection >= 0
-
     t = @multi && @grabber.holding_anything? && !@grabber.carrying
     return unless t
-
     @grabber.do_with(selection)
     do_green
   end
-
+  
   #===============================================================================
   # pbChangeSelection Addition
   #===============================================================================
@@ -467,21 +458,21 @@ class PokemonStorageScene
       when -1   # Box name
         selection = -2
       when -2   # Party
-        selection = PokemonBox::BOX_SIZE - 1 - (PokemonBox::BOX_WIDTH * 2 / 3) # 25
-      when -3 # Close Box
-        selection = PokemonBox::BOX_SIZE - (PokemonBox::BOX_WIDTH / 3) # 28
+        selection = PokemonBox::BOX_SIZE - 1 - (PokemonBox::BOX_WIDTH * 2 / 3)   # 25
+      when -3   # Close Box
+        selection = PokemonBox::BOX_SIZE - (PokemonBox::BOX_WIDTH / 3)   # 28
       else
         selection -= PokemonBox::BOX_WIDTH
-        if skip && selection < 0
+		if skip && selection < 0
           selection += PokemonBox::BOX_SIZE
-        elsif selection < 0
+		elsif selection < 0
           selection = -1
         end
       end
     when Input::DOWN
       case selection
-      when -1 # Box name
-        selection = PokemonBox::BOX_WIDTH / 3 # 2
+      when -1   # Box name
+        selection = PokemonBox::BOX_WIDTH / 3   # 2
       when -2   # Party
         selection = -1
       when -3   # Close Box
@@ -491,25 +482,25 @@ class PokemonStorageScene
         if skip && selection >= PokemonBox::BOX_SIZE
           selection -= PokemonBox::BOX_SIZE
         elsif selection >= PokemonBox::BOX_SIZE
-          selection = if selection < PokemonBox::BOX_SIZE + (PokemonBox::BOX_WIDTH / 2)
-                        -2 # Party
-                      else
-                        -3 # Close Box
-                      end
+          if selection < PokemonBox::BOX_SIZE + (PokemonBox::BOX_WIDTH / 2)
+            selection = -2   # Party
+          else
+            selection = -3   # Close Box
+          end
         end
       end
     when Input::LEFT, Input::RIGHT
       selection = swdfm_change_sel(key, selection)
     end
-    selection
+    return selection
   end
-
+  
   #===============================================================================
   # pbSelectBoxInternal Override
   #===============================================================================
   def pbSelectBoxInternal(_party)
     selection = @selection
-    pbSetArrow(@sprites['arrow'], selection)
+    pbSetArrow(@sprites["arrow"], selection)
     pbUpdateOverlay(selection)
     pbSetMosaic(selection)
     loop do
@@ -523,7 +514,7 @@ class PokemonStorageScene
       if key >= 0
         pbPlayCursorSE
         selection = pbChangeSelection(key, selection)
-        pbSetArrow(@sprites['arrow'], selection)
+        pbSetArrow(@sprites["arrow"], selection)
         case selection
         when -4
           nextbox = (@storage.currentBox + @storage.maxBoxes - 1) % @storage.maxBoxes
@@ -538,7 +529,7 @@ class PokemonStorageScene
         pbUpdateOverlay(selection)
         pbSetMosaic(selection)
       end
-      update
+      self.update
       t = @grabber.holding_anything? && !@grabber.carrying
       if Input.trigger?(Input::JUMPUP) && !t
         pbPlayCursorSE
@@ -554,22 +545,15 @@ class PokemonStorageScene
         @storage.currentBox = nextbox
         pbUpdateOverlay(selection)
         pbSetMosaic(selection)
-      elsif Input.trigger?(Input::SPECIAL) && !t # Jump to box name
-        if selection != -1
-          pbPlayCursorSE
-          selection = -1
-          pbSetArrow(@sprites['arrow'], selection)
-          pbSortByPokedex
-          pbUpdateOverlay(selection)
-          pbSetMosaic(selection)
-        end
-      elsif Input.trigger?(Input::AUX2)
-        pbSearch
-      elsif Input.trigger?(Input::ACTION) && @command == 0 # Organize only
+      elsif Input.trigger?(Input::SPECIAL) && !t   # Jump to box name
+        pbSortByPokedex
+        pbUpdateOverlay(selection)
+        pbSetMosaic(selection)
+      elsif Input.trigger?(Input::ACTION) && @command == 0   # Organize only
         if !t && !@grabber.carrying
           pbPlayDecisionSE
           pbSetQuickSwap(!@quickswap)
-        elsif @grabber.carrying && CAN_MASS_RELEASE && @multi
+        elsif @grabber.carrying && CAN_MASS_RELEASE
           pbMassRelease
         end
       elsif Input.trigger?(Input::BACK)
@@ -582,14 +566,14 @@ class PokemonStorageScene
         elsif selection == -1   # Box name
           return [-4, -1]
         elsif selection == -2   # Party Pokémon
-          return [-2, -1] unless @multi
+          return [-2, -1] if !@multi
         elsif selection == -3   # Close Box
           return [-3, -1]
         end
       end
     end
   end
-
+  
   def pbSortByPokedex
     storage = $PokemonStorage
     all_pokemon = []
@@ -622,13 +606,12 @@ class PokemonStorageScene
     storage.maxBoxes.times do |box|
       storage.maxPokemon(box).times do |i|
         break if index >= all_pokemon.length
-
         storage[box, i] = all_pokemon[index]
         index += 1
       end
     end
     pbHardRefresh
-    pbMessage(_INTL('Pokémon ordenados por Pokédex correctamente.'))
+    pbMessage(_INTL("Pokémon ordenados por Pokédex correctamente."))
   end
 
   #===============================================================================
@@ -636,7 +619,7 @@ class PokemonStorageScene
   #===============================================================================
   def pbSelectPartyInternal(party, depositing)
     selection = @selection
-    pbPartySetArrow(@sprites['arrow'], selection)
+    pbPartySetArrow(@sprites["arrow"], selection)
     pbUpdateOverlay(selection, party)
     pbSetMosaic(selection)
     lastsel = 1
@@ -653,19 +636,19 @@ class PokemonStorageScene
         newselection = pbPartyChangeSelection(key, selection)
         case newselection
         when -1
-          return -1 unless depositing
+          return -1 if !depositing
         when -2
           selection = lastsel
         else
           selection = newselection
         end
-        pbPartySetArrow(@sprites['arrow'], selection)
+        pbPartySetArrow(@sprites["arrow"], selection)
         lastsel = selection if selection > 0
         pbUpdateOverlay(selection, party)
         pbSetMosaic(selection)
       end
-      update
-      if Input.trigger?(Input::ACTION) && @command == 0 # Organize only
+      self.update
+      if Input.trigger?(Input::ACTION) && @command == 0   # Organize only
         pbPlayDecisionSE
         pbSetQuickSwap(!@quickswap, true)
       elsif Input.trigger?(Input::BACK)
@@ -675,30 +658,29 @@ class PokemonStorageScene
         if selection >= 0 && selection < Settings::MAX_PARTY_SIZE
           @selection = selection
           return selection
-        elsif selection == Settings::MAX_PARTY_SIZE # Close Box
+        elsif selection == Settings::MAX_PARTY_SIZE   # Close Box
           @selection = selection
-          return depositing ? -3 : -1
+          return (depositing) ? -3 : -1
         end
       end
     end
   end
-
+  
   #===============================================================================
   # New Method To Swap Boxes
   #===============================================================================
   def pbSwapBoxes(newbox)
     return if @storage.currentBox == newbox
-
-    @storage.swap(newbox, @storage.currentBox)
-    @sprites['box'].update
-    refresh_box_sprites
+	@storage.swap(newbox, @storage.currentBox)
+	@sprites["box"].update
+	refresh_box_sprites
   end
-
+  
   #===============================================================================
   # pbSetQuickSwap Override
   #===============================================================================
   def pbSetQuickSwap(value, ignore_multi = false)
-    ignore_multi = true unless CAN_MULTI_SELECT
+    ignore_multi = true if !CAN_MULTI_SELECT
     # Set to Quickswap
     if !@quickswap && !@multi
       @quickswap = true
@@ -711,10 +693,10 @@ class PokemonStorageScene
       @quickswap = false
       @multi     = false
     end
-    @sprites['arrow'].quickswap = @quickswap
-    @sprites['arrow'].multi = @multi
+    @sprites["arrow"].quickswap = @quickswap
+    @sprites["arrow"].multi = @multi
   end
-
+  
   #===============================================================================
   # pbChooseBox
   #===============================================================================
@@ -722,36 +704,38 @@ class PokemonStorageScene
     commands = []
     @storage.maxBoxes.times do |i|
       box = @storage[i]
-      next unless box
-
-      if swapping && i == @storage.currentBox
-        commands.push(_INTL('No intercambiar'))
-        next
+      if box
+	    if swapping  && i == @storage.currentBox
+          commands.push("No intercambiar")
+		  next
+		end
+		commands.push(_INTL("{1} ({2}/{3})", box.name, box.nitems, box.length))
       end
-      commands.push(_INTL('{1} ({2}/{3})', box.name, box.nitems, box.length))
     end
-    pbShowCommands(msg, commands, @storage.currentBox)
+    return pbShowCommands(msg, commands, @storage.currentBox)
   end
-
+  
   #===============================================================================
   # Additional methods
-  #===============================================================================
+  #===============================================================================  
   # Tension: Used For Multiple Grabbing
   #===============================================================================
-  attr_reader :grabber
-
+  def grabber
+    return @grabber
+  end
+  
   def set_tension
-    @sprites['arrow'].set_tension
+    @sprites["arrow"].set_tension
   end
-
+  
   def start_tension
-    @sprites['arrow'].start_tension
+    @sprites["arrow"].start_tension
   end
-
+  
   def release_tension
-    @sprites['arrow'].release_tension
+    @sprites["arrow"].release_tension
   end
-
+  
   #===============================================================================
   # Sets all necessary sprites to green
   #===============================================================================
@@ -767,57 +751,54 @@ class PokemonStorageScene
       sels.push(sel)
     end
     for i in 0...PokemonBox::BOX_SIZE
-      boxpokesprite = @sprites['box'].getPokemon(i)
+      boxpokesprite = @sprites["box"].getPokemon(i)
       if sels.include?(i)
         boxpokesprite&.make_green
       else
-        pokemon = boxpokesprite&.getPokemon
-        boxpokesprite&.make_clear if pokemon && !pokemon.fainted?
+        boxpokesprite&.make_clear
       end
     end
   end
-
+  
   #===============================================================================
   # Method to refresh all box sprites
   #===============================================================================
   def refresh_box_sprites
-    @sprites['box'].refreshSprites = true
-    @sprites['box'].refreshBox = true
+    @sprites["box"].refreshSprites = true
+    @sprites["box"].refreshBox = true
     pbHardRefresh
   end
-
+  
   #===============================================================================
   # Changes from wherever the anchor is to the top left of the selection
   #===============================================================================
   def quick_change(selection)
-    pbSetArrow(@sprites['arrow'], selection)
+    pbSetArrow(@sprites["arrow"], selection)
     pbUpdateOverlay(selection)
     pbSetMosaic(selection)
     @selection = selection
   end
-
+  
   #===============================================================================
   # Shortcut to mass release
   #===============================================================================
   def pbMassRelease
     @screen.pbMassRelease
   end
-
+  
   #===============================================================================
   # Greys all necessary sprites
   #===============================================================================
   def do_greys(ableProc = nil)
-    return unless ableProc
-
+    return if !ableProc
     for i in 0...(PokemonBox::BOX_SIZE + PokemonBox::BOX_WIDTH)
-      boxpokesprite = if i < PokemonBox::BOX_SIZE
-                        @sprites['box'].getPokemon(i)
-                      else
-                        @sprites['boxparty'].getPokemon(i - 30)
-                      end
-      next unless boxpokesprite
-      next unless boxpokesprite.getPokemon
-
+      if i < PokemonBox::BOX_SIZE
+        boxpokesprite = @sprites["box"].getPokemon(i)
+      else
+        boxpokesprite = @sprites["boxparty"].getPokemon(i-30)
+      end
+      next if !boxpokesprite
+      next if !boxpokesprite.getPokemon
       if ableProc.call(boxpokesprite.getPokemon)
         boxpokesprite.make_clear
       else
@@ -831,215 +812,30 @@ end
 # PokemonStorageScreen Override
 #===============================================================================
 class PokemonStorageScreen
-  def pbStartScreen(command)
-    $game_temp.in_storage = true
-    @heldpkmn = nil
-    case command
-    when 0 # Organise
-      @scene.pbStartBox(self, command)
-      loop do
-        selected = @scene.pbSelectBox(@storage.party)
-        if selected.nil?
-          if pbHeldPokemon
-            pbDisplay(_INTL('¡Estás sosteniendo un Pokémon!'))
-            next
-          elsif @scene.grabber.carrying
-            pbDisplay(_INTL('¡Estás sosteniendo un Pokémon!'))
-            next
-          end
-          next if pbConfirm(_INTL('¿Desea hacer más operaciones?'))
-
-          break
-        elsif selected[0] == -3   # Close box
-          if pbHeldPokemon
-            pbDisplay(_INTL('¡Estás sosteniendo un Pokémon!'))
-            next
-          elsif @scene.grabber.carrying
-            pbDisplay(_INTL('¡Estás sosteniendo un Pokémon!'))
-            next
-          end
-          if pbConfirm(_INTL('¿Desea salir de la caja?'))
-            pbSEPlay('PC close')
-            break
-          end
-          next
-        elsif selected[0] == -4   # Box name
-          if @scene.grabber.carrying && CAN_BOX_POUR
-            if pbPour(selected)
-              @scene.grabber.carrying = false
-              @scene.grabber.clear
-              @scene.release_tension
-            end
-          else
-            pbBoxCommands
-          end
-        else
-          pokemon = @storage[selected[0], selected[1]]
-          heldpoke = pbHeldPokemon
-          next if !pokemon && !heldpoke && !@scene.grabber.carrying
-
-          if @scene.quickswap
-            if @heldpkmn
-              pokemon ? pbSwap(selected) : pbPlace(selected)
-            else
-              pbHold(selected)
-            end
-          elsif @scene.multi
-            if !@scene.grabber.carrying
-              if @scene.grabber.holding_anything?
-                @scene.grabber.carrying = true
-                # Gathers held mons data in @carried_mons in the grabber
-                @scene.grabber.pack_up(@storage, selected[0])
-                # Deletes mon off storage
-                pbHold_Multi(selected)
-                @scene.start_tension
-                # Moves the hand to mock pivot position
-                @scene.quick_change(@scene.grabber.mock_pivot)
-                selected[1] = @scene.grabber.mock_pivot
-              else
-                # Start tension here
-                @scene.grabber.setPivot(selected[1])
-                @scene.grabber.do_with(selected[1])
-                @scene.do_green
-                @scene.set_tension
-              end
-            else
-              # Drop Off If Possible
-              next unless @scene.grabber.place_with_positions(@storage, selected[0], selected[1])
-
-              pbPlace_Multi(selected)
-              # @scene.grabber.get_new_carried_mons
-              @scene.grabber.carrying = false
-              @scene.grabber.clear
-              @scene.release_tension
-
-            end
-          else
-            organise_commands(selected, pokemon)
-          end
-        end
-      end
-      @scene.pbCloseBox
-    when 1 # Withdraw
-      @scene.pbStartBox(self, command)
-      loop do
-        selected = @scene.pbSelectBox(@storage.party)
-        if selected.nil?
-          next if pbConfirm(_INTL('¿Desea hacer más operaciones?'))
-
-          break
-        else
-          case selected[0]
-          when -2   # Party Pokémon
-            pbDisplay(_INTL('¿Cuál tomarás?'))
-            next
-          when -3   # Close box
-            if pbConfirm(_INTL('¿Desea salir de la caja?'))
-              pbSEPlay('PC close')
-              break
-            end
-            next
-          when -4   # Box name
-            pbBoxCommands
-            next
-          end
-          pokemon = @storage[selected[0], selected[1]]
-          next unless pokemon
-
-          commands_symbols = %i[WITHDRAW SUMMARY MARK POKEDEX RELEASE CANCEL]
-          commands_text = [_INTL('Retirar'), _INTL('Datos'), _INTL('Marcas')]
-          if $player.has_pokedex && !pokemon.egg? && $player.pokedex.species_in_unlocked_dex?(pokemon.species)
-            commands_text.push(_INTL('Pokédex'))
-          end
-          commands_text.push(_INTL('Liberar'), _INTL('Cancelar'))
-
-          command_index = pbShowCommands(_INTL('{1} está seleccionado.', pokemon.name), commands_text)
-          next if command_index < 0
-
-          command = commands_symbols[command_index]
-          case command
-          when :WITHDRAW then pbWithdraw(selected, nil)
-          when :SUMMARY then pbSummary(selected, nil)
-          when :MARK then pbMark(selected, nil)
-          when :POKEDEX then openPokedexOnPokemon(pokemon.species, pokemon.gender, pokemon.form)
-          when :RELEASE then pbRelease(selected, nil)
-          end
-        end
-      end
-      @scene.pbCloseBox
-    when 2 # Deposit
-      @scene.pbStartBox(self, command)
-      loop do
-        selected = @scene.pbSelectParty(@storage.party)
-        if selected == -3 # Close box
-          if pbConfirm(_INTL('¿Desea salir de la caja?'))
-            pbSEPlay('PC close')
-            break
-          end
-          next
-        elsif selected < 0
-          next if pbConfirm(_INTL('¿Desea hacer más operaciones?'))
-
-          break
-        else
-          pokemon = @storage[-1, selected]
-          next unless pokemon
-
-          commands_symbols = %i[DEPOSIT SUMMARY MARK POKEDEX RELEASE CANCEL]
-          commands_texts = [_INTL('Dejar'),
-                            _INTL('Datos'),
-                            _INTL('Marcas')]
-          if $player.has_pokedex && !pokemon.egg? && $player.pokedex.species_in_unlocked_dex?(pokemon.species)
-            commands_texts.push(_INTL('Pokédex'))
-          end
-          commands_texts.push(_INTL('Liberar'),
-                              _INTL('Cancelar'))
-          command_index = pbShowCommands(_INTL('{1} está seleccionado.', pokemon.name), commands_texts)
-          next if command_index < 0
-
-          command = commands_symbols[command_index]
-          case command
-          when :DEPOSIT then pbStore([-1, selected], nil)
-          when :SUMMARY then pbSummary([-1, selected], nil)
-          when :MARK then pbMark([-1, selected], nil)
-          when :POKEDEX then openPokedexOnPokemon(pokemon.species, pokemon.gender, pokemon.form)
-          when :RELEASE then pbRelease([-1, selected], nil)
-          end
-        end
-      end
-      @scene.pbCloseBox
-    when 3
-      @scene.pbStartBox(self, command)
-      @scene.pbCloseBox
-    end
-    $game_temp.in_storage = false
-  end
-
+  
   #===============================================================================
   # pbBoxCommands Override
   #===============================================================================
   def pbBoxCommands
     c_consts = [:JUMP]
-    c_consts.push(:SWAP) if CAN_SWAP_BOXES
-    c_consts.push(:WALL, :NAME, :RELEASE, :SORT, :CANCEL)
+	c_consts.push(:SWAP) if CAN_SWAP_BOXES
+	c_consts.push(:WALL, :NAME, :CANCEL)
     commands = [
-      _INTL('Saltar')
-    ]
-    commands.push(_INTL('Intercambiar')) if CAN_SWAP_BOXES
+      _INTL("Saltar")
+	]
+    commands.push(_INTL("Intercambiar")) if CAN_SWAP_BOXES
     commands.push(
-      _INTL('Fondo'),
-      _INTL('Nombre'),
-      _INTL('Liberar Caja'),
-      # _INTL("Ordenar Caja"),
-      _INTL('Cancelar')
+      _INTL("Fondo"),
+      _INTL("Nombre"),
+      _INTL("Cancelar")
     )
-    command = pbShowCommands(_INTL('¿Qué quieres hacer?'), commands)
+    command = pbShowCommands(_INTL("¿Qué quieres hacer?"), commands)
     case c_consts[command]
     when :JUMP
-      destbox = @scene.pbChooseBox(_INTL('¿Saltar a qué Caja?'))
+      destbox = @scene.pbChooseBox(_INTL("¿Saltar a qué Caja?"))
       @scene.pbJumpToBox(destbox) if destbox >= 0
     when :SWAP
-      destbox = @scene.pbChooseBox(_INTL('¿Intercambiar con qué Caja?'), true)
+      destbox = @scene.pbChooseBox(_INTL("¿Intercambiar con qué Caja?"), true)
       @scene.pbSwapBoxes(destbox) if destbox >= 0
     when :WALL
       papers = @storage.availableWallpapers
@@ -1050,48 +846,13 @@ class PokemonStorageScreen
           break
         end
       end
-      wpaper = pbShowCommands(_INTL('Elige el fondo.'), papers[0], index)
+      wpaper = pbShowCommands(_INTL("Elige el fondo."), papers[0], index)
       @scene.pbChangeBackground(papers[1][wpaper]) if wpaper >= 0
     when :NAME
-      @scene.pbBoxName(_INTL('¿Nombre de la Caja?'), BOX_NAME_MIN_CHARS, BOX_NAME_MAX_CHARS)
-    when :RELEASE
-      pbReleaseBox(@storage.currentBox)
-      # when :SORT
-      #   pbSortBox(@storage.currentBox)
+      @scene.pbBoxName(_INTL("¿Nombre de la Caja?"), 0, 12)
     end
   end
-
-  def pbReleaseBox(box)
-    released_count = 0
-    stored_items = 0
-    pbDisplay(_INTL('ATENCIÓN. Estás a punto de liberar a todos los Pokémon de la caja.'))
-    pbDisplay(_INTL('Una vez hecho no podrás recuperarlos.'))
-    if pbConfirmMessageSerious(_INTL('¿Quieres liberar a todos los Pokémon de la Caja?'))
-      for i in 0...@storage.maxPokemon(box)
-        pokemon = @storage[box, i]
-        next if !pokemon || pokemon.mail || pokemon.cannot_release || (pokemon.egg? && !Settings::CAN_RELEASE_EGGS)
-
-        if pokemon.hasItem? # Recupera el objeto equipado si lleva alguno.
-          stored_items += 1
-          $bag.add(pokemon.item_id)
-        end
-        @storage.pbDelete(box, i)
-        @scene.pbHardRefresh
-        released_count += 1
-        pbWait(0.20)
-      end
-      if released_count > 0
-        pbDisplay(_INTL('¡Has liberado {1} Pokémon de esta caja!', released_count))
-      else
-        pbDisplay(_INTL('No hay Pokémon válidos para liberar en esta caja.'))
-      end
-      if stored_items > 0
-        pbDisplay(_INTL("Se ha#{stored_items > 1 ? 'n' : ''} guardado #{stored_items} objeto#{stored_items > 1 ? 's' : ''} en tu mochila"))
-      end
-    end
-    @scene.pbRefresh
-  end
-
+  
   #===============================================================================
   # ***Additional methods***
   #===============================================================================
@@ -1099,7 +860,7 @@ class PokemonStorageScreen
     box, index = selected
     if box == -1 && pbAble?(@storage[box, index]) && pbAbleCount <= 1
       pbPlayBuzzerSE
-      pbDisplay(_INTL('¡Es tu último Pokémon!'))
+      pbDisplay(_INTL("¡Es tu último Pokémon!"))
       return
     end
     for i in @scene.grabber.get_carried_mons
@@ -1110,99 +871,77 @@ class PokemonStorageScreen
     @scene.refresh_box_sprites
     @scene.pbRefresh
   end
-
+  
   def pbPlace_Multi(selected)
     box, index = selected
     for i in @scene.grabber.get_new_carried_mons(index)
       this_index = i[0]
-      raise _INTL('La posición {1}, {2} no está vacía...', box, this_index) if @storage[box, this_index]
-
+      if @storage[box, this_index]
+        raise _INTL("La posición {1}, {2} no está vacía...", box, this_index)
+      end
       if box != -1 && this_index >= @storage.maxPokemon(box)
-        pbDisplay('No se puede dejar ahí.')
+        pbDisplay("No se puede dejar ahí.")
         return
       end
       this_pkmn = i[1]
       if box >= 0 && this_pkmn
-        this_pkmn.formTime = nil if this_pkmn.respond_to?('formTime')
+        this_pkmn.formTime = nil if this_pkmn.respond_to?("formTime")
         this_pkmn.form     = 0 if this_pkmn.isSpecies?(:SHAYMIN)
         this_pkmn.heal if Settings::HEAL_STORED_POKEMON
       end
-      @storage[box, this_index] = this_pkmn
-      @storage.party.compact! if box == -1
+      @storage[box,this_index] = this_pkmn
+      if box==-1
+        @storage.party.compact!
+      end
     end
     @scene.refresh_box_sprites
     @scene.pbRefresh
     @heldpkmn = nil
   end
-
+  
   #===============================================================================
   # Puts all held Pokemon into available slots in a box
   #===============================================================================
   def pbPour(selected)
-    # box = @storage.currentBox
-    mons_to_place = @scene.grabber.carried_mons.clone
-    needed_space = mons_to_place && mons_to_place.size > 0 ? mons_to_place.size : 1
-    box = @scene.pbChooseBoxWithSpace('¿Dejar en qué caja?', needed_space)
-    return false if box < 0
-
-    count = 0
-    placed = false
-    if !mons_to_place.empty?
-      for i in 0...PokemonBox::BOX_SIZE
-        next if @storage[box, i]
-
-        m_t_p = mons_to_place.pop
-        next unless m_t_p && !m_t_p.empty?
-
-        @storage[box, i] = m_t_p[0]
-        count += 1
-        break if mons_to_place.empty?
-      end
-    elsif @heldpkmn
-      for i in 0...PokemonBox::BOX_SIZE
-        next if @storage[box, i]
-
-        @storage[box, i] = @heldpkmn
-        count += 1
-        placed = true
-        break
-      end
-    end
-    emptied = mons_to_place.empty? || placed
+    box = @storage.currentBox
+	mons_to_place = @scene.grabber.carried_mons.clone
+	count = 0
+	for i in 0...PokemonBox::BOX_SIZE
+	  next if @storage[box, i]
+	  m_t_p = mons_to_place.pop
+	  @storage[box, i] = m_t_p[0]
+	  count += 1
+	  break if mons_to_place.empty?
+	end
+	emptied = mons_to_place.empty?
+	@scene.grabber.pour(count)
     @scene.refresh_box_sprites
     @scene.pbRefresh
-    @heldpkmn = nil if emptied
-    if emptied && @scene.sprites['arrow']&.holding?
-      @scene.sprites['arrow']&.deleteSprite
-      @scene.sprites['arrow']&.update
-      @scene.grabber.carrying = false
-    end
-    @scene.grabber.pour(count)
-    emptied
+	@heldpkmn = nil if emptied
+	return emptied
   end
-
+  
   #===============================================================================
   # Releases all held Pokemon
   #===============================================================================
   def pbMassRelease
     if @scene.grabber.contains_an_egg?
-      pbDisplay(_INTL('¡No puedes liberar un Huevo!'))
+      pbDisplay(_INTL("¡No puedes liberar un Huevo!"))
       return false
     end
     # NOTE: No need to stop if last mon because this cannot be done in party!
-    pbDisplay(_INTL('¡ATENCIÓN! Has elegido la opción de liberar todos los Pokémon elegidos.'))
-    command = pbShowCommands(_INTL('¿Quieres liberar estos Pokémon?'), [_INTL('No'), _INTL('Sí')])
+    pbDisplay(_INTL("¡ATENCIÓN! Has elegido la opción de liberar todos los Pokémon elegidos."))
+    command = pbShowCommands(_INTL("¿Quieres liberar estos Pokémon?"), [_INTL("No"), _INTL("Sí")])
     return unless command == 1
-
-    command = pbShowCommands(_INTL('¿Estás seguro?'), [_INTL('No'), _INTL('Sí')])
+    command = pbShowCommands(_INTL("¿Estás seguro?"), [_INTL("No"), _INTL("Sí")])
     return unless command == 1
-
     @scene.grabber.clear
     @scene.pbRefresh
-    pbDisplay(_INTL('Los Pokémon han sido liberados.'))
-    pbDisplay(_INTL('¡Sed libres, Pokémon!'))
+    pbDisplay(_INTL("Los Pokémon han sido liberados."))
+    pbDisplay(_INTL("¡Sed libres, Pokémon!"))
     @scene.pbRefresh
     @scene.grabber.carrying = false
     @scene.release_tension
   end
 end
+

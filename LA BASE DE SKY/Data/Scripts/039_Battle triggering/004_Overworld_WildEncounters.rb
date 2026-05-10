@@ -200,9 +200,7 @@ class PokemonEncounters
     if first_pkmn
       case first_pkmn.ability_id
       when :INTIMIDATE, :KEENEYE
-        if Settings::MECHANICS_GENERATION < 8
-          return false if enc_data[1] <= first_pkmn.level - 5 && rand(100) < 50
-        end
+        return false if enc_data[1] <= first_pkmn.level - 5 && rand(100) < 50
       end
     end
     return true
@@ -388,9 +386,7 @@ def pbGenerateWildPokemon(species, level, isRoamer = false)
   items = genwildpoke.wildHoldItems
   first_pkmn = $player.first_pokemon
   chances = [50, 5, 1]
-  if Settings::MECHANICS_GENERATION >= 9
-    chances[0] = 30
-  elsif first_pkmn
+  if first_pkmn
     case first_pkmn.ability_id
     when :COMPOUNDEYES
       chances = [60, 20, 5]
@@ -447,7 +443,6 @@ def pbGenerateWildPokemon(species, level, isRoamer = false)
     end
   end
   # Trigger events that may alter the generated Pokémon further
-  genwildpoke.form_simple = genwildpoke.form if MultipleForms.hasFunction?(genwildpoke.species, "getForm")
   EventHandlers.trigger(:on_wild_pokemon_created, genwildpoke)
   return genwildpoke
 end
@@ -471,3 +466,4 @@ def pbEncounter(enc_type, only_single = true)
   $game_temp.force_single_battle = false
   return true
 end
+

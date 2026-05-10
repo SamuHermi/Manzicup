@@ -6,8 +6,6 @@ class Window_PokemonItemStorage < Window_DrawableCommand
   attr_reader :pocket
   attr_reader :sortIndex
 
-  QTY_X_OFFSET = -2
-
   def sortIndex=(value)
     @sortIndex = value
     refresh
@@ -16,7 +14,7 @@ class Window_PokemonItemStorage < Window_DrawableCommand
   def initialize(bag, x, y, width, height)
     @bag = bag
     @sortIndex = -1
-    @adapter = PokemonItemMartAdapter.new
+    @adapter = PokemonMartAdapter.new
     super(x, y, width, height)
     self.windowskin = nil
   end
@@ -43,7 +41,7 @@ class Window_PokemonItemStorage < Window_DrawableCommand
       if GameData::Item.get(item).show_quantity?
         qty     = _ISPRINTF("x{1: 2d}", @bag[index][1])
         sizeQty = self.contents.text_size(qty).width
-        xQty = rect.x + rect.width - sizeQty + QTY_X_OFFSET
+        xQty = rect.x + rect.width - sizeQty - 2
         textpos.push([qty, xQty, rect.y, :left, baseColor, self.shadowColor])
       end
     end
@@ -55,32 +53,13 @@ end
 #
 #===============================================================================
 class ItemStorage_Scene
-  ITEMLISTBASECOLOR              = Color.new(88, 88, 80)
-  ITEMLISTSHADOWCOLOR            = Color.new(168, 184, 184)
-  ITEMTEXTBASECOLOR              = Color.new(248, 248, 248)
-  ITEMTEXTSHADOWCOLOR            = Color.new(0, 0, 0)
-  TITLEBASECOLOR                 = Color.new(248, 248, 248)
-  TITLESHADOWCOLOR               = Color.new(0, 0, 0)
-  ITEMSVISIBLE                   = 7
-  ITEM_ICON_X                    = 50
-  ITEM_ICON_Y                    = 334
-  ITEM_WINDOW_X                  = 98
-  ITEM_WINDOW_Y                  = 14
-  ITEM_WINDOW_WIDTH              = 334
-  ITEM_SPACING                   = 32
-  ITEM_WINDOW_HEIGHT             = 32 + (ITEMSVISIBLE * ITEM_SPACING)
-  POCKET_WINDOW_WIDTH            = 88
-  POCKET_WINDOW_HEIGHT           = 64
-  POCKET_WINDOW_X                = 14
-  POCKET_WINDOW_Y                = 16
-  ITEM_TEXT_WINDOW_X             = 84
-  ITEM_TEXT_WINDOW_Y             = 272
-  ITEM_TEXT_WINDOW_WIDTH         = Graphics.width - 84
-  ITEM_TEXT_WINDOW_HEIGHT        = 128
-  HELP_WINDOW_TEXT_LINES         = 1
-  TOSS_WITHDRAW_ITEM_TEXT_X      = 0
-  TOSS_WITHDRAW_ITEM_TEXT_Y      = 8
-  TOSS_WITHDRAW_ITEM_TEXT_HEIGHT = 2
+  ITEMLISTBASECOLOR   = Color.new(88, 88, 80)
+  ITEMLISTSHADOWCOLOR = Color.new(168, 184, 184)
+  ITEMTEXTBASECOLOR   = Color.new(248, 248, 248)
+  ITEMTEXTSHADOWCOLOR = Color.new(0, 0, 0)
+  TITLEBASECOLOR      = Color.new(248, 248, 248)
+  TITLESHADOWCOLOR    = Color.new(0, 0, 0)
+  ITEMSVISIBLE        = 7
 
   def initialize(title)
     @title = title
@@ -97,21 +76,21 @@ class ItemStorage_Scene
     @sprites = {}
     @sprites["background"] = IconSprite.new(0, 0, @viewport)
     @sprites["background"].setBitmap("Graphics/UI/itemstorage_bg")
-    @sprites["icon"] = ItemIconSprite.new(ITEM_ICON_X, ITEM_ICON_Y, nil, @viewport)
+    @sprites["icon"] = ItemIconSprite.new(50, 334, nil, @viewport)
     # Item list
-    @sprites["itemwindow"] = Window_PokemonItemStorage.new(@bag, ITEM_WINDOW_X, ITEM_WINDOW_Y, ITEM_WINDOW_WIDTH, ITEM_WINDOW_HEIGHT)
+    @sprites["itemwindow"] = Window_PokemonItemStorage.new(@bag, 98, 14, 334, 32 + (ITEMSVISIBLE * 32))
     @sprites["itemwindow"].viewport    = @viewport
     @sprites["itemwindow"].index       = 0
     @sprites["itemwindow"].baseColor   = ITEMLISTBASECOLOR
     @sprites["itemwindow"].shadowColor = ITEMLISTSHADOWCOLOR
     @sprites["itemwindow"].refresh
     # Title
-    @sprites["pocketwindow"] = BitmapSprite.new(POCKET_WINDOW_WIDTH, POCKET_WINDOW_HEIGHT, @viewport)
-    @sprites["pocketwindow"].x = POCKET_WINDOW_X
-    @sprites["pocketwindow"].y = POCKET_WINDOW_Y
+    @sprites["pocketwindow"] = BitmapSprite.new(88, 64, @viewport)
+    @sprites["pocketwindow"].x = 14
+    @sprites["pocketwindow"].y = 16
     pbSetNarrowFont(@sprites["pocketwindow"].bitmap)
     # Item description
-    @sprites["itemtextwindow"] = Window_UnformattedTextPokemon.newWithSize("", ITEM_TEXT_WINDOW_X, ITEM_TEXT_WINDOW_Y, ITEM_TEXT_WINDOW_WIDTH, ITEM_TEXT_WINDOW_HEIGHT, @viewport)
+    @sprites["itemtextwindow"] = Window_UnformattedTextPokemon.newWithSize("", 84, 272, Graphics.width - 84, 128, @viewport)
     @sprites["itemtextwindow"].baseColor   = ITEMTEXTBASECOLOR
     @sprites["itemtextwindow"].shadowColor = ITEMTEXTSHADOWCOLOR
     @sprites["itemtextwindow"].windowskin  = nil
@@ -122,7 +101,7 @@ class ItemStorage_Scene
     @sprites["msgwindow"] = Window_AdvancedTextPokemon.new("")
     @sprites["msgwindow"].visible  = false
     @sprites["msgwindow"].viewport = @viewport
-    pbBottomLeftLines(@sprites["helpwindow"], HELP_WINDOW_TEXT_LINES)
+    pbBottomLeftLines(@sprites["helpwindow"], 1)
     pbDeactivateWindows(@sprites)
     pbRefresh
     pbFadeInAndShow(@sprites)
@@ -153,7 +132,7 @@ class ItemStorage_Scene
   def pbRefresh
     bm = @sprites["pocketwindow"].bitmap
     # Draw title at upper left corner ("Toss Item/Withdraw Item")
-    drawTextEx(bm, TOSS_WITHDRAW_ITEM_TEXT_X, TOSS_WITHDRAW_ITEM_TEXT_Y, bm.width, TOSS_WITHDRAW_ITEM_TEXT_HEIGHT, @title, TITLEBASECOLOR, TITLESHADOWCOLOR)
+    drawTextEx(bm, 0, 8, bm.width, 2, @title, TITLEBASECOLOR, TITLESHADOWCOLOR)
     itemwindow = @sprites["itemwindow"]
     # Draw item icon
     @sprites["icon"].item = itemwindow.item
@@ -217,9 +196,6 @@ end
 # The window _helpwindow_ will display the _helptext_.
 #===============================================================================
 module UIHelper
-
-  TEXT_LINES = 2
-
   # Letter by letter display of the message _msg_ by the window _helpwindow_.
   def self.pbDisplay(helpwindow, msg, brief)
     cw = helpwindow
@@ -227,7 +203,7 @@ module UIHelper
     cw.letterbyletter = true
     cw.text           = msg + "\1"
     cw.visible        = true
-    pbBottomLeftLines(cw, TEXT_LINES)
+    pbBottomLeftLines(cw, 2)
     loop do
       Graphics.update
       Input.update
@@ -267,7 +243,7 @@ module UIHelper
     dw.letterbyletter = true
     dw.text           = msg
     dw.visible        = true
-    pbBottomLeftLines(dw, TEXT_LINES)
+    pbBottomLeftLines(dw, 2)
     commands = [_INTL("Sí"), _INTL("No")]
     cw = Window_CommandPokemon.new(commands)
     cw.index = 0

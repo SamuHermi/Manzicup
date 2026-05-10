@@ -1,10 +1,6 @@
-Name       = Random Pokemon & Moves + Randomizer EX (Abilities)
-Version    = 2.2.1
+Name = Random Pokemon & Moves + Randomizer EX (Abilities)
+Version = 1.0
 Essentials = 21.1
 Requires   = v21.1 Hotfixes
-Requires   = DP Scripting Utilities
-Optional   = DiegoWTs Starter Selection,1.5.0
-Optional   = Script sencillo para la selección de starters.,1.0
-Optional   = Level Caps EX,2.1
-Credits    = DPertierra, Golisopod User, CrimsonTY, Luka SJ, Skyflyer, Nononever
-Disabled   = 
+Credits    = Golisopod User, CrimsonTY, Luka SJ, DPertierra, Skyflyer
+Disabled   = false

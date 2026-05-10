@@ -74,17 +74,12 @@ class Battle
     end
   end
 
-  def pbUseItemMessage(item, trainer_name, battler = nil)
-    item_data = GameData::Item.get(item)
-    # one_target_of_many = 
-    item_name = item_data.portion_name
-    if battler && !battler.allAllies.empty?
-      # Specify which Pokémon the item was used on (only for Pokémon in battle,
-      # because the effects of items used on party Pokémon all mention the
-      # Pokémon's name so it doesn't need specifying here too)
-      pbDisplayBrief(_INTL("{1} usó {2} en {3}.", trainer_name, item_name, battler.name))
+  def pbUseItemMessage(item, trainerName)
+    itemName = GameData::Item.get(item).portion_name
+    if itemName.starts_with_vowel?
+      pbDisplayBrief(_INTL("{1} usó {2}.", trainerName, itemName))
     else
-      pbDisplayBrief(_INTL("{1} usó {2}.", trainer_name, item_name))
+      pbDisplayBrief(_INTL("{1} usó {2}.", trainerName, itemName))
     end
   end
 
@@ -108,8 +103,8 @@ class Battle
   # Uses an item on a Pokémon in battle that belongs to the trainer.
   def pbUseItemOnBattler(item, idxParty, userBattler)
     trainerName = pbGetOwnerName(userBattler.index)
+    pbUseItemMessage(item, trainerName)
     battler = pbFindBattler(idxParty, userBattler.index)
-    pbUseItemMessage(item, trainerName, battler)
     ch = @choices[userBattler.index]
     if battler
       if ItemHandlers.triggerCanUseInBattle(item, battler.pokemon, battler, ch[3], true, self, @scene, false)
@@ -152,3 +147,4 @@ class Battle
     pbReturnUnusedItemToBag(item, userBattler.index)
   end
 end
+

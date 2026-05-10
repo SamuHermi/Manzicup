@@ -2,30 +2,6 @@
 # Evolution screen
 #===============================================================================
 class PokemonEvolutionScene
-  EVOLUTION_BGM = 'Evolution'
-
-  SPRITE_1_Y_OFFSET = -64
-
-  # Layout and timing constants
-  VIEWPORT_Z = 99_999
-  BG_BUFFER = 80
-  NARROW_BG_BASE = 64
-  NARROW_Y_DELAY = 0.2
-  LERP_FAST = 0.7
-  LERP_SLOW = 0.5
-  LERP_MED = 0.4
-
-  EVOLUTION_ANIM_SECONDS = 9
-  ANIM_FPS = 20
-  ZOOM_START = 25
-  ZOOM_EXTRA = 15
-  ZOOM_DEFAULT = 12
-
-  DELAY_SHORT = 1
-  FLASH_WAIT = 0.25
-  TONE_MAX = 255
-  MESSAGE_WAIT = 80
-
   def self.pbDuplicatePokemon(pkmn, new_species)
     new_pkmn = pkmn.clone
     new_pkmn.species   = new_species
@@ -48,27 +24,27 @@ class PokemonEvolutionScene
     @newspecies = newspecies
     @sprites = {}
     @bgviewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
-    @bgviewport.z = VIEWPORT_Z
+    @bgviewport.z = 99999
     @viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
-    @viewport.z = VIEWPORT_Z
+    @viewport.z = 99999
     @msgviewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
-    @msgviewport.z = VIEWPORT_Z
-    addBackgroundOrColoredPlane(@sprites, 'background', 'evolution_bg',
+    @msgviewport.z = 99999
+    addBackgroundOrColoredPlane(@sprites, "background", "evolution_bg",
                                 Color.new(248, 248, 248), @bgviewport)
     rsprite1 = PokemonSprite.new(@viewport)
     rsprite1.setOffset(PictureOrigin::CENTER)
     rsprite1.setPokemonBitmap(@pokemon, false)
     rsprite1.x = Graphics.width / 2
-    rsprite1.y = (Graphics.height + SPRITE_1_Y_OFFSET) / 2
+    rsprite1.y = (Graphics.height - 64) / 2
     rsprite2 = PokemonSprite.new(@viewport)
     rsprite2.setOffset(PictureOrigin::CENTER)
     rsprite2.setPokemonBitmapSpecies(@pokemon, @newspecies, false)
     rsprite2.x       = rsprite1.x
     rsprite2.y       = rsprite1.y
     rsprite2.visible = false
-    @sprites['rsprite1'] = rsprite1
-    @sprites['rsprite2'] = rsprite2
-    @sprites['msgwindow'] = pbCreateMessageWindow(@msgviewport)
+    @sprites["rsprite1"] = rsprite1
+    @sprites["rsprite2"] = rsprite2
+    @sprites["msgwindow"] = pbCreateMessageWindow(@msgviewport)
     set_up_animation
     pbFadeInAndShow(@sprites) { pbUpdate }
   end
@@ -83,9 +59,9 @@ class PokemonEvolutionScene
     sprite2.setColor(0, Color.new(255, 255, 255, 255))
     # Make sprite turn white
     sprite.moveColor(0, 25, Color.new(255, 255, 255, 255))
-    total_duration = EVOLUTION_ANIM_SECONDS * ANIM_FPS # seconds * fps
-    duration = ZOOM_START + ZOOM_EXTRA
-    zoom_duration = ZOOM_DEFAULT
+    total_duration = 9 * 20   # 9 seconds
+    duration = 25 + 15
+    zoom_duration = 12
     loop do
       # Shrink prevo sprite, enlarge evo sprite
       sprite.moveZoom(duration, zoom_duration, 0)
@@ -93,7 +69,6 @@ class PokemonEvolutionScene
       duration += zoom_duration
       # If animation has played for long enough, end it now while the evo sprite is large
       break if duration >= total_duration
-
       # Enlarge prevo sprite, shrink evo sprite
       sprite.moveZoom(duration, zoom_duration, 110)
       sprite2.moveZoom(duration, zoom_duration, 0)
@@ -108,34 +83,34 @@ class PokemonEvolutionScene
   # Opens the evolution screen
   def pbEvolution(cancancel = true)
     pbBGMStop
-    pbMessageDisplay(@sprites['msgwindow'], '\\se[]' + _INTL('¡Anda!') + "\1") { pbUpdate }
+    pbMessageDisplay(@sprites["msgwindow"], "\\se[]" + _INTL("¡Anda!") + "\1") { pbUpdate }
     pbPlayDecisionSE
     @pokemon.play_cry
-    @sprites['msgwindow'].text = _INTL('¡{1} está evolucionando!', @pokemon.name)
+    @sprites["msgwindow"].text = _INTL("¡{1} está evolucionando!", @pokemon.name)
     timer_start = System.uptime
     loop do
       Graphics.update
       Input.update
       pbUpdate
-      break if System.uptime - timer_start >= DELAY_SHORT
+      break if System.uptime - timer_start >= 1
     end
-    pbMEPlay('Evolution start')
-    pbBGMPlay(EVOLUTION_BGM)
+    pbMEPlay("Evolution start")
+    pbBGMPlay("Evolution")
     canceled = false
     timer_start = System.uptime
     loop do
       pbUpdateNarrowScreen(timer_start)
       @picture1.update
-      setPictureSprite(@sprites['rsprite1'], @picture1)
-      if @sprites['rsprite1'].zoom_x > 1.0
-        @sprites['rsprite1'].zoom_x = 1.0
-        @sprites['rsprite1'].zoom_y = 1.0
+      setPictureSprite(@sprites["rsprite1"], @picture1)
+      if @sprites["rsprite1"].zoom_x > 1.0
+        @sprites["rsprite1"].zoom_x = 1.0
+        @sprites["rsprite1"].zoom_y = 1.0
       end
       @picture2.update
-      setPictureSprite(@sprites['rsprite2'], @picture2)
-      if @sprites['rsprite2'].zoom_x > 1.0
-        @sprites['rsprite2'].zoom_x = 1.0
-        @sprites['rsprite2'].zoom_y = 1.0
+      setPictureSprite(@sprites["rsprite2"], @picture2)
+      if @sprites["rsprite2"].zoom_x > 1.0
+        @sprites["rsprite2"].zoom_x = 1.0
+        @sprites["rsprite2"].zoom_y = 1.0
       end
       Graphics.update
       Input.update
@@ -151,31 +126,27 @@ class PokemonEvolutionScene
     pbFlashInOut(canceled)
     if canceled
       $stats.evolutions_cancelled += 1
-      pbMessageDisplay(@sprites['msgwindow'],
-                       _INTL('¿Eh? ¡{1} dejó de evolucionar!', @pokemon.name)) { pbUpdate }
+      pbMessageDisplay(@sprites["msgwindow"],
+                       _INTL("¿Eh? ¡{1} dejó de evolucionar!", @pokemon.name)) { pbUpdate }
     else
       pbEvolutionSuccess
     end
   end
 
   def pbUpdateNarrowScreen(timer_start)
-    return if @bgviewport.rect.y >= BG_BUFFER
-
-    buffer = BG_BUFFER
-    @bgviewport.rect.height = Graphics.height - lerp(0, NARROW_BG_BASE + (buffer * 2), LERP_FAST, timer_start,
-                                                     System.uptime).to_i
-    @bgviewport.rect.y = lerp(0, buffer, LERP_SLOW, timer_start + NARROW_Y_DELAY, System.uptime).to_i
-    @sprites['background'].oy = @bgviewport.rect.y
+    return if @bgviewport.rect.y >= 80
+    buffer = 80
+    @bgviewport.rect.height = Graphics.height - lerp(0, 64 + (buffer * 2), 0.7, timer_start, System.uptime).to_i
+    @bgviewport.rect.y = lerp(0, buffer, 0.5, timer_start + 0.2, System.uptime).to_i
+    @sprites["background"].oy = @bgviewport.rect.y
   end
 
   def pbUpdateExpandScreen(timer_start)
     return if @bgviewport.rect.height >= Graphics.height
-
-    buffer = BG_BUFFER
-    @bgviewport.rect.height = Graphics.height - lerp(NARROW_BG_BASE + (buffer * 2), 0, LERP_FAST, timer_start,
-                                                     System.uptime).to_i
-    @bgviewport.rect.y = lerp(buffer, 0, LERP_SLOW, timer_start, System.uptime).to_i
-    @sprites['background'].oy = @bgviewport.rect.y
+    buffer = 80
+    @bgviewport.rect.height = Graphics.height - lerp(64 + (buffer * 2), 0, 0.7, timer_start, System.uptime).to_i
+    @bgviewport.rect.y = lerp(buffer, 0, 0.5, timer_start, System.uptime).to_i
+    @sprites["background"].oy = @bgviewport.rect.y
   end
 
   def pbFlashInOut(canceled)
@@ -184,38 +155,38 @@ class PokemonEvolutionScene
       Graphics.update
       pbUpdate(true)
       pbUpdateExpandScreen(timer_start)
-      tone = lerp(0, TONE_MAX, LERP_FAST, timer_start, System.uptime)
+      tone = lerp(0, 255, 0.7, timer_start, System.uptime)
       @viewport.tone.set(tone, tone, tone, 0)
-      break if tone >= TONE_MAX
+      break if tone >= 255
     end
     @bgviewport.rect.y      = 0
     @bgviewport.rect.height = Graphics.height
-    @sprites['background'].oy = 0
+    @sprites["background"].oy = 0
     if canceled
-      @sprites['rsprite1'].visible     = true
-      @sprites['rsprite1'].zoom_x      = 1.0
-      @sprites['rsprite1'].zoom_y      = 1.0
-      @sprites['rsprite1'].color.alpha = 0
-      @sprites['rsprite2'].visible     = false
+      @sprites["rsprite1"].visible     = true
+      @sprites["rsprite1"].zoom_x      = 1.0
+      @sprites["rsprite1"].zoom_y      = 1.0
+      @sprites["rsprite1"].color.alpha = 0
+      @sprites["rsprite2"].visible     = false
     else
-      @sprites['rsprite1'].visible     = false
-      @sprites['rsprite2'].visible     = true
-      @sprites['rsprite2'].zoom_x      = 1.0
-      @sprites['rsprite2'].zoom_y      = 1.0
-      @sprites['rsprite2'].color.alpha = 0
+      @sprites["rsprite1"].visible     = false
+      @sprites["rsprite2"].visible     = true
+      @sprites["rsprite2"].zoom_x      = 1.0
+      @sprites["rsprite2"].zoom_y      = 1.0
+      @sprites["rsprite2"].color.alpha = 0
     end
     timer_start = System.uptime
     loop do
       Graphics.update
       pbUpdate(true)
-      break if System.uptime - timer_start >= FLASH_WAIT
+      break if System.uptime - timer_start >= 0.25
     end
     timer_start = System.uptime
     loop do
       Graphics.update
       pbUpdate
       pbUpdateExpandScreen(timer_start)
-      tone = lerp(TONE_MAX, 0, LERP_MED, timer_start, System.uptime)
+      tone = lerp(255, 0, 0.4, timer_start, System.uptime)
       @viewport.tone.set(tone, tone, tone, 0)
       break if tone <= 0
     end
@@ -234,16 +205,15 @@ class PokemonEvolutionScene
     end
     pbBGMStop
     # Success jingle/message
-    pbMEPlay('Evolution success')
+    pbMEPlay("Evolution success")
     newspeciesname = GameData::Species.get(@newspecies).name
-    Achievements.incrementProgress('EVOLUTION', 1)
-    pbMessageDisplay(@sprites['msgwindow'],
-                     '\\se[]' + _INTL('¡Enhorabuena! ¡Tu {1} evolucionó en {2}!',
-                                      @pokemon.name, newspeciesname) + '\\wt[80]') { pbUpdate }
-    @sprites['msgwindow'].text = ''
-    # Check for consumed item and check if Pokémon should be duplicated
+    Achievements.incrementProgress("EVOLUTION",1)
+    pbMessageDisplay(@sprites["msgwindow"],
+                     "\\se[]" + _INTL("¡Enhorabuena! ¡Tu {1} evolucionó en {2}!",
+                                      @pokemon.name, newspeciesname) + "\\wt[80]") { pbUpdate }
+    @sprites["msgwindow"].text = ""
+        # Check for consumed item and check if Pokémon should be duplicated
     pbEvolutionMethodAfterEvolution
-    @pokemon.form # gets the form after evolution
     # Modify Pokémon to make it evolved
     was_fainted = @pokemon.fainted?
 
@@ -252,15 +222,7 @@ class PokemonEvolutionScene
       @pokemon.species = @newspecies
       @pokemon.ability = ability
     else
-      @pokemon.species = @newspecies
-    end
-
-    defaultPresetIndex = pbDetectDefaultEVPreset(@pokemon)
-    if (pbDetectCurrentEVPreset(@pokemon) != defaultPresetIndex) && pbConfirmMessage(
-      _INTL('¿Quieres cambiar los EVs de {1} a {2}?', @pokemon.name,
-            EV_PRESETS[defaultPresetIndex][:name])
-    ) { pbUpdate }
-      pbApplyEVPreset(@pokemon, defaultPresetIndex)
+    @pokemon.species = @newspecies
     end
 
     @pokemon.hp = 0 if was_fainted
@@ -274,21 +236,20 @@ class PokemonEvolutionScene
     moves_to_learn = []
     movelist = @pokemon.getMoveList
     movelist.each do |i|
-      next if i[0] != 0 && i[0] != @pokemon.level # 0 is "learn upon evolution"
-
+      next if i[0] != 0 && i[0] != @pokemon.level   # 0 is "learn upon evolution"
       moves_to_learn.push(i[1])
     end
     # Show Pokédex entry for new species if it hasn't been owned before
     if Settings::SHOW_NEW_SPECIES_POKEDEX_ENTRY_MORE_OFTEN && !was_owned &&
        $player.has_pokedex && $player.pokedex.species_in_unlocked_dex?(@pokemon.species)
-      pbMessageDisplay(@sprites['msgwindow'],
-                       _INTL('Los datos de {1} se han añadido a la Pokédex.', newspeciesname)) { pbUpdate }
+      pbMessageDisplay(@sprites["msgwindow"],
+                       _INTL("Los datos de {1} se han añadido a la Pokédex.", newspeciesname)) { pbUpdate }
       $player.pokedex.register_last_seen(@pokemon)
       pbFadeOutIn do
         scene = PokemonPokedexInfo_Scene.new
         screen = PokemonPokedexInfoScreen.new(scene)
         screen.pbDexEntry(@pokemon.species)
-        @sprites['msgwindow'].text = '' if moves_to_learn.length > 0
+        @sprites["msgwindow"].text = "" if moves_to_learn.length > 0
         pbEndScreen(false) if moves_to_learn.length == 0
       end
     end
@@ -296,6 +257,7 @@ class PokemonEvolutionScene
     moves_to_learn.each do |move|
       pbLearnMove(@pokemon, move, true) { pbUpdate }
     end
+
   end
 
   def pbEvolutionMethodAfterEvolution
@@ -303,9 +265,9 @@ class PokemonEvolutionScene
   end
 
   def pbUpdate(animating = false)
-    if animating # Pokémon shouldn't animate during the evolution animation
-      @sprites['background'].update
-      @sprites['msgwindow'].update
+    if animating      # Pokémon shouldn't animate during the evolution animation
+      @sprites["background"].update
+      @sprites["msgwindow"].update
     else
       pbUpdateSpriteHash(@sprites)
     end
@@ -313,11 +275,14 @@ class PokemonEvolutionScene
 
   # Closes the evolution screen.
   def pbEndScreen(need_fade_out = true)
-    pbDisposeMessageWindow(@sprites['msgwindow']) if @sprites['msgwindow']
-    pbFadeOutAndHide(@sprites) { pbUpdate } if need_fade_out
+    pbDisposeMessageWindow(@sprites["msgwindow"]) if @sprites["msgwindow"]
+    if need_fade_out
+      pbFadeOutAndHide(@sprites) { pbUpdate }
+    end
     pbDisposeSpriteHash(@sprites)
     @viewport.dispose
     @bgviewport.dispose
     @msgviewport.dispose
   end
 end
+

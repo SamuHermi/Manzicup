@@ -94,32 +94,34 @@
 #===============================================================================
 
 module NameBox
+
   # Posición del NameBox en pantalla
   NAMEBOX_X = 14
   NAMEBOX_Y = 228 # + 5
   NAMEBOX_Z = 999
   NAMEBOX_IN_TOP = true
 
-  # IMPORTANTCHARACTER está pensado para las personas que piensen usar el sistema
+  # IMPORTANTCHARACTER está pensado para las personas que piensen usar el sistema 
   # de traducción de essentials, en caso contrario, ignorar.
   IMPORTANTCHARACTER = {
     # "Nombre" = \_INTL("Nombre")
   }
 
-  # CHARACTERNAMES funciona igual que "IMPORTANTCHARACTER", pero esta enfocado a
-  # nombres comunes, como profesiones o roles.
-  # NameBox.CHARACTERNAMES puede aceptar un segundo parametro para sacarle provecho
-  # a CHARACTERNAMES, por ejemplo, en vez de tener.
+  #CHARACTERNAMES funciona igual que "IMPORTANTCHARACTER", pero esta enfocado a 
+  #nombres comunes, como profesiones o roles.
+  #NameBox.CHARACTERNAMES puede aceptar un segundo parametro para sacarle provecho
+  #a CHARACTERNAMES, por ejemplo, en vez de tener.
   # IMPORTANTCHARACTER = {
   #  "Recluta 1" = _INTL("Recluta 1")
   #  "Recluta 2" = _INTL("Recluta 2")
-  # ...
+    # ...
   #  "Recluta N" = _INTL("Recluta N")
-  # }
-  # Solo necesitas
-  # IMPORTANTCHARACTER = {
+  #}
+  #Solo necesitas
+  #IMPORTANTCHARACTER = {
   #  "Recluta" = \_INTL("Recluta")
-  # }
+  #}
+
 
   CHARACTERNAMES = {
     # "Nombre" = \_INTL("Nombre")
@@ -128,47 +130,38 @@ module NameBox
   # Colores asociados a cada personaje
   NPCCOLORS = {
     # "Nombre" => [ColorBase, Sombra]
-    'Hermi' => [MessageConfig::HERMI_TEXT_COLOR, MessageConfig::HERMI_TEXT_SHADOW_COLOR],
-    'Iria' => [MessageConfig::IRIA_TEXT_COLOR, MessageConfig::IRIA_TEXT_SHADOW_COLOR],
-    'Samer' => [MessageConfig::SAMER_TEXT_COLOR, MessageConfig::SAMER_TEXT_SHADOW_COLOR],
-    'Isa' => [MessageConfig::ISA_TEXT_COLOR,   MessageConfig::ISA_TEXT_SHADOW_COLOR],
-    'Bra' => [MessageConfig::BRA_TEXT_COLOR,   MessageConfig::BRA_TEXT_SHADOW_COLOR],
-    'Pablo' => [MessageConfig::PABLO_TEXT_COLOR, MessageConfig::PABLO_TEXT_SHADOW_COLOR],
-    'Brais' => [MessageConfig::BRAIS_TEXT_COLOR, MessageConfig::BRAIS_TEXT_SHADOW_COLOR],
-    # "Jess" =>  [MessageConfig::JESS_TEXT_COLOR,  MessageConfig::JESS_TEXT_SHADOW_COLOR],
-    'Ana' => [MessageConfig::ANA_TEXT_COLOR, MessageConfig::ANA_TEXT_SHADOW_COLOR],
-    'Rodri' => [MessageConfig::RODRI_TEXT_COLOR, MessageConfig::RODRI_TEXT_SHADOW_COLOR],
-    'Sabo' => [MessageConfig::SABO_TEXT_COLOR, MessageConfig::SABO_TEXT_SHADOW_COLOR],
-    'Nerea' => [MessageConfig::NEREA_TEXT_COLOR, MessageConfig::NEREA_TEXT_SHADOW_COLOR],
+    "Hermi" => [MessageConfig::HERMI_TEXT_COLOR, MessageConfig::HERMI_TEXT_SHADOW_COLOR],
+    "Iria" =>  [MessageConfig::IRIA_TEXT_COLOR,  MessageConfig::IRIA_TEXT_SHADOW_COLOR],
+    "Samer" => [MessageConfig::SAMER_TEXT_COLOR, MessageConfig::SAMER_TEXT_SHADOW_COLOR],
+    "Isa" =>   [MessageConfig::ISA_TEXT_COLOR,   MessageConfig::ISA_TEXT_SHADOW_COLOR],
+    "Bra" =>   [MessageConfig::BRA_TEXT_COLOR,   MessageConfig::BRA_TEXT_SHADOW_COLOR],
+    "Pablo" => [MessageConfig::PABLO_TEXT_COLOR, MessageConfig::PABLO_TEXT_SHADOW_COLOR],
+    "Brais" => [MessageConfig::BRAIS_TEXT_COLOR, MessageConfig::BRAIS_TEXT_SHADOW_COLOR],
+    #"Jess" =>  [MessageConfig::JESS_TEXT_COLOR,  MessageConfig::JESS_TEXT_SHADOW_COLOR],
+    "Ana" =>   [MessageConfig::ANA_TEXT_COLOR,   MessageConfig::ANA_TEXT_SHADOW_COLOR],
+    "Rodri" => [MessageConfig::RODRI_TEXT_COLOR, MessageConfig::RODRI_TEXT_SHADOW_COLOR],
+    "Sabo" =>  [MessageConfig::SABO_TEXT_COLOR,  MessageConfig::SABO_TEXT_SHADOW_COLOR],
+    "Nerea" => [MessageConfig::NEREA_TEXT_COLOR, MessageConfig::NEREA_TEXT_SHADOW_COLOR],
 
-    'Maryan' => [Color.new(218, 172, 200), Color.new(171, 103, 158)],
-    'Moridon' => [Color.new(100, 100, 100), Color.new(94, 77, 82)],
-    'Lumine' => [Color.new(255, 205, 141), Color.new(129, 183, 215)],
-    'Swolio' => [Color.new(150, 150, 150), Color.new(166, 6, 6)],
+    "Maryan" =>  [Color.new(218, 172, 200),Color.new(171, 103, 158)],
+    "Moridon" => [Color.new(100, 100, 100),Color.new(94, 77, 82)],
+    "Lumine" =>  [Color.new(255, 205, 141),Color.new(129, 183, 215)],
+    "Swolio" =>  [Color.new(150, 150, 150),Color.new(166, 6, 6)],
 
-    'Mermi' => [MessageConfig::HERMI_TEXT_SHADOW_COLOR, MessageConfig::HERMI_TEXT_COLOR],
-    'Iria-BEATRICE' => [MessageConfig::IRIA_TEXT_SHADOW_COLOR, MessageConfig::IRIA_TEXT_COLOR],
-    'El Liante' => [MessageConfig::SAMER_TEXT_SHADOW_COLOR, MessageConfig::SAMER_TEXT_COLOR],
-    'Isssabel' => [MessageConfig::ISA_TEXT_SHADOW_COLOR, MessageConfig::ISA_TEXT_COLOR],
-    'Uchi' => [MessageConfig::BRA_TEXT_SHADOW_COLOR, MessageConfig::BRA_TEXT_COLOR],
-    'Babatunde' => [MessageConfig::PABLO_TEXT_SHADOW_COLOR, MessageConfig::PABLO_TEXT_COLOR],
-    'Saku' => [MessageConfig::BRAIS_TEXT_SHADOW_COLOR, MessageConfig::BRAIS_TEXT_COLOR],
-    'Paxaxa' => [MessageConfig::ANA_TEXT_SHADOW_COLOR, MessageConfig::ANA_TEXT_COLOR],
-    'Thirtrep' => [MessageConfig::RODRI_TEXT_SHADOW_COLOR, MessageConfig::RODRI_TEXT_COLOR],
-    'Sabo Colón' => [MessageConfig::SABO_TEXT_SHADOW_COLOR, MessageConfig::SABO_TEXT_COLOR],
-    'TBD (Nerea)' => [MessageConfig::NEREA_TEXT_SHADOW_COLOR, MessageConfig::NEREA_TEXT_COLOR]
+    "Mermi" =>          [MessageConfig::HERMI_TEXT_SHADOW_COLOR, MessageConfig::HERMI_TEXT_COLOR],
+    "Iria-BEATRICE" =>  [MessageConfig::IRIA_TEXT_SHADOW_COLOR,  MessageConfig::IRIA_TEXT_COLOR],
+    "El Liante" =>      [MessageConfig::SAMER_TEXT_SHADOW_COLOR, MessageConfig::SAMER_TEXT_COLOR],
+    "Isssabel" =>       [MessageConfig::ISA_TEXT_SHADOW_COLOR, MessageConfig::ISA_TEXT_COLOR],
+    "Uchi" =>           [MessageConfig::BRA_TEXT_SHADOW_COLOR, MessageConfig::BRA_TEXT_COLOR],
+    "Babatunde" =>      [MessageConfig::PABLO_TEXT_SHADOW_COLOR, MessageConfig::PABLO_TEXT_COLOR],
+    "Saku" =>           [MessageConfig::BRAIS_TEXT_SHADOW_COLOR, MessageConfig::BRAIS_TEXT_COLOR],
+    "Paxaxa" =>         [MessageConfig::ANA_TEXT_SHADOW_COLOR, MessageConfig::ANA_TEXT_COLOR],
+    "Thirtrep" =>       [MessageConfig::RODRI_TEXT_SHADOW_COLOR, MessageConfig::RODRI_TEXT_COLOR],
+    "Sabo Colón" =>     [MessageConfig::SABO_TEXT_SHADOW_COLOR, MessageConfig::SABO_TEXT_COLOR],
+    "TBD (Nerea)" =>    [MessageConfig::NEREA_TEXT_SHADOW_COLOR, MessageConfig::NEREA_TEXT_COLOR],
 
-  }
+    }
 
-  # Si esto está en true el cuadro del nombre del NPC será del mismo estilo que el cuadro de texto elegido
-  # Si quieren cambiar este comportamiento y definir un skin específico para cada nombre, entonces hay que cambiar la siguiente constante a false
-  USE_TEXT_WINDOW_SKIN_FOR_NAMEBOX = true
-
-  # Si USE_TEXT_WINDOW_SKIN_FOR_NAMEBOX es false, entonces se usarán los siguientes skins para los NPCs
-  NAMEBOX_WINDOW_SKINS_FOR_NPC = {
-    'Prof. Oak' => 'speech hgss 2',
-    'Candela' => 'speech hgss 1'
-  }
 
   # Si esto está en true el cuadro del nombre del NPC será del mismo estilo que el cuadro de texto elegido
   # Si quieren cambiar este comportamiento y definir un skin específico para cada nombre, entonces hay que cambiar la siguiente constante a false
@@ -176,8 +169,8 @@ module NameBox
 
   # Si USE_TEXT_WINDOW_SKIN_FOR_NAMEBOX es false, entonces se usarán los siguientes skins para los NPCs
   NAMEBOX_WINDOW_SKINS_FOR_NPC = {
-    'Prof. Oak' => 'speech hgss 2',
-    'Candela' => 'speech hgss 1'
+    "Prof. Oak" => "speech hgss 2",
+    "Candela" => "speech hgss 1"
   }
 
   # Si USE_TEXT_WINDOW_SKIN_FOR_NAMEBOX es false, y no se encuentra al NPC en el hash NAMEBOX_WINDOW_SKINS_FOR_NPC,
@@ -186,7 +179,7 @@ module NameBox
   USE_TEXT_WINDOW_SKIN_AS_DEFAULT = true
 
   # Nombre de la skin para el cuadro en "Graphics/Windowskins"
-  DEFAULT_NAMEBOXWINSKIN = 'speech hgss 2'
+  DEFAULT_NAMEBOXWINSKIN = "speech hgss 2"
 
   # Carga el NameBox con el nombre indicado pero no lo deja visible
   # Se hará visible cuando se muestre un cuadro de diálogo
@@ -199,16 +192,16 @@ module NameBox
     # Parseo antiguo para mostrar el nombre de personaje
     @currentName.gsub!(/\\pn/i,  $player.name) if $player
     # Parseo nuevo para mostrar el nombre de personaje
-    @currentName.gsub!(/\\[Pp][Nn]/, $player.name) if $player
+    @currentName.gsub!(/\\[Pp][Nn]/,$player.name) if $player
     # Parsea la variable con el formato '\v[n]'
-    @currentName.gsub!(/\\v\[([0-9]+)\]/i) { $game_variables[::Regexp.last_match(1).to_i] }
+    @currentName.gsub!(/\\v\[([0-9]+)\]/i) { $game_variables[$1.to_i] }
     # Temas relacionados al genero
-    @currentName.gsub!(/\\@a/i, 'a') if $player&.female?
-    @currentName.gsub!(/\\@a/i, '') if $player&.male?
-    @currentName.gsub!(/\\@/i, 'a') if $player&.female?
-    @currentName.gsub!(/\\@/i, 'o') if $player&.male?
-    @currentName.gsub!(/\\&/i, 'o') if $player&.female?
-    @currentName.gsub!(/\\&/i, 'a') if $player&.male?
+    @currentName.gsub!(/\\@a/i,"a") if $player&.female?
+    @currentName.gsub!(/\\@a/i,"") if $player&.male?
+    @currentName.gsub!(/\\@/i,"a") if $player&.female?
+    @currentName.gsub!(/\\@/i,"o") if $player&.male?
+    @currentName.gsub!(/\\&/i,"o") if $player&.female?
+    @currentName.gsub!(/\\&/i,"a") if $player&.male?
 
     @namebox&.dispose
     @namebox = Window_AdvancedTextPokemon.new(@currentName)

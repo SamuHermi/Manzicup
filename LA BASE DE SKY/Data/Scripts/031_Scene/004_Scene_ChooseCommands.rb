@@ -1,99 +1,21 @@
 class Battle::Scene
   #=============================================================================
-  # Helper method to initialize mouse state safely
-  #=============================================================================
-  def pbInitializeMouseState
-    return { pressed: false, pressedIndex: -1, waitForRelease: false } unless Settings::ENABLE_MOUSE_INPUT_IN_BATTLE
-
-    mousePressed = false
-    begin
-      mousePressed = Mouse.press? if defined?(Mouse) && Mouse
-    rescue StandardError
-      mousePressed = false
-    end
-    {
-      pressed: false,
-      pressedIndex: -1,
-      waitForRelease: mousePressed
-    }
-  end
-
-  #=============================================================================
-  # Helper method for mouse button input with click tracking
-  # Returns the index of the clicked button, or nil if no valid click
-  #=============================================================================
-  def pbCheckMouseButtons(buttons, mouseState, validationProc = nil)
-    return nil unless Settings::ENABLE_MOUSE_INPUT_IN_BATTLE
-    return nil if !defined?(Mouse) || !Mouse
-    return nil if mouseState[:waitForRelease]
-
-    clickedIndex = nil
-
-    begin
-      # Clear the wait flag once mouse is released
-      mouseState[:waitForRelease] = false if mouseState[:waitForRelease] && !Mouse.press?
-
-      # Only process mouse input if we're not waiting for initial release
-      unless mouseState[:waitForRelease]
-        buttons.each_with_index do |button, i|
-          # Skip invalid buttons (e.g., moves that don't exist)
-          next if validationProc && !validationProc.call(i)
-
-          # Mouse pressed on this button
-          if Mouse.over?(button) && Mouse.press? && !mouseState[:pressed]
-            mouseState[:pressed] = true
-            mouseState[:pressedIndex] = i
-          end
-
-          # Mouse released on same button it was pressed on
-          next unless Mouse.over?(button) && mouseState[:pressed] && mouseState[:pressedIndex] == i
-
-          next unless Mouse.release? || !Mouse.press? # Released or no longer pressing
-          clickedIndex = i
-          mouseState[:pressed] = false
-          mouseState[:pressedIndex] = -1
-          break
-        end
-
-        # Reset mouse state if released anywhere or no longer pressing
-        if Mouse.release? || (mouseState[:pressed] && !Mouse.press?)
-          mouseState[:pressed] = false
-          mouseState[:pressedIndex] = -1
-        end
-      end
-    rescue StandardError
-      # Silently ignore any mouse-related errors
-      return nil
-    end
-
-    clickedIndex
-  end
-
-  #=============================================================================
   # The player chooses a main command for a Pokémon
   # Return values: -1=Cancel, 0=Fight, 1=Bag, 2=Pokémon, 3=Run, 4=Call
   #=============================================================================
   def pbCommandMenu(idxBattler, firstAction)
-    shadowTrainer = GameData::Type.exists?(:SHADOW) && @battle.trainerBattle?
+    shadowTrainer = (GameData::Type.exists?(:SHADOW) && @battle.trainerBattle?)
     cmds = [
-      _INTL("¿Qué debería hacer\n{1}?", @battle.battlers[idxBattler].name),
-      _INTL('Luchar'),
-      _INTL('Mochila'),
-      _INTL('Pokémon'),
-      if shadowTrainer
-        _INTL('Llamar')
-      else
-  firstAction ? _INTL('Huir') : _INTL('Cancelar')
-      end
+      _INTL("¿Qué debería\nhacer {1}?", @battle.battlers[idxBattler].name),
+      _INTL("Luchar"),
+      _INTL("Mochila"),
+      _INTL("Pokémon"),
+      (shadowTrainer) ? _INTL("Llamar") : (firstAction) ? _INTL("Huir") : _INTL("Cancelar")
     ]
-    ret = pbCommandMenuEx(idxBattler, cmds, if shadowTrainer
-                                              2
-                                            else
-  firstAction ? 0 : 1
-                                            end)
+    ret = pbCommandMenuEx(idxBattler, cmds, (shadowTrainer) ? 2 : (firstAction) ? 0 : 1)
     ret = 4 if ret == 3 && shadowTrainer   # Convert "Run" to "Call"
     ret = -1 if ret == 3 && !firstAction   # Convert "Run" to "Cancel"
-    ret
+    return ret
   end
 
   # Mode: 0 = regular battle with "Run" (first choosable action in the round only)
@@ -103,12 +25,11 @@ class Battle::Scene
   #       4 = Bug-Catching Contest
   def pbCommandMenuEx(idxBattler, texts, mode = 0)
     pbShowWindow(COMMAND_BOX)
-    cw = @sprites['commandWindow']
+    cw = @sprites["commandWindow"]
     cw.setTexts(texts)
     cw.setIndexAndMode(@lastCmd[idxBattler], mode)
     pbSelectBattler(idxBattler)
     ret = -1
-    mouseState = pbInitializeMouseState
     loop do
       oldIndex = cw.index
       pbUpdate(cw)
@@ -123,53 +44,22 @@ class Battle::Scene
         cw.index += 2 if (cw.index & 2) == 0
       end
       pbPlayCursorSE if cw.index != oldIndex
-
-      # Mouse input
-      clickedIndex = pbCheckMouseButtons(cw.buttons, mouseState)
-      if clickedIndex
-        cw.index = clickedIndex
-        pbPlayDecisionSE
-        ret = cw.index
-        @lastCmd[idxBattler] = ret
-        break
-      end
-
       # Actions
-      if Input.trigger?(Input::USE) # Confirm choice
+      if Input.trigger?(Input::USE)                 # Confirm choice
         pbPlayDecisionSE
         ret = cw.index
         @lastCmd[idxBattler] = ret
         break
-      elsif Input.trigger?(Input::BACK) && mode == 1 # Cancel
+      elsif Input.trigger?(Input::BACK) && mode == 1   # Cancel
         pbPlayCancelSE
         break
-      elsif Input.trigger?(Input::F9) && $DEBUG # Debug menu
+      elsif Input.trigger?(Input::F9) && $DEBUG    # Debug menu
         pbPlayDecisionSE
         ret = -2
         break
       end
     end
-    ret
-  end
-
-  def fight_action_handler(battler, idxBattler, cw)
-    newMode = @battle.pbRegisteredMegaEvolution?(idxBattler) ? 2 : 1
-    if MultipleForms.hasFunction?(battler.pokemon, 'getMegaMoves')
-      megaMoves = MultipleForms.call('getMegaMoves', battler.pokemon)
-      newMode == 2 ? battler.display_mega_moves : battler.display_base_moves(true)
-      cw.refresh(true) # Refresh button names too
-      return true
-    end
-    false
-  end
-
-  def fight_cancel_handler(battler, idxBattler, cw)
-    newMode = @battle.pbRegisteredMegaEvolution?(idxBattler) ? 2 : 1
-    return false if newMode == 1 # Not cancelling Mega Evolution
-
-    battler.display_base_moves
-    cw.refresh(true) # Refresh button names too
-    true
+    return ret
   end
 
   #=============================================================================
@@ -177,15 +67,16 @@ class Battle::Scene
   #=============================================================================
   def pbFightMenu(idxBattler, megaEvoPossible = false)
     battler = @battle.battlers[idxBattler]
-    cw = @sprites['fightWindow']
+    cw = @sprites["fightWindow"]
     cw.battler = battler
     moveIndex = 0
-    moveIndex = @lastMove[idxBattler] if battler.moves[@lastMove[idxBattler]]&.id
-    cw.shiftMode = @battle.pbCanShift?(idxBattler) ? 1 : 0
-    cw.setIndexAndMode(moveIndex, megaEvoPossible ? 1 : 0)
+    if battler.moves[@lastMove[idxBattler]]&.id
+      moveIndex = @lastMove[idxBattler]
+    end
+    cw.shiftMode = (@battle.pbCanShift?(idxBattler)) ? 1 : 0
+    cw.setIndexAndMode(moveIndex, (megaEvoPossible) ? 1 : 0)
     needFullRefresh = true
     needRefresh = false
-    mouseState = pbInitializeMouseState
     loop do
       # Refresh view if necessary
       if needFullRefresh
@@ -195,9 +86,8 @@ class Battle::Scene
       end
       if needRefresh
         if megaEvoPossible
-          newMode = @battle.pbRegisteredMegaEvolution?(idxBattler) ? 2 : 1
+          newMode = (@battle.pbRegisteredMegaEvolution?(idxBattler)) ? 2 : 1
           cw.mode = newMode if newMode != cw.mode
-          cw.refresh # Add this to ensure move names are updated
         end
         needRefresh = false
       end
@@ -215,47 +105,26 @@ class Battle::Scene
         cw.index += 2 if battler.moves[cw.index + 2]&.id && (cw.index & 2) == 0
       end
       pbPlayCursorSE if cw.index != oldIndex
-
-      # Mouse input
-      clickedIndex = pbCheckMouseButtons(cw.buttons, mouseState, proc { |i| battler.moves[i]&.id })
-      if clickedIndex
-        cw.index = clickedIndex
-        pbPlayDecisionSE
-        moveExecuted = yield cw.index
-        break if moveExecuted
-
-
-        needFullRefresh = true
-        needRefresh = true
-
-      end
-
       # Actions
-      if Input.trigger?(Input::USE) # Confirm choice
+      if Input.trigger?(Input::USE)      # Confirm choice
         pbPlayDecisionSE
         break if yield cw.index
-
         needFullRefresh = true
         needRefresh = true
-      elsif Input.trigger?(Input::BACK) # Cancel fight menu
+      elsif Input.trigger?(Input::BACK)   # Cancel fight menu
         pbPlayCancelSE
-        fight_cancel_handler(battler, idxBattler, cw)
-        break if yield (-1)
-
+        break if yield -1
         needRefresh = true
-      elsif Input.trigger?(Input::ACTION) # Toggle Mega Evolution
+      elsif Input.trigger?(Input::ACTION)   # Toggle Mega Evolution
         if megaEvoPossible
           pbPlayDecisionSE
-          break if yield (-2)
-
-          needFullRefresh = fight_action_handler(battler, idxBattler, cw)
+          break if yield -2
           needRefresh = true
         end
-      elsif Input.trigger?(Input::SPECIAL) # Shift
+      elsif Input.trigger?(Input::SPECIAL)   # Shift
         if cw.shiftMode > 0
           pbPlayDecisionSE
-          break if yield (-3)
-
+          break if yield -3
           needRefresh = true
         end
       end
@@ -279,8 +148,8 @@ class Battle::Scene
     # Start party screen
     scene = PokemonParty_Scene.new
     switchScreen = PokemonPartyScreen.new(scene, modParty)
-    msg = _INTL('Elige un Pokémon.')
-    msg = _INTL('¿Qué Pokémon liberar?') if mode == 1
+    msg = _INTL("Elige un Pokémon.")
+    msg = _INTL("¿Qué Pokémon liberar?") if mode == 1
     switchScreen.pbStartScene(msg, @battle.pbNumPositions(0, 0))
     # Loop while in party screen
     loop do
@@ -288,8 +157,7 @@ class Battle::Scene
       scene.pbSetHelpText(msg)
       idxParty = switchScreen.pbChoosePokemon
       if idxParty < 0
-        next unless canCancel
-
+        next if !canCancel
         break
       end
       # Choose a command for the selected Pokémon
@@ -298,20 +166,19 @@ class Battle::Scene
       cmdSummary = -1
       cmdSelect  = -1
       commands = []
-      commands[cmdSwitch  = commands.length] = _INTL('Cambiar') if mode == 0 && modParty[idxParty].able? &&
-                                                                   (!@battle.rules[:cannot_switch] || !canCancel)
-      commands[cmdBoxes   = commands.length] = _INTL('Enviar al PC') if mode == 1
-      commands[cmdSelect  = commands.length] = _INTL('Seleccionar') if mode == 2 && modParty[idxParty].fainted?
-      commands[cmdSummary = commands.length] = _INTL('Datos')
-      commands[commands.length]              = _INTL('Cancelar')
-      command = scene.pbShowCommands(_INTL('¿Qué hacer con {1}?', modParty[idxParty].name), commands)
+      commands[cmdSwitch  = commands.length] = _INTL("Cambiar") if mode == 0 && modParty[idxParty].able? &&
+                                                                     (@battle.canSwitch || !canCancel)
+      commands[cmdBoxes   = commands.length] = _INTL("s") if mode == 1
+      commands[cmdSelect  = commands.length] = _INTL("Seleccionar") if mode == 2 && modParty[idxParty].fainted?
+      commands[cmdSummary = commands.length] = _INTL("Datos")
+      commands[commands.length]              = _INTL("Cancelar")
+      command = scene.pbShowCommands(_INTL("¿Qué hacer con {1}?", modParty[idxParty].name), commands)
       if (cmdSwitch >= 0 && command == cmdSwitch) ||   # Switch In
          (cmdBoxes >= 0 && command == cmdBoxes)   ||   # Send to Boxes
          (cmdSelect >= 0 && command == cmdSelect)      # Select for Revival Blessing
         idxPartyRet = -1
         partyPos.each_with_index do |pos, i|
           next if pos != idxParty + partyStart
-
           idxPartyRet = i
           break
         end
@@ -353,19 +220,17 @@ class Battle::Scene
     loop do
       # Select an item
       item = itemScene.pbChooseItem
-      break unless item
-
+      break if !item
       # Choose a command for the selected item
       item = GameData::Item.get(item)
       itemName = item.name
       useType = item.battle_use
       cmdUse = -1
       commands = []
-      commands[cmdUse = commands.length] = _INTL('Usar') if useType && useType != 0
-      commands[commands.length]          = _INTL('Cancelar')
-      command = itemScene.pbShowCommands(_INTL('Has seleccionado {1}.', itemName), commands)
-      next unless cmdUse >= 0 && command == cmdUse # Use
-
+      commands[cmdUse = commands.length] = _INTL("Usar") if useType && useType != 0
+      commands[commands.length]          = _INTL("Cancelar")
+      command = itemScene.pbShowCommands(_INTL("Has seleccionado {1}.", itemName), commands)
+      next unless cmdUse >= 0 && command == cmdUse   # Use
       # Use types:
       # 0 = not usable in battle
       # 1 = use on Pokémon (lots of items, Blue Flute)
@@ -374,17 +239,17 @@ class Battle::Scene
       # 4 = use on opposing battler (Poké Balls)
       # 5 = use no target (Poké Doll, Guard Spec., Poké Flute, Launcher items)
       case useType
-      when 1, 2, 3 # Use on Pokémon/Pokémon's move/battler
+      when 1, 2, 3   # Use on Pokémon/Pokémon's move/battler
         # Auto-choose the Pokémon/battler whose action is being decided if they
         # are the only available Pokémon/battler to use the item on
         case useType
         when 1   # Use on Pokémon
-          if (@battle.pbTeamLengthFromBattlerIndex(idxBattler) == 1) && yield item.id, useType, @battle.battlers[idxBattler].pokemonIndex, -1, itemScene
-            break
+          if @battle.pbTeamLengthFromBattlerIndex(idxBattler) == 1
+            break if yield item.id, useType, @battle.battlers[idxBattler].pokemonIndex, -1, itemScene
           end
         when 3   # Use on battler
-          if (@battle.pbPlayerBattlerCount == 1) && yield item.id, useType, @battle.battlers[idxBattler].pokemonIndex, -1, itemScene
-            break
+          if @battle.pbPlayerBattlerCount == 1
+            break if yield item.id, useType, @battle.battlers[idxBattler].pokemonIndex, -1, itemScene
           end
         end
         # Fade out and hide Bag screen
@@ -397,40 +262,35 @@ class Battle::Scene
         # Start party screen
         pkmnScene = PokemonParty_Scene.new
         pkmnScreen = PokemonPartyScreen.new(pkmnScene, modParty)
-        pkmnScreen.pbStartScene(_INTL('¿Usar en qué Pokémon?'), @battle.pbNumPositions(0, 0))
+        pkmnScreen.pbStartScene(_INTL("¿Usar en qué Pokémon?"), @battle.pbNumPositions(0, 0))
         idxParty = -1
         # Loop while in party screen
         loop do
           # Select a Pokémon
-          pkmnScene.pbSetHelpText(_INTL('¿Usar en qué Pokémon?'))
+          pkmnScene.pbSetHelpText(_INTL("¿Usar en qué Pokémon?"))
           idxParty = pkmnScreen.pbChoosePokemon
           break if idxParty < 0
-
           idxPartyRet = -1
           partyPos.each_with_index do |pos, i|
             next if pos != idxParty + partyStart
-
             idxPartyRet = i
             break
           end
           next if idxPartyRet < 0
-
           pkmn = party[idxPartyRet]
           next if !pkmn || pkmn.egg?
-
           idxMove = -1
-          if useType == 2 # Use on Pokémon's move
-            idxMove = pkmnScreen.pbChooseMove(pkmn, _INTL('¿Restaurar qué movimiento?'))
+          if useType == 2   # Use on Pokémon's move
+            idxMove = pkmnScreen.pbChooseMove(pkmn, _INTL("¿Restaurar qué movimiento?"))
             next if idxMove < 0
           end
           break if yield item.id, useType, idxPartyRet, idxMove, pkmnScene
         end
         pkmnScene.pbEndScene
         break if idxParty >= 0
-
         # Cancelled choosing a Pokémon; show the Bag screen again
         itemScene.pbFadeInScene
-      when 4 # Use on opposing battler (Poké Balls)
+      when 4   # Use on opposing battler (Poké Balls)
         idxTarget = -1
         if @battle.pbOpposingBattlerCount(idxBattler) == 1
           @battle.allOtherSideBattlers(idxBattler).each { |b| idxTarget = b.index }
@@ -441,18 +301,18 @@ class Battle::Scene
           itemScene.pbFadeOutScene
           # Fade in and show the battle screen, choosing a target
           tempVisibleSprites = visibleSprites.clone
-          tempVisibleSprites['commandWindow'] = false
-          tempVisibleSprites['targetWindow']  = true
+          tempVisibleSprites["commandWindow"] = false
+          tempVisibleSprites["targetWindow"]  = true
           idxTarget = pbChooseTarget(idxBattler, GameData::Target.get(:Foe), tempVisibleSprites)
-          if (idxTarget >= 0) && yield item.id, useType, idxTarget, -1, self
-            break
+          if idxTarget >= 0
+            break if yield item.id, useType, idxTarget, -1, self
           end
           # Target invalid/cancelled choosing a target; show the Bag screen again
           wasTargeting = false
           pbFadeOutAndHide(@sprites)
           itemScene.pbFadeInScene
         end
-      when 5 # Use with no target
+      when 5   # Use with no target
         break if yield item.id, useType, idxBattler, -1, itemScene
       end
     end
@@ -463,7 +323,7 @@ class Battle::Scene
     # Close Bag screen
     itemScene.pbEndScene
     # Fade back into battle screen (if not already showing it)
-    pbFadeInAndShow(@sprites, visibleSprites) unless wasTargeting
+    pbFadeInAndShow(@sprites, visibleSprites) if !wasTargeting
   end
 
   #=============================================================================
@@ -475,29 +335,27 @@ class Battle::Scene
   # there is no battler there, otherwise is a battler's name.
   def pbCreateTargetTexts(idxBattler, target_data)
     texts = Array.new(@battle.battlers.length) do |i|
-      next nil unless @battle.battlers[i]
-
+      next nil if !@battle.battlers[i]
       showName = false
       # NOTE: Targets listed here are ones with num_targets of 0, plus
       #       RandomNearFoe which should look like it targets the user. All
       #       other targets are handled by the "else" part.
-      showName = case target_data.id
-                 when :None, :User, :RandomNearFoe
-        (i == idxBattler)
-                 when :UserSide
-        !@battle.opposes?(i, idxBattler)
-                 when :FoeSide
-        @battle.opposes?(i, idxBattler)
-                 when :BothSides
-        true
+      case target_data.id
+      when :None, :User, :RandomNearFoe
+        showName = (i == idxBattler)
+      when :UserSide
+        showName = !@battle.opposes?(i, idxBattler)
+      when :FoeSide
+        showName = @battle.opposes?(i, idxBattler)
+      when :BothSides
+        showName = true
       else
-        @battle.pbMoveCanTarget?(idxBattler, i, target_data)
-                 end
-      next nil unless showName
-
-      next @battle.battlers[i].fainted? ? '' : @battle.battlers[i].name
+        showName = @battle.pbMoveCanTarget?(idxBattler, i, target_data)
+      end
+      next nil if !showName
+      next (@battle.battlers[i].fainted?) ? "" : @battle.battlers[i].name
     end
-    texts
+    return texts
   end
 
   # Returns the initial position of the cursor when choosing a target for a move
@@ -508,12 +366,10 @@ class Battle::Scene
       @battle.allSameSideBattlers(idxBattler).each do |b|
         next if b.index == idxBattler || !@battle.nearBattlers?(b, idxBattler)
         next if b.fainted?
-
         return b.index
       end
       @battle.allSameSideBattlers(idxBattler).each do |b|
         next if b.index == idxBattler || !@battle.nearBattlers?(b, idxBattler)
-
         return b.index
       end
     when :NearFoe, :NearOther
@@ -522,45 +378,31 @@ class Battle::Scene
       indices.each { |i| return i if @battle.nearBattlers?(i, idxBattler) }
     when :Foe, :Other
       indices = @battle.pbGetOpposingIndicesInOrder(idxBattler)
-      indices.each { |i| return i unless @battle.battlers[i].fainted? }
-      return indices.first unless indices.empty?
+      indices.each { |i| return i if !@battle.battlers[i].fainted? }
+      return indices.first if !indices.empty?
     end
-    idxBattler # Target the user initially
+    return idxBattler   # Target the user initially
   end
 
   def pbChooseTarget(idxBattler, target_data, visibleSprites = nil)
     pbShowWindow(TARGET_BOX)
-    cw = @sprites['targetWindow']
+    cw = @sprites["targetWindow"]
     # Create an array of battler names (only valid targets are named)
     texts = pbCreateTargetTexts(idxBattler, target_data)
     # Determine mode based on target_data
-    mode = target_data.num_targets == 1 ? 0 : 1
+    mode = (target_data.num_targets == 1) ? 0 : 1
     cw.setDetails(texts, mode)
     cw.index = pbFirstTarget(idxBattler, target_data)
-    pbSelectBattler(mode == 0 ? cw.index : texts, 2) # Select initial battler/data box
+    pbSelectBattler((mode == 0) ? cw.index : texts, 2)   # Select initial battler/data box
     pbFadeInAndShow(@sprites, visibleSprites) if visibleSprites
     ret = -1
-    mouseState = pbInitializeMouseState
     loop do
       oldIndex = cw.index
       pbUpdate(cw)
-
-      # Mouse input
-      clickedIndex = pbCheckMouseButtons(cw.buttons, mouseState, proc { |i|
-        cw.buttons[i] && !texts[i].nil?
-      })
-      if clickedIndex
-        cw.index = clickedIndex
-        pbSelectBattler(mode == 0 ? cw.index : texts, 2) if mode == 0
-        ret = cw.index
-        pbPlayDecisionSE
-        break
-      end
-
       # Update selected command
-      if mode == 0 # Choosing just one target, can change index
+      if mode == 0   # Choosing just one target, can change index
         if Input.trigger?(Input::LEFT) || Input.trigger?(Input::RIGHT)
-          inc = cw.index.even? ? -2 : 2
+          inc = (cw.index.even?) ? -2 : 2
           inc *= -1 if Input.trigger?(Input::RIGHT)
           indexLength = @battle.sideSizes[cw.index % 2] * 2
           newIndex = cw.index
@@ -568,7 +410,6 @@ class Battle::Scene
             newIndex += inc
             break if newIndex < 0 || newIndex >= indexLength
             next if texts[newIndex].nil?
-
             cw.index = newIndex
             break
           end
@@ -577,28 +418,27 @@ class Battle::Scene
           tryIndex = @battle.pbGetOpposingIndicesInOrder(cw.index)
           tryIndex.each do |idxBattlerTry|
             next if texts[idxBattlerTry].nil?
-
             cw.index = idxBattlerTry
             break
           end
         end
         if cw.index != oldIndex
           pbPlayCursorSE
-          pbSelectBattler(cw.index, 2) # Select the new battler/data box
+          pbSelectBattler(cw.index, 2)   # Select the new battler/data box
         end
       end
-      if Input.trigger?(Input::USE) # Confirm
+      if Input.trigger?(Input::USE)   # Confirm
         ret = cw.index
         pbPlayDecisionSE
         break
-      elsif Input.trigger?(Input::BACK) # Cancel
+      elsif Input.trigger?(Input::BACK)   # Cancel
         ret = -1
         pbPlayCancelSE
         break
       end
     end
-    pbSelectBattler(-1) # Deselect all battlers/data boxes
-    ret
+    pbSelectBattler(-1)   # Deselect all battlers/data boxes
+    return ret
   end
 
   #=============================================================================
@@ -614,14 +454,14 @@ class Battle::Scene
       screen = PokemonSummaryScreen.new(scene)
       ret = screen.pbStartForgetScreen([pkmn], 0, moveToLearn)
     end
-    ret
+    return ret
   end
 
   #=============================================================================
   # Opens the nicknaming screen for a newly caught Pokémon
   #=============================================================================
   def pbNameEntry(helpText, pkmn)
-    pbEnterPokemonName(helpText, 0, Pokemon::MAX_NAME_SIZE, '', pkmn)
+    return pbEnterPokemonName(helpText, 0, Pokemon::MAX_NAME_SIZE, "", pkmn)
   end
 
   #=============================================================================
@@ -635,3 +475,4 @@ class Battle::Scene
     end
   end
 end
+

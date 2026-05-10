@@ -37,25 +37,11 @@ module GameData
     def self.check_egg_graphic_file(path, species, form, suffix = "")
       species_data = self.get_species_form(species, form)
       return nil if species_data.nil?
-      
       if form > 0
         ret = pbResolveBitmap(sprintf("%s%s_%d%s", path, species_data.species, form, suffix))
         return ret if ret
       end
-      
-      ret = pbResolveBitmap(sprintf("%s%s%s", path, species_data.species, suffix))
-      return ret if ret
-      
-      # Try baby species as fallback
-      baby_species = species_data.get_baby_species
-      return nil unless baby_species
-      
-      if form > 0
-        ret = pbResolveBitmap(sprintf("%s%s_%d%s", path, baby_species, form, suffix))
-        return ret if ret
-      end
-      
-      pbResolveBitmap(sprintf("%s%s%s", path, baby_species, suffix))
+      return pbResolveBitmap(sprintf("%s%s%s", path, species_data.species, suffix))
     end
 
     def self.front_sprite_filename(species, form = 0, gender = 0, shiny = false, shadow = false)
@@ -216,7 +202,7 @@ module GameData
     def self.play_cry_from_species(species, form = 0, volume = 90, pitch = 100)
       filename = self.cry_filename(species, form)
       return if !filename
-      pbPokemonCryPlay(RPG::AudioFile.new(filename, volume, pitch)) rescue nil
+      pbSEPlay(RPG::AudioFile.new(filename, volume, pitch)) rescue nil
     end
 
     def self.play_cry_from_pokemon(pkmn, volume = 90, pitch = 100)
@@ -224,7 +210,7 @@ module GameData
       filename = self.cry_filename_from_pokemon(pkmn)
       return if !filename
       pitch ||= 100
-      pbPokemonCryPlay(RPG::AudioFile.new(filename, volume, pitch)) rescue nil
+      pbSEPlay(RPG::AudioFile.new(filename, volume, pitch)) rescue nil
     end
 
     def self.play_cry(pkmn, volume = 90, pitch = 100)
@@ -258,3 +244,4 @@ module GameData
     end
   end
 end
+

@@ -5,58 +5,65 @@ module Battle::CatchAndStoreMixin
   def pbStorePokemon(pkmn)
     # Nickname the Pokémon (unless it's a Shadow Pokémon)
     pkmn.get_evolutions(true).each do |evo|
-      Console.echo_li("Evolución posible: #{evo}") if evo.get_evolutions(true).length == 0
+      if evo.get_evolutions(true).length == 0
+        Console.echo_li("Evolución posible: #{evo}")
+      end
     end
-    if !pkmn.shadowPokemon? && $PokemonSystem.givenicknames == 0 &&
-       pbDisplayConfirm(_INTL('¿Quieres ponerle un mote a {1}?', pkmn.name))
-      nickname = @scene.pbNameEntry(_INTL('¿Mote de {1}?', pkmn.speciesName), pkmn)
-      pkmn.name = nickname
+    if !pkmn.shadowPokemon?
+      if $PokemonSystem.givenicknames == 0 &&
+         pbDisplayConfirm(_INTL("¿Quieres ponerle un mote a {1}?", pkmn.name))
+        nickname = @scene.pbNameEntry(_INTL("¿Mote de {1}?", pkmn.speciesName), pkmn)
+        pkmn.name = nickname
+      end
     end
-
+    
     # Store the Pokémon
-    if pbPlayer.party_full? && (@sendToBoxes == 0 || @sendToBoxes == 2) # Ask/must add to party
-      cmds = [_INTL('Añadir al equipo'),
-              _INTL('Enviarlo al PC'),
-              _INTL('Ver los datos de {1}', pkmn.name),
-              _INTL('Comprobar equipo')]
-      cmds.delete_at(1) if @sendToBoxes == 2 # Remove "Send to a Box" option
+    if pbPlayer.party_full? && (@sendToBoxes == 0 || @sendToBoxes == 2)   # Ask/must add to party
+      cmds = [_INTL("Añadir al equipo"),
+              _INTL("Enviarlo al PC"),
+              _INTL("Ver los datos de {1}", pkmn.name),
+              _INTL("Comprobar equipo")]
+      cmds.delete_at(1) if @sendToBoxes == 2
       loop do
-        cmd = pbShowCommands(_INTL('¿Qué quieres hacer con {1}?', pkmn.name), cmds, 99)
-        next if cmd == 99 && @sendToBoxes == 2 # Can't cancel if must add to party
-        break if cmd == 99 # Cancelling = send to a Box
-
+        cmd = pbShowCommands(_INTL("¿Qué quieres hacer con {1}?", pkmn.name), cmds, 99)
+        next if cmd == 99 && @sendToBoxes == 2   # Can't cancel if must add to party
+        break if cmd == 99   # Cancelling = send to a Box
         cmd += 1 if cmd >= 1 && @sendToBoxes == 2
         case cmd
-        when 0 # Add to your party
-          pbDisplay(_INTL('Elige un Pokémon de tu equipo para reemplazarlo.'))
+        when 0   # Add to your party
+          pbDisplay(_INTL("Elige un Pokémon de tu equipo para reemplazarlo."))
           party_index = -1
-          @scene.pbPartyScreen(0, @sendToBoxes != 2, 1) do |idxParty, _partyScene|
+          @scene.pbPartyScreen(0, (@sendToBoxes != 2), 1) do |idxParty, _partyScene|
             party_index = idxParty
             next true
           end
-          next if party_index < 0 # Cancelled
-
+          next if party_index < 0   # Cancelled
           party_size = pbPlayer.party.length
           # Get chosen Pokémon and clear battle-related conditions
           send_pkmn = pbPlayer.party[party_index]
           @peer.pbOnLeavingBattle(self, send_pkmn, @usedInBattle[0][party_index], true)
-          send_pkmn.statusCount = 0 if send_pkmn.status == :POISON # Bad poison becomes regular
+          send_pkmn.statusCount = 0 if send_pkmn.status == :POISON   # Bad poison becomes regular
           send_pkmn.makeUnmega
           send_pkmn.makeUnprimal
           send_pkmn.makeUnmanzi
           # Send chosen Pokémon to storage
+          send_pkmn = pbPlayer.party[party_index]
           stored_box = @peer.pbStorePokemon(pbPlayer, send_pkmn)
           pbPlayer.party.delete_at(party_index)
           box_name = @peer.pbBoxName(stored_box)
-          pbDisplayPaused(_INTL('Has enviado a {1} a la Caja "{2}".', send_pkmn.name, box_name))
+          pbDisplayPaused(_INTL("Has enviado a {1} a la Caja \"{2}\".", send_pkmn.name, box_name))
           # Rearrange all remembered properties of party Pokémon
           (party_index...party_size).each do |idx|
             if idx < party_size - 1
-              @usedInBattle[0][idx] = @usedInBattle[0][idx + 1]
+              @initialItems[0][idx] = @initialItems[0][idx + 1]
               $game_temp.party_levels_before_battle[idx] = $game_temp.party_levels_before_battle[idx + 1]
+              $game_temp.party_critical_hits_dealt[idx] = $game_temp.party_critical_hits_dealt[idx + 1]
+              $game_temp.party_direct_damage_taken[idx] = $game_temp.party_direct_damage_taken[idx + 1]
             else
-              @usedInBattle[0][idx] = nil
+              @initialItems[0][idx] = nil
               $game_temp.party_levels_before_battle[idx] = nil
+              $game_temp.party_critical_hits_dealt[idx] = nil
+              $game_temp.party_direct_damage_taken[idx] = nil
             end
           end
           break
@@ -74,27 +81,28 @@ module Battle::CatchAndStoreMixin
       end
     end
     # Store as normal (add to party if there's space, or send to a Box if not)
-
+    
     stored_box = @peer.pbStorePokemon(pbPlayer, pkmn)
     if stored_box < 0
-      pbDisplayPaused(_INTL('{1} se ha añadido a tu equipo.', pkmn.name))
-    else
-      # Messages saying the Pokémon was stored in a PC box
-      box_name = @peer.pbBoxName(stored_box)
-      pbDisplayPaused(_INTL('¡{1} se ha enviado a la Caja "{2}"!', pkmn.name, box_name))
+      pbDisplayPaused(_INTL("{1} se ha añadido a tu equipo.", pkmn.name))
+      @initialItems[0][pbPlayer.party.length - 1] = pkmn.item_id if @initialItems
+      return
     end
+    # Messages saying the Pokémon was stored in a PC box
+    box_name = @peer.pbBoxName(stored_box)
+    pbDisplayPaused(_INTL("¡{1} se ha enviado a la Caja \"{2}\"!", pkmn.name, box_name))
   end
 
   # Register all caught Pokémon in the Pokédex, and store them.
   def pbRecordAndStoreCaughtPokemon
     @caughtPokemon.each do |pkmn|
       pbSetCaught(pkmn)
-      pbSetSeen(pkmn) # In case the form changed upon leaving battle
+      pbSetSeen(pkmn)   # In case the form changed upon leaving battle
       # Record the Pokémon's species as owned in the Pokédex
-      unless pbPlayer.owned?(pkmn.species)
+      if !pbPlayer.owned?(pkmn.species)
         pbPlayer.pokedex.set_owned(pkmn.species)
         if $player.has_pokedex && $player.pokedex.species_in_unlocked_dex?(pkmn.species)
-          pbDisplayPaused(_INTL('Los datos de {1} se han añadido a la Pokédex.', pkmn.name))
+          pbDisplayPaused(_INTL("Los datos de {1} se han añadido a la Pokédex.", pkmn.name))
           pbPlayer.pokedex.register_last_seen(pkmn)
           @scene.pbShowPokedex(pkmn.species)
         end
@@ -112,201 +120,156 @@ module Battle::CatchAndStoreMixin
   #=============================================================================
   def pbThrowPokeBall(idxBattler, ball, catch_rate = nil, showPlayer = false)
     # Determine which Pokémon you're throwing the Poké Ball at
-    battler = @battlers[idxBattler]
-    battler = @battlers[idxBattler].pbDirectOpposing(true) unless battler.opposes?
-    battler = battler.allAllies[0] if battler.fainted?
-    pkmn = battler.pokemon
-    # Throw message
-    pbThrowPokeBallMessage(battler, ball)
-    # Failure checks (Pokémon is fainted, or opposing trainer blocks the Poké
-    # Ball)
-    return if pbThrowPokeBallNegated?(battler, ball)
-
-    # Calculate the number of shakes (4=capture)
-    @criticalCapture = false
-    num_shakes = pbCaptureCalc(pkmn, battler, catch_rate, ball)
-    if num_shakes != 4
-      @first_poke_ball = ball unless @poke_ball_failed # For Ball Fetch
-      @poke_ball_failed = true # For Ball Fetch
-    end
-    # Animation of Ball throw, absorb, shake and capture/burst out
-    @scene.pbThrow(ball, num_shakes, @criticalCapture, battler.index, showPlayer)
-    # Outcome
-    pbThrowPokeBallOutcome(battler, pkmn, ball, num_shakes)
-  end
-
-  def pbThrowPokeBallMessage(battler, ball)
-    return if battler.fainted? # Messages are shown in def pbThrowPokeBallNegated? for this
-
-    item_name = GameData::Item.get(ball).name
-    if item_name.starts_with_vowel?
-      pbDisplayBrief(_INTL('¡{1} lanzó un {2}!', pbPlayer.name, item_name))
+    battler = nil
+    if opposes?(idxBattler)
+      battler = @battlers[idxBattler]
     else
-      pbDisplayBrief(_INTL('¡{1} lanzó una {2}!', pbPlayer.name, item_name))
+      battler = @battlers[idxBattler].pbDirectOpposing(true)
     end
-  end
-
-  def pbThrowPokeBallNegated?(battler, ball)
+    battler = battler.allAllies[0] if battler.fainted?
+    # Messages
+    itemName = GameData::Item.get(ball).name
     if battler.fainted?
-      item_name = GameData::Item.get(ball).name
-      PBDebug.log("[Threw Poké Ball] #{item_name}, failed due to no target")
-      if item_name.starts_with_vowel?
-        pbDisplay(_INTL('¡{1} lanzó un {2}!', pbPlayer.name, item_name))
+      if itemName.starts_with_vowel?
+        pbDisplay(_INTL("¡{1} lanzó un {2}!", pbPlayer.name, itemName))
       else
-        pbDisplay(_INTL('¡{1} lanzó una {2}!', pbPlayer.name, item_name))
+        pbDisplay(_INTL("¡{1} lanzó una {2}!", pbPlayer.name, itemName))
       end
-      pbDisplay(_INTL('Pero no había objetivo...'))
-      return true
+      pbDisplay(_INTL("Pero no había objetivo..."))
+      return
     end
+    if itemName.starts_with_vowel?
+      pbDisplayBrief(_INTL("¡{1} lanzó {2}!", pbPlayer.name, itemName))
+    else
+      pbDisplayBrief(_INTL("¡{1} lanzó {2}!", pbPlayer.name, itemName))
+    end
+    # Animation of opposing trainer blocking Poké Balls (unless it's a Snag Ball
+    # at a Shadow Pokémon)
     if trainerBattle? && !(GameData::Item.get(ball).is_snag_ball? && battler.shadowPokemon?)
-      item_name = GameData::Item.get(ball).name
-      PBDebug.log("[Threw Poké Ball] #{item_name}, failed due to opposing trainer blocking")
-      @scene.pbThrowAndDeflect(ball, 1) # Animation
-      pbDisplay(_INTL('¡El Entrenador bloqueó tu {1}! ¡Robar está mal!', item_name))
-      return true
+      @scene.pbThrowAndDeflect(ball, 1)
+      pbDisplay(_INTL("¡El Entrenador bloqueó tu Ball! ¡Robar está mal!"))
+      return
     end
-    false
+    # Calculate the number of shakes (4=capture)
+    pkmn = battler.pokemon
+    @criticalCapture = false
+    numShakes = pbCaptureCalc(pkmn, battler, catch_rate, ball)
+    PBDebug.log("[Threw Poké Ball] #{itemName}, #{numShakes} shakes (4=capture)")
+    # Animation of Ball throw, absorb, shake and capture/burst out
+    @scene.pbThrow(ball, numShakes, @criticalCapture, battler.index, showPlayer)
+    # Outcome message
+    case numShakes
+    when 0
+      pbDisplay(_INTL("¡Oh no! ¡El Pokémon se ha escapado!"))
+      Battle::PokeBallEffects.onFailCatch(ball, self, battler)
+    when 1
+      pbDisplay(_INTL("¡Vaya! ¡Parecía que lo habías atrapado!"))
+      Battle::PokeBallEffects.onFailCatch(ball, self, battler)
+    when 2
+      pbDisplay(_INTL("¡Qué pena! ¡Te ha faltado poco!"))
+      Battle::PokeBallEffects.onFailCatch(ball, self, battler)
+    when 3
+      pbDisplay(_INTL("¡Uy! ¡Casi lo consigues!"))
+      Battle::PokeBallEffects.onFailCatch(ball, self, battler)
+    when 4
+      pbDisplayBrief(_INTL("¡Ya está! ¡{1} atrapado!", pkmn.name))
+      @scene.pbThrowSuccess   # Play capture success jingle
+      pbRemoveFromParty(battler.index, battler.pokemonIndex)
+      # Gain Exp
+      if Settings::GAIN_EXP_FOR_CAPTURE
+        battler.captured = true
+        pbGainExp
+        battler.captured = false
+      end
+      battler.pbReset
+      if pbAllFainted?(battler.index)
+        @decision = (trainerBattle?) ? 1 : 4   # Battle ended by win/capture
+      end
+      # Modify the Pokémon's properties because of the capture
+      if GameData::Item.get(ball).is_snag_ball?
+        pkmn.owner = Pokemon::Owner.new_from_trainer(pbPlayer)
+      end
+      Battle::PokeBallEffects.onCatch(ball, self, pkmn)
+      pkmn.poke_ball = ball
+      pkmn.makeUnmega if pkmn.mega?
+      pkmn.makeUnprimal
+      pkmn.makeUnmanzi
+      pkmn.update_shadow_moves if pkmn.shadowPokemon?
+      pkmn.record_first_moves
+      # Reset form
+      pkmn.forced_form = nil if MultipleForms.hasFunction?(pkmn.species, "getForm")
+      @peer.pbOnLeavingBattle(self, pkmn, true, true)
+      # Make the Poké Ball and data box disappear
+      @scene.pbHideCaptureBall(idxBattler)
+      # Save the Pokémon for storage at the end of battle
+      @caughtPokemon.push(pkmn)
+    end
+    if numShakes != 4
+      @first_poke_ball = ball if !@poke_ball_failed
+      @poke_ball_failed = true
+    end
   end
 
-  #-----------------------------------------------------------------------------
-  # Calculate how many shakes a thrown Poké Ball will make (4 = capture).
-  #-----------------------------------------------------------------------------
-
-  def pbCaptureCalc(pkmn, battler, base_catch_rate, ball)
-    # Certain capture checks
+  #=============================================================================
+  # Calculate how many shakes a thrown Poké Ball will make (4 = capture)
+  #=============================================================================
+  def pbCaptureCalc(pkmn, battler, catch_rate, ball)
     return 4 if $DEBUG && Input.press?(Input::CTRL)
-    return 4 if Battle::PokeBallEffects.isUnconditional?(ball, self, battler)
-    return 4 if @rules[:certain_capture]
-
     # Get a catch rate if one wasn't provided
-    base_catch_rate ||= pkmn.species_data.catch_rate
+    catch_rate = pkmn.species_data.catch_rate if !catch_rate
     # Modify catch_rate depending on the Poké Ball's effect
-    base_catch_rate = if !pkmn.species_data.has_flag?('UltraBeast') || ball == :BEASTBALL
-                        Battle::PokeBallEffects.modifyCatchRate(ball, base_catch_rate, self, battler)
-                      else
-                        [base_catch_rate / 10.0, 1].max
-                      end
-    # Modify catch_rate depending on HP
-    mod_catch_rate = base_catch_rate * 4096
-    mod_catch_rate *= ((3 * battler.totalhp) - (2 * battler.hp)) / (3 * battler.totalhp).to_f
-    # Higher wild level penalty if the player can't make the Pokémon obey
-    if Settings::CATCH_RATE_PENALTY_IF_POKEMON_WILL_NOT_OBEY &&
-       pkmn.level > battler.pbMaxLevelBadgeObedience + 5
-      badges_needed = battler.pbBadgesNeededToObey
-      mod_catch_rate *= 0.8**badges_needed if badges_needed > 0
+    if !pkmn.species_data.has_flag?("UltraBeast") || ball == :BEASTBALL
+      catch_rate = Battle::PokeBallEffects.modifyCatchRate(ball, catch_rate, self, battler)
+    else
+      catch_rate /= 10
     end
-    # Floor the mod_catch_rate
-    mod_catch_rate = mod_catch_rate.floor
-    mod_catch_rate = 1 if mod_catch_rate < 1
-    # Status bonus
-    if %i[SLEEP FROZEN].include?(battler.status)
-      mod_catch_rate *= 2.5
+    # First half of the shakes calculation
+    a = battler.totalhp
+    b = battler.hp
+    x = (((3 * a) - (2 * b)) * catch_rate.to_f) / (3 * a)
+    # Calculation modifiers
+    if battler.status == :SLEEP || battler.status == :FROZEN
+      x *= 2.5
     elsif battler.status != :NONE
-      mod_catch_rate *= 1.5
+      x *= 1.5
     end
-    # Low wild level bonus (Gen 9's version)
-    mod_catch_rate *= [(36 - (2 * pkmn.level)) / 10.0, 1].max if Settings::CATCH_RATE_BONUS_FOR_LOW_LEVEL
-    # Higher wild level penalty if the player doesn't have enough Gym Badges (Gen 8 only)
-    if Settings::NUM_BADGES_TO_NOT_MAKE_HIGHER_LEVEL_CAPTURES_HARDER > $player.badge_count
-      max_player_level = 0
-      allSameSideBattlers(0, true).each { |b| max_player_level = b.level if b.level > max_player_level }
-      mod_catch_rate /= 10.0 if pkmn.level > max_player_level
-    end
-    # Floor the mod_catch_rate
-    mod_catch_rate = mod_catch_rate.floor
-    mod_catch_rate = 1 if mod_catch_rate < 1
+    x = x.floor
+    x = 1 if x < 1
     # Definite capture, no need to perform randomness checks
-    return 4 if mod_catch_rate >= 255 * 4096
-
-    # Second half of the shakes calculation (from Gen 6)
-    shake_chance = (65_536 * ((mod_catch_rate.to_f / (255 * 4096))**0.1875)).floor
+    return 4 if x >= 255 || Battle::PokeBallEffects.isUnconditional?(ball, self, battler)
+    # Second half of the shakes calculation
+    y = (65_536 / ((255.0 / x)**0.1875)).floor
     # Critical capture check
     if Settings::ENABLE_CRITICAL_CAPTURES
       dex_modifier = 0
-      num_owned = $player.pokedex.owned_count
-      if num_owned > 600
+      numOwned = $player.pokedex.owned_count
+      if numOwned > 600
         dex_modifier = 5
-      elsif num_owned > 450
+      elsif numOwned > 450
         dex_modifier = 4
-      elsif num_owned > 300
+      elsif numOwned > 300
         dex_modifier = 3
-      elsif num_owned > 150
+      elsif numOwned > 150
         dex_modifier = 2
-      elsif num_owned > 30
+      elsif numOwned > 30
         dex_modifier = 1
       end
       dex_modifier *= 1 + $bag.quantity(:CATCHINGCHARM)
       c = x * dex_modifier / 12
-      critical_chance = mod_catch_rate * dex_modifier / 12
       # Calculate the number of shakes
-      if critical_chance > 0 && pbRandom(256) < critical_chance
+      if c > 0 && pbRandom(256) < c
         @criticalCapture = true
-        return 4 if pbRandom(65_536) < shake_chance
-
+        return 4 if pbRandom(65_536) < y
         return 0
       end
     end
     # Calculate the number of shakes
-    num_shakes = 0
+    numShakes = 0
     4.times do |i|
-      break if num_shakes < i
-
-      num_shakes += 1 if pbRandom(65_536) < shake_chance
+      break if numShakes < i
+      numShakes += 1 if pbRandom(65_536) < y
     end
-    num_shakes
-  end
-
-  #-----------------------------------------------------------------------------
-  # The outcome of the capture attempt (after the animation).
-  #-----------------------------------------------------------------------------
-
-  def pbThrowPokeBallOutcome(battler, pkmn, ball, num_shakes)
-    # Succeeded
-    if num_shakes == 4
-      PBDebug.log("[Threw Poké Ball] #{GameData::Item.get(ball).name}, #{num_shakes} shakes (succeeded)")
-      pbThrowPokeBallSuccess(battler, pkmn, ball)
-      return
-    end
-    # Failed
-    PBDebug.log("[Threw Poké Ball] #{GameData::Item.get(ball).name}, #{num_shakes} shakes (failed)")
-    case num_shakes
-    when 0 then pbDisplay(_INTL('¡Oh, no! ¡El Pokémon se ha escapado!'))
-    when 1 then pbDisplay(_INTL('¡Vaya! ¡Parecía que lo habías atrapado!'))
-    when 2 then pbDisplay(_INTL('¡Qué pena! ¡Te ha faltado poco!'))
-    when 3 then pbDisplay(_INTL('¡Uy! ¡Casi lo consigues!'))
-    end
-    Battle::PokeBallEffects.onFailCatch(ball, self, battler)
-  end
-
-  def pbThrowPokeBallSuccess(battler, pkmn, ball)
-    pbDisplayBrief(_INTL('¡Ya está! ¡{1} atrapado!', pkmn.name))
-    @scene.pbThrowSuccess # Play capture success jingle
-    pbRemoveFromParty(battler.index, battler.pokemonIndex)
-    # Gain Exp
-    if Settings::GAIN_EXP_FOR_CAPTURE
-      battler.captured = true
-      pbGainExp
-      battler.captured = false
-    end
-    battler.pbReset
-    if pbAllFainted?(battler.index)
-      @decision = trainerBattle? ? Battle::Outcome::WIN : Battle::Outcome::CATCH
-    end
-    # Modify the Pokémon's properties because of the capture
-    pkmn.owner = Pokemon::Owner.new_from_trainer(pbPlayer) if GameData::Item.get(ball).is_snag_ball?
-    Battle::PokeBallEffects.onCatch(ball, self, pkmn)
-    pkmn.poke_ball = ball
-    pkmn.makeUnmega if pkmn.mega?
-    pkmn.makeUnprimal
-    pkmn.update_shadow_moves if pkmn.shadowPokemon?
-    pkmn.record_first_moves
-    # Reset form
-    pkmn.forced_form = nil if MultipleForms.hasFunction?(pkmn.species, 'getForm')
-    @peer.pbOnLeavingBattle(self, pkmn, true, true)
-    # Make the Poké Ball and data box disappear
-    @scene.pbHideCaptureBall(battler.index)
-    # Save the Pokémon for storage at the end of battle
-    @caughtPokemon.push(pkmn)
+    return numShakes
   end
 end
 
@@ -316,3 +279,4 @@ end
 class Battle
   include Battle::CatchAndStoreMixin
 end
+
